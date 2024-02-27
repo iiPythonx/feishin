@@ -60,6 +60,17 @@ export enum ServerType {
     SUBSONIC = 'subsonic',
 }
 
+export const toServerType = (value?: string): ServerType | null => {
+    switch (value?.toLowerCase()) {
+        case ServerType.JELLYFIN:
+            return ServerType.JELLYFIN;
+        case ServerType.NAVIDROME:
+            return ServerType.NAVIDROME;
+        default:
+            return null;
+    }
+};
+
 export type ServerListItem = {
     credential: string;
     features?: Record<string, number[]>;
@@ -144,6 +155,7 @@ export enum TableColumn {
     BIT_RATE = 'bitRate',
     BPM = 'bpm',
     CHANNELS = 'channels',
+    CODEC = 'codec',
     COMMENT = 'comment',
     DATE_ADDED = 'dateAdded',
     DISC_NUMBER = 'discNumber',

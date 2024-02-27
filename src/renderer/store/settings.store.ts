@@ -268,6 +268,7 @@ export interface SettingsState {
         disableAutoUpdate: boolean;
         exitToTray: boolean;
         minimizeToTray: boolean;
+        startMinimized: boolean;
         windowBarStyle: Platform;
     };
 }
@@ -577,6 +578,7 @@ const initialState: SettingsState = {
         disableAutoUpdate: false,
         exitToTray: false,
         minimizeToTray: false,
+        startMinimized: false,
         windowBarStyle: platformDefaultWindowBarStyle,
     },
 };
