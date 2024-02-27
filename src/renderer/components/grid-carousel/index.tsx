@@ -297,7 +297,7 @@ export const SwiperGridCarousel = ({
                     modules={[Virtual]}
                     slidesPerView={slideCount}
                     spaceBetween={20}
-                    style={{ height: '100%', width: '100%' }}
+                    style={{ height: '100%', width: '100%', marginTop: '12px' }}
                     onBeforeInit={(swiper) => {
                         swiperRef.current = swiper;
                     }}
