@@ -21,7 +21,12 @@ import { useListContext } from '/@/renderer/context/list-context';
 import { usePlayQueueAdd } from '/@/renderer/features/player';
 import { useCreateFavorite, useDeleteFavorite } from '/@/renderer/features/shared';
 import { AppRoute } from '/@/renderer/router/routes';
-import { useCurrentServer, useListStoreActions, useListStoreByKey } from '/@/renderer/store';
+import {
+    useCurrentServer,
+    useListStoreActions,
+    useListStoreByKey,
+    useSettingsStore,
+} from '/@/renderer/store';
 import { CardRow, ListDisplayType } from '/@/renderer/types';
 
 export const SongListGridView = ({ gridRef, itemCount }: any) => {
@@ -38,6 +43,8 @@ export const SongListGridView = ({ gridRef, itemCount }: any) => {
 
     const createFavoriteMutation = useCreateFavorite({});
     const deleteFavoriteMutation = useDeleteFavorite({});
+
+    const albumArtRes = useSettingsStore((state) => state.general.albumArtRes) || 250;
 
     const handleFavorite = (options: {
         id: string[];
@@ -126,6 +133,7 @@ export const SongListGridView = ({ gridRef, itemCount }: any) => {
 
     const fetchInitialData = useCallback(() => {
         const query: SongListQuery = {
+            imageSize: albumArtRes,
             ...filter,
             ...customFilters,
         };
@@ -158,7 +166,7 @@ export const SongListGridView = ({ gridRef, itemCount }: any) => {
         }
 
         return itemData;
-    }, [customFilters, filter, id, queryClient, server?.id]);
+    }, [customFilters, filter, id, queryClient, server?.id, albumArtRes]);
 
     const fetch = useCallback(
         async ({ skip, take }: { skip: number; take: number }) => {
@@ -167,7 +175,7 @@ export const SongListGridView = ({ gridRef, itemCount }: any) => {
             }
 
             const query: SongListQuery = {
-                imageSize: 250,
+                imageSize: albumArtRes,
                 limit: take,
                 startIndex: skip,
                 ...filter,
@@ -188,7 +196,7 @@ export const SongListGridView = ({ gridRef, itemCount }: any) => {
 
             return songs;
         },
-        [customFilters, filter, id, queryClient, server],
+        [customFilters, filter, id, queryClient, server, albumArtRes],
     );
 
     return (
