@@ -63,7 +63,7 @@ interface AlbumArtistDetailContentProps {
 
 export const AlbumArtistDetailContent = ({ background }: AlbumArtistDetailContentProps) => {
     const { t } = useTranslation();
-    const { externalLinks } = useGeneralSettings();
+    const { externalLinks, artistBiographies } = useGeneralSettings();
     const { albumArtistId } = useParams() as { albumArtistId: string };
     const cq = useContainerQuery();
     const handlePlayQueueAdd = usePlayQueueAdd();
@@ -331,7 +331,9 @@ export const AlbumArtistDetailContent = ({ background }: AlbumArtistDetailConten
     const topSongs = topSongsQuery?.data?.items?.slice(0, 10);
 
     const showBiography =
-        detailQuery?.data?.biography !== undefined && detailQuery?.data?.biography !== null;
+        detailQuery?.data?.biography !== undefined &&
+        detailQuery?.data?.biography !== null &&
+        artistBiographies;
     const showTopSongs = topSongsQuery?.data?.items?.length;
     const showGenres = detailQuery?.data?.genres ? detailQuery?.data?.genres.length !== 0 : false;
     const mbzId = detailQuery?.data?.mbz;

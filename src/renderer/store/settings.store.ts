@@ -189,6 +189,7 @@ export interface SettingsState {
     general: {
         accent: string;
         albumArtRes?: number | null;
+        artistBiographies: boolean;
         buttonSize: number;
         defaultFullPlaylist: boolean;
         externalLinks: boolean;
@@ -308,6 +309,7 @@ const initialState: SettingsState = {
     general: {
         accent: 'rgb(53, 116, 252)',
         albumArtRes: undefined,
+        artistBiographies: true,
         buttonSize: 20,
         defaultFullPlaylist: true,
         externalLinks: true,
