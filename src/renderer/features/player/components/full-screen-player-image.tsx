@@ -278,7 +278,6 @@ export const FullScreenPlayerImage = () => {
                     to={generatePath(AppRoute.LIBRARY_ALBUMS_DETAIL, {
                         albumId: currentSong?.albumId || '',
                     })}
-                    transform="uppercase"
                     w="100%"
                     weight={600}
                 >
@@ -292,7 +291,6 @@ export const FullScreenPlayerImage = () => {
                         style={{
                             textShadow: 'var(--fullscreen-player-text-shadow)',
                         }}
-                        transform="uppercase"
                     >
                         {index > 0 && (
                             <Text
@@ -313,14 +311,16 @@ export const FullScreenPlayerImage = () => {
                             to={generatePath(AppRoute.LIBRARY_ALBUM_ARTISTS_DETAIL, {
                                 albumArtistId: artist.id,
                             })}
-                            transform="uppercase"
                             weight={600}
                         >
                             {artist.name}
                         </Text>
                     </TextTitle>
                 ))}
-                <Group position="center">
+                <Group
+                    position="center"
+                    pt="1rem"
+                >
                     {currentSong?.container && (
                         <Badge size="lg">
                             {currentSong?.container} {currentSong?.bitRate}
