@@ -413,6 +413,8 @@
         "applicationHotkeys_description": "configure application hotkeys. toggle the checkbox to set as a global hotkey (desktop only)",
         "artistBiographies": "enable artist biographies",
         "artistBiographies_description": "determines whether feishin will display artist biographies from navidrome",
+        "artistTopSongs": "enable artist top songs",
+        "artistTopSongs_description": "determines whether feishin will display the top songs of an artist",
         "audioDevice": "audio device",
         "audioDevice_description": "select the audio device to use for playback (web player only)",
         "audioExclusiveMode": "audio exclusive mode",

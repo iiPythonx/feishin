@@ -12,26 +12,6 @@ export const GeneralSettings = () => {
         {
             control: (
                 <Switch
-                    defaultChecked={settings.artistBiographies}
-                    onChange={(e) => {
-                        setSettings({
-                            general: {
-                                ...settings,
-                                artistBiographies: e.currentTarget.checked,
-                            },
-                        });
-                    }}
-                />
-            ),
-            description: t('setting.artistBiographies', {
-                context: 'description',
-                postProcess: 'sentenceCase',
-            }),
-            title: t('setting.artistBiographies', { postProcess: 'sentenceCase' }),
-        },
-        {
-            control: (
-                <Switch
                     aria-label="Go to playlist songs page by default"
                     defaultChecked={settings.defaultFullPlaylist}
                     onChange={(e) =>

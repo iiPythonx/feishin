@@ -173,6 +173,10 @@ export enum BindingActions {
 }
 
 export interface SettingsState {
+    artist: {
+        artistBiographies: boolean;
+        artistTopSongs: boolean;
+    };
     discord: {
         clientId: string;
         enableIdle: boolean;
@@ -189,7 +193,6 @@ export interface SettingsState {
     general: {
         accent: string;
         albumArtRes?: number | null;
-        artistBiographies: boolean;
         buttonSize: number;
         defaultFullPlaylist: boolean;
         externalLinks: boolean;
@@ -293,6 +296,10 @@ const getPlatformDefaultWindowBarStyle = (): Platform => {
 const platformDefaultWindowBarStyle: Platform = getPlatformDefaultWindowBarStyle();
 
 const initialState: SettingsState = {
+    artist: {
+        artistBiographies: true,
+        artistTopSongs: true,
+    },
     discord: {
         clientId: '1165957668758900787',
         enableIdle: false,
@@ -309,7 +316,6 @@ const initialState: SettingsState = {
     general: {
         accent: 'rgb(53, 116, 252)',
         albumArtRes: undefined,
-        artistBiographies: true,
         buttonSize: 20,
         defaultFullPlaylist: true,
         externalLinks: true,
@@ -678,3 +684,5 @@ export const useRemoteSettings = () => useSettingsStore((state) => state.remote,
 export const useFontSettings = () => useSettingsStore((state) => state.font, shallow);
 
 export const useDiscordSetttings = () => useSettingsStore((state) => state.discord, shallow);
+
+export const useArtistSettings = () => useSettingsStore((state) => state.artist, shallow);
