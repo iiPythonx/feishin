@@ -4,6 +4,7 @@ import { WindowSettings } from '/@/renderer/features/settings/components/window/
 import { DiscordSettings } from '/@/renderer/features/settings/components/window/discord-settings';
 import isElectron from 'is-electron';
 import { PasswordSettings } from '/@/renderer/features/settings/components/window/password-settings';
+import { CacheSettings } from '/@/renderer/features/settings/components/window/cache-settngs';
 
 const utils = isElectron() ? window.electron.utils : null;
 
@@ -21,6 +22,8 @@ export const WindowTab = () => {
                     <PasswordSettings />
                 </>
             )}
+            <Divider />
+            <CacheSettings />
         </Stack>
     );
 };

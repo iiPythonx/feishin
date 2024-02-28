@@ -350,6 +350,7 @@
         "setting": {
             "generalTab": "general",
             "hotkeysTab": "hotkeys",
+            "pagesTab": "pages",
             "playbackTab": "playback",
             "windowTab": "window"
         },

@@ -65,8 +65,9 @@ export const CacheSettings = () => {
                 }
                 description={t('setting.clearQueryCache', {
                     context: 'description',
+                    postProcess: 'sentenceCase',
                 })}
-                title={t('setting.clearQueryCache')}
+                title={t('setting.clearQueryCache', { postProcess: 'sentenceCase' })}
             />
             {browser && (
                 <SettingsOptions
@@ -82,8 +83,9 @@ export const CacheSettings = () => {
                     }
                     description={t('setting.clearCache', {
                         context: 'description',
+                        postProcess: 'sentenceCase',
                     })}
-                    title={t('setting.clearCache')}
+                    title={t('setting.clearCache', { postProcess: 'sentenceCase' })}
                 />
             )}
         </>

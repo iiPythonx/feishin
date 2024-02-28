@@ -11,6 +11,12 @@ const GeneralTab = lazy(() =>
     })),
 );
 
+const PagesTab = lazy(() =>
+    import('/@/renderer/features/settings/components/pages/pages-tab').then((module) => ({
+        default: module.PagesTab,
+    })),
+);
+
 const PlaybackTab = lazy(() =>
     import('/@/renderer/features/settings/components/playback/playback-tab').then((module) => ({
         default: module.PlaybackTab,
@@ -54,6 +60,9 @@ export const SettingsContent = () => {
                     <Tabs.Tab value="general">
                         {t('page.setting.generalTab', { postProcess: 'sentenceCase' })}
                     </Tabs.Tab>
+                    <Tabs.Tab value="pages">
+                        {t('page.setting.pagesTab', { postProcess: 'sentenceCase' })}
+                    </Tabs.Tab>
                     <Tabs.Tab value="playback">
                         {t('page.setting.playbackTab', { postProcess: 'sentenceCase' })}
                     </Tabs.Tab>
@@ -68,6 +77,9 @@ export const SettingsContent = () => {
                 </Tabs.List>
                 <Tabs.Panel value="general">
                     <GeneralTab />
+                </Tabs.Panel>
+                <Tabs.Panel value="pages">
+                    <PagesTab />
                 </Tabs.Panel>
                 <Tabs.Panel value="playback">
                     <PlaybackTab />
