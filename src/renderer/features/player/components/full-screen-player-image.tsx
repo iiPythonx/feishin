@@ -45,6 +45,7 @@ interface TransparentMetadataContainer {
 
 const MetadataContainer = styled(Stack)<TransparentMetadataContainer>`
     padding: 1rem;
+    background: rgb(var(--main-bg-transparent) ${({ opacity }) => opacity}%);
     border-radius: 5px;
 
     h1 {
@@ -257,7 +258,6 @@ export const FullScreenPlayerImage = () => {
                     align="center"
                     order={1}
                     overflow="hidden"
-                    pb="0.5rem"
                     style={{
                         textShadow: 'var(--fullscreen-player-text-shadow)',
                     }}
@@ -283,43 +283,47 @@ export const FullScreenPlayerImage = () => {
                 >
                     {currentSong?.album}{' '}
                 </TextTitle>
-                {currentSong?.artists?.map((artist, index) => (
-                    <TextTitle
-                        key={`fs-artist-${artist.id}`}
-                        align="center"
-                        order={3}
-                        style={{
-                            textShadow: 'var(--fullscreen-player-text-shadow)',
-                        }}
-                    >
-                        {index > 0 && (
+                <TextTitle
+                    key="fs-artists"
+                    align="center"
+                    order={3}
+                    style={{
+                        textShadow: 'var(--fullscreen-player-text-shadow)',
+                    }}
+                >
+                    {currentSong?.artists?.map((artist, index) => (
+                        <>
+                            {index > 0 && (
+                                <Text
+                                    $secondary
+                                    sx={{
+                                        display: 'inline-block',
+                                        padding: '0 0.5rem',
+                                    }}
+                                >
+                                    •
+                                </Text>
+                            )}
                             <Text
-                                sx={{
-                                    display: 'inline-block',
-                                    padding: '0 0.5rem',
+                                $link
+                                $secondary
+                                component={Link}
+                                style={{
+                                    textShadow: 'var(--fullscreen-player-text-shadow)',
                                 }}
+                                to={generatePath(AppRoute.LIBRARY_ALBUM_ARTISTS_DETAIL, {
+                                    albumArtistId: artist.id,
+                                })}
+                                weight={600}
                             >
-                                •
+                                {artist.name}
                             </Text>
-                        )}
-                        <Text
-                            $link
-                            component={Link}
-                            style={{
-                                textShadow: 'var(--fullscreen-player-text-shadow)',
-                            }}
-                            to={generatePath(AppRoute.LIBRARY_ALBUM_ARTISTS_DETAIL, {
-                                albumArtistId: artist.id,
-                            })}
-                            weight={600}
-                        >
-                            {artist.name}
-                        </Text>
-                    </TextTitle>
-                ))}
+                        </>
+                    ))}
+                </TextTitle>
                 <Group
+                    mt="sm"
                     position="center"
-                    pt="1rem"
                 >
                     {currentSong?.container && (
                         <Badge size="lg">
