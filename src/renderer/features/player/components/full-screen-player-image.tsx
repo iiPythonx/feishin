@@ -327,7 +327,7 @@ export const FullScreenPlayerImage = () => {
                 >
                     {currentSong?.container && (
                         <Badge size="lg">
-                            {currentSong?.container} {currentSong?.bitRate}
+                            {currentSong?.container} {Math.round(currentSong?.bitRate / 100) * 100}
                         </Badge>
                     )}
                     {currentSong?.releaseYear && (
