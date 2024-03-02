@@ -135,7 +135,7 @@ export const FullScreenPlayerImage = () => {
     const albumArtRes = useSettingsStore((store) => store.general.albumArtRes);
 
     const { queue } = usePlayerData();
-    const { opacity, useImageAspectRatio } = useFullScreenPlayerStore();
+    const { useImageAspectRatio } = useFullScreenPlayerStore();
     const currentSong = queue.current;
     const { color: background } = useFastAverageColor({
         algorithm: 'dominant',
@@ -251,7 +251,6 @@ export const FullScreenPlayerImage = () => {
             <MetadataContainer
                 className="full-screen-player-image-metadata"
                 maw="100%"
-                opacity={opacity}
                 spacing="xs"
             >
                 <TextTitle
