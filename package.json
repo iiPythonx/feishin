@@ -28,7 +28,8 @@
         "prepare": "husky install",
         "i18next": "i18next -c src/i18n/i18next-parser.config.js",
         "prod:buildserver": "pwsh -c \"./scripts/server-build.ps1\"",
-        "prod:publishserver": "pwsh -c \"./scripts/server-publish.ps1\""
+        "prod:publishserver": "pwsh -c \"./scripts/server-publish.ps1\"",
+        "compile": "concurrently \"npm run build:main\" \"npm run build:renderer\" \"npm run build:remote\" ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never"
     },
     "lint-staged": {
         "*.{js,jsx,ts,tsx}": [
