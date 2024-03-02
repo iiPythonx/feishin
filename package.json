@@ -15,7 +15,7 @@
         "lint:code": "cross-env NODE_ENV=development eslint . --ext .js,.jsx,.ts,.tsx --fix",
         "lint:styles": "npx stylelint **/*.tsx --fix",
         "package": "ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never",
-        "package:pr": "ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never --win --mac --linux",
+        "package:pr": "ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never --win --linux",
         "package:dev": "ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never --dir",
         "postinstall": "ts-node .erb/scripts/check-native-dep.js && electron-builder install-app-deps && cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.dev.dll.ts",
         "start": "ts-node ./.erb/scripts/check-port-in-use.js && npm run start:renderer",
