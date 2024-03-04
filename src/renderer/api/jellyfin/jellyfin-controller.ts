@@ -999,33 +999,6 @@ const getSimilarSongs = async (args: SimilarSongsArgs): Promise<Song[]> => {
     }, []);
 };
 
-const getSimilarSongs = async (args: SimilarSongsArgs): Promise<Song[]> => {
-    const { apiClientProps, query } = args;
-
-    const res = await jfApiClient(apiClientProps).getSimilarSongs({
-        params: {
-            itemId: query.songId,
-        },
-        query: {
-            Fields: 'Genres, DateCreated, MediaSources, ParentId',
-            Limit: query.count,
-            UserId: apiClientProps.server?.userId || undefined,
-        },
-    });
-
-    if (res.status !== 200) {
-        throw new Error('Failed to get similar songs');
-    }
-
-    return res.body.Items.reduce<Song[]>((acc, song) => {
-        if (song.Id !== query.songId) {
-            acc.push(jfNormalize.song(song, apiClientProps.server, ''));
-        }
-
-        return acc;
-    }, []);
-};
-
 export const jfController = {
     addToPlaylist,
     authenticate,
