@@ -8,6 +8,7 @@ interface FullScreenPlayerState {
     dynamicBackground?: boolean;
     dynamicImageBlur: number;
     dynamicIsImage?: boolean;
+    dynamicUseCoverArt: string | 'album' | 'track';
     expanded: boolean;
     opacity: number;
     useImageAspectRatio: boolean;
@@ -32,6 +33,7 @@ export const useFullScreenPlayerStore = create<FullScreenPlayerSlice>()(
                 dynamicBackground: true,
                 dynamicImageBlur: 1.5,
                 dynamicIsImage: false,
+                dynamicUseCoverArt: 'album',
                 expanded: false,
                 opacity: 60,
                 useImageAspectRatio: false,

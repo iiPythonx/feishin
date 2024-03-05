@@ -83,6 +83,7 @@ const Controls = () => {
         dynamicBackground,
         dynamicImageBlur,
         dynamicIsImage,
+        dynamicUseCoverArt,
         expanded,
         opacity,
         useImageAspectRatio,
@@ -189,6 +190,32 @@ const Controls = () => {
                                     step={0.5}
                                     w="100%"
                                     onChangeEnd={(e) => setStore({ dynamicImageBlur: Number(e) })}
+                                />
+                            </Option.Control>
+                        </Option>
+                    )}
+                    {dynamicBackground && dynamicIsImage && (
+                        <Option>
+                            <Option.Label>
+                                {t('page.fullscreenPlayer.config.dynamicUseCoverArt', {
+                                    postProcess: 'sentenceCase',
+                                })}
+                            </Option.Label>
+                            <Option.Control>
+                                <Select
+                                    // I know it's not translated, and I don't care.
+                                    data={[
+                                        {
+                                            label: 'album',
+                                            value: 'album',
+                                        },
+                                        {
+                                            label: 'track',
+                                            value: 'track',
+                                        },
+                                    ]}
+                                    value={dynamicUseCoverArt}
+                                    onChange={(e) => setStore({ dynamicUseCoverArt: e || 'album' })}
                                 />
                             </Option.Control>
                         </Option>
@@ -450,8 +477,10 @@ const containerVariants: Variants = {
 };
 
 export const FullScreenPlayer = () => {
-    const { dynamicBackground, dynamicImageBlur, dynamicIsImage } = useFullScreenPlayerStore();
+    const { dynamicBackground, dynamicImageBlur, dynamicIsImage, dynamicUseCoverArt } =
+        useFullScreenPlayerStore();
     const { setStore } = useFullScreenPlayerStoreActions();
+
     const { windowBarStyle } = useWindowSettings();
 
     const location = useLocation();
@@ -477,7 +506,10 @@ export const FullScreenPlayer = () => {
         imageUrl && dynamicIsImage
             ? `url("${imageUrl
                   .replace(/size=\d+/g, 'size=500')
-                  .replace(currentSong.id, currentSong.albumId)}`
+                  .replace(
+                      currentSong.id,
+                      currentSong[dynamicUseCoverArt === 'album' ? 'albumId' : 'id'],
+                  )}`
             : mainBackground;
 
     return (

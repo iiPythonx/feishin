@@ -313,6 +313,7 @@
                 "dynamicBackground": "dynamic background",
                 "dynamicImageBlur": "image blur size",
                 "dynamicIsImage": "enable background image",
+                "dynamicUseCoverArt": "cover art to use",
                 "followCurrentLyric": "follow current lyric",
                 "lyricAlignment": "lyric alignment",
                 "lyricGap": "lyric gap",
