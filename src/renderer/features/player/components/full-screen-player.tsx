@@ -173,7 +173,7 @@ const Controls = () => {
                             </Option.Control>
                         </Option>
                     )}
-                    {dynamicIsImage && (
+                    {dynamicBackground && dynamicIsImage && (
                         <Option>
                             <Option.Label>
                                 {t('page.fullscreenPlayer.config.dynamicImageBlur', {
@@ -425,6 +425,7 @@ const containerVariants: Variants = {
             background: dynamicBackground ? backgroundImage : mainBackground,
             backgroundColor: dynamicBackground ? background : mainBackground,
             backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
             height:
                 windowBarStyle === Platform.WINDOWS || windowBarStyle === Platform.MACOS
@@ -476,7 +477,7 @@ export const FullScreenPlayer = () => {
         imageUrl && dynamicIsImage
             ? `url("${imageUrl
                   .replace(/size=\d+/g, 'size=500')
-                  .replace(currentSong.id, currentSong.albumId)}") no-repeat fixed`
+                  .replace(currentSong.id, currentSong.albumId)}`
             : mainBackground;
 
     return (
