@@ -121,4 +121,12 @@ body[data-theme='defaultLight'] {
     .ag-root ::-webkit-scrollbar-thumb {
         background: var(--scrollbar-thumb-bg);
     }
+
+    .current-song {
+        background: var(--table-row-hover-bg);
+
+        .current-song-child {
+            color: var(--primary-color) !important;
+        }
+    }
 }
