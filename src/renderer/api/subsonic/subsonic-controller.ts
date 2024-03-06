@@ -29,7 +29,7 @@ import {
     Song,
 } from '/@/renderer/api/types';
 import { randomString } from '/@/renderer/utils';
-import { ServerFeatures } from '/@/renderer/api/features.types';
+import { ServerFeatures } from '/@/renderer/api/features-types';
 
 const authenticate = async (
     url: string,
@@ -404,7 +404,7 @@ const getServerInfo = async (args: ServerInfoArgs): Promise<ServerInfo> => {
     }
 
     if (subsonicFeatures[SubsonicExtensions.SONG_LYRICS]) {
-        features.multipleStructuredLyrics = true;
+        features.lyricsMultipleStructured = true;
     }
 
     return { features, id: apiClientProps.server?.id, version: ping.body.serverVersion };

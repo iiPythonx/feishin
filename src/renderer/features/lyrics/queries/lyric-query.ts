@@ -15,7 +15,7 @@ import { queryKeys } from '/@/renderer/api/query-keys';
 import { api } from '/@/renderer/api';
 import isElectron from 'is-electron';
 import { hasFeature } from '/@/renderer/api/utils';
-import { ServerFeature } from '/@/renderer/api/features.types';
+import { ServerFeature } from '/@/renderer/api/features-types';
 
 const lyricsIpc = isElectron() ? window.electron.lyrics : null;
 
@@ -96,7 +96,7 @@ export const useSongLyricsBySong = (
             if (!server) throw new Error('Server not found');
             if (!song) return null;
 
-            if (hasFeature(server, ServerFeature.MULTIPLE_STRUCTURED_LYRICS)) {
+            if (hasFeature(server, ServerFeature.LYRICS_MULTIPLE_STRUCTURED)) {
                 const subsonicLyrics = await api.controller
                     .getStructuredLyrics({
                         apiClientProps: { server, signal },
@@ -107,7 +107,7 @@ export const useSongLyricsBySong = (
                 if (subsonicLyrics) {
                     return subsonicLyrics;
                 }
-            } else if (hasFeature(server, ServerFeature.SINGLE_STRUCTURED_LYRIC)) {
+            } else if (hasFeature(server, ServerFeature.LYRICS_SINGLE_STRUCTURED)) {
                 const jfLyrics = await api.controller
                     .getLyrics({
                         apiClientProps: { server, signal },
