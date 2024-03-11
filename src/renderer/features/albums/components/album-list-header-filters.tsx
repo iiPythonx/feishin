@@ -135,6 +135,11 @@ const FILTERS = {
         },
         {
             defaultOrder: SortOrder.DESC,
+            name: i18n.t('filter.releaseDate', { postProcess: 'titleCase' }),
+            value: AlbumListSort.RELEASE_DATE,
+        },
+        {
+            defaultOrder: SortOrder.DESC,
             name: i18n.t('filter.releaseYear', { postProcess: 'titleCase' }),
             value: AlbumListSort.YEAR,
         },

@@ -174,7 +174,7 @@ const normalizeAlbum = (
         mbzId: item.mbzAlbumId || null,
         name: item.name,
         playCount: item.playCount,
-        releaseDate: new Date(item.minYear, 0, 1).toISOString(),
+        releaseDate: item.releaseDate,
         releaseYear: item.minYear,
         serverId: server?.id || 'unknown',
         serverType: ServerType.NAVIDROME,

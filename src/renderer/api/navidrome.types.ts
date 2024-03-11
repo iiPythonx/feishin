@@ -208,6 +208,7 @@ export enum NDAlbumListSort {
     RANDOM = 'random',
     RATING = 'rating',
     RECENTLY_ADDED = 'recently_added',
+    RELEASE_DATE = 'releaseDate',
     SONG_COUNT = 'songCount',
     STARRED = 'starred',
     YEAR = 'max_year',

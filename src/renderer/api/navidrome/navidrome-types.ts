@@ -131,6 +131,7 @@ const album = z.object({
     playCount: z.number(),
     playDate: z.string().optional(),
     rating: z.number().optional(),
+    releaseDate: z.string(),
     size: z.number(),
     songCount: z.number(),
     sortAlbumArtistName: z.string(),
