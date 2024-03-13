@@ -28,8 +28,7 @@
         "prepare": "husky install",
         "i18next": "i18next -c src/i18n/i18next-parser.config.js",
         "prod:buildserver": "pwsh -c \"./scripts/server-build.ps1\"",
-        "prod:publishserver": "pwsh -c \"./scripts/server-publish.ps1\"",
-        "compile": "concurrently \"npm run build:main\" \"npm run build:renderer\" \"npm run build:remote\" ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never"
+        "prod:publishserver": "pwsh -c \"./scripts/server-publish.ps1\""
     },
     "lint-staged": {
         "*.{js,jsx,ts,tsx}": [
@@ -223,6 +222,7 @@
         "@types/webpack-env": "^1.16.3",
         "@typescript-eslint/eslint-plugin": "^5.47.0",
         "@typescript-eslint/parser": "^5.47.0",
+        "app-builder-lib": "^24.13.3",
         "browserslist-config-erb": "^0.0.3",
         "chalk": "^4.1.2",
         "concurrently": "^7.1.0",
@@ -232,7 +232,7 @@
         "css-minimizer-webpack-plugin": "^3.4.1",
         "detect-port": "^1.3.0",
         "electron": "^27.1.0",
-        "electron-builder": "^24.9.0",
+        "electron-builder": "^24.13.3",
         "electron-devtools-installer": "^3.2.0",
         "electron-notarize": "^1.2.1",
         "electronmon": "^2.0.2",
