@@ -46,6 +46,7 @@ const mpvLog = (
     const { action, toast } = data;
 
     if (err) {
+        if (err.errcode === 3) return;
         const message = `[AUDIO PLAYER] ${action} - mpv errorcode ${err.errcode} - ${
             NodeMpvErrorCode[err.errcode as keyof typeof NodeMpvErrorCode]
         }`;

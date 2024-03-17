@@ -161,6 +161,8 @@ const tableColumns: { [key: string]: ColDef } = {
     codec: {
         cellRenderer: (params: ICellRendererParams) => GenericCell(params, { position: 'center' }),
         colId: TableColumn.CODEC,
+        headerComponent: (params: IHeaderParams) =>
+            GenericTableHeader(params, { position: 'center' }),
         headerName: i18n.t('table.column.codec'),
         valueGetter: (params: ValueGetterParams) =>
             params.data ? params.data.container : undefined,

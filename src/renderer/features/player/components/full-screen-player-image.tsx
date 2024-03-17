@@ -326,7 +326,7 @@ export const FullScreenPlayerImage = () => {
                 >
                     {currentSong?.container && (
                         <Badge size="lg">
-                            {currentSong?.container}{' '}
+                            {currentSong?.container.split('/').pop()}{' '}
                             {Math.round((currentSong?.bitRate || 0) / 100) * 100}
                         </Badge>
                     )}
