@@ -259,6 +259,7 @@ export interface SettingsState {
         port: number;
         username: string;
     };
+    sharing: { [key: string]: string };
     tab: 'general' | 'playback' | 'window' | 'hotkeys' | string;
     tables: {
         albumDetail: DataTableProps;
@@ -422,6 +423,7 @@ const initialState: SettingsState = {
         port: 4333,
         username: 'feishin',
     },
+    sharing: {},
     tab: 'general',
     tables: {
         albumDetail: {
@@ -680,6 +682,8 @@ export const useMpvSettings = () =>
 export const useLyricsSettings = () => useSettingsStore((state) => state.lyrics, shallow);
 
 export const useRemoteSettings = () => useSettingsStore((state) => state.remote, shallow);
+
+export const useSharingSettings = () => useSettingsStore((state) => state.sharing, shallow);
 
 export const useFontSettings = () => useSettingsStore((state) => state.font, shallow);
 
