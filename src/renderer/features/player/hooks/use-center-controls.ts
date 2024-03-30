@@ -591,22 +591,22 @@ export const useCenterControls = (args: { playersRef: any }) => {
     };
 
     const debouncedSeek = debounce((e: number) => {
-        if (isMpvPlayer) {
-            mpvPlayer!.seekTo(e);
-        } else {
-            currentPlayerRef.seekTo(e);
-        }
+        currentPlayerRef.seekTo(e);
     }, 100);
 
     const handleSeekSlider = useCallback(
         (e: number | any) => {
             setCurrentTime(e, true);
             handleScrobbleFromSeek(e);
-            debouncedSeek(e);
+            if (!isMpvPlayer) {
+                debouncedSeek(e);
+            } else {
+                mpvPlayer!.seekTo(e);
+            }
 
             mpris?.updateSeek(e);
         },
-        [debouncedSeek, handleScrobbleFromSeek, setCurrentTime],
+        [debouncedSeek, isMpvPlayer, handleScrobbleFromSeek, setCurrentTime],
     );
 
     const handleQuit = useCallback(() => {
