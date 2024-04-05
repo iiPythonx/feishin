@@ -625,6 +625,11 @@ ipcMain.on('update-song', (_event, data: SongUpdate) => {
     }
 });
 
+ipcMain.on('mpris-update-seek', (_event, arg: number) => {
+    currentSong.currentTime = arg;
+    broadcast({ data: currentSong, event: 'song' });
+});
+
 ipcMain.on('update-volume', (_event, volume: number) => {
     currentSong.volume = volume;
     broadcast({ data: { volume }, event: 'song' });
