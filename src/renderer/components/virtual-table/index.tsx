@@ -331,7 +331,7 @@ const tableColumns: { [key: string]: ColDef } = {
         headerName: i18n.t('table.column.size'),
         valueGetter: (params: ValueGetterParams) =>
             params.data ? formatSizeString(params.data.size) : undefined,
-        width: 60,
+        width: 80,
     },
     songCount: {
         cellRenderer: (params: ICellRendererParams) => GenericCell(params, { position: 'center' }),

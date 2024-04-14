@@ -19,7 +19,6 @@ import {
 } from '/@/renderer/components/virtual-grid';
 import { useListContext } from '/@/renderer/context/list-context';
 import { usePlayQueueAdd } from '/@/renderer/features/player';
-import { useCreateFavorite, useDeleteFavorite } from '/@/renderer/features/shared';
 import { AppRoute } from '/@/renderer/router/routes';
 import {
     useCurrentServer,
@@ -28,6 +27,7 @@ import {
     useSettingsStore,
 } from '/@/renderer/store';
 import { CardRow, ListDisplayType } from '/@/renderer/types';
+import { useHandleFavorite } from '/@/renderer/features/shared/hooks/use-handle-favorite';
 
 export const SongListGridView = ({ gridRef, itemCount }: any) => {
     const queryClient = useQueryClient();
@@ -41,35 +41,9 @@ export const SongListGridView = ({ gridRef, itemCount }: any) => {
     const scrollOffset = searchParams.get('scrollOffset');
     const initialScrollOffset = Number(id ? scrollOffset : grid?.scrollOffset) || 0;
 
-    const createFavoriteMutation = useCreateFavorite({});
-    const deleteFavoriteMutation = useDeleteFavorite({});
-
     const albumArtRes = useSettingsStore((state) => state.general.albumArtRes) || 250;
 
-    const handleFavorite = (options: {
-        id: string[];
-        isFavorite: boolean;
-        itemType: LibraryItem;
-    }) => {
-        const { id, itemType, isFavorite } = options;
-        if (isFavorite) {
-            deleteFavoriteMutation.mutate({
-                query: {
-                    id,
-                    type: itemType,
-                },
-                serverId: server?.id,
-            });
-        } else {
-            createFavoriteMutation.mutate({
-                query: {
-                    id,
-                    type: itemType,
-                },
-                serverId: server?.id,
-            });
-        }
-    };
+    const handleFavorite = useHandleFavorite({ gridRef, server });
 
     const cardRows = useMemo(() => {
         const rows: CardRow<Song>[] = [

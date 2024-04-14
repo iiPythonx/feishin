@@ -9,6 +9,7 @@ export const QUEUE_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
     { divider: true, id: 'removeFromFavorites' },
     { children: true, disabled: false, id: 'setRating' },
     { disabled: false, id: 'deselectAll' },
+    { divider: true, id: 'showDetails' },
 ];
 
 export const SONG_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
@@ -18,7 +19,8 @@ export const SONG_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
     { divider: true, id: 'addToPlaylist' },
     { id: 'addToFavorites' },
     { divider: true, id: 'removeFromFavorites' },
-    { children: true, disabled: false, divider: true, id: 'setRating' },
+    { children: true, disabled: false, id: 'setRating' },
+    { divider: true, id: 'showDetails' },
     { id: 'shareItem' },
 ];
 
@@ -31,6 +33,7 @@ export const PLAYLIST_SONG_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
     { id: 'addToFavorites' },
     { divider: true, id: 'removeFromFavorites' },
     { children: true, disabled: false, id: 'setRating' },
+    { divider: true, id: 'showDetails' },
 ];
 
 export const SMART_PLAYLIST_SONG_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
@@ -41,6 +44,7 @@ export const SMART_PLAYLIST_SONG_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
     { id: 'addToFavorites' },
     { divider: true, id: 'removeFromFavorites' },
     { children: true, disabled: false, id: 'setRating' },
+    { divider: true, id: 'showDetails' },
 ];
 
 export const ALBUM_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
@@ -50,7 +54,8 @@ export const ALBUM_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
     { divider: true, id: 'addToPlaylist' },
     { id: 'addToFavorites' },
     { id: 'removeFromFavorites' },
-    { children: true, disabled: false, divider: true, id: 'setRating' },
+    { children: true, disabled: false, id: 'setRating' },
+    { divider: true, id: 'showDetails' },
     { id: 'shareItem' },
 ];
 
@@ -69,6 +74,7 @@ export const ARTIST_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
     { id: 'addToFavorites' },
     { divider: true, id: 'removeFromFavorites' },
     { children: true, disabled: false, id: 'setRating' },
+    { divider: true, id: 'showDetails' },
 ];
 
 export const PLAYLIST_CONTEXT_MENU_ITEMS: SetContextMenuItems = [

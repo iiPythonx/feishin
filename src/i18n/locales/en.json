@@ -26,6 +26,8 @@
         "action_one": "action",
         "action_other": "actions",
         "add": "add",
+        "albumGain": "album gain",
+        "albumPeak": "album peak",
         "areYouSure": "are you sure?",
         "ascending": "ascending",
         "backward": "backward",
@@ -72,6 +74,7 @@
         "menu": "menu",
         "minimize": "minimize",
         "modified": "modified",
+        "mbid": "MusicBrainz ID",
         "name": "name",
         "no": "no",
         "none": "none",
@@ -103,6 +106,8 @@
         "sortOrder": "order",
         "title": "title",
         "trackNumber": "track",
+        "trackGain": "track gain",
+        "trackPeak": "track peak",
         "unknown": "unknown",
         "version": "version",
         "year": "year",
@@ -153,6 +158,7 @@
         "loginRateError": "too many login attempts, please try again in a few seconds",
         "mpvRequired": "MPV required",
         "networkError": "a network error occurred",
+        "openError": "could not open file",
         "playbackError": "an error occurred when trying to play the media",
         "remoteDisableError": "an error occurred when trying to $t(common.disable) the remote server",
         "remoteEnableError": "an error occurred when trying to $t(common.enable) the remote server",
@@ -313,7 +319,8 @@
             "removeFromPlaylist": "$t(action.removeFromPlaylist)",
             "removeFromQueue": "$t(action.removeFromQueue)",
             "setRating": "$t(action.setRating)",
-            "shareItem": "share item"
+            "shareItem": "share item",
+            "showDetails": "get info"
         },
         "fullscreenPlayer": {
             "config": {
@@ -353,6 +360,11 @@
             "newlyAdded": "newly added releases",
             "recentlyPlayed": "recently played",
             "title": "$t(common.home)"
+        },
+        "itemDetail": {
+            "copyPath": "copy path to clipboard",
+            "copiedPath": "path copied successfully",
+            "openFile": "show track in file manager"
         },
         "playlistList": {
             "title": "$t(entity.playlist_other)"
