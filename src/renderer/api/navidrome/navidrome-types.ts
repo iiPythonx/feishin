@@ -351,13 +351,10 @@ const shareItem = z.object({
 const shareItemParameters = z.object({
     description: z.string(),
     downloadable: z.boolean(),
+    expires: z.number(),
     resourceIds: z.string(),
     resourceType: z.string(),
 });
-
-export enum NavidromeExtensions {
-    SMART_PLAYLISTS = 'smartPlaylists',
-}
 
 export const ndType = {
     _enum: {

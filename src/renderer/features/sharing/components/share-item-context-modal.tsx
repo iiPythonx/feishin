@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Box, Divider, Group, Stack, TextInput } from '@mantine/core';
+import { DateTimePicker } from '@mantine/dates';
 import { useForm } from '@mantine/form';
-import { useSharingSettings, useSettingsStoreActions, useCurrentServer } from '/@/renderer/store';
 import { closeModal, ContextModalProps } from '@mantine/modals';
-import isEqual from 'lodash/isEqual';
 import { Text, Button, Switch, toast } from '/@/renderer/components';
+import { useSharingSettings, useSettingsStoreActions, useCurrentServer } from '/@/renderer/store';
+import isEqual from 'lodash/isEqual';
 import { useTranslation } from 'react-i18next';
 import { useShareItem } from '../mutations/share-item-mutation';
 
@@ -21,36 +22,79 @@ export const ShareItemContextModal = ({
     const settings = useSharingSettings();
     const { setSettings } = useSettingsStoreActions();
 
+    const shareItemMutation = useShareItem({});
+
     const server = useCurrentServer();
     if (!server) throw new Error('Server not found');
 
-    const shareItemMutation = useShareItem({});
+    // Uses the same default as Navidrome: 1 year
+    const defaultDate = new Date();
+    defaultDate.setFullYear(defaultDate.getFullYear() + 1);
 
     const form = useForm({
         initialValues: {
             allowDownloading: false,
             baseUrl: settings[server.url] || server.url,
             description: '',
+            expires: defaultDate,
+        },
+        validate: {
+            expires: (value) =>
+                value > new Date()
+                    ? null
+                    : t('form.shareItem.expireInvalid', {
+                          postProcess: 'sentenceCase',
+                      }),
         },
     });
 
     const handleSubmit = form.onSubmit(async (values) => {
-        shareItemMutation.mutate({
-            baseUrl: values.baseUrl,
-            body: {
-                description: values.description,
-                downloadable: values.allowDownloading,
-                resourceIds: itemIds.join(),
-                resourceType,
+        shareItemMutation.mutate(
+            {
+                body: {
+                    description: values.description,
+                    downloadable: values.allowDownloading,
+                    expires: values.expires.getTime(),
+                    resourceIds: itemIds.join(),
+                    resourceType,
+                },
+                serverId: server?.id,
             },
-            serverId: server?.id,
-        });
+            {
+                onError: () => {
+                    toast.error({
+                        message: t('form.shareItem.createFailed', {
+                            postProcess: 'sentenceCase',
+                        }),
+                    });
+                },
+                onSuccess: (_data) => {
+                    if (!server) throw new Error('Server not found');
+                    if (!_data?.id) throw new Error('Failed to share item');
 
-        toast.success({
-            message: t('form.shareItem.success', {
-                postProcess: 'sentenceCase',
-            }),
-        });
+                    const shareUrl = `${values.baseUrl}/share/${_data.id}`;
+
+                    navigator.clipboard.writeText(shareUrl);
+                    toast.success({
+                        autoClose: 5000,
+                        id: 'share-item-toast',
+                        message: t('form.shareItem.success', {
+                            postProcess: 'sentenceCase',
+                        }),
+                        onClick: (a) => {
+                            if (!(a.target instanceof HTMLElement)) return;
+
+                            // Make sure we weren't clicking close (otherwise clicking close /also/ opens the url)
+                            if (a.target.nodeName !== 'svg') {
+                                window.open(shareUrl);
+                                toast.hide('share-item-toast');
+                            }
+                        },
+                    });
+                },
+            },
+        );
+
         closeModal(id);
         return null;
     });
@@ -78,6 +122,17 @@ export const ShareItemContextModal = ({
                             postProcess: 'titleCase',
                         })}
                         {...form.getInputProps('allowDownloading')}
+                    />
+                    <DateTimePicker
+                        clearable
+                        label={t('form.shareItem.setExpiration', {
+                            postProcess: 'titleCase',
+                        })}
+                        minDate={new Date()}
+                        placeholder={defaultDate.toLocaleDateString()}
+                        popoverProps={{ withinPortal: true }}
+                        valueFormat="MM/DD/YYYY HH:mm"
+                        {...form.getInputProps('expires')}
                     />
                     <Divider />
                     <Group

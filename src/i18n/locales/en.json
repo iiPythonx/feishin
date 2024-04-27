@@ -261,7 +261,10 @@
         "shareItem": {
             "allowDownloading": "allow downloading",
             "description": "description",
-            "success": "share link copied to clipboard"
+            "setExpiration": "set expiration",
+            "success": "share link copied to clipboard (or click here to open)",
+            "expireInvalid": "expiration must be in the future",
+            "createFailed": "failed to create share (is sharing enabled?)"
         },
         "updateServer": {
             "success": "server updated successfully",
@@ -288,6 +291,8 @@
             "moreFromGeneric": "more from {{item}}"
         },
         "albumList": {
+            "artistAlbums": "Albums by {{artist}}",
+            "genreAlbums": "\"{{genre}}\" $t(entity.album_other)",
             "title": "$t(entity.album_other)"
         },
         "appMenu": {
@@ -344,6 +349,8 @@
             "upNext": "up next"
         },
         "genreList": {
+            "showAlbums": "show $t(entity.genre_one) $t(entity.album_other)",
+            "showTracks": "show $t(entity.genre_one) $t(entity.track_other)",
             "title": "$t(entity.genre_other)"
         },
         "globalSearch": {
@@ -487,6 +494,8 @@
         "gaplessAudio": "gapless audio",
         "gaplessAudio_description": "sets the gapless audio setting for mpv",
         "gaplessAudio_optionWeak": "weak (recommended)",
+        "genreBehavior": "genre page default behavior",
+        "genreBehavior_description": "determines whether clicking on a genre opens by default in track or album list",
         "globalMediaHotkeys": "global media hotkeys",
         "globalMediaHotkeys_description": "enable or disable the usage of your system media hotkeys to control playback",
         "homeConfiguration": "home page configuration",

@@ -172,6 +172,11 @@ export enum BindingActions {
     ZOOM_OUT = 'zoomOut',
 }
 
+export enum GenreTarget {
+    ALBUM = 'album',
+    TRACK = 'track',
+}
+
 export interface SettingsState {
     artist: {
         artistBiographies: boolean;
@@ -197,6 +202,7 @@ export interface SettingsState {
         defaultFullPlaylist: boolean;
         externalLinks: boolean;
         followSystemTheme: boolean;
+        genreTarget: GenreTarget;
         homeItems: SortableItem<HomeItem>[];
         language: string;
         passwordStore?: string;
@@ -321,6 +327,7 @@ const initialState: SettingsState = {
         defaultFullPlaylist: true,
         externalLinks: true,
         followSystemTheme: false,
+        genreTarget: GenreTarget.TRACK,
         homeItems,
         language: 'en',
         passwordStore: undefined,
@@ -614,6 +621,11 @@ export const useSettingsStore = create<SettingsSlice>()(
                     resetSampleRate: () => {
                         set((state) => {
                             state.playback.mpvProperties.audioSampleRateHz = 0;
+                        });
+                    },
+                    setGenreBehavior: (target: GenreTarget) => {
+                        set((state) => {
+                            state.general.genreTarget = target;
                         });
                     },
                     setHomeItems: (items: SortableItem<HomeItem>[]) => {

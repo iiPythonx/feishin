@@ -11,6 +11,8 @@ import {
 import { closeAllModals, openContextModal, openModal } from '@mantine/modals';
 import { AnimatePresence } from 'framer-motion';
 import isElectron from 'is-electron';
+import { ServerFeature } from '/@/renderer/api/features-types';
+import { hasFeature } from '/@/renderer/api/utils';
 import { useTranslation } from 'react-i18next';
 import {
     RiAddBoxFill,
@@ -79,7 +81,7 @@ const ContextMenuContext = createContext<ContextMenuContextProps>({
     },
 });
 
-const JELLYFIN_IGNORED_MENU_ITEMS: ContextMenuItemType[] = ['setRating'];
+const JELLYFIN_IGNORED_MENU_ITEMS: ContextMenuItemType[] = ['setRating', 'shareItem'];
 // const NAVIDROME_IGNORED_MENU_ITEMS: ContextMenuItemType[] = [];
 // const SUBSONIC_IGNORED_MENU_ITEMS: ContextMenuItemType[] = [];
 
@@ -805,6 +807,7 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
                 rightIcon: <RiArrowRightSFill size="1.2rem" />,
             },
             shareItem: {
+                disabled: !hasFeature(server, ServerFeature.SHARING_ALBUM_SONG),
                 id: 'shareItem',
                 label: t('page.contextMenu.shareItem', { postProcess: 'sentenceCase' }),
                 leftIcon: <RiShareForwardFill size="1.1rem" />,
@@ -834,6 +837,7 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
         handlePlay,
         handleUpdateRating,
         handleShareItem,
+        server,
     ]);
 
     const mergedRef = useMergedRef(ref, clickOutsideRef);

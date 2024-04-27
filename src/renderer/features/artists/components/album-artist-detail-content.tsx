@@ -44,6 +44,7 @@ import {
 } from '/@/renderer/store/settings.store';
 import { CardRow, Play, TableColumn } from '/@/renderer/types';
 import { sanitize } from '/@/renderer/utils/sanitize';
+import { useGenreRoute } from '/@/renderer/hooks/use-genre-route';
 
 const ContentContainer = styled.div`
     position: relative;
@@ -74,6 +75,7 @@ export const AlbumArtistDetailContent = ({ background }: AlbumArtistDetailConten
     const cq = useContainerQuery();
     const handlePlayQueueAdd = usePlayQueueAdd();
     const server = useCurrentServer();
+    const genrePath = useGenreRoute();
 
     const detailQuery = useAlbumArtistDetail({
         query: { id: albumArtistId },
@@ -420,7 +422,7 @@ export const AlbumArtistDetailContent = ({ background }: AlbumArtistDetailConten
                                     component={Link}
                                     radius="md"
                                     size="md"
-                                    to={generatePath(AppRoute.LIBRARY_GENRES_SONGS, {
+                                    to={generatePath(genrePath, {
                                         genreId: genre.id,
                                     })}
                                     variant="outline"
