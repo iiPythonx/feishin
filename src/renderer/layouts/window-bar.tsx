@@ -218,15 +218,14 @@ const MacOsControls = ({ controls, title }: WindowBarControlsProps) => {
 
 export const WindowBar = () => {
     const playerStatus = useCurrentStatus();
-    const { currentSong, index, length } = useQueueStatus();
+    const { currentSong, length } = useQueueStatus();
     const { windowBarStyle } = useWindowSettings();
 
     const statusString = playerStatus === PlayerStatus.PAUSED ? '(Paused) ' : '';
-    const queueString = length ? `(${index + 1} / ${length}) ` : '';
     const title = length
         ? currentSong?.artistName
-            ? `${statusString}${queueString}${currentSong?.name} — ${currentSong?.artistName}`
-            : `${statusString}${queueString}${currentSong?.name}`
+            ? `${statusString}${currentSong?.name} — ${currentSong?.artistName}`
+            : `${statusString}${currentSong?.name}`
         : 'Feishin';
     document.title = title;
 
