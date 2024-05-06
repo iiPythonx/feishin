@@ -328,7 +328,7 @@ export const FullScreenPlayerImage = () => {
                         </Badge>
                     )}
                     {currentSong?.releaseYear && (
-                        <Badge size="lg">{currentSong?.releaseYear}</Badge>
+                        <Badge size="lg">YEAR {currentSong?.releaseYear}</Badge>
                     )}
                 </Group>
             </MetadataContainer>
