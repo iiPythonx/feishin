@@ -10,6 +10,7 @@ import {
 import { useSettingsStore, useSettingsStoreActions } from '/@/renderer/store/settings.store';
 import type { CrossfadeStyle } from '/@/renderer/types';
 import { PlaybackStyle, PlayerStatus } from '/@/renderer/types';
+import { useWebAudio } from '/@/renderer/features/player/hooks/use-webaudio';
 import { useSpeed } from '/@/renderer/store';
 import { toast } from '/@/renderer/components/toast';
 
@@ -33,11 +34,6 @@ export type AudioPlayerProgress = {
 
 const getDuration = (ref: any) => {
     return ref.current?.player?.player?.player?.duration;
-};
-
-type WebAudio = {
-    context: AudioContext;
-    gain: GainNode;
 };
 
 // Credits: http://stackoverflow.com/questions/12150729/ddg
@@ -72,7 +68,7 @@ export const AudioPlayer = forwardRef(
         const { resetSampleRate } = useSettingsStoreActions();
         const playbackSpeed = useSpeed();
 
-        const [webAudio, setWebAudio] = useState<WebAudio | null>(null);
+        const { webAudio, setWebAudio } = useWebAudio();
         const [player1Source, setPlayer1Source] = useState<MediaElementAudioSourceNode | null>(
             null,
         );
@@ -148,7 +144,7 @@ export const AudioPlayer = forwardRef(
                 const gain = context.createGain();
                 gain.connect(context.destination);
 
-                setWebAudio({ context, gain });
+                setWebAudio!({ context, gain });
 
                 return () => {
                     return context.close();
