@@ -206,6 +206,7 @@ export interface SettingsState {
         homeFeature: boolean;
         homeItems: SortableItem<HomeItem>[];
         language: string;
+        nativeAspectRatio: boolean;
         passwordStore?: string;
         playButtonBehavior: Play;
         resume: boolean;
@@ -333,6 +334,7 @@ const initialState: SettingsState = {
         homeFeature: true,
         homeItems,
         language: 'en',
+        nativeAspectRatio: false,
         passwordStore: undefined,
         playButtonBehavior: Play.NOW,
         resume: false,
