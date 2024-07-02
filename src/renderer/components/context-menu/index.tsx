@@ -18,9 +18,10 @@ const ContextMenuContainer = styled(motion.div)<Omit<ContextMenuProps, 'children
     z-index: 1000;
     min-width: ${({ minWidth }) => minWidth}px;
     max-width: ${({ maxWidth }) => maxWidth}px;
-    background: var(--dropdown-menu-bg);
+    background: #2020209c;
     border-radius: var(--dropdown-menu-border-radius);
     box-shadow: 2px 2px 10px 2px rgb(0 0 0 / 40%);
+    backdrop-filter: blur(3rem);
 
     button:first-child {
         border-top-left-radius: var(--dropdown-menu-border-radius);
@@ -40,7 +41,7 @@ export const StyledContextMenuButton = styled(UnstyledButton)`
     color: var(--dropdown-menu-fg);
     text-align: left;
     cursor: default;
-    background: var(--dropdown-menu-bg);
+    background: transparent;
     border: none;
 
     & .mantine-Button-inner {

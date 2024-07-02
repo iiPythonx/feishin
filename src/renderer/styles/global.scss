@@ -46,6 +46,52 @@ html {
     outline: none;
 }
 
+.mantine-Menu-dropdown,
+.mantine-Popover-dropdown {
+    background: #2020209c !important;
+    backdrop-filter: blur(3rem);
+    border-radius: 8px;
+
+    input,
+    .mantine-MultiSelect-input {
+        background-color: rgba(46, 46, 46, 0.486) !important;
+        border-radius: 8px;
+    }
+}
+
+.ContextMenuContainer-sc-wewqlt kWTCEn {
+    background: transparent !important;
+}
+
+.YpKvW,
+.mantime-Menu-item {
+    background: transparent;
+}
+
+.card-controls {
+    backdrop-filter: blur(4px);
+}
+
+// this is the stupidest thing ever i love mantime
+footer div div div div div div img,
+footer div div div div div div button {
+    border-radius: 8px;
+}
+
+.ContextMenuContainer-sc-1719ung {
+    background: #2020209c;
+    backdrop-filter: blur(3rem);
+    border-radius: 8px;
+}
+
+.mantine-Modal-content {
+    border-radius: 8px !important;
+}
+
+#default.layout {
+    background: var(--main-bg) !important;
+}
+
 ::-webkit-scrollbar {
     width: 12px;
     height: 12px;

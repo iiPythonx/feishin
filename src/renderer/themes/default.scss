@@ -76,7 +76,7 @@
     --dropdown-menu-item-font-size: 1rem;
     --dropdown-menu-bg-hover: rgb(62, 62, 62);
     --dropdown-menu-border: 1px var(--generic-border-color) solid;
-    --dropdown-menu-border-radius: 4px;
+    --dropdown-menu-border-radius: 8px;
     --switch-track-bg: rgb(50, 50, 50);
     --switch-track-enabled-bg: var(--primary-color);
     --switch-thumb-bg: rgb(255, 255, 255);
@@ -197,23 +197,14 @@
     .current-song > .row-index.playing .current-song-index {
         display: none;
     }
-}
 
-.mantine-Menu-dropdown,
-gkuHmS {
-    background: #2020209c;
-    backdrop-filter: blur(3rem);
-    border-radius: 8px;
-}
+    .full-screen-player-queue-container {
+        border-radius: 16px;
+        backdrop-filter: blur(3rem);
+    }
 
-.ContextMenuContainer-sc-wewqlt kWTCEn {
-    background: transparent !important;
-}
-
-.StyledContextMenuButton-sc-f7lg3i gkMnrM {
-    background: transparent;
-}
-
-.iJGRtO .card-controls {
-    backdrop-filter: blur(4px);
+    .mantine-Badge-root {
+        background: rgb(var(--main-bg-transparent), 80%);
+        backdrop-filter: blur(3rem);
+    }
 }
