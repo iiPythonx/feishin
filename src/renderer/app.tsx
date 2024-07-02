@@ -96,7 +96,7 @@ export const App = () => {
 
     useEffect(() => {
         const root = document.documentElement;
-        root.style.setProperty('--image-fit', nativeImageAspect ? 'scale-down' : 'cover');
+        root.style.setProperty('--image-fit', nativeImageAspect ? 'contain' : 'cover');
     }, [nativeImageAspect]);
 
     const providerValue = useMemo(() => {
