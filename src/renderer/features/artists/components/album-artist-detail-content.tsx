@@ -104,7 +104,7 @@ export const AlbumArtistDetailContent = ({ background }: AlbumArtistDetailConten
             _custom: {
                 jellyfin: {
                     ...(server?.type === ServerType.JELLYFIN
-                        ? { ArtistIds: albumArtistId }
+                        ? { AlbumArtistIds: albumArtistId }
                         : undefined),
                 },
                 navidrome: {
