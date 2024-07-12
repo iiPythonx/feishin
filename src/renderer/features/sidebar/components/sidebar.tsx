@@ -30,6 +30,7 @@ import {
 } from '/@/renderer/store';
 import { fadeIn } from '/@/renderer/styles';
 import { Platform } from '/@/renderer/types';
+import { RescanSiderbar } from '/@/renderer/features/sidebar/components/rescan';
 
 const SidebarContainer = styled.div<{ $windowBarStyle: Platform }>`
     height: 100%;
@@ -87,6 +88,7 @@ export const Sidebar = () => {
             Home: t('page.sidebar.home', { postProcess: 'titleCase' }),
             'Now Playing': t('page.sidebar.nowPlaying', { postProcess: 'titleCase' }),
             Playlists: t('page.sidebar.playlists', { postProcess: 'titleCase' }),
+            Rescan: t('page.sidebar.rescan', { postProcess: 'titleCase' }),
             Search: t('page.sidebar.search', { postProcess: 'titleCase' }),
             Settings: t('page.sidebar.settings', { postProcess: 'titleCase' }),
             Tracks: t('page.sidebar.tracks', { postProcess: 'titleCase' }),
@@ -162,8 +164,10 @@ export const Sidebar = () => {
                     sx={{ maxHeight: showImage ? `calc(100% - ${sidebar.leftWidth})` : '100%' }}
                 >
                     <Stack spacing={0}>
-                        {sidebarItemsWithRoute.map((item) => {
-                            return (
+                        {sidebarItemsWithRoute.map((item) =>
+                            item.route === AppRoute.RESCAN ? (
+                                <RescanSiderbar />
+                            ) : (
                                 <SidebarItem
                                     key={`sidebar-${item.route}`}
                                     to={item.route}
@@ -177,8 +181,8 @@ export const Sidebar = () => {
                                         {item.label}
                                     </Group>
                                 </SidebarItem>
-                            );
-                        })}
+                            ),
+                        )}
                     </Stack>
                     <Divider
                         mx="1rem"

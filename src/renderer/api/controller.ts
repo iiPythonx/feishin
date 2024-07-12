@@ -49,6 +49,9 @@ import type {
     SearchResponse,
     LyricsArgs,
     LyricsResponse,
+    RescanArgs,
+    ScanStatus,
+    ScanStatusArgs,
     ServerInfo,
     ServerInfoArgs,
     StructuredLyricsArgs,
@@ -93,6 +96,7 @@ export type ControllerEndpoint = Partial<{
     getPlaylistList: (args: PlaylistListArgs) => Promise<PlaylistListResponse>;
     getPlaylistSongList: (args: PlaylistSongListArgs) => Promise<SongListResponse>;
     getRandomSongList: (args: RandomSongListArgs) => Promise<SongListResponse>;
+    getScanStatus: (args: ScanStatusArgs) => Promise<ScanStatus>;
     getServerInfo: (args: ServerInfoArgs) => Promise<ServerInfo>;
     getSimilarSongs: (args: SimilarSongsArgs) => Promise<Song[]>;
     getSongDetail: (args: SongDetailArgs) => Promise<SongDetailResponse>;
@@ -101,6 +105,7 @@ export type ControllerEndpoint = Partial<{
     getTopSongs: (args: TopSongListArgs) => Promise<TopSongListResponse>;
     getUserList: (args: UserListArgs) => Promise<UserListResponse>;
     removeFromPlaylist: (args: RemoveFromPlaylistArgs) => Promise<RemoveFromPlaylistResponse>;
+    rescan: (args: RescanArgs) => Promise<ScanStatus>;
     scrobble: (args: ScrobbleArgs) => Promise<ScrobbleResponse>;
     search: (args: SearchArgs) => Promise<SearchResponse>;
     setRating: (args: SetRatingArgs) => Promise<RatingResponse>;
@@ -141,6 +146,7 @@ const endpoints: ApiController = {
         getPlaylistList: jfController.getPlaylistList,
         getPlaylistSongList: jfController.getPlaylistSongList,
         getRandomSongList: jfController.getRandomSongList,
+        getScanStatus: undefined,
         getServerInfo: jfController.getServerInfo,
         getSimilarSongs: jfController.getSimilarSongs,
         getSongDetail: jfController.getSongDetail,
@@ -149,6 +155,7 @@ const endpoints: ApiController = {
         getTopSongs: jfController.getTopSongList,
         getUserList: undefined,
         removeFromPlaylist: jfController.removeFromPlaylist,
+        rescan: undefined,
         scrobble: jfController.scrobble,
         search: jfController.search,
         setRating: undefined,
@@ -181,6 +188,7 @@ const endpoints: ApiController = {
         getPlaylistList: ndController.getPlaylistList,
         getPlaylistSongList: ndController.getPlaylistSongList,
         getRandomSongList: ssController.getRandomSongList,
+        getScanStatus: ssController.getScanStatus,
         getServerInfo: ndController.getServerInfo,
         getSimilarSongs: ndController.getSimilarSongs,
         getSongDetail: ndController.getSongDetail,
@@ -189,6 +197,7 @@ const endpoints: ApiController = {
         getTopSongs: ssController.getTopSongList,
         getUserList: ndController.getUserList,
         removeFromPlaylist: ndController.removeFromPlaylist,
+        rescan: ssController.rescan,
         scrobble: ssController.scrobble,
         search: ssController.search3,
         setRating: ssController.setRating,
@@ -218,6 +227,7 @@ const endpoints: ApiController = {
         getMusicFolderList: ssController.getMusicFolderList,
         getPlaylistDetail: undefined,
         getPlaylistList: undefined,
+        getScanStatus: ssController.getScanStatus,
         getServerInfo: ssController.getServerInfo,
         getSimilarSongs: ssController.getSimilarSongs,
         getSongDetail: undefined,
@@ -225,6 +235,7 @@ const endpoints: ApiController = {
         getStructuredLyrics: ssController.getStructuredLyrics,
         getTopSongs: ssController.getTopSongList,
         getUserList: undefined,
+        rescan: ssController.rescan,
         scrobble: ssController.scrobble,
         search: ssController.search3,
         setRating: undefined,
@@ -541,6 +552,21 @@ const getSimilarSongs = async (args: SimilarSongsArgs) => {
     )?.(args);
 };
 
+const rescan = async (args: RescanArgs) => {
+    return (
+        apiController('rescan', args.apiClientProps.server?.type) as ControllerEndpoint['rescan']
+    )?.(args);
+};
+
+const getScanStatus = async (args: RescanArgs) => {
+    return (
+        apiController(
+            'getScanStatus',
+            args.apiClientProps.server?.type,
+        ) as ControllerEndpoint['getScanStatus']
+    )?.(args);
+};
+
 export const controller = {
     addToPlaylist,
     authenticate,
@@ -560,6 +586,7 @@ export const controller = {
     getPlaylistList,
     getPlaylistSongList,
     getRandomSongList,
+    getScanStatus,
     getServerInfo,
     getSimilarSongs,
     getSongDetail,
@@ -568,6 +595,7 @@ export const controller = {
     getTopSongList,
     getUserList,
     removeFromPlaylist,
+    rescan,
     scrobble,
     search,
     shareItem,

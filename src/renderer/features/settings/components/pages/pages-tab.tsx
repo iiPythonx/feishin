@@ -3,6 +3,7 @@ import { HomeSettings } from '/@/renderer/features/settings/components/pages/hom
 import { GeneralSettings } from '/@/renderer/features/settings/components/pages/general-settings';
 import { SidebarSettings } from '/@/renderer/features/settings/components/pages/sidebar-settings';
 import { ArtistSettings } from '/@/renderer/features/settings/components/pages/artist-settings';
+import { SidebarReorder } from '/@/renderer/features/settings/components/general/sidebar-reorder';
 
 export const PagesTab = () => {
     return (
@@ -11,6 +12,7 @@ export const PagesTab = () => {
             <ArtistSettings />
             <GeneralSettings />
             <SidebarSettings />
+            <SidebarReorder />
         </Stack>
     );
 };
