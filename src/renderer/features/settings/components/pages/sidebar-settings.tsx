@@ -30,7 +30,29 @@ export const SidebarSettings = () => {
         });
     };
 
+    const handleSetSidebarRescan = (e: ChangeEvent<HTMLInputElement>) => {
+        setSettings({
+            general: {
+                ...settings,
+                sidebarRescan: e.target.checked,
+            },
+        });
+    };
+
     const options: SettingOption[] = [
+        {
+            control: (
+                <Switch
+                    checked={settings.sidebarRescan}
+                    onChange={handleSetSidebarRescan}
+                />
+            ),
+            description: t('setting.sidebarRescan', {
+                context: 'description',
+                postProcess: 'sentenceCase',
+            }),
+            title: t('setting.sidebarRescan', { postProcess: 'sentenceCase' }),
+        },
         {
             control: (
                 <Switch

@@ -606,6 +606,8 @@
         "sidebarConfiguration_description": "select the items and order in which they appear in the sidebar",
         "sidebarPlaylistList": "sidebar playlist list",
         "sidebarPlaylistList_description": "show or hide the playlist list in the sidebar",
+        "sidebarRescan": "enable server rescan",
+        "sidebarRescan_description": "adds a button to perform a server rescan",
         "sidePlayQueueStyle": "side play queue style",
         "sidePlayQueueStyle_description": "sets the style of the side play queue",
         "sidePlayQueueStyle_optionAttached": "attached",

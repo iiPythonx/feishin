@@ -221,6 +221,7 @@ export interface SettingsState {
         sidebarCollapsedNavigation: boolean;
         sidebarItems: SidebarItemType[];
         sidebarPlaylistList: boolean;
+        sidebarRescan: boolean;
         skipButtons: {
             enabled: boolean;
             skipBackwardSeconds: number;
@@ -349,6 +350,7 @@ const initialState: SettingsState = {
         sidebarCollapsedNavigation: true,
         sidebarItems,
         sidebarPlaylistList: true,
+        sidebarRescan: false,
         skipButtons: {
             enabled: false,
             skipBackwardSeconds: 5,

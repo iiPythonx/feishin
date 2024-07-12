@@ -54,15 +54,12 @@ const RescanMenu = ({
         setScanStatus,
     } = useContext(RescanContext);
 
-    const isNavidrome = server?.type === ServerType.NAVIDROME;
+    const isSupported =
+        server?.type === ServerType.NAVIDROME || server?.type === ServerType.SUBSONIC;
+    if (!isSupported) toast.error({ message: 'Rescan supports Navidrome only in this fork.' });
 
     useEffect(() => {
-        if (
-            scanning &&
-            timerRef.current === undefined &&
-            server &&
-            server.type !== ServerType.JELLYFIN
-        ) {
+        if (scanning && timerRef.current === undefined && server) {
             timerRef.current = setInterval(async () => {
                 const status = await api.controller.getScanStatus({ apiClientProps: { server } });
                 if (status) {
@@ -70,8 +67,12 @@ const RescanMenu = ({
 
                     if (scanning && !status.scanning) {
                         toast.success({
-                            message: 'Scan completed',
+                            message: 'Library scan was completed.',
                         });
+                        if (timerRef.current) {
+                            clearInterval(timerRef.current);
+                            timerRef.current = undefined;
+                        }
                     }
                 }
             }, 5000);
@@ -84,29 +85,20 @@ const RescanMenu = ({
     const handleRefresh = useCallback(
         async (full?: boolean) => {
             try {
-                if (!server) return;
+                if (!server || !isSupported) return;
 
                 const results = await api.controller.rescan({
                     apiClientProps: { server },
                     full,
                 });
-                if (server.type === ServerType.JELLYFIN) {
-                    toast.success({
-                        message: 'Scan started. Note that Jellyfin does not report progress',
-                        title: 'Started sync',
-                    });
-                } else if (results) {
-                    toast.success({
-                        message: 'Scan started.',
-                        title: 'Started sync',
-                    });
+                if (results) {
                     setScanStatus!({ ...results, scanning: true });
                 }
             } catch (error) {
                 console.error(error);
             }
         },
-        [server, setScanStatus],
+        [server, isSupported, setScanStatus],
     );
 
     return (
@@ -121,16 +113,16 @@ const RescanMenu = ({
             )}
             {!scanning && (
                 <DropdownMenu.Item
-                    closeMenuOnClick={server?.type === ServerType.JELLYFIN}
+                    closeMenuOnClick
                     icon={<RiScanLine />}
-                    onClick={() => handleRefresh(isNavidrome ? false : undefined)}
+                    onClick={() => handleRefresh(false)}
                 >
                     Start scan
                 </DropdownMenu.Item>
             )}
-            {isNavidrome && !scanning && (
+            {!scanning && (
                 <DropdownMenu.Item
-                    closeMenuOnClick={false}
+                    closeMenuOnClick
                     icon={<RiScan2Line />}
                     onClick={() => {
                         handleRefresh(true);
@@ -139,12 +131,10 @@ const RescanMenu = ({
                     Start full scan
                 </DropdownMenu.Item>
             )}
-            {(isNavidrome || server?.type === ServerType.SUBSONIC) && (
-                <>
-                    <DropdownMenu.Item disabled>Folders: {folders ?? '-'}</DropdownMenu.Item>
-                    <DropdownMenu.Item disabled>Tracks: {tracks ?? '-'}</DropdownMenu.Item>
-                </>
-            )}
+            <>
+                <DropdownMenu.Item disabled>Folders: {folders ?? '-'}</DropdownMenu.Item>
+                <DropdownMenu.Item disabled>Tracks: {tracks ?? '-'}</DropdownMenu.Item>
+            </>
         </>
     );
 };
@@ -183,7 +173,7 @@ export const RescanButton = () => {
     );
 };
 
-export const RescanSiderbar = () => {
+export const RescanSidebar = () => {
     const { scanStatus, setScanStatus } = useContext(RescanContext);
     const server = useCurrentServer();
     const timerRef = useRef<ReturnType<typeof setInterval>>();
@@ -200,7 +190,10 @@ export const RescanSiderbar = () => {
 
     return (
         // Note, tabIndex -1 is intentional here to make the Button the tabable component
-        <SidebarItem tabIndex={-1}>
+        <SidebarItem
+            key="sidebar-rescan"
+            tabIndex={-1}
+        >
             <DropdownMenu position="bottom">
                 <DropdownMenu.Target>
                     <UnstyledButton

@@ -30,7 +30,7 @@ import {
 } from '/@/renderer/store';
 import { fadeIn } from '/@/renderer/styles';
 import { Platform } from '/@/renderer/types';
-import { RescanSiderbar } from '/@/renderer/features/sidebar/components/rescan';
+import { RescanSidebar } from '/@/renderer/features/sidebar/components/rescan';
 
 const SidebarContainer = styled.div<{ $windowBarStyle: Platform }>`
     height: 100%;
@@ -75,7 +75,7 @@ export const Sidebar = () => {
     const sidebar = useSidebarStore();
     const { setSideBar } = useAppStoreActions();
     const { windowBarStyle } = useWindowSettings();
-    const { sidebarPlaylistList } = useGeneralSettings();
+    const { sidebarPlaylistList, sidebarRescan } = useGeneralSettings();
     const imageUrl = useCurrentSong()?.imageUrl;
     const server = useCurrentServer();
 
@@ -164,10 +164,8 @@ export const Sidebar = () => {
                     sx={{ maxHeight: showImage ? `calc(100% - ${sidebar.leftWidth})` : '100%' }}
                 >
                     <Stack spacing={0}>
-                        {sidebarItemsWithRoute.map((item) =>
-                            item.route === AppRoute.RESCAN ? (
-                                <RescanSiderbar />
-                            ) : (
+                        {sidebarItemsWithRoute.map((item) => {
+                            return (
                                 <SidebarItem
                                     key={`sidebar-${item.route}`}
                                     to={item.route}
@@ -181,9 +179,18 @@ export const Sidebar = () => {
                                         {item.label}
                                     </Group>
                                 </SidebarItem>
-                            ),
-                        )}
+                            );
+                        })}
                     </Stack>
+                    {sidebarRescan && (
+                        <>
+                            <Divider
+                                mx="1rem"
+                                my="0.5rem"
+                            />
+                            <RescanSidebar />
+                        </>
+                    )}
                     <Divider
                         mx="1rem"
                         my="0.5rem"

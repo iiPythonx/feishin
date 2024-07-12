@@ -35,7 +35,6 @@ export const DraggableItems = <K extends string, T extends SortableItem<K>>({
             ) as Record<K, string>,
         [itemLabels, t],
     );
-    console.log(itemLabels, translatedItemMap);
 
     const [localItems, setLocalItems] = useState(settings);
 
