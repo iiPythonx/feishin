@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import styled from 'styled-components';
+import isElectron from 'is-electron';
 import { usePlaybackType, useSettingsStore } from '/@/renderer/store/settings.store';
 import { PlaybackType } from '/@/renderer/types';
 import { AudioPlayer } from '/@/renderer/components';
@@ -59,6 +60,8 @@ const CenterGridItem = styled.div`
     overflow: hidden;
 `;
 
+const remote = isElectron() ? window.electron.remote : null;
+
 export const Playerbar = () => {
     const playersRef = PlayersRef;
     const settings = useSettingsStore((state) => state.playback);
@@ -73,8 +76,9 @@ export const Playerbar = () => {
 
     const autoNextFn = useCallback(() => {
         const playerData = autoNext();
+        remote?.updatePlayback(status);
         updateSong(playerData.current.song);
-    }, [autoNext]);
+    }, [autoNext, status]);
 
     return (
         <PlayerbarContainer>
