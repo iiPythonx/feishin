@@ -449,6 +449,12 @@ const enableServer = (config: RemoteConfig): Promise<void> => {
                                 }
                                 break;
                             }
+                            case 'seek': {
+                                getMainWindow()?.webContents.send('request-seek', {
+                                    offset: Number(json.offset) || 0,
+                                });
+                                break;
+                            }
                             case 'favorite': {
                                 const { favorite, id } = json;
                                 if (id && id === currentState.song?.id) {

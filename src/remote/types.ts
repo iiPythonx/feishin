@@ -89,6 +89,11 @@ export interface ClientRating {
     rating: number;
 }
 
+export interface ClientSeek {
+    event: 'seek';
+    offset: number;
+}
+
 export interface ClientVolume {
     event: 'volume';
     volume: number;
@@ -104,4 +109,5 @@ export type ClientEvent =
     | ClientSimpleEvent
     | ClientFavorite
     | ClientRating
+    | ClientSeek
     | ClientVolume;
