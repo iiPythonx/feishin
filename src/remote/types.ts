@@ -20,6 +20,11 @@ export interface ServerPlayStatus {
     event: 'playback';
 }
 
+export interface ServerPosition {
+    data: number;
+    event: 'position';
+}
+
 export interface ServerProxy {
     data: string;
     event: 'proxy';
@@ -59,6 +64,7 @@ export type ServerEvent =
     | ServerError
     | ServerFavorite
     | ServerPlayStatus
+    | ServerPosition
     | ServerRating
     | ServerRepeat
     | ServerShuffle

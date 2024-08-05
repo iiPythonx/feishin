@@ -619,6 +619,14 @@ ipcMain.on('update-volume', (_event, volume: number) => {
     broadcast({ data: volume, event: 'volume' });
 });
 
+ipcMain.on('mpris-update-seek', (_event, arg) => {
+    broadcast({ data: arg, event: 'position' });
+});
+
+ipcMain.on('mpris-update-position', (_event, arg) => {
+    broadcast({ data: arg, event: 'position' });
+});
+
 if (mprisPlayer) {
     mprisPlayer.on('loopStatus', (event: string) => {
         const repeat =
