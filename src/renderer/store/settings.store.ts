@@ -206,6 +206,7 @@ export interface SettingsState {
         albumArtRes?: number | null;
         buttonSize: number;
         defaultFullPlaylist: boolean;
+        doubleClickQueueAll: boolean;
         externalLinks: boolean;
         followSystemTheme: boolean;
         genreTarget: GenreTarget;
@@ -335,6 +336,7 @@ const initialState: SettingsState = {
         albumArtRes: undefined,
         buttonSize: 20,
         defaultFullPlaylist: true,
+        doubleClickQueueAll: true,
         externalLinks: true,
         followSystemTheme: false,
         genreTarget: GenreTarget.TRACK,

@@ -258,30 +258,49 @@ export const AudioPlayer = forwardRef(
         );
 
         useEffect(() => {
-            if (isElectron()) {
-                if (audioDeviceId) {
-                    player1Ref.current?.getInternalPlayer()?.setSinkId(audioDeviceId);
-                    player2Ref.current?.getInternalPlayer()?.setSinkId(audioDeviceId);
+            // Not standard, just used in chromium-based browsers. See
+            // https://developer.chrome.com/blog/audiocontext-setsinkid/.
+            // If the isElectron() check is every removed, fix this.
+            if (isElectron() && webAudio && 'setSinkId' in webAudio.context) {
+                if (audioDeviceId !== 'default') {
+                    // @ts-ignore
+                    webAudio.context.setSinkId(audioDeviceId);
                 } else {
-                    player1Ref.current?.getInternalPlayer()?.setSinkId('');
-                    player2Ref.current?.getInternalPlayer()?.setSinkId('');
+                    // @ts-ignore
+                    webAudio.context.setSinkId('');
                 }
             }
-        }, [audioDeviceId]);
+        }, [audioDeviceId, webAudio]);
 
         useEffect(() => {
-            if (webAudio && player1Source && player1 && currentPlayer === 1) {
-                const newVolume = calculateReplayGain(player1) * volume;
-                webAudio.gain.gain.setValueAtTime(newVolume, 0);
-            }
-        }, [calculateReplayGain, currentPlayer, player1, player1Source, volume, webAudio]);
+            if (!webAudio) return;
 
-        useEffect(() => {
-            if (webAudio && player2Source && player2 && currentPlayer === 2) {
-                const newVolume = calculateReplayGain(player2) * volume;
+            const sources = [player1Source ? player1 : null, player2Source ? player2 : null];
+            const current = sources[currentPlayer - 1];
+
+            // Set the current replaygain
+            if (current) {
+                const newVolume = calculateReplayGain(current) * volume;
                 webAudio.gain.gain.setValueAtTime(newVolume, 0);
             }
-        }, [calculateReplayGain, currentPlayer, player2, player2Source, volume, webAudio]);
+
+            // Set the next track replaygain right before the end of this track
+            // Attempt to prevent pop-in for web audio.
+            const next = sources[3 - currentPlayer];
+            if (next && current) {
+                const newVolume = calculateReplayGain(next) * volume;
+                webAudio.gain.gain.setValueAtTime(newVolume, (current.duration - 1) / 1000);
+            }
+        }, [
+            calculateReplayGain,
+            currentPlayer,
+            player1,
+            player1Source,
+            player2,
+            player2Source,
+            volume,
+            webAudio,
+        ]);
 
         const handlePlayer1Start = useCallback(
             async (player: ReactPlayer) => {
