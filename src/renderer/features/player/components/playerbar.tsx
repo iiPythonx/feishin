@@ -1,5 +1,4 @@
 import { useCallback, MouseEvent } from 'react';
-import isElectron from 'is-electron';
 import styled from 'styled-components';
 import { usePlaybackType, useSettingsStore } from '/@/renderer/store/settings.store';
 import { PlaybackType } from '/@/renderer/types';
@@ -19,6 +18,7 @@ import { CenterControls } from './center-controls';
 import { LeftControls } from './left-controls';
 import { RightControls } from './right-controls';
 import { PlayersRef } from '/@/renderer/features/player/ref/players-ref';
+import { updateSong } from '/@/renderer/features/player/update-remote-song';
 
 const PlayerbarContainer = styled.div`
     width: 100vw;
@@ -61,8 +61,6 @@ const CenterGridItem = styled.div`
     overflow: hidden;
 `;
 
-const remote = isElectron() ? window.electron.remote : null;
-
 export const Playerbar = () => {
     const playersRef = PlayersRef;
     const settings = useSettingsStore((state) => state.playback);
@@ -84,13 +82,7 @@ export const Playerbar = () => {
 
     const autoNextFn = useCallback(() => {
         const playerData = autoNext();
-
-        if (remote) {
-            remote.updateSong({
-                currentTime: 0,
-                song: playerData.current.song,
-            });
-        }
+        updateSong(playerData.current.song);
     }, [autoNext]);
 
     return (
