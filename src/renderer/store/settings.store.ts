@@ -190,10 +190,9 @@ export interface SettingsState {
     };
     discord: {
         clientId: string;
-        enableIdle: boolean;
         enabled: boolean;
-        showServerImage: boolean;
-        updateInterval: number;
+        proxyType: string;
+        proxyUrl: string;
     };
     font: {
         builtIn: string;
@@ -320,11 +319,10 @@ const initialState: SettingsState = {
         artistTopSongs: true,
     },
     discord: {
-        clientId: '1165957668758900787',
-        enableIdle: false,
+        clientId: '1117545345690374277',
         enabled: false,
-        showServerImage: false,
-        updateInterval: 15,
+        proxyType: 'freeimagehost',
+        proxyUrl: '',
     },
     font: {
         builtIn: 'Inter',

@@ -1,7 +1,7 @@
 import { Client, SetActivity } from '@xhayper/discord-rpc';
 import { ipcMain } from 'electron';
 
-const FEISHIN_DISCORD_APPLICATION_ID = '1165957668758900787';
+const FEISHIN_DISCORD_APPLICATION_ID = '1117545345690374277';
 
 let client: Client | null = null;
 
