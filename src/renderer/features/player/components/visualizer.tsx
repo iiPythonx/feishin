@@ -34,7 +34,7 @@ export const Visualizer = () => {
                 overlay: true,
                 showBgColor: false,
                 showPeaks: false,
-                smoothing: 0.85,
+                smoothing: 0.8,
             });
             setMotion(audioMotion);
             audioMotion.connectInput(gain);

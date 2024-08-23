@@ -4,7 +4,7 @@ import { devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
 interface FullScreenPlayerState {
-    activeTab: string | 'queue' | 'related' | 'lyrics';
+    activeTab: string | 'queue' | 'related' | 'lyrics' | 'visualizer';
     dynamicBackground?: boolean;
     dynamicImageBlur: number;
     dynamicIsImage?: boolean;

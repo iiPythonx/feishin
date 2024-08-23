@@ -82,8 +82,6 @@ export const Playerbar = () => {
         setFullScreenPlayerStore({ expanded: !isFullScreenPlayerExpanded });
     };
 
-    setFullScreenPlayerStore({ expanded: false });
-
     const autoNextFn = useCallback(() => {
         const playerData = autoNext();
 
