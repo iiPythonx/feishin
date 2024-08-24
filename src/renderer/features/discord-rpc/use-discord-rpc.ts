@@ -58,7 +58,7 @@ export const useDiscordRpc = () => {
                 // Handle forwarding album art
                 let coverUrl = 'icon';
                 if (discordSettings.proxyType === 'ndip' && discordSettings.proxyUrl) {
-                    coverUrl = `${discordSettings.proxyUrl}/image/${song.id}/300`;
+                    coverUrl = `${discordSettings.proxyUrl}/image/${song.id}`;
                 }
                 activity.largeImageKey = coverUrl;
                 discordRpc?.setActivity(activity);
