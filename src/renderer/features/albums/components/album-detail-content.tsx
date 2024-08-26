@@ -83,7 +83,7 @@ export const AlbumDetailContent = ({ tableRef, background }: AlbumDetailContentP
     const currentSong = useCurrentSong();
     const { externalLinks } = useGeneralSettings();
     const genreRoute = useGenreRoute();
-    // const { hide1DiscLabel } = useTableSettings('albumDetail');
+    const { hide1DiscLabel } = useTableSettings('albumDetail');
 
     const columnDefs = useMemo(
         () => getColumnDefs(tableConfig.columns, false, 'albumDetail'),
@@ -112,6 +112,10 @@ export const AlbumDetailContent = ({ tableRef, background }: AlbumDetailContentP
         const rowData: (QueueSong | { id: string; name: string })[] = [];
         const discTranslated = t('common.disc', { postProcess: 'upperCase' });
 
+        const discs = detailQuery.data.songs
+            .map((s) => s.discNumber)
+            .filter((v, i, a) => a.indexOf(v) === i);
+
         for (const song of detailQuery.data.songs) {
             if (song.discNumber !== discNumber || song.discSubtitle !== discSubtitle) {
                 discNumber = song.discNumber;
@@ -125,13 +129,13 @@ export const AlbumDetailContent = ({ tableRef, background }: AlbumDetailContentP
                     name += `: ${discSubtitle}`;
                 }
 
-                rowData.push({ id, name });
+                if (!(hide1DiscLabel && discs.length === 1)) rowData.push({ id, name });
             }
             rowData.push(song);
         }
 
         return rowData;
-    }, [detailQuery.data?.songs, t]);
+    }, [detailQuery.data?.songs, t, hide1DiscLabel]);
 
     const [pagination, setPagination] = useSetState({
         artist: 0,
