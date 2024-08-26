@@ -83,7 +83,7 @@ export const AlbumDetailContent = ({ tableRef, background }: AlbumDetailContentP
     const currentSong = useCurrentSong();
     const { externalLinks } = useGeneralSettings();
     const genreRoute = useGenreRoute();
-    const { hide1DiscLabel } = useTableSettings('albumDetail');
+    // const { hide1DiscLabel } = useTableSettings('albumDetail');
 
     const columnDefs = useMemo(
         () => getColumnDefs(tableConfig.columns, false, 'albumDetail'),
@@ -106,30 +106,32 @@ export const AlbumDetailContent = ({ tableRef, background }: AlbumDetailContentP
             return [];
         }
 
-        const uniqueDiscNumbers = new Set(detailQuery.data?.songs.map((s) => s.discNumber));
+        let discNumber = -1;
+        let discSubtitle: string | null = null;
+
         const rowData: (QueueSong | { id: string; name: string })[] = [];
+        const discTranslated = t('common.disc', { postProcess: 'upperCase' });
 
-        for (const discNumber of uniqueDiscNumbers.values()) {
-            const songsByDiscNumber = detailQuery.data?.songs.filter(
-                (s) => s.discNumber === discNumber,
-            );
+        for (const song of detailQuery.data.songs) {
+            if (song.discNumber !== discNumber || song.discSubtitle !== discSubtitle) {
+                discNumber = song.discNumber;
+                discSubtitle = song.discSubtitle;
 
-            const discSubtitle = songsByDiscNumber?.[0]?.discSubtitle;
-            const discName = [`Disc ${discNumber}`.toLocaleUpperCase(), discSubtitle]
-                .filter(Boolean)
-                .join(': ');
+                let id = `disc-${discNumber}`;
+                let name = `${discTranslated} ${discNumber}`;
 
-            if (!(uniqueDiscNumbers.size === 1 && hide1DiscLabel)) {
-                rowData.push({
-                    id: `disc-${discNumber}`,
-                    name: discName,
-                });
+                if (discSubtitle) {
+                    id += `-${discSubtitle}`;
+                    name += `: ${discSubtitle}`;
+                }
+
+                rowData.push({ id, name });
             }
-            rowData.push(...songsByDiscNumber);
+            rowData.push(song);
         }
 
         return rowData;
-    }, [detailQuery.data?.songs, hide1DiscLabel]);
+    }, [detailQuery.data?.songs, t]);
 
     const [pagination, setPagination] = useSetState({
         artist: 0,

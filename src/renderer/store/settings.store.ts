@@ -218,6 +218,7 @@ export interface SettingsState {
         resume: boolean;
         showQueueDrawerButton: boolean;
         sideQueueType: SideQueueType;
+        sidebarCollapseShared: boolean;
         sidebarCollapsedNavigation: boolean;
         sidebarItems: SidebarItemType[];
         sidebarPlaylistList: boolean;
@@ -303,6 +304,7 @@ export interface SettingsSlice extends SettingsState {
         setSettings: (data: Partial<SettingsState>) => void;
         setSidebarItems: (items: SidebarItemType[]) => void;
         setTable: (type: TableType, data: DataTableProps) => void;
+        toggleSidebarCollapseShare: () => void;
     };
 }
 
@@ -348,6 +350,7 @@ const initialState: SettingsState = {
         resume: false,
         showQueueDrawerButton: false,
         sideQueueType: 'sideQueue',
+        sidebarCollapseShared: false,
         sidebarCollapsedNavigation: true,
         sidebarItems,
         sidebarPlaylistList: true,
@@ -659,6 +662,12 @@ export const useSettingsStore = create<SettingsSlice>()(
                     setTable: (type: TableType, data: DataTableProps) => {
                         set((state) => {
                             state.tables[type] = data;
+                        });
+                    },
+                    toggleSidebarCollapseShare: () => {
+                        set((state) => {
+                            state.general.sidebarCollapseShared =
+                                !state.general.sidebarCollapseShared;
                         });
                     },
                 },

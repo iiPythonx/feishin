@@ -290,7 +290,8 @@
         },
         "albumDetail": {
             "moreFromArtist": "more from this $t(entity.artist_one)",
-            "moreFromGeneric": "more from {{item}}"
+            "moreFromGeneric": "more from {{item}}",
+            "released": "released"
         },
         "albumList": {
             "artistAlbums": "albums by {{artist}}",
@@ -318,6 +319,7 @@
             "createPlaylist": "$t(action.createPlaylist)",
             "deletePlaylist": "$t(action.deletePlaylist)",
             "deselectAll": "$t(action.deselectAll)",
+            "download": "download",
             "moveToBottom": "$t(action.moveToBottom)",
             "moveToTop": "$t(action.moveToTop)",
             "numberSelected": "{{count}} selected",
@@ -375,6 +377,9 @@
             "copyPath": "copy path to clipboard",
             "copiedPath": "path copied successfully",
             "openFile": "show track in file manager"
+        },
+        "playlist": {
+            "reorder": "reordering only enabled when sorting by id"
         },
         "playlistList": {
             "title": "$t(entity.playlist_other)"

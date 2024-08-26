@@ -27,6 +27,7 @@ import { WebAudioContext } from '/@/renderer/features/player/context/webaudio-co
 import { useDiscordRpc } from '/@/renderer/features/discord-rpc/use-discord-rpc';
 import i18n from '/@/i18n/i18n';
 import { useServerVersion } from '/@/renderer/hooks/use-server-version';
+import { updateSong } from '/@/renderer/features/player/update-remote-song';
 
 ModuleRegistry.registerModules([ClientSideRowModelModule, InfiniteRowModelModule]);
 
@@ -170,6 +171,7 @@ export const App = () => {
                 if (playbackType === PlaybackType.LOCAL) {
                     mpvPlayer!.setQueue(playerData, true);
                 }
+                updateSong(playerData.current.song);
             });
         }
 
