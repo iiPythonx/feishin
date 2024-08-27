@@ -4,6 +4,7 @@ import { ControlSettings } from '/@/renderer/features/settings/components/genera
 import { ThemeSettings } from '/@/renderer/features/settings/components/general/theme-settings';
 import { RemoteSettings } from '/@/renderer/features/settings/components/general/remote-settings';
 import isElectron from 'is-electron';
+import { ContextMenuSettings } from '/@/renderer/features/settings/components/general/context-menu-settings';
 
 export const GeneralTab = () => {
     return (
@@ -11,6 +12,7 @@ export const GeneralTab = () => {
             <ApplicationSettings />
             <ThemeSettings />
             <ControlSettings />
+            <ContextMenuSettings />
             {isElectron() && <RemoteSettings />}
         </Stack>
     );

@@ -24,6 +24,7 @@ import { randomString } from '/@/renderer/utils';
 import i18n from '/@/i18n/i18n';
 import { usePlayerStore } from '/@/renderer/store/player.store';
 import { mergeOverridingColumns } from '/@/renderer/store/utils';
+import type { ContextMenuItemType } from '/@/renderer/features/context-menu';
 
 const utils = isElectron() ? window.electron.utils : null;
 
@@ -182,6 +183,10 @@ export interface SettingsState {
         artistBiographies: boolean;
         artistTopSongs: boolean;
     };
+    css: {
+        content: string;
+        enabled: boolean;
+    };
     discord: {
         clientId: string;
         enabled: boolean;
@@ -199,6 +204,7 @@ export interface SettingsState {
         albumArtRes?: number | null;
         buttonSize: number;
         defaultFullPlaylist: boolean;
+        disabledContextMenu: { [k in ContextMenuItemType]?: boolean };
         doubleClickQueueAll: boolean;
         externalLinks: boolean;
         followSystemTheme: boolean;
@@ -298,6 +304,7 @@ export interface SettingsSlice extends SettingsState {
         setSettings: (data: Partial<SettingsState>) => void;
         setSidebarItems: (items: SidebarItemType[]) => void;
         setTable: (type: TableType, data: DataTableProps) => void;
+        toggleContextMenuItem: (item: ContextMenuItemType) => void;
         toggleSidebarCollapseShare: () => void;
     };
 }
@@ -313,6 +320,10 @@ const initialState: SettingsState = {
     artist: {
         artistBiographies: true,
         artistTopSongs: true,
+    },
+    css: {
+        content: '',
+        enabled: false,
     },
     discord: {
         clientId: '1117545345690374277',
@@ -331,6 +342,7 @@ const initialState: SettingsState = {
         albumArtRes: undefined,
         buttonSize: 20,
         defaultFullPlaylist: true,
+        disabledContextMenu: {},
         doubleClickQueueAll: true,
         externalLinks: true,
         followSystemTheme: false,
@@ -658,6 +670,12 @@ export const useSettingsStore = create<SettingsSlice>()(
                             state.tables[type] = data;
                         });
                     },
+                    toggleContextMenuItem: (item: ContextMenuItemType) => {
+                        set((state) => {
+                            state.general.disabledContextMenu[item] =
+                                !state.general.disabledContextMenu[item];
+                        });
+                    },
                     toggleSidebarCollapseShare: () => {
                         set((state) => {
                             state.general.sidebarCollapseShared =
@@ -718,3 +736,5 @@ export const useFontSettings = () => useSettingsStore((state) => state.font, sha
 export const useDiscordSetttings = () => useSettingsStore((state) => state.discord, shallow);
 
 export const useArtistSettings = () => useSettingsStore((state) => state.artist, shallow);
+
+export const useCssSettings = () => useSettingsStore((state) => state.css, shallow);
