@@ -40,11 +40,11 @@ export const StylesSettings = () => {
             children: (
                 <ConfirmModal onConfirm={handleResetToDefault}>
                     <Text color="red !important">
-                        {t('setting.customCssNotice', { postProcess: 'sentenceCase' })}
+                        {t('setting.customCssNotice', { css: 'CSS', postProcess: 'sentenceCase' })}
                     </Text>
                 </ConfirmModal>
             ),
-            title: t('setting.customCssEnable', { postProcess: 'sentenceCase' }),
+            title: t('setting.customCssEnable', { css: 'CSS', postProcess: 'sentenceCase' }),
         });
     };
 
@@ -70,9 +70,10 @@ export const StylesSettings = () => {
                 }
                 description={t('setting.customCssEnable', {
                     context: 'description',
+                    css: 'CSS',
                     postProcess: 'sentenceCase',
                 })}
-                title={t('setting.customCssEnable', { postProcess: 'sentenceCase' })}
+                title={t('setting.customCssEnable', { css: 'CSS', postProcess: 'sentenceCase' })}
             />
             {enabled && (
                 <>
@@ -102,9 +103,10 @@ export const StylesSettings = () => {
                         }
                         description={t('setting.customCss', {
                             context: 'description',
+                            css: 'CSS',
                             postProcess: 'sentenceCase',
                         })}
-                        title={t('setting.customCss', { postProcess: 'sentenceCase' })}
+                        title={t('setting.customCss', { css: 'CSS', postProcess: 'sentenceCase' })}
                     />
                     {open && (
                         <>
