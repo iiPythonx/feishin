@@ -400,7 +400,6 @@
             "home": "$t(common.home)",
             "nowPlaying": "now playing",
             "playlists": "$t(entity.playlist_other)",
-            "rescan": "rescan",
             "search": "$t(common.search)",
             "settings": "$t(common.setting_other)",
             "shared": "shared $t(entity.playlist_other)",
