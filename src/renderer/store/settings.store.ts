@@ -192,6 +192,7 @@ export interface SettingsState {
         enabled: boolean;
         proxyType: string;
         proxyUrl: string;
+        showAsListening: boolean;
     };
     font: {
         builtIn: string;
@@ -330,6 +331,7 @@ const initialState: SettingsState = {
         enabled: false,
         proxyType: 'pizza',
         proxyUrl: '',
+        showAsListening: false,
     },
     font: {
         builtIn: 'Inter',

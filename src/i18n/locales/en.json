@@ -485,6 +485,8 @@
         "disableLibraryUpdateOnStartup": "disable checking for new versions on startup",
         "discordApplicationId": "{{discord}} application id",
         "discordApplicationId_description": "the application id for {{discord}} rich presence (defaults to {{defaultId}})",
+        "discordListening": "show status as listening",
+        "discordListening_description": "show status as listening instead of playing",
         "discordRichPresence": "{{discord}} rich presence",
         "discordRichPresence_description": "enable playback status in {{discord}} rich presence. Image keys are: {{icon}}, {{playing}}, and {{paused}} ",
         "discordProxyType": "{{discord}} image proxy type",

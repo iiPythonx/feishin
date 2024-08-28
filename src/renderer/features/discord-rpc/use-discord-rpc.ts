@@ -54,6 +54,7 @@ export const useDiscordRpc = () => {
                     smallImageKey: status,
                     smallImageText: status.charAt(0).toUpperCase() + status.slice(1),
                     state: `on ${song.album}`,
+                    type: discordSettings.showAsListening ? 2 : 0,
                 };
 
                 if ((current[2] as PlayerStatus) === PlayerStatus.PLAYING) {
@@ -99,6 +100,7 @@ export const useDiscordRpc = () => {
         [
             discordSettings.proxyType,
             discordSettings.proxyUrl,
+            discordSettings.showAsListening,
             lastImageUrl,
             setLastImageUrl,
             firstChangeHandled,
