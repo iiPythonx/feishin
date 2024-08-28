@@ -10,23 +10,28 @@ import { AlbumDetailHeader } from '/@/renderer/features/albums/components/album-
 import { usePlayQueueAdd } from '/@/renderer/features/player';
 import { usePlayButtonBehavior } from '/@/renderer/store/settings.store';
 import { LibraryItem } from '/@/renderer/api/types';
-import { useCurrentServer } from '/@/renderer/store';
+import { useCurrentServer, useFullScreenPlayerStore } from '/@/renderer/store';
 
 const AlbumDetailRoute = () => {
     const tableRef = useRef<AgGridReactType | null>(null);
     const scrollAreaRef = useRef<HTMLDivElement>(null);
     const headerRef = useRef<HTMLDivElement>(null);
+    const { dynamicIsImage: useBlur } = useFullScreenPlayerStore();
 
     const { albumId } = useParams() as { albumId: string };
     const server = useCurrentServer();
     const detailQuery = useAlbumDetail({ query: { id: albumId }, serverId: server?.id });
-    const { color: background, colorId } = useFastAverageColor({
+    const { color: backgroundColor, colorId } = useFastAverageColor({
         id: albumId,
         src: detailQuery.data?.imageUrl,
         srcLoaded: !detailQuery.isLoading,
     });
+    const backgroundURL = detailQuery.data?.imageUrl || '';
     const handlePlayQueueAdd = usePlayQueueAdd();
     const playButtonBehavior = usePlayButtonBehavior();
+    // const backgroundToUse = (useBlur && backgroundURL) || backgroundColor;
+
+    // console.log(backgroundToUse, useBlur, (useBlur && `url(${backgroundURL})`) || backgroundColor);
 
     const handlePlay = () => {
         handlePlayQueueAdd?.({
@@ -38,7 +43,7 @@ const AlbumDetailRoute = () => {
         });
     };
 
-    if (!background || colorId !== albumId) {
+    if (!backgroundColor || colorId !== albumId) {
         return <Spinner container />;
     }
 
@@ -47,7 +52,7 @@ const AlbumDetailRoute = () => {
             <NativeScrollArea
                 ref={scrollAreaRef}
                 pageHeaderProps={{
-                    backgroundColor: background,
+                    backgroundColor: backgroundColor || undefined,
                     children: (
                         <LibraryHeaderBar>
                             <LibraryHeaderBar.PlayButton onClick={handlePlay} />
@@ -62,10 +67,10 @@ const AlbumDetailRoute = () => {
             >
                 <AlbumDetailHeader
                     ref={headerRef}
-                    background={background}
+                    background={(useBlur && `url(${backgroundURL})`) || backgroundColor}
                 />
                 <AlbumDetailContent
-                    background={background}
+                    background={(useBlur && `url(${backgroundURL})`) || backgroundColor}
                     tableRef={tableRef}
                 />
             </NativeScrollArea>

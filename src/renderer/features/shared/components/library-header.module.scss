@@ -132,6 +132,8 @@
     width: 100%;
     height: 100%;
     opacity: 0.9;
+    background-size: cover !important;
+    filter: blur(2.5rem);
 }
 
 .background-overlay {
@@ -140,8 +142,9 @@
     left: 0;
     z-index: 0;
     width: 100%;
-    height: 100%;
+    height: 125%;
     background: var(--bg-header-overlay);
+    opacity: 0.6;
 }
 
 .title {
