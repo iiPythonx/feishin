@@ -1,123 +1,118 @@
 /* eslint-disable consistent-return */
-import isElectron from 'is-electron';
-import { useCallback, useEffect, useRef } from 'react';
-import {
-    useCurrentSong,
-    useCurrentStatus,
-    useDiscordSetttings,
-    usePlayerStore,
-} from '/@/renderer/store';
+import { useCallback, useEffect, useState } from 'react';
+import { useDiscordSetttings, usePlayerStore } from '/@/renderer/store';
 import { SetActivity } from '@xhayper/discord-rpc';
 import { PlayerStatus } from '/@/renderer/types';
-import { ServerType } from '/@/renderer/api/types';
+import { QueueSong } from '/@/renderer/api/types';
+import axios from 'axios';
+import isElectron from 'is-electron';
 
 const discordRpc = isElectron() ? window.electron.discordRpc : null;
 
 export const useDiscordRpc = () => {
-    const intervalRef = useRef(0);
     const discordSettings = useDiscordSetttings();
-    const currentSong = useCurrentSong();
-    const currentStatus = useCurrentStatus();
-
-    const setActivity = useCallback(async () => {
-        if (!discordSettings.enableIdle && currentStatus === PlayerStatus.PAUSED) {
-            discordRpc?.clearActivity();
-            return;
-        }
-
-        const currentTime = usePlayerStore.getState().current.time;
-
-        const now = Date.now();
-        const start = currentTime ? Math.round(now - currentTime * 1000) : null;
-        const end =
-            currentSong?.duration && start ? Math.round(start + currentSong.duration) : null;
-
-        const artists = currentSong?.artists.map((artist) => artist.name).join(', ');
-
-        const activity: SetActivity = {
-            details: currentSong?.name.padEnd(2, ' ') || 'Idle',
-            instance: false,
-            largeImageKey: undefined,
-            largeImageText: currentSong?.album || 'Unknown album',
-            smallImageKey: undefined,
-            smallImageText: currentStatus,
-            state: (artists && `By ${artists}`) || 'Unknown artist',
-        };
-
-        if (currentStatus === PlayerStatus.PLAYING) {
-            if (start && end) {
-                activity.startTimestamp = start;
-                activity.endTimestamp = end;
-            }
-
-            activity.smallImageKey = 'playing';
-        } else {
-            activity.smallImageKey = 'paused';
-        }
-
-        if (
-            currentSong?.serverType === ServerType.JELLYFIN &&
-            discordSettings.showServerImage &&
-            currentSong?.imageUrl
-        ) {
-            activity.largeImageKey = currentSong?.imageUrl;
-        }
-
-        // Fall back to default icon if not set
-        if (!activity.largeImageKey) {
-            activity.largeImageKey = 'icon';
-        }
-
-        discordRpc?.setActivity(activity);
-    }, [currentSong, currentStatus, discordSettings.enableIdle, discordSettings.showServerImage]);
+    const [lastImageUrl, setLastImageUrl] = useState('icon');
+    const [firstChangeHandled, setFirstChangeHandled] = useState(false);
 
     useEffect(() => {
-        const initializeDiscordRpc = async () => {
-            discordRpc?.initialize(discordSettings.clientId);
-        };
-
-        if (discordSettings.enabled) {
-            initializeDiscordRpc();
-        } else {
-            discordRpc?.quit();
-        }
-
-        return () => {
-            discordRpc?.quit();
-        };
+        if (!discordSettings.enabled) return discordRpc?.quit();
+        discordRpc?.initialize(discordSettings.clientId);
+        return () => discordRpc?.quit();
     }, [discordSettings.clientId, discordSettings.enabled]);
 
-    useEffect(() => {
-        if (discordSettings.enabled) {
-            let intervalSeconds = discordSettings.updateInterval;
-            if (intervalSeconds < 15) {
-                intervalSeconds = 15;
+    // Experimental shit
+    const updateActivity = useCallback(
+        async (
+            current: (QueueSong | PlayerStatus | number | undefined)[],
+            previous: (QueueSong | PlayerStatus | number | undefined)[],
+        ) => {
+            if (!current[0] || (current[0] && current[2] === 'paused' && current[1] === 0))
+                return discordRpc?.clearActivity();
+
+            // Handle change detection
+            const song = current[0] as QueueSong;
+            const trackChanged =
+                previous[0] && (previous[0] as QueueSong).uniqueId !== song.uniqueId;
+            if (
+                Math.abs((current[1] as number) - (previous[1] as number)) > 1.2 ||
+                trackChanged ||
+                current[2] !== previous[2]
+            ) {
+                setFirstChangeHandled(true);
+
+                const start = Math.round(Date.now() - (current[1] as number) * 1000);
+                const end = Math.round(start + song.duration);
+
+                const status = current[2] as string;
+                const activity: SetActivity = {
+                    details: song.name.padEnd(2, ' '),
+                    instance: false,
+                    largeImageKey: undefined,
+                    largeImageText: song.album ? song.album : undefined,
+                    // @ts-ignore
+                    name: song.artistName,
+                    smallImageKey: status,
+                    smallImageText: status.charAt(0).toUpperCase() + status.slice(1),
+                    state: `on ${song.album}`,
+                };
+
+                if ((current[2] as PlayerStatus) === PlayerStatus.PLAYING) {
+                    activity.endTimestamp = end;
+                    activity.smallImageKey = 'playing';
+                } else {
+                    activity.smallImageKey = 'paused';
+                }
+
+                // Handle forwarding album art
+                let imageUrl = lastImageUrl;
+                if (trackChanged || !firstChangeHandled) {
+                    if (discordSettings.proxyType === 'ndip' && discordSettings.proxyUrl) {
+                        imageUrl = `${discordSettings.proxyUrl}/image/${song.id}`;
+                    } else if (discordSettings.proxyType === 'pizza' && song.imageUrl) {
+                        const image = await axios({
+                            method: 'GET',
+                            responseType: 'blob',
+                            url: song.imageUrl,
+                        });
+
+                        // Upload file to Pizza
+                        const form = new FormData();
+                        form.append('file', new File([image.data], 'file.jpg'));
+                        const response = await axios({
+                            data: form,
+                            headers: {
+                                'Content-Type': 'multipart/form-data',
+                            },
+                            method: 'POST',
+                            url: 'https://covers.iipython.dev/api/image',
+                        });
+                        imageUrl = response.data.url;
+                    } else {
+                        imageUrl = 'icon';
+                    }
+                }
+                setLastImageUrl(imageUrl);
+                activity.largeImageKey = imageUrl;
+                discordRpc?.setActivity(activity);
             }
-
-            intervalRef.current = window.setInterval(setActivity, intervalSeconds * 1000);
-            return () => clearInterval(intervalRef.current);
-        }
-
-        return () => {};
-    }, [discordSettings.enabled, discordSettings.updateInterval, setActivity]);
-
-    // useEffect(() => {
-    //     console.log(
-    //         'currentStatus, discordSettings.enableIdle',
-    //         currentStatus,
-    //         discordSettings.enableIdle,
-    //     );
-
-    //     if (discordSettings.enableIdle === false && currentStatus === PlayerStatus.PAUSED) {
-    //         console.log('removing activity');
-    //         clearActivity();
-    //         clearInterval(intervalRef.current);
-    //     }
-    // }, [
-    //     clearActivity,
-    //     currentStatus,
-    //     discordSettings.enableIdle,
-    //     discordSettings.enabled,
-    //     setActivity,
-    // ]);
+        },
+        [
+            discordSettings.proxyType,
+            discordSettings.proxyUrl,
+            lastImageUrl,
+            setLastImageUrl,
+            firstChangeHandled,
+            setFirstChangeHandled,
+        ],
+    );
+    useEffect(() => {
+        if (!discordSettings.enabled) return;
+        const unsubSongChange = usePlayerStore.subscribe(
+            (state) => [state.current.song, state.current.time, state.current.status],
+            updateActivity,
+        );
+        return () => {
+            unsubSongChange();
+        };
+    }, [updateActivity, discordSettings.enabled]);
 };

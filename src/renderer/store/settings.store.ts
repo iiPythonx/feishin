@@ -24,6 +24,7 @@ import { randomString } from '/@/renderer/utils';
 import i18n from '/@/i18n/i18n';
 import { usePlayerStore } from '/@/renderer/store/player.store';
 import { mergeOverridingColumns } from '/@/renderer/store/utils';
+import type { ContextMenuItemType } from '/@/renderer/features/context-menu';
 
 const utils = isElectron() ? window.electron.utils : null;
 
@@ -89,12 +90,6 @@ export const sidebarItems = [
         id: 'Settings',
         label: i18n.t('page.sidebar.settings'),
         route: AppRoute.SETTINGS,
-    },
-    {
-        disabled: true,
-        id: 'Rescan',
-        label: i18n.t('page.sidebar.rescan'),
-        route: AppRoute.RESCAN,
     },
 ];
 
@@ -188,12 +183,15 @@ export interface SettingsState {
         artistBiographies: boolean;
         artistTopSongs: boolean;
     };
+    css: {
+        content: string;
+        enabled: boolean;
+    };
     discord: {
         clientId: string;
-        enableIdle: boolean;
         enabled: boolean;
-        showServerImage: boolean;
-        updateInterval: number;
+        proxyType: string;
+        proxyUrl: string;
     };
     font: {
         builtIn: string;
@@ -206,6 +204,7 @@ export interface SettingsState {
         albumArtRes?: number | null;
         buttonSize: number;
         defaultFullPlaylist: boolean;
+        disabledContextMenu: { [k in ContextMenuItemType]?: boolean };
         doubleClickQueueAll: boolean;
         externalLinks: boolean;
         followSystemTheme: boolean;
@@ -219,6 +218,7 @@ export interface SettingsState {
         resume: boolean;
         showQueueDrawerButton: boolean;
         sideQueueType: SideQueueType;
+        sidebarCollapseShared: boolean;
         sidebarCollapsedNavigation: boolean;
         sidebarItems: SidebarItemType[];
         sidebarPlaylistList: boolean;
@@ -232,6 +232,7 @@ export interface SettingsState {
         themeDark: AppTheme;
         themeLight: AppTheme;
         volumeWheelStep: number;
+        volumeWidth: number;
         zoomFactor: number;
     };
     hotkeys: {
@@ -303,6 +304,8 @@ export interface SettingsSlice extends SettingsState {
         setSettings: (data: Partial<SettingsState>) => void;
         setSidebarItems: (items: SidebarItemType[]) => void;
         setTable: (type: TableType, data: DataTableProps) => void;
+        toggleContextMenuItem: (item: ContextMenuItemType) => void;
+        toggleSidebarCollapseShare: () => void;
     };
 }
 
@@ -318,12 +321,15 @@ const initialState: SettingsState = {
         artistBiographies: true,
         artistTopSongs: true,
     },
-    discord: {
-        clientId: '1165957668758900787',
-        enableIdle: false,
+    css: {
+        content: '',
         enabled: false,
-        showServerImage: false,
-        updateInterval: 15,
+    },
+    discord: {
+        clientId: '1117545345690374277',
+        enabled: false,
+        proxyType: 'pizza',
+        proxyUrl: '',
     },
     font: {
         builtIn: 'Inter',
@@ -336,6 +342,7 @@ const initialState: SettingsState = {
         albumArtRes: undefined,
         buttonSize: 20,
         defaultFullPlaylist: true,
+        disabledContextMenu: {},
         doubleClickQueueAll: true,
         externalLinks: true,
         followSystemTheme: false,
@@ -349,6 +356,7 @@ const initialState: SettingsState = {
         resume: false,
         showQueueDrawerButton: false,
         sideQueueType: 'sideQueue',
+        sidebarCollapseShared: false,
         sidebarCollapsedNavigation: true,
         sidebarItems,
         sidebarPlaylistList: true,
@@ -362,6 +370,7 @@ const initialState: SettingsState = {
         themeDark: AppTheme.DEFAULT_DARK,
         themeLight: AppTheme.DEFAULT_LIGHT,
         volumeWheelStep: 5,
+        volumeWidth: 60,
         zoomFactor: 100,
     },
     hotkeys: {
@@ -661,6 +670,18 @@ export const useSettingsStore = create<SettingsSlice>()(
                             state.tables[type] = data;
                         });
                     },
+                    toggleContextMenuItem: (item: ContextMenuItemType) => {
+                        set((state) => {
+                            state.general.disabledContextMenu[item] =
+                                !state.general.disabledContextMenu[item];
+                        });
+                    },
+                    toggleSidebarCollapseShare: () => {
+                        set((state) => {
+                            state.general.sidebarCollapseShared =
+                                !state.general.sidebarCollapseShared;
+                        });
+                    },
                 },
                 ...initialState,
             })),
@@ -715,3 +736,5 @@ export const useFontSettings = () => useSettingsStore((state) => state.font, sha
 export const useDiscordSetttings = () => useSettingsStore((state) => state.discord, shallow);
 
 export const useArtistSettings = () => useSettingsStore((state) => state.artist, shallow);
+
+export const useCssSettings = () => useSettingsStore((state) => state.css, shallow);

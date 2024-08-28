@@ -290,7 +290,8 @@
         },
         "albumDetail": {
             "moreFromArtist": "more from this $t(entity.artist_one)",
-            "moreFromGeneric": "more from {{item}}"
+            "moreFromGeneric": "more from {{item}}",
+            "released": "released"
         },
         "albumList": {
             "artistAlbums": "albums by {{artist}}",
@@ -318,6 +319,7 @@
             "createPlaylist": "$t(action.createPlaylist)",
             "deletePlaylist": "$t(action.deletePlaylist)",
             "deselectAll": "$t(action.deselectAll)",
+            "download": "download",
             "moveToBottom": "$t(action.moveToBottom)",
             "moveToTop": "$t(action.moveToTop)",
             "numberSelected": "{{count}} selected",
@@ -376,10 +378,14 @@
             "copiedPath": "path copied successfully",
             "openFile": "show track in file manager"
         },
+        "playlist": {
+            "reorder": "reordering only enabled when sorting by id"
+        },
         "playlistList": {
             "title": "$t(entity.playlist_other)"
         },
         "setting": {
+            "advanced": "advanced",
             "generalTab": "general",
             "hotkeysTab": "hotkeys",
             "pagesTab": "pages",
@@ -395,7 +401,6 @@
             "home": "$t(common.home)",
             "nowPlaying": "now playing",
             "playlists": "$t(entity.playlist_other)",
-            "rescan": "rescan",
             "search": "$t(common.search)",
             "settings": "$t(common.setting_other)",
             "shared": "shared $t(entity.playlist_other)",
@@ -463,22 +468,29 @@
         "clearQueryCache": "clear feishin cache",
         "clearQueryCache_description": "a 'soft clear' of feishin. this will refresh playlists, track metadata, and reset saved lyrics. settings, server credentials and cached images are preserved",
         "clearCacheSuccess": "cache cleared successfully",
+        "contextMenu": "context menu (right click) configuration",
+        "contextMenu_description": "allows you to hide items that are shown in the menu when you right click on an item. items that are unchecked will be hidden",
         "crossfadeDuration": "crossfade duration",
         "crossfadeDuration_description": "sets the duration of the crossfade effect",
         "crossfadeStyle": "crossfade style",
         "crossfadeStyle_description": "select the crossfade style to use for the audio player",
+        "customCssEnable": "enable custom {{css}}",
+        "customCssEnable_description": "allow writing custom {{css}} for the player",
+        "customCssNotice": "custom {{css}} can pose risks by allowing the interface to be changed.",
+        "customCss": "custom {{css}}",
+        "customCss_description": "custom css content",
         "customFontPath": "custom font path",
         "customFontPath_description": "sets the path to the custom font to use for the application",
         "disableAutomaticUpdates": "disable automatic updates",
         "disableLibraryUpdateOnStartup": "disable checking for new versions on startup",
         "discordApplicationId": "{{discord}} application id",
         "discordApplicationId_description": "the application id for {{discord}} rich presence (defaults to {{defaultId}})",
-        "discordIdleStatus": "show rich presence idle status",
-        "discordIdleStatus_description": "when enabled, update status while player is idle",
         "discordRichPresence": "{{discord}} rich presence",
         "discordRichPresence_description": "enable playback status in {{discord}} rich presence. Image keys are: {{icon}}, {{playing}}, and {{paused}} ",
-        "discordUpdateInterval": "{{discord}} rich presence update interval",
-        "discordUpdateInterval_description": "the time in seconds between each update (minimum 15 seconds)",
+        "discordProxyType": "{{discord}} image proxy type",
+        "discordProxyType_description": "the image proxy you want to forward images to",
+        "discordProxyUrl": "{{discord}} image proxy url",
+        "discordProxyUrl_description": "the selfhosted url of the proxy you are using, only applies to ndip and imgproxy",
         "doubleClickBehavior": "queue all searched tracks when double clicking",
         "doubleClickBehavior_description": "if true, all matching tracks in a track search will be queued. otherwise, only the clicked one will be queued",
         "enableRemote": "enable remote control server",
@@ -630,6 +642,8 @@
         "useSystemTheme_description": "follow the system-defined light or dark preference",
         "volumeWheelStep": "volume wheel step",
         "volumeWheelStep_description": "the amount of volume to change when scrolling the mouse wheel on the volume slider",
+        "volumeWidth": "volume slider width",
+        "volumeWidth_description": "the width of the volume slider",
         "windowBarStyle": "window bar style",
         "windowBarStyle_description": "select the style of the window bar",
         "zoom": "zoom percentage",

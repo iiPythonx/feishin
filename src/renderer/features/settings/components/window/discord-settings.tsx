@@ -1,11 +1,17 @@
+import { SelectItem } from '@mantine/core';
 import isElectron from 'is-electron';
-import { NumberInput, Switch, TextInput } from '/@/renderer/components';
+import { Select, Switch, TextInput } from '/@/renderer/components';
 import {
     SettingOption,
     SettingsSection,
 } from '/@/renderer/features/settings/components/settings-section';
 import { useDiscordSetttings, useSettingsStoreActions } from '/@/renderer/store';
 import { useTranslation } from 'react-i18next';
+
+const PROXY_ITEMS: SelectItem[] = [
+    { label: 'ndip', value: 'ndip' },
+    { label: 'pizza', value: 'pizza' },
+];
 
 export const DiscordSettings = () => {
     const { t } = useTranslation();
@@ -57,7 +63,7 @@ export const DiscordSettings = () => {
             ),
             description: t('setting.discordApplicationId', {
                 context: 'description',
-                defaultId: '1165957668758900787',
+                defaultId: '1117545345690374277',
                 discord: 'Discord',
                 postProcess: 'sentenceCase',
             }),
@@ -69,53 +75,56 @@ export const DiscordSettings = () => {
         },
         {
             control: (
-                <NumberInput
-                    value={settings.updateInterval}
+                <Select
+                    aria-label={t('setting.discordProxyType')}
+                    clearable={false}
+                    data={PROXY_ITEMS}
+                    defaultValue={settings.proxyType ?? 'freeimagehost'}
+                    disabled={!isElectron()}
                     onChange={(e) => {
-                        let value = e ? Number(e) : 0;
-                        if (value < 15) {
-                            value = 15;
-                        }
-
+                        if (!e) return;
                         setSettings({
                             discord: {
                                 ...settings,
-                                updateInterval: value,
+                                proxyType: e,
                             },
                         });
                     }}
                 />
             ),
-            description: t('setting.discordUpdateInterval', {
+            description: t('setting.discordProxyType', {
                 context: 'description',
                 postProcess: 'sentenceCase',
             }),
             isHidden: !isElectron(),
-            title: t('setting.discordUpdateInterval', {
+            title: t('setting.discordProxyType', {
                 discord: 'Discord',
                 postProcess: 'sentenceCase',
             }),
         },
         {
             control: (
-                <Switch
-                    checked={settings.enableIdle}
-                    onChange={(e) => {
+                <TextInput
+                    defaultValue={settings.proxyUrl}
+                    disabled={settings.proxyType !== 'ndip'}
+                    onBlur={(e) => {
                         setSettings({
                             discord: {
                                 ...settings,
-                                enableIdle: e.currentTarget.checked,
+                                proxyUrl: e.currentTarget.value,
                             },
                         });
                     }}
                 />
             ),
-            description: t('setting.discordIdleStatus', {
+            description: t('setting.discordProxyUrl', {
                 context: 'description',
+                discord: 'Discord',
                 postProcess: 'sentenceCase',
             }),
             isHidden: !isElectron(),
-            title: t('setting.discordIdleStatus', {
+            title: t('setting.discordProxyUrl', {
+                discord: 'Discord',
                 postProcess: 'sentenceCase',
             }),
         },

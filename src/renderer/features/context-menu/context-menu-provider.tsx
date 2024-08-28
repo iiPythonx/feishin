@@ -30,6 +30,7 @@ import {
     RiShareForwardFill,
     RiInformationFill,
     RiRadio2Fill,
+    RiDownload2Line,
 } from 'react-icons/ri';
 import { AnyLibraryItems, LibraryItem, ServerType, AnyLibraryItem } from '/@/renderer/api/types';
 import {
@@ -56,12 +57,14 @@ import {
     useCurrentServer,
     usePlayerStore,
     useQueueControls,
+    useSettingsStore,
 } from '/@/renderer/store';
 import { usePlaybackType } from '/@/renderer/store/settings.store';
 import { Play, PlaybackType } from '/@/renderer/types';
 import { ItemDetailsModal } from '/@/renderer/features/item-details/components/item-details-modal';
 import { updateSong } from '/@/renderer/features/player/update-remote-song';
 import { controller } from '/@/renderer/api/controller';
+import { api } from '/@/renderer/api';
 
 type ContextMenuContextProps = {
     closeContextMenu: () => void;
@@ -90,12 +93,14 @@ const JELLYFIN_IGNORED_MENU_ITEMS: ContextMenuItemType[] = ['setRating', 'shareI
 // const SUBSONIC_IGNORED_MENU_ITEMS: ContextMenuItemType[] = [];
 
 const mpvPlayer = isElectron() ? window.electron.mpvPlayer : null;
+const utils = isElectron() ? window.electron.utils : null;
 
 export interface ContextMenuProviderProps {
     children: ReactNode;
 }
 
 export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
+    const disabledItems = useSettingsStore((state) => state.general.disabledContextMenu);
     const { t } = useTranslation();
     const [opened, setOpened] = useState(false);
     const clickOutsideRef = useClickOutside(() => setOpened(false));
@@ -287,13 +292,16 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
         if (ctx.dataNodes) {
             const nodesToFavorite = ctx.dataNodes.filter((item) => !item.data.userFavorite);
 
-            const nodesByServerId = nodesToFavorite.reduce((acc, node) => {
-                if (!acc[node.data.serverId]) {
-                    acc[node.data.serverId] = [];
-                }
-                acc[node.data.serverId].push(node);
-                return acc;
-            }, {} as Record<string, RowNode<any>[]>);
+            const nodesByServerId = nodesToFavorite.reduce(
+                (acc, node) => {
+                    if (!acc[node.data.serverId]) {
+                        acc[node.data.serverId] = [];
+                    }
+                    acc[node.data.serverId].push(node);
+                    return acc;
+                },
+                {} as Record<string, RowNode<any>[]>,
+            );
 
             for (const serverId of Object.keys(nodesByServerId)) {
                 const nodes = nodesByServerId[serverId];
@@ -324,13 +332,16 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
             }
         } else {
             const itemsToFavorite = ctx.data.filter((item) => !item.userFavorite);
-            const itemsByServerId = (itemsToFavorite as any[]).reduce((acc, item) => {
-                if (!acc[item.serverId]) {
-                    acc[item.serverId] = [];
-                }
-                acc[item.serverId].push(item);
-                return acc;
-            }, {} as Record<string, AnyLibraryItems>);
+            const itemsByServerId = (itemsToFavorite as any[]).reduce(
+                (acc, item) => {
+                    if (!acc[item.serverId]) {
+                        acc[item.serverId] = [];
+                    }
+                    acc[item.serverId].push(item);
+                    return acc;
+                },
+                {} as Record<string, AnyLibraryItems>,
+            );
 
             for (const serverId of Object.keys(itemsByServerId)) {
                 const items = itemsByServerId[serverId];
@@ -361,13 +372,16 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
 
         if (ctx.dataNodes) {
             const nodesToUnfavorite = ctx.dataNodes.filter((item) => item.data.userFavorite);
-            const nodesByServerId = nodesToUnfavorite.reduce((acc, node) => {
-                if (!acc[node.data.serverId]) {
-                    acc[node.data.serverId] = [];
-                }
-                acc[node.data.serverId].push(node);
-                return acc;
-            }, {} as Record<string, RowNode<any>[]>);
+            const nodesByServerId = nodesToUnfavorite.reduce(
+                (acc, node) => {
+                    if (!acc[node.data.serverId]) {
+                        acc[node.data.serverId] = [];
+                    }
+                    acc[node.data.serverId].push(node);
+                    return acc;
+                },
+                {} as Record<string, RowNode<any>[]>,
+            );
 
             for (const serverId of Object.keys(nodesByServerId)) {
                 const idsToUnfavorite = nodesByServerId[serverId].map((node) => node.data.id);
@@ -390,13 +404,16 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
             }
         } else {
             const itemsToUnfavorite = ctx.data.filter((item) => item.userFavorite);
-            const itemsByServerId = (itemsToUnfavorite as any[]).reduce((acc, item) => {
-                if (!acc[item.serverId]) {
-                    acc[item.serverId] = [];
-                }
-                acc[item.serverId].push(item);
-                return acc;
-            }, {} as Record<string, AnyLibraryItems>);
+            const itemsByServerId = (itemsToUnfavorite as any[]).reduce(
+                (acc, item) => {
+                    if (!acc[item.serverId]) {
+                        acc[item.serverId] = [];
+                    }
+                    acc[item.serverId].push(item);
+                    return acc;
+                },
+                {} as Record<string, AnyLibraryItems>,
+            );
 
             for (const serverId of Object.keys(itemsByServerId)) {
                 const idsToUnfavorite = itemsByServerId[serverId].map(
@@ -673,6 +690,20 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
         handlePlayQueueAdd?.({ byData: [ctx.data[0], ...songs], playType: Play.NOW });
     }, [ctx, handlePlayQueueAdd]);
 
+    const handleDownload = useCallback(() => {
+        const item = ctx.data[0];
+        const url = api.controller.getDownloadUrl({
+            apiClientProps: { server },
+            query: { id: item.id },
+        });
+
+        if (utils) {
+            utils.download(url!);
+        } else {
+            window.open(url, '_blank');
+        }
+    }, [ctx.data, server]);
+
     const contextMenuItems: Record<ContextMenuItemType, ContextMenuItem> = useMemo(() => {
         return {
             addToFavorites: {
@@ -703,6 +734,13 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
                 label: t('page.contextMenu.deselectAll', { postProcess: 'sentenceCase' }),
                 leftIcon: <RiCloseCircleLine size="1.1rem" />,
                 onClick: handleDeselectAll,
+            },
+            download: {
+                disabled: ctx.data?.length !== 1,
+                id: 'download',
+                label: t('page.contextMenu.download', { postProcess: 'sentenceCase' }),
+                leftIcon: <RiDownload2Line size="1.1rem" />,
+                onClick: handleDownload,
             },
             moveToBottomOfQueue: {
                 id: 'moveToBottomOfQueue',
@@ -848,18 +886,19 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
         handleAddToPlaylist,
         openDeletePlaylistModal,
         handleDeselectAll,
+        ctx.data,
+        handleDownload,
         handleMoveToBottom,
         handleMoveToTop,
+        handleSimilar,
         handleRemoveFromFavorites,
         handleRemoveFromPlaylist,
         handleRemoveSelected,
-        ctx.data,
+        server,
+        handleShareItem,
         handleOpenItemDetails,
         handlePlay,
         handleUpdateRating,
-        handleShareItem,
-        server,
-        handleSimilar,
     ]);
 
     const mergedRef = useMergedRef(ref, clickOutsideRef);
@@ -890,7 +929,8 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
                                 >
                                     {ctx.menuItems?.map((item) => {
                                         return (
-                                            !contextMenuItems[item.id].disabled && (
+                                            !contextMenuItems[item.id].disabled &&
+                                            !disabledItems[item.id] && (
                                                 <Fragment key={`context-menu-${item.id}`}>
                                                     {item.children ? (
                                                         <HoverCard

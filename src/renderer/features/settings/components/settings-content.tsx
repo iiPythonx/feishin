@@ -35,6 +35,12 @@ const HotkeysTab = lazy(() =>
     })),
 );
 
+const AdvancedTab = lazy(() =>
+    import('/@/renderer/features/settings/components/advanced/advanced-tab').then((module) => ({
+        default: module.AdvancedTab,
+    })),
+);
+
 const TabContainer = styled.div`
     width: 100%;
     height: 100%;
@@ -74,6 +80,9 @@ export const SettingsContent = () => {
                             {t('page.setting.windowTab', { postProcess: 'sentenceCase' })}
                         </Tabs.Tab>
                     )}
+                    <Tabs.Tab value="advanced">
+                        {t('page.setting.advanced', { postProcess: 'sentenceCase' })}
+                    </Tabs.Tab>
                 </Tabs.List>
                 <Tabs.Panel value="general">
                     <GeneralTab />
@@ -92,6 +101,9 @@ export const SettingsContent = () => {
                         <ApplicationTab />
                     </Tabs.Panel>
                 )}
+                <Tabs.Panel value="advanced">
+                    <AdvancedTab />
+                </Tabs.Panel>
             </Tabs>
         </TabContainer>
     );

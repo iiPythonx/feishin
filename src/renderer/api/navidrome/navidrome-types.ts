@@ -128,10 +128,12 @@ const album = z.object({
     name: z.string(),
     orderAlbumArtistName: z.string(),
     orderAlbumName: z.string(),
+    originalDate: z.string().optional(),
+    originalYear: z.number().optional(),
     playCount: z.number(),
     playDate: z.string().optional(),
     rating: z.number().optional(),
-    releaseDate: z.string(),
+    releaseDate: z.string().optional(),
     size: z.number(),
     songCount: z.number(),
     sortAlbumArtistName: z.string(),
@@ -215,6 +217,7 @@ const song = z.object({
     playCount: z.number(),
     playDate: z.string().optional(),
     rating: z.number().optional(),
+    releaseDate: z.string().optional(),
     rgAlbumGain: z.number().optional(),
     rgAlbumPeak: z.number().optional(),
     rgTrackGain: z.number().optional(),
@@ -356,6 +359,12 @@ const shareItemParameters = z.object({
     resourceType: z.string(),
 });
 
+const moveItemParameters = z.object({
+    insert_before: z.string(),
+});
+
+const moveItem = z.null();
+
 export const ndType = {
     _enum: {
         albumArtistList: ndAlbumArtistListSort,
@@ -372,6 +381,7 @@ export const ndType = {
         authenticate: authenticateParameters,
         createPlaylist: createPlaylistParameters,
         genreList: genreListParameters,
+        moveItem: moveItemParameters,
         playlistList: playlistListParameters,
         removeFromPlaylist: removeFromPlaylistParameters,
         shareItem: shareItemParameters,
@@ -391,6 +401,7 @@ export const ndType = {
         error,
         genre,
         genreList,
+        moveItem,
         playlist,
         playlistList,
         playlistSong,

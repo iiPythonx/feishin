@@ -106,30 +106,36 @@ export const AlbumDetailContent = ({ tableRef, background }: AlbumDetailContentP
             return [];
         }
 
-        const uniqueDiscNumbers = new Set(detailQuery.data?.songs.map((s) => s.discNumber));
+        let discNumber = -1;
+        let discSubtitle: string | null = null;
+
         const rowData: (QueueSong | { id: string; name: string })[] = [];
+        const discTranslated = t('common.disc', { postProcess: 'upperCase' });
 
-        for (const discNumber of uniqueDiscNumbers.values()) {
-            const songsByDiscNumber = detailQuery.data?.songs.filter(
-                (s) => s.discNumber === discNumber,
-            );
+        const discs = detailQuery.data.songs
+            .map((s) => s.discNumber)
+            .filter((v, i, a) => a.indexOf(v) === i);
 
-            const discSubtitle = songsByDiscNumber?.[0]?.discSubtitle;
-            const discName = [`Disc ${discNumber}`.toLocaleUpperCase(), discSubtitle]
-                .filter(Boolean)
-                .join(': ');
+        for (const song of detailQuery.data.songs) {
+            if (song.discNumber !== discNumber || song.discSubtitle !== discSubtitle) {
+                discNumber = song.discNumber;
+                discSubtitle = song.discSubtitle;
 
-            if (!(uniqueDiscNumbers.size === 1 && hide1DiscLabel)) {
-                rowData.push({
-                    id: `disc-${discNumber}`,
-                    name: discName,
-                });
+                let id = `disc-${discNumber}`;
+                let name = `${discTranslated} ${discNumber}`;
+
+                if (discSubtitle) {
+                    id += `-${discSubtitle}`;
+                    name += `: ${discSubtitle}`;
+                }
+
+                if (!(hide1DiscLabel && discs.length === 1)) rowData.push({ id, name });
             }
-            rowData.push(...songsByDiscNumber);
+            rowData.push(song);
         }
 
         return rowData;
-    }, [detailQuery.data?.songs, hide1DiscLabel]);
+    }, [detailQuery.data?.songs, t, hide1DiscLabel]);
 
     const [pagination, setPagination] = useSetState({
         artist: 0,
