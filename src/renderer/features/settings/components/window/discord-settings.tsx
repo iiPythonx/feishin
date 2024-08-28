@@ -9,10 +9,8 @@ import { useDiscordSetttings, useSettingsStoreActions } from '/@/renderer/store'
 import { useTranslation } from 'react-i18next';
 
 const PROXY_ITEMS: SelectItem[] = [
-    { label: 'imgproxy', value: 'imgproxy' },
     { label: 'ndip', value: 'ndip' },
-    { label: 'freeimagehost', value: 'freeimagehost' },
-    { label: 'imgbb', value: 'imgbb' },
+    { label: 'pizza', value: 'pizza' },
 ];
 
 export const DiscordSettings = () => {
@@ -108,6 +106,7 @@ export const DiscordSettings = () => {
             control: (
                 <TextInput
                     defaultValue={settings.proxyUrl}
+                    disabled={settings.proxyType !== 'ndip'}
                     onBlur={(e) => {
                         setSettings({
                             discord: {

@@ -328,7 +328,7 @@ const initialState: SettingsState = {
     discord: {
         clientId: '1117545345690374277',
         enabled: false,
-        proxyType: 'freeimagehost',
+        proxyType: 'pizza',
         proxyUrl: '',
     },
     font: {
