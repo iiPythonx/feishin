@@ -8,13 +8,14 @@ import { useAlbumArtistDetail } from '/@/renderer/features/artists/queries/album
 import { usePlayQueueAdd } from '/@/renderer/features/player';
 import { AnimatedPage, LibraryHeaderBar } from '/@/renderer/features/shared';
 import { useFastAverageColor } from '/@/renderer/hooks';
-import { useCurrentServer } from '/@/renderer/store';
+import { useBackgroundSettings, useCurrentServer } from '/@/renderer/store';
 import { usePlayButtonBehavior } from '/@/renderer/store/settings.store';
 
 const AlbumArtistDetailRoute = () => {
     const scrollAreaRef = useRef<HTMLDivElement>(null);
     const headerRef = useRef<HTMLDivElement>(null);
     const server = useCurrentServer();
+    const { enableBackgroundArtist, backgroundBlurSize } = useBackgroundSettings();
 
     const { albumArtistId } = useParams() as { albumArtistId: string };
     const handlePlayQueueAdd = usePlayQueueAdd();
@@ -28,6 +29,8 @@ const AlbumArtistDetailRoute = () => {
         src: detailQuery.data?.imageUrl,
         srcLoaded: !detailQuery.isLoading,
     });
+
+    const backgroundUrl = detailQuery.data?.imageUrl || '';
 
     const handlePlay = () => {
         handlePlayQueueAdd?.({
@@ -63,9 +66,15 @@ const AlbumArtistDetailRoute = () => {
             >
                 <AlbumArtistDetailHeader
                     ref={headerRef}
-                    background={background}
+                    background={{
+                        background:
+                            (enableBackgroundArtist && `url(${backgroundUrl})`) || background,
+                        blur: (enableBackgroundArtist && backgroundBlurSize) || 0,
+                    }}
                 />
-                <AlbumArtistDetailContent background={background} />
+                <AlbumArtistDetailContent
+                    background={(enableBackgroundArtist && `url(${backgroundUrl})`) || background}
+                />
             </NativeScrollArea>
         </AnimatedPage>
     );

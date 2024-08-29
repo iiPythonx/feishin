@@ -10,13 +10,13 @@ import { AlbumDetailHeader } from '/@/renderer/features/albums/components/album-
 import { usePlayQueueAdd } from '/@/renderer/features/player';
 import { usePlayButtonBehavior } from '/@/renderer/store/settings.store';
 import { LibraryItem } from '/@/renderer/api/types';
-import { useCurrentServer, useFullScreenPlayerStore } from '/@/renderer/store';
+import { useBackgroundSettings, useCurrentServer } from '/@/renderer/store';
 
 const AlbumDetailRoute = () => {
     const tableRef = useRef<AgGridReactType | null>(null);
     const scrollAreaRef = useRef<HTMLDivElement>(null);
     const headerRef = useRef<HTMLDivElement>(null);
-    const { dynamicIsImage: useBlur } = useFullScreenPlayerStore();
+    const { enableBackgroundAlbum, backgroundBlurSize } = useBackgroundSettings();
 
     const { albumId } = useParams() as { albumId: string };
     const server = useCurrentServer();
@@ -64,10 +64,16 @@ const AlbumDetailRoute = () => {
             >
                 <AlbumDetailHeader
                     ref={headerRef}
-                    background={(useBlur && `url(${backgroundURL})`) || backgroundColor}
+                    background={{
+                        background:
+                            (enableBackgroundAlbum && `url(${backgroundURL})`) || backgroundColor,
+                        blur: (enableBackgroundAlbum && backgroundBlurSize) || 0,
+                    }}
                 />
                 <AlbumDetailContent
-                    background={(useBlur && `url(${backgroundURL})`) || backgroundColor}
+                    background={
+                        (enableBackgroundAlbum && `url(${backgroundURL})`) || backgroundColor
+                    }
                     tableRef={tableRef}
                 />
             </NativeScrollArea>

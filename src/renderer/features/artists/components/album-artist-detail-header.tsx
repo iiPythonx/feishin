@@ -11,7 +11,10 @@ import { formatDurationString } from '/@/renderer/utils';
 import { useCurrentServer } from '../../../store/auth.store';
 
 interface AlbumArtistDetailHeaderProps {
-    background: string;
+    background: {
+        background: string;
+        blur: number;
+    };
 }
 
 export const AlbumArtistDetailHeader = forwardRef(
@@ -66,10 +69,10 @@ export const AlbumArtistDetailHeader = forwardRef(
         return (
             <LibraryHeader
                 ref={ref}
-                background={background}
                 imageUrl={detailQuery?.data?.imageUrl}
                 item={{ route: AppRoute.LIBRARY_ALBUM_ARTISTS, type: LibraryItem.ALBUM_ARTIST }}
                 title={detailQuery?.data?.name || ''}
+                {...background}
             >
                 <Stack>
                     <Group>

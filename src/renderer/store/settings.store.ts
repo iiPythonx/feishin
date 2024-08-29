@@ -183,6 +183,13 @@ export interface SettingsState {
         artistBiographies: boolean;
         artistTopSongs: boolean;
     };
+    background: {
+        backgroundBlurSize: number;
+        backgroundPlayerCoverType: string;
+        enableBackgroundAlbum: boolean;
+        enableBackgroundArtist: boolean;
+        enableBackgroundPlayer: boolean;
+    };
     css: {
         content: string;
         enabled: boolean;
@@ -321,6 +328,13 @@ const initialState: SettingsState = {
     artist: {
         artistBiographies: true,
         artistTopSongs: true,
+    },
+    background: {
+        backgroundBlurSize: 1.5,
+        backgroundPlayerCoverType: 'album',
+        enableBackgroundAlbum: false,
+        enableBackgroundArtist: false,
+        enableBackgroundPlayer: false,
     },
     css: {
         content: '',
@@ -740,3 +754,5 @@ export const useDiscordSetttings = () => useSettingsStore((state) => state.disco
 export const useArtistSettings = () => useSettingsStore((state) => state.artist, shallow);
 
 export const useCssSettings = () => useSettingsStore((state) => state.css, shallow);
+
+export const useBackgroundSettings = () => useSettingsStore((state) => state.background, shallow);

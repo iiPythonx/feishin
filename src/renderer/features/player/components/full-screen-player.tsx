@@ -16,6 +16,7 @@ import {
     Switch,
 } from '/@/renderer/components';
 import {
+    useBackgroundSettings,
     useCurrentSong,
     useFullScreenPlayerStore,
     useFullScreenPlayerStoreActions,
@@ -79,15 +80,8 @@ const mainBackground = 'var(--main-bg)';
 
 const Controls = () => {
     const { t } = useTranslation();
-    const {
-        dynamicBackground,
-        dynamicImageBlur,
-        dynamicIsImage,
-        dynamicUseCoverArt,
-        expanded,
-        opacity,
-        useImageAspectRatio,
-    } = useFullScreenPlayerStore();
+    const { dynamicBackground, expanded, opacity, useImageAspectRatio } =
+        useFullScreenPlayerStore();
     const { setStore } = useFullScreenPlayerStoreActions();
     const { setSettings } = useSettingsStoreActions();
     const lyricConfig = useLyricsSettings();
@@ -156,71 +150,6 @@ const Controls = () => {
                             />
                         </Option.Control>
                     </Option>
-                    {dynamicBackground && (
-                        <Option>
-                            <Option.Label>
-                                {t('page.fullscreenPlayer.config.dynamicIsImage', {
-                                    postProcess: 'sentenceCase',
-                                })}
-                            </Option.Label>
-                            <Option.Control>
-                                <Switch
-                                    defaultChecked={dynamicIsImage}
-                                    onChange={(e) =>
-                                        setStore({
-                                            dynamicIsImage: e.target.checked,
-                                        })
-                                    }
-                                />
-                            </Option.Control>
-                        </Option>
-                    )}
-                    {dynamicBackground && dynamicIsImage && (
-                        <Option>
-                            <Option.Label>
-                                {t('page.fullscreenPlayer.config.dynamicImageBlur', {
-                                    postProcess: 'sentenceCase',
-                                })}
-                            </Option.Label>
-                            <Option.Control>
-                                <Slider
-                                    defaultValue={dynamicImageBlur}
-                                    label={(e) => `${e} rem`}
-                                    max={6}
-                                    min={0}
-                                    step={0.5}
-                                    w="100%"
-                                    onChangeEnd={(e) => setStore({ dynamicImageBlur: Number(e) })}
-                                />
-                            </Option.Control>
-                        </Option>
-                    )}
-                    {dynamicBackground && dynamicIsImage && (
-                        <Option>
-                            <Option.Label>
-                                {t('page.fullscreenPlayer.config.dynamicUseCoverArt', {
-                                    postProcess: 'sentenceCase',
-                                })}
-                            </Option.Label>
-                            <Option.Control>
-                                <Select
-                                    // I know it's not translated, and I don't care.
-                                    data={[
-                                        {
-                                            label: 'album',
-                                            value: 'album',
-                                        },
-                                        {
-                                            label: 'track',
-                                            value: 'track',
-                                        },
-                                    ]}
-                                    value={dynamicUseCoverArt}
-                                    onChange={(e) => setStore({ dynamicUseCoverArt: e || 'album' })}
-                                />
-                            </Option.Control>
-                        </Option>
-                    )}
                     {dynamicBackground && (
                         <Option>
                             <Option.Label>
@@ -478,8 +407,9 @@ const containerVariants: Variants = {
 };
 
 export const FullScreenPlayer = () => {
-    const { dynamicBackground, dynamicImageBlur, dynamicIsImage, dynamicUseCoverArt } =
-        useFullScreenPlayerStore();
+    const { dynamicBackground } = useFullScreenPlayerStore();
+    const { enableBackgroundPlayer, backgroundBlurSize, backgroundPlayerCoverType } =
+        useBackgroundSettings();
     const { setStore } = useFullScreenPlayerStoreActions();
 
     const { windowBarStyle } = useWindowSettings();
@@ -504,12 +434,12 @@ export const FullScreenPlayer = () => {
 
     const imageUrl = currentSong?.imageUrl && currentSong.imageUrl.replace(/size=\d+/g, 'size=500');
     const backgroundImage =
-        imageUrl && dynamicIsImage
+        imageUrl && enableBackgroundPlayer
             ? `url("${imageUrl
                   .replace(/size=\d+/g, 'size=500')
                   .replace(
                       currentSong.id,
-                      currentSong[dynamicUseCoverArt === 'album' ? 'albumId' : 'id'],
+                      currentSong[backgroundPlayerCoverType === 'album' ? 'albumId' : 'id'],
                   )}")`
             : mainBackground;
 
@@ -523,7 +453,7 @@ export const FullScreenPlayer = () => {
             variants={containerVariants}
         >
             <Controls />
-            {dynamicBackground && <BackgroundImageOverlay $blur={dynamicImageBlur} />}
+            {dynamicBackground && <BackgroundImageOverlay $blur={backgroundBlurSize} />}
             <ResponsiveContainer>
                 <FullScreenPlayerImage />
                 <FullScreenPlayerQueue />
