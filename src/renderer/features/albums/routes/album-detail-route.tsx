@@ -29,9 +29,6 @@ const AlbumDetailRoute = () => {
     const backgroundURL = detailQuery.data?.imageUrl || '';
     const handlePlayQueueAdd = usePlayQueueAdd();
     const playButtonBehavior = usePlayButtonBehavior();
-    // const backgroundToUse = (useBlur && backgroundURL) || backgroundColor;
-
-    // console.log(backgroundToUse, useBlur, (useBlur && `url(${backgroundURL})`) || backgroundColor);
 
     const handlePlay = () => {
         handlePlayQueueAdd?.({

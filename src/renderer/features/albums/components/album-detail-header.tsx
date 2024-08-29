@@ -78,7 +78,7 @@ export const AlbumDetailHeader = forwardRef(
             <Stack ref={cq.ref}>
                 <LibraryHeader
                     ref={ref}
-                    background={`url(${background})`}
+                    background={background}
                     imageUrl={detailQuery?.data?.imageUrl}
                     item={{ route: AppRoute.LIBRARY_ALBUMS, type: LibraryItem.ALBUM }}
                     title={detailQuery?.data?.name || ''}
