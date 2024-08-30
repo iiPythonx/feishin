@@ -148,7 +148,6 @@ export const FullScreenPlayerImage = () => {
         current: 0,
         topImage: scaleImageUrl(mainImageDimensions.idealSize, queue.current?.imageUrl),
     });
-
     const updateImageSize = useCallback(() => {
         if (mainImageRef.current) {
             setMainImageDimensions({

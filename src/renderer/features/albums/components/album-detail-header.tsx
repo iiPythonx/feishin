@@ -37,7 +37,7 @@ export const AlbumDetailHeader = forwardRef(
                 id: 'releaseDate',
                 value:
                     detailQuery?.data?.releaseDate &&
-                    `${releasePrefix} ${formatDateAbsolute(detailQuery?.data?.releaseDate)}`,
+                    `${releasePrefix} ${detailQuery?.data?.releaseYear}`,
             },
             {
                 id: 'songCount',
@@ -47,6 +47,10 @@ export const AlbumDetailHeader = forwardRef(
                 id: 'duration',
                 value:
                     detailQuery?.data?.duration && formatDurationString(detailQuery.data.duration),
+            },
+            {
+                id: 'playCount',
+                value: `${detailQuery?.data?.playCount} plays`,
             },
         ];
 
