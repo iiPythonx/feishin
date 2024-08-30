@@ -447,6 +447,16 @@
         "pause": "pause"
     },
     "setting": {
+        "enableBackgroundPlayer": "enable player background image",
+        "enableBackgroundPlayer_description": "enable the background image for the fullscreen player",
+        "enableBackgroundAlbum": "enable album background image",
+        "enableBackgroundAlbum_description": "enable the background image for the album page",
+        "enableBackgroundArtist": "enable artist background image",
+        "enableBackgroundArtist_description": "enable the background image for the artist page",
+        "backgroundBlurSize": "background blur size",
+        "backgroundBlurSize_description": "size in rem of the background blur",
+        "backgroundPlayerCoverType": "player background cover type",
+        "backgroundPlayerCoverType_description": "the art to use for the background image in the fullscreen player",
         "accentColor": "accent color",
         "accentColor_description": "sets the accent color for the application",
         "applicationHotkeys": "application hotkeys",

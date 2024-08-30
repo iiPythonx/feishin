@@ -15,7 +15,7 @@
         "lint:code": "cross-env NODE_ENV=development eslint . --ext .js,.jsx,.ts,.tsx --fix",
         "lint:styles": "npx stylelint **/*.tsx --fix",
         "package": "node --import tsx ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never",
-        "package:pr": "node --import tsx ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never --win --mac --linux",
+        "package:pr": "node --import tsx ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never --win --linux",
         "package:dev": "node --import tsx ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never --dir",
         "postinstall": "node --import tsx .erb/scripts/check-native-dep.js && electron-builder install-app-deps && cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.dev.dll.ts",
         "start": "node --import tsx ./.erb/scripts/check-port-in-use.js && npm run start:renderer",
@@ -57,35 +57,6 @@
         ],
         "afterSign": ".erb/scripts/notarize.js",
         "electronVersion": "31.2.0",
-        "mac": {
-            "target": {
-                "target": "default",
-                "arch": [
-                    "arm64",
-                    "x64"
-                ]
-            },
-            "icon": "assets/icons/icon.icns",
-            "type": "distribution",
-            "hardenedRuntime": true,
-            "entitlements": "assets/entitlements.mac.plist",
-            "entitlementsInherit": "assets/entitlements.mac.plist",
-            "gatekeeperAssess": false
-        },
-        "dmg": {
-            "contents": [
-                {
-                    "x": 130,
-                    "y": 220
-                },
-                {
-                    "x": 410,
-                    "y": 220,
-                    "type": "link",
-                    "path": "/Applications"
-                }
-            ]
-        },
         "win": {
             "target": [
                 "nsis",
@@ -93,42 +64,8 @@
             ],
             "icon": "assets/icons/icon.ico"
         },
-        "deb": {
-            "depends": [
-                "libgssapi_krb5.so.2",
-                "libavahi-common.so.3",
-                "libavahi-client.so.3",
-                "libkrb5.so.3",
-                "libkrb5support.so.0",
-                "libkeyutils.so.1",
-                "libcups.so.2"
-            ]
-        },
-        "rpm": {
-            "depends": [
-                "libgssapi_krb5.so.2",
-                "libavahi-common.so.3",
-                "libavahi-client.so.3",
-                "libkrb5.so.3",
-                "libkrb5support.so.0",
-                "libkeyutils.so.1",
-                "libcups.so.2"
-            ]
-        },
-        "freebsd": {
-            "depends": [
-                "libgssapi_krb5.so.2",
-                "libavahi-common.so.3",
-                "libavahi-client.so.3",
-                "libkrb5.so.3",
-                "libkrb5support.so.0",
-                "libkeyutils.so.1",
-                "libcups.so.2"
-            ]
-        },
         "linux": {
             "target": [
-                "AppImage",
                 "tar.xz"
             ],
             "icon": "assets/icons/icon.png",

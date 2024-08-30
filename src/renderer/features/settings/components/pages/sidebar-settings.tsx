@@ -81,5 +81,10 @@ export const SidebarSettings = () => {
         },
     ];
 
-    return <SettingsSection options={options} />;
+    return (
+        <SettingsSection
+            divider={false}
+            options={options}
+        />
+    );
 };
