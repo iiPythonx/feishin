@@ -96,7 +96,11 @@ export const BackgroundSettings = () => {
                 context: 'description',
                 postProcess: 'sentenceCase',
             }),
-            isHidden: false,
+            isHidden: !(
+                settings.enableBackgroundAlbum ||
+                settings.enableBackgroundArtist ||
+                settings.enableBackgroundPlayer
+            ),
             title: t('setting.backgroundBlurSize', { postProcess: 'sentenceCase' }),
         },
         {
@@ -121,6 +125,7 @@ export const BackgroundSettings = () => {
                 context: 'description',
                 postProcess: 'sentenceCase',
             }),
+            isHidden: !settings.enableBackgroundPlayer,
             title: t('setting.backgroundPlayerCoverType', {
                 postProcess: 'sentenceCase',
             }),

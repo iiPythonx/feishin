@@ -35,16 +35,12 @@ export const DiscordSettings = () => {
             ),
             description: t('setting.discordRichPresence', {
                 context: 'description',
-                discord: 'Discord',
-                icon: 'icon',
-                paused: 'paused',
-                playing: 'playing',
                 postProcess: 'sentenceCase',
             }),
             isHidden: !isElectron(),
             title: t('setting.discordRichPresence', {
                 discord: 'Discord',
-                postProcess: 'sentenceCase',
+                rpc: 'RPC',
             }),
         },
         {
@@ -63,15 +59,10 @@ export const DiscordSettings = () => {
             ),
             description: t('setting.discordApplicationId', {
                 context: 'description',
-                defaultId: '1117545345690374277',
-                discord: 'Discord',
                 postProcess: 'sentenceCase',
             }),
-            isHidden: !isElectron(),
-            title: t('setting.discordApplicationId', {
-                discord: 'Discord',
-                postProcess: 'sentenceCase',
-            }),
+            isHidden: !(isElectron() && settings.enabled),
+            title: t('setting.discordApplicationId'),
         },
         {
             control: (
@@ -96,9 +87,8 @@ export const DiscordSettings = () => {
                 context: 'description',
                 postProcess: 'sentenceCase',
             }),
-            isHidden: !isElectron(),
+            isHidden: !(isElectron() && settings.enabled),
             title: t('setting.discordProxyType', {
-                discord: 'Discord',
                 postProcess: 'sentenceCase',
             }),
         },
@@ -119,14 +109,10 @@ export const DiscordSettings = () => {
             ),
             description: t('setting.discordProxyUrl', {
                 context: 'description',
-                discord: 'Discord',
                 postProcess: 'sentenceCase',
             }),
-            isHidden: !isElectron(),
-            title: t('setting.discordProxyUrl', {
-                discord: 'Discord',
-                postProcess: 'sentenceCase',
-            }),
+            isHidden: !(isElectron() && settings.enabled),
+            title: t('setting.discordProxyUrl'),
         },
         {
             control: (
@@ -146,7 +132,7 @@ export const DiscordSettings = () => {
                 context: 'description',
                 postProcess: 'sentenceCase',
             }),
-            isHidden: !isElectron(),
+            isHidden: !(isElectron() && settings.enabled),
             title: t('setting.discordListening', {
                 postProcess: 'sentenceCase',
             }),

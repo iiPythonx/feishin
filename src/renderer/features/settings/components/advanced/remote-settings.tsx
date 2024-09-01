@@ -1,7 +1,7 @@
 import isElectron from 'is-electron';
 import { SettingsSection } from '/@/renderer/features/settings/components/settings-section';
 import { useRemoteSettings, useSettingsStoreActions } from '/@/renderer/store';
-import { NumberInput, Switch, Text, TextInput, toast } from '/@/renderer/components';
+import { NumberInput, Switch, TextInput, toast } from '/@/renderer/components';
 import debounce from 'lodash/debounce';
 import { useTranslation } from 'react-i18next';
 
@@ -11,8 +11,6 @@ export const RemoteSettings = () => {
     const { t } = useTranslation();
     const settings = useRemoteSettings();
     const { setSettings } = useSettingsStoreActions();
-
-    const url = `http://localhost:${settings.port}`;
 
     const debouncedEnableRemote = debounce(async (enabled: boolean) => {
         const errorMsg = await remote!.setRemoteEnabled(enabled);
@@ -67,25 +65,10 @@ export const RemoteSettings = () => {
                     }}
                 />
             ),
-            description: (
-                <Text
-                    $noSelect
-                    $secondary
-                    size="sm"
-                >
-                    {t('setting.enableRemote', {
-                        context: 'description',
-                        postProcess: 'sentenceCase',
-                    })}{' '}
-                    <a
-                        href={url}
-                        rel="noreferrer noopener"
-                        target="_blank"
-                    >
-                        {url}
-                    </a>
-                </Text>
-            ),
+            description: t('setting.enableRemote', {
+                context: 'description',
+                postProcess: 'sentenceCase',
+            }),
             isHidden,
             title: t('setting.enableRemote', { postProcess: 'sentenceCase' }),
         },
@@ -105,7 +88,7 @@ export const RemoteSettings = () => {
                 context: 'description',
                 postProcess: 'sentenceCase',
             }),
-            isHidden,
+            isHidden: !settings.enabled,
             title: t('setting.remotePort', { postProcess: 'sentenceCase' }),
         },
         {
@@ -129,7 +112,7 @@ export const RemoteSettings = () => {
                 context: 'description',
                 postProcess: 'sentenceCase',
             }),
-            isHidden,
+            isHidden: !settings.enabled,
             title: t('setting.remoteUsername', { postProcess: 'sentenceCase' }),
         },
         {
@@ -153,7 +136,7 @@ export const RemoteSettings = () => {
                 context: 'description',
                 postProcess: 'sentenceCase',
             }),
-            isHidden,
+            isHidden: !settings.enabled,
             title: t('setting.remotePassword', { postProcess: 'sentenceCase' }),
         },
     ];

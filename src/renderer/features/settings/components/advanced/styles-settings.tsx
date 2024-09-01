@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { Button, ConfirmModal, Switch, Text, Textarea } from '/@/renderer/components';
+import { Button, Switch, Textarea } from '/@/renderer/components';
 import { sanitizeCss } from '/@/renderer/utils/sanitize';
-import { Code } from '@mantine/core';
 import { SettingsOptions } from '/@/renderer/features/settings/components/settings-option';
-import { closeAllModals, openModal } from '@mantine/modals';
 import { useTranslation } from 'react-i18next';
 import { useCssSettings, useSettingsStoreActions } from '/@/renderer/store';
 
@@ -25,29 +23,6 @@ export const StylesSettings = () => {
         });
     };
 
-    const handleResetToDefault = () => {
-        setSettings({
-            css: {
-                content,
-                enabled: true,
-            },
-        });
-        closeAllModals();
-    };
-
-    const openConfirmModal = () => {
-        openModal({
-            children: (
-                <ConfirmModal onConfirm={handleResetToDefault}>
-                    <Text color="red !important">
-                        {t('setting.customCssNotice', { css: 'CSS', postProcess: 'sentenceCase' })}
-                    </Text>
-                </ConfirmModal>
-            ),
-            title: t('setting.customCssEnable', { css: 'CSS', postProcess: 'sentenceCase' }),
-        });
-    };
-
     return (
         <>
             <SettingsOptions
@@ -55,25 +30,19 @@ export const StylesSettings = () => {
                     <Switch
                         checked={enabled}
                         onChange={(e) => {
-                            if (!e.currentTarget.checked) {
-                                setSettings({
-                                    css: {
-                                        content,
-                                        enabled: false,
-                                    },
-                                });
-                            } else {
-                                openConfirmModal();
-                            }
+                            setSettings({
+                                css: {
+                                    content,
+                                    enabled: e.currentTarget.checked,
+                                },
+                            });
                         }}
                     />
                 }
                 description={t('setting.customCssEnable', {
                     context: 'description',
-                    css: 'CSS',
-                    postProcess: 'sentenceCase',
                 })}
-                title={t('setting.customCssEnable', { css: 'CSS', postProcess: 'sentenceCase' })}
+                title={t('setting.customCssEnable')}
             />
             {enabled && (
                 <>
@@ -83,7 +52,6 @@ export const StylesSettings = () => {
                                 {open && (
                                     <Button
                                         compact
-                                        // disabled={isSaveButtonDisabled}
                                         variant="filled"
                                         onClick={handleSave}
                                     >
@@ -103,10 +71,8 @@ export const StylesSettings = () => {
                         }
                         description={t('setting.customCss', {
                             context: 'description',
-                            css: 'CSS',
-                            postProcess: 'sentenceCase',
                         })}
-                        title={t('setting.customCss', { css: 'CSS', postProcess: 'sentenceCase' })}
+                        title={t('setting.customCss')}
                     />
                     {open && (
                         <>
@@ -117,8 +83,6 @@ export const StylesSettings = () => {
                                     setCss(sanitizeCss(`<style>${e.currentTarget.value}`))
                                 }
                             />
-                            <Text>{t('common.preview', { postProcess: 'sentenceCase' })}: </Text>
-                            <Code block>{css}</Code>
                         </>
                     )}
                 </>
