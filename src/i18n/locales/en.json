@@ -390,7 +390,8 @@
             "hotkeysTab": "hotkeys",
             "pagesTab": "pages",
             "playbackTab": "playback",
-            "windowTab": "window"
+            "windowTab": "window",
+            "tweaks": "tweaks"
         },
         "sidebar": {
             "albumArtists": "$t(entity.albumArtist_other)",
@@ -488,7 +489,7 @@
         "customCssEnable_description": "allow writing custom {{css}} for the player",
         "customCssNotice": "custom {{css}} can pose risks by allowing the interface to be changed.",
         "customCss": "custom {{css}}",
-        "customCss_description": "custom css content",
+        "customCss_description": "custom {{css}} content",
         "customFontPath": "custom font path",
         "customFontPath_description": "sets the path to the custom font to use for the application",
         "disableAutomaticUpdates": "disable automatic updates",
@@ -650,6 +651,7 @@
         "themeDark_description": "sets the dark theme to use for the application",
         "themeLight": "theme (light)",
         "themeLight_description": "sets the light theme to use for the application",
+        "tweaks": "tweaks",
         "useSystemTheme": "use system theme",
         "useSystemTheme_description": "follow the system-defined light or dark preference",
         "volumeWheelStep": "volume wheel step",
