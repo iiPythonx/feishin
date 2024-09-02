@@ -105,7 +105,22 @@ export enum HomeItem {
     RECENTLY_PLAYED = 'recentlyPlayed',
 }
 
-export const homeItems = Object.values(HomeItem).map((item) => ({
+const homeItems = Object.values(HomeItem).map((item) => ({
+    disabled: false,
+    id: item,
+}));
+
+/* eslint-disable typescript-sort-keys/string-enum */
+export enum ArtistItem {
+    BIOGRAPHY = 'biography',
+    TOP_SONGS = 'topSongs',
+    RECENT_ALBUMS = 'recentAlbums',
+    COMPILATIONS = 'compilations',
+    SIMILAR_ARTISTS = 'similarArtists',
+}
+/* eslint-enable typescript-sort-keys/string-enum */
+
+const artistItems = Object.values(ArtistItem).map((item) => ({
     disabled: false,
     id: item,
 }));
@@ -178,6 +193,12 @@ export enum GenreTarget {
     TRACK = 'track',
 }
 
+export type TranscodingConfig = {
+    bitrate?: number;
+    enabled: boolean;
+    format?: string;
+};
+
 export interface SettingsState {
     artist: {
         artistBiographies: boolean;
@@ -210,6 +231,9 @@ export interface SettingsState {
     general: {
         accent: string;
         albumArtRes?: number | null;
+        albumBackground: boolean;
+        albumBackgroundBlur: number;
+        artistItems: SortableItem<ArtistItem>[];
         buttonSize: number;
         defaultFullPlaylist: boolean;
         disabledContextMenu: { [k in ContextMenuItemType]?: boolean };
@@ -223,6 +247,7 @@ export interface SettingsState {
         nativeAspectRatio: boolean;
         passwordStore?: string;
         playButtonBehavior: Play;
+        playerbarOpenDrawer: boolean;
         resume: boolean;
         showQueueDrawerButton: boolean;
         sideQueueType: SideQueueType;
@@ -276,7 +301,9 @@ export interface SettingsState {
             scrobbleAtPercentage: number;
         };
         style: PlaybackStyle;
+        transcode: TranscodingConfig;
         type: PlaybackType;
+        webAudio: boolean;
     };
     remote: {
         enabled: boolean;
@@ -307,11 +334,13 @@ export interface SettingsSlice extends SettingsState {
     actions: {
         reset: () => void;
         resetSampleRate: () => void;
+        setArtistItems: (item: SortableItem<ArtistItem>[]) => void;
         setGenreBehavior: (target: GenreTarget) => void;
         setHomeItems: (item: SortableItem<HomeItem>[]) => void;
         setSettings: (data: Partial<SettingsState>) => void;
         setSidebarItems: (items: SidebarItemType[]) => void;
         setTable: (type: TableType, data: DataTableProps) => void;
+        setTranscodingConfig: (config: TranscodingConfig) => void;
         toggleContextMenuItem: (item: ContextMenuItemType) => void;
         toggleSidebarCollapseShare: () => void;
     };
@@ -356,6 +385,9 @@ const initialState: SettingsState = {
     general: {
         accent: 'rgb(53, 116, 252)',
         albumArtRes: undefined,
+        albumBackground: false,
+        albumBackgroundBlur: 6,
+        artistItems,
         buttonSize: 20,
         defaultFullPlaylist: true,
         disabledContextMenu: {},
@@ -369,6 +401,7 @@ const initialState: SettingsState = {
         nativeAspectRatio: false,
         passwordStore: undefined,
         playButtonBehavior: Play.NOW,
+        playerbarOpenDrawer: false,
         resume: false,
         showQueueDrawerButton: false,
         sideQueueType: 'sideQueue',
@@ -462,7 +495,11 @@ const initialState: SettingsState = {
             scrobbleAtPercentage: 75,
         },
         style: PlaybackStyle.GAPLESS,
+        transcode: {
+            enabled: false,
+        },
         type: PlaybackType.WEB,
+        webAudio: true,
     },
     remote: {
         enabled: false,
@@ -663,6 +700,11 @@ export const useSettingsStore = create<SettingsSlice>()(
                             state.playback.mpvProperties.audioSampleRateHz = 0;
                         });
                     },
+                    setArtistItems: (items) => {
+                        set((state) => {
+                            state.general.artistItems = items;
+                        });
+                    },
                     setGenreBehavior: (target: GenreTarget) => {
                         set((state) => {
                             state.general.genreTarget = target;
@@ -684,6 +726,11 @@ export const useSettingsStore = create<SettingsSlice>()(
                     setTable: (type: TableType, data: DataTableProps) => {
                         set((state) => {
                             state.tables[type] = data;
+                        });
+                    },
+                    setTranscodingConfig: (config) => {
+                        set((state) => {
+                            state.playback.transcode = config;
                         });
                     },
                     toggleContextMenuItem: (item: ContextMenuItemType) => {

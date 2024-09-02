@@ -17,6 +17,10 @@ interface AlbumDetailHeaderProps {
         background: string;
         blur: number;
     };
+    background: {
+        background: string;
+        blur: number;
+    };
 }
 
 export const AlbumDetailHeader = forwardRef(
@@ -26,6 +30,8 @@ export const AlbumDetailHeader = forwardRef(
         const detailQuery = useAlbumDetail({ query: { id: albumId }, serverId: server?.id });
         const cq = useContainerQuery();
         const { t } = useTranslation();
+
+        const showRating = detailQuery?.data?.serverType === ServerType.NAVIDROME;
 
         const originalDifferentFromRelease =
             detailQuery.data?.originalDate &&
@@ -55,9 +61,9 @@ export const AlbumDetailHeader = forwardRef(
             },
             {
                 id: 'playCount',
-                value: `${detailQuery?.data?.playCount} ${t('entity.play', {
+                value: t('entity.play', {
                     count: detailQuery?.data?.playCount as number,
-                })}`,
+                }),
             },
         ];
 
@@ -82,8 +88,6 @@ export const AlbumDetailHeader = forwardRef(
                 serverId: detailQuery.data.serverId,
             });
         };
-
-        const showRating = detailQuery?.data?.serverType === ServerType.NAVIDROME;
 
         return (
             <Stack ref={cq.ref}>

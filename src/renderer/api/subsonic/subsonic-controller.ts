@@ -31,6 +31,7 @@ import {
     SimilarSongsArgs,
     Song,
     DownloadArgs,
+    TranscodingArgs,
 } from '/@/renderer/api/types';
 import { randomString } from '/@/renderer/utils';
 import { ServerFeatures } from '/@/renderer/api/features-types';
@@ -548,6 +549,19 @@ const getScanStatus = async (args: ScanStatusArgs): Promise<ScanStatus> => {
     };
 };
 
+const getTranscodingUrl = (args: TranscodingArgs) => {
+    const { base, format, bitrate } = args.query;
+    let url = base;
+    if (format) {
+        url += `&format=${format}`;
+    }
+    if (bitrate !== undefined) {
+        url += `&maxBitRate=${bitrate}`;
+    }
+
+    return url;
+};
+
 export const ssController = {
     authenticate,
     createFavorite,
@@ -560,6 +574,7 @@ export const ssController = {
     getSimilarSongs,
     getStructuredLyrics,
     getTopSongList,
+    getTranscodingUrl,
     removeFavorite,
     rescan,
     scrobble,

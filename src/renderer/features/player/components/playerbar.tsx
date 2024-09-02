@@ -1,6 +1,10 @@
 import { useCallback, MouseEvent } from 'react';
 import styled from 'styled-components';
-import { usePlaybackType, useSettingsStore } from '/@/renderer/store/settings.store';
+import {
+    usePlaybackType,
+    useSettingsStore,
+    useGeneralSettings,
+} from '/@/renderer/store/settings.store';
 import { PlaybackType } from '/@/renderer/types';
 import { AudioPlayer } from '/@/renderer/components';
 import {
@@ -64,6 +68,7 @@ const CenterGridItem = styled.div`
 export const Playerbar = () => {
     const playersRef = PlayersRef;
     const settings = useSettingsStore((state) => state.playback);
+    const { playerbarOpenDrawer } = useGeneralSettings();
     const playbackType = usePlaybackType();
     const volume = useVolume();
     const player1 = usePlayer1Data();
@@ -86,7 +91,9 @@ export const Playerbar = () => {
     }, [autoNext]);
 
     return (
-        <PlayerbarContainer onClick={handleToggleFullScreenPlayer}>
+        <PlayerbarContainer
+            onClick={playerbarOpenDrawer ? handleToggleFullScreenPlayer : undefined}
+        >
             <PlayerbarControlsGrid>
                 <LeftGridItem>
                     <LeftControls />

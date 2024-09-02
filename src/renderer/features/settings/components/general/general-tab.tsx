@@ -3,6 +3,7 @@ import { ApplicationSettings } from '/@/renderer/features/settings/components/ge
 import { ControlSettings } from '/@/renderer/features/settings/components/general/control-settings';
 import { ThemeSettings } from '/@/renderer/features/settings/components/general/theme-settings';
 import { ContextMenuSettings } from '/@/renderer/features/settings/components/general/context-menu-settings';
+import { ArtistSettings } from '/@/renderer/features/settings/components/general/artist-settings';
 
 export const GeneralTab = () => {
     return (
@@ -10,6 +11,7 @@ export const GeneralTab = () => {
             <ApplicationSettings />
             <ThemeSettings />
             <ControlSettings />
+            <ArtistSettings />
             <ContextMenuSettings />
         </Stack>
     );
