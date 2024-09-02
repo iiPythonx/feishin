@@ -108,6 +108,7 @@ const Controls = () => {
             spacing="sm"
             sx={{
                 background: `rgb(var(--main-bg-transparent), ${opacity}%)`,
+                borderRadius: '0px 0px 18px 0px',
                 left: 0,
                 top: 0,
             }}
