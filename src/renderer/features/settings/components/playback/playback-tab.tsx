@@ -16,14 +16,10 @@ const MpvSettings = lazy(() =>
 
 export const PlaybackTab = () => {
     const audioType = useSettingsStore((state) => state.playback.type);
-    const useWebAudio = useSettingsStore((state) => state.playback.webAudio);
 
     const hasFancyAudio = useMemo(() => {
-        return (
-            (isElectron() && audioType === PlaybackType.LOCAL) ||
-            (useWebAudio && 'AudioContext' in window)
-        );
-    }, [audioType, useWebAudio]);
+        return (isElectron() && audioType === PlaybackType.LOCAL) || 'AudioContext' in window;
+    }, [audioType]);
 
     return (
         <Stack spacing="md">

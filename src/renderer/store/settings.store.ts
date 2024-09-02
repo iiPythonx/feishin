@@ -200,10 +200,6 @@ export type TranscodingConfig = {
 };
 
 export interface SettingsState {
-    artist: {
-        artistBiographies: boolean;
-        artistTopSongs: boolean;
-    };
     background: {
         backgroundBlurSize: number;
         backgroundPlayerCoverType: string;
@@ -303,7 +299,6 @@ export interface SettingsState {
         style: PlaybackStyle;
         transcode: TranscodingConfig;
         type: PlaybackType;
-        webAudio: boolean;
     };
     remote: {
         enabled: boolean;
@@ -354,10 +349,6 @@ const getPlatformDefaultWindowBarStyle = (): Platform => {
 const platformDefaultWindowBarStyle: Platform = getPlatformDefaultWindowBarStyle();
 
 const initialState: SettingsState = {
-    artist: {
-        artistBiographies: true,
-        artistTopSongs: true,
-    },
     background: {
         backgroundBlurSize: 1.5,
         backgroundPlayerCoverType: 'album',
@@ -499,7 +490,6 @@ const initialState: SettingsState = {
             enabled: false,
         },
         type: PlaybackType.WEB,
-        webAudio: true,
     },
     remote: {
         enabled: false,
@@ -797,8 +787,6 @@ export const useSharingSettings = () => useSettingsStore((state) => state.sharin
 export const useFontSettings = () => useSettingsStore((state) => state.font, shallow);
 
 export const useDiscordSetttings = () => useSettingsStore((state) => state.discord, shallow);
-
-export const useArtistSettings = () => useSettingsStore((state) => state.artist, shallow);
 
 export const useCssSettings = () => useSettingsStore((state) => state.css, shallow);
 

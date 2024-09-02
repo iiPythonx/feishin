@@ -21,6 +21,7 @@ import { PlaybackStyle, PlayerStatus } from '/@/renderer/types';
 import { getServerById, TranscodingConfig, usePlaybackSettings, useSpeed } from '/@/renderer/store';
 import { toast } from '/@/renderer/components/toast';
 import { api } from '/@/renderer/api';
+import { useWebAudio } from '/@/renderer/features/player/hooks/use-webaudio';
 
 interface AudioPlayerProps extends ReactPlayerProps {
     crossfadeDuration: number;
@@ -111,7 +112,6 @@ export const AudioPlayer = forwardRef(
         const [isTransitioning, setIsTransitioning] = useState(false);
         const audioDeviceId = useSettingsStore((state) => state.playback.audioDeviceId);
         const playback = useSettingsStore((state) => state.playback.mpvProperties);
-        const useWebAudio = useSettingsStore((state) => state.playback.webAudio);
         const { resetSampleRate } = useSettingsStoreActions();
         const playbackSpeed = useSpeed();
         const { transcode } = usePlaybackSettings();
@@ -176,7 +176,7 @@ export const AudioPlayer = forwardRef(
         );
 
         useEffect(() => {
-            if (useWebAudio && 'AudioContext' in window) {
+            if ('AudioContext' in window) {
                 let context: AudioContext;
 
                 try {

@@ -37,11 +37,7 @@ import { LibraryBackgroundOverlay } from '/@/renderer/features/shared/components
 import { useContainerQuery } from '/@/renderer/hooks';
 import { AppRoute } from '/@/renderer/router/routes';
 import { ArtistItem, useCurrentServer } from '/@/renderer/store';
-import {
-    useArtistSettings,
-    useGeneralSettings,
-    usePlayButtonBehavior,
-} from '/@/renderer/store/settings.store';
+import { useGeneralSettings, usePlayButtonBehavior } from '/@/renderer/store/settings.store';
 import { CardRow, Play, TableColumn } from '/@/renderer/types';
 import { sanitize } from '/@/renderer/utils/sanitize';
 import { useGenreRoute } from '/@/renderer/hooks/use-genre-route';
@@ -69,7 +65,6 @@ interface AlbumArtistDetailContentProps {
 
 export const AlbumArtistDetailContent = ({ background }: AlbumArtistDetailContentProps) => {
     const { t } = useTranslation();
-    const { artistBiographies } = useArtistSettings();
     const { artistItems, externalLinks } = useGeneralSettings();
     const { albumArtistId } = useParams() as { albumArtistId: string };
     const cq = useContainerQuery();
@@ -372,7 +367,6 @@ export const AlbumArtistDetailContent = ({ background }: AlbumArtistDetailConten
         return sanitize(bio);
     }, [detailQuery?.data?.biography, enabledItem.biography]);
 
-    const showBiography = biography && artistBiographies;
     const showTopSongs = topSongsQuery?.data?.items?.length && enabledItem.topSongs;
     const showGenres = detailQuery?.data?.genres ? detailQuery?.data?.genres.length !== 0 : false;
     const mbzId = detailQuery?.data?.mbz;
@@ -501,7 +495,7 @@ export const AlbumArtistDetailContent = ({ background }: AlbumArtistDetailConten
                     </Box>
                 ) : null}
                 <Grid>
-                    {showBiography ? (
+                    {biography ? (
                         <Grid.Col
                             order={itemOrder.biography}
                             span={12}

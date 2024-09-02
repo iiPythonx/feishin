@@ -17,10 +17,6 @@ interface AlbumDetailHeaderProps {
         background: string;
         blur: number;
     };
-    background: {
-        background: string;
-        blur: number;
-    };
 }
 
 export const AlbumDetailHeader = forwardRef(
