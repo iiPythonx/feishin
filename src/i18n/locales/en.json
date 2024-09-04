@@ -144,6 +144,8 @@
         "playlistWithCount_one": "{{count}} playlist",
         "playlistWithCount_other": "{{count}} playlists",
         "smartPlaylist": "smart $t(entity.playlist_one)",
+        "song_one": "{{count}} song",
+        "song_other": "{{count}} songs",
         "track_one": "track",
         "track_other": "tracks",
         "trackWithCount_one": "{{count}} track",
