@@ -474,7 +474,7 @@ export const useCenterControls = (args: { playersRef: any }) => {
             mpvPlayer!.seek(-seconds);
         } else {
             resetNextPlayer();
-            currentPlayerRef.seekTo(newTime);
+            currentPlayerRef.seekTo(newTime, 'seconds');
         }
     };
 
@@ -497,12 +497,16 @@ export const useCenterControls = (args: { playersRef: any }) => {
 
             resetNextPlayer();
             setCurrentTime(newTime, true);
-            currentPlayerRef.seekTo(newTime);
+            currentPlayerRef.seekTo(newTime, 'seconds');
         }
     };
 
     const debouncedSeek = debounce((e: number) => {
-        currentPlayerRef.seekTo(e);
+        if (isMpvPlayer) {
+            mpvPlayer!.seekTo(e);
+        } else {
+            currentPlayerRef.seekTo(e, 'seconds');
+        }
     }, 100);
 
     const handleSeekSlider = useCallback(
