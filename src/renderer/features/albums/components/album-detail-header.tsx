@@ -33,16 +33,16 @@ export const AlbumDetailHeader = forwardRef(
             detailQuery.data?.originalDate &&
             detailQuery.data.originalDate !== detailQuery.data.releaseDate;
 
-        const releasePrefix = originalDifferentFromRelease
-            ? t('page.albumDetail.released', { postProcess: 'sentenceCase' })
-            : '♫';
+        const releaseString =
+            detailQuery.data?.releaseDate &&
+            (detailQuery.data?.releaseDate.slice(0, 10) === `${detailQuery.data.releaseYear}-01-01`
+                ? detailQuery.data.releaseYear
+                : formatDateAbsolute(detailQuery.data.releaseDate));
 
         const metadataItems = [
             {
                 id: 'releaseDate',
-                value:
-                    detailQuery?.data?.releaseDate &&
-                    `${releasePrefix} ${detailQuery?.data?.releaseYear}`,
+                value: detailQuery?.data?.releaseDate && `♫ ${releaseString}`,
             },
             {
                 id: 'songCount',
