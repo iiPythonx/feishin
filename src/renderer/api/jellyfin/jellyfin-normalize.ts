@@ -53,7 +53,7 @@ const getAlbumArtistCoverArtUrl = (args: {
         `${args.baseUrl}/Items` +
         `/${args.item.Id}` +
         '/Images/Primary' +
-        `?width=${size}&` +
+        `?width=${size}` +
         '&quality=96'
     );
 };
@@ -69,7 +69,7 @@ const getAlbumCoverArtUrl = (args: { baseUrl: string; item: JFAlbum; size: numbe
         `${args.baseUrl}/Items` +
         `/${args.item.Id}` +
         '/Images/Primary' +
-        `?width=${size}&height=${size}` +
+        `?width=${size}` +
         '&quality=96'
     );
 };
@@ -86,7 +86,7 @@ const getSongCoverArtUrl = (args: {
             `${args.baseUrl}/Items` +
             `/${args.item.Id}` +
             '/Images/Primary' +
-            `?width=${size}&height=${size}` +
+            `?width=${size}` +
             '&quality=96'
         );
     }
@@ -97,7 +97,7 @@ const getSongCoverArtUrl = (args: {
             `${args.baseUrl}/Items` +
             `/${args.item?.AlbumId}` +
             '/Images/Primary' +
-            `?width=${size}&height=${size}` +
+            `?width=${size}` +
             '&quality=96'
         );
     }
@@ -116,7 +116,7 @@ const getPlaylistCoverArtUrl = (args: { baseUrl: string; item: JFPlaylist; size:
         `${args.baseUrl}/Items` +
         `/${args.item.Id}` +
         '/Images/Primary' +
-        `?width=${size}&height=${size}` +
+        `?width=${size}` +
         '&quality=96'
     );
 };
@@ -153,11 +153,16 @@ const normalizeSong = (
         discNumber: (item.ParentIndexNumber && item.ParentIndexNumber) || 1,
         discSubtitle: null,
         duration: item.RunTimeTicks / 10000,
-        gain: item.LUFS
-            ? {
-                  track: -18 - item.LUFS,
-              }
-            : null,
+        gain:
+            item.NormalizationGain !== undefined
+                ? {
+                      track: item.NormalizationGain,
+                  }
+                : item.LUFS
+                  ? {
+                        track: -18 - item.LUFS,
+                    }
+                  : null,
         genres: item.GenreItems?.map((entry) => ({
             id: entry.Id,
             imageUrl: null,
@@ -388,7 +393,7 @@ const getGenreCoverArtUrl = (args: {
         `${args.baseUrl}/Items` +
         `/${args.item.Id}` +
         '/Images/Primary' +
-        `?width=${size}&height=${size}` +
+        `?width=${size}` +
         '&quality=96'
     );
 };

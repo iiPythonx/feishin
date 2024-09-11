@@ -18,10 +18,10 @@ import {
 import { useSettingsStore, useSettingsStoreActions } from '/@/renderer/store/settings.store';
 import type { CrossfadeStyle } from '/@/renderer/types';
 import { PlaybackStyle, PlayerStatus } from '/@/renderer/types';
+import { useWebAudio } from '/@/renderer/features/player/hooks/use-webaudio';
 import { getServerById, TranscodingConfig, usePlaybackSettings, useSpeed } from '/@/renderer/store';
 import { toast } from '/@/renderer/components/toast';
 import { api } from '/@/renderer/api';
-import { useWebAudio } from '/@/renderer/features/player/hooks/use-webaudio';
 
 interface AudioPlayerProps extends ReactPlayerProps {
     crossfadeDuration: number;
@@ -45,7 +45,7 @@ const getDuration = (ref: any) => {
     return ref.current?.player?.player?.player?.duration;
 };
 
-// Credits: http://stackoverflow.com/questions/12150729/ddg
+// Credits: https://gist.github.com/novwhisky/8a1a0168b94f3b6abfaa?permalink_comment_id=1551393#gistcomment-1551393
 // This is used so that the player will always have an <audio> element. This means that
 // player1Source and player2Source are connected BEFORE the user presses play for
 // the first time. This workaround is important for Safari, which seems to require the

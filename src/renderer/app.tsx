@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
 import { ModuleRegistry } from '@ag-grid-community/core';
 import { InfiniteRowModelModule } from '@ag-grid-community/infinite-row-model';
@@ -287,7 +287,7 @@ export const App = () => {
                 <ContextMenuProvider>
                     <WebAudioContext.Provider value={webAudioProvider}>
                         <AppRouter />
-                    </WebAudioContext.Provider>
+                    </WebAudioContext.Provider>{' '}
                 </ContextMenuProvider>
             </PlayQueueHandlerContext.Provider>
             <IsUpdatedDialog />

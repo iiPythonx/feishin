@@ -2,7 +2,7 @@
     "name": "feishin",
     "productName": "Feishin",
     "description": "Feishin music server",
-    "version": "0.8.0",
+    "version": "0.8.1",
     "scripts": {
         "build": "concurrently \"npm run build:main\" \"npm run build:renderer\" \"npm run build:remote\"",
         "build:main": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.main.prod.ts",
@@ -249,6 +249,7 @@
         "@xhayper/discord-rpc": "^1.0.24",
         "audiomotion-analyzer": "^4.5.0",
         "auto-text-size": "^0.2.3",
+        "audiomotion-analyzer": "^4.5.0",
         "axios": "^1.6.0",
         "clsx": "^2.0.0",
         "cmdk": "^0.2.0",
