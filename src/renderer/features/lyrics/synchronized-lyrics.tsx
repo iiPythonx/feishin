@@ -80,6 +80,7 @@ export const SynchronizedLyrics = ({
         (time: number) => {
             if (playbackType === PlaybackType.LOCAL && mpvPlayer) {
                 mpvPlayer.seekTo(time);
+                setCurrentTime(time, true);
             } else {
                 setCurrentTime(time, true);
                 handleScrobbleFromSeek(time);
