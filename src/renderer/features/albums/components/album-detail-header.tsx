@@ -10,7 +10,7 @@ import { LibraryHeader, useSetRating } from '/@/renderer/features/shared';
 import { useContainerQuery } from '/@/renderer/hooks';
 import { AppRoute } from '/@/renderer/router/routes';
 import { useCurrentServer } from '/@/renderer/store';
-import { formatDateAbsolute, formatDurationString } from '/@/renderer/utils';
+import { formatDateAbsoluteUTC, formatDurationString } from '/@/renderer/utils';
 
 interface AlbumDetailHeaderProps {
     background: {
@@ -37,7 +37,7 @@ export const AlbumDetailHeader = forwardRef(
             detailQuery.data?.releaseDate &&
             (detailQuery.data?.releaseDate.slice(0, 10) === `${detailQuery.data.releaseYear}-01-01`
                 ? detailQuery.data.releaseYear
-                : formatDateAbsolute(detailQuery.data.releaseDate));
+                : formatDateAbsoluteUTC(detailQuery.data.releaseDate));
 
         const metadataItems = [
             {
@@ -64,7 +64,7 @@ export const AlbumDetailHeader = forwardRef(
         ];
 
         if (originalDifferentFromRelease) {
-            const formatted = `♫ ${formatDateAbsolute(detailQuery!.data!.originalDate)}`;
+            const formatted = `♫ ${formatDateAbsoluteUTC(detailQuery!.data!.originalDate)}`;
             metadataItems.splice(0, 0, {
                 id: 'originalDate',
                 value: formatted,
