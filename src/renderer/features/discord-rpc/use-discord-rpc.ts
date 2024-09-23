@@ -53,12 +53,13 @@ export const useDiscordRpc = () => {
                     name: song.artistName,
                     smallImageKey: status,
                     smallImageText: status.charAt(0).toUpperCase() + status.slice(1),
-                    state: `on ${song.album}`,
+                    state: `by ${song.artistName}`,
                     type: discordSettings.showAsListening ? 2 : 0,
                 };
 
                 if ((current[2] as PlayerStatus) === PlayerStatus.PLAYING) {
                     activity.endTimestamp = end;
+                    activity.startTimestamp = start;
                     activity.smallImageKey = 'playing';
                 } else {
                     activity.smallImageKey = 'paused';
