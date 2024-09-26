@@ -213,6 +213,7 @@ export interface SettingsState {
     };
     discord: {
         clientId: string;
+        enableCustomName: boolean;
         enabled: boolean;
         proxyType: string;
         proxyUrl: string;
@@ -365,6 +366,7 @@ const initialState: SettingsState = {
     },
     discord: {
         clientId: '1117545345690374277',
+        enableCustomName: false,
         enabled: false,
         proxyType: 'pizza',
         proxyUrl: '',

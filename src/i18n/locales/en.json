@@ -519,6 +519,8 @@
         "discordApplicationId_description": "the application id for discord rich presence.",
         "discordListening": "enable listening status",
         "discordListening_description": "show status as listening instead of playing.",
+        "discordCustomname": "enable artist name",
+        "discordCustomname_description": "This will show the artist name you are listening to instead of just Feishin.",
         "discordRichPresence": "{{discord}} {{rpc}} (modified)",
         "discordRichPresence_description": "enable playback status in discord rich presence.",
         "discordProxyType": "image proxy type",

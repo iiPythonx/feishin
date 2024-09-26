@@ -49,8 +49,6 @@ export const useDiscordRpc = () => {
                     instance: false,
                     largeImageKey: undefined,
                     largeImageText: song.album ? song.album : undefined,
-                    // @ts-ignore
-                    name: song.artistName,
                     smallImageKey: status,
                     smallImageText: status.charAt(0).toUpperCase() + status.slice(1),
                     state: `by ${song.artistName}`,
@@ -64,6 +62,9 @@ export const useDiscordRpc = () => {
                 } else {
                     activity.smallImageKey = 'paused';
                 }
+
+                // @ts-ignore
+                if (discordSettings.enableCustomName) activity.name = song.artistName;
 
                 // Handle forwarding album art
                 let imageUrl = lastImageUrl;
@@ -102,6 +103,7 @@ export const useDiscordRpc = () => {
             discordSettings.proxyType,
             discordSettings.proxyUrl,
             discordSettings.showAsListening,
+            discordSettings.enableCustomName,
             lastImageUrl,
             setLastImageUrl,
             firstChangeHandled,
