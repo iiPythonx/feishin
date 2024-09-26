@@ -494,17 +494,24 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
     const removeFromPlaylistMutation = useRemoveFromPlaylist();
 
     const handleRemoveFromPlaylist = useCallback(() => {
-        const songId =
-            (serverType === ServerType.NAVIDROME || ServerType.JELLYFIN
-                ? ctx.dataNodes?.map((node) => node.data.playlistItemId)
-                : ctx.dataNodes?.map((node) => node.data.id)) || [];
+        let songId: string[] | undefined;
+
+        switch (serverType) {
+            case ServerType.NAVIDROME:
+            case ServerType.JELLYFIN:
+                songId = ctx.dataNodes?.map((node) => node.data.playlistItemId);
+                break;
+            case ServerType.SUBSONIC:
+                songId = ctx.dataNodes?.map((node) => node.rowIndex!.toString());
+                break;
+        }
 
         const confirm = () => {
             removeFromPlaylistMutation.mutate(
                 {
                     query: {
                         id: ctx.context.playlistId,
-                        songId,
+                        songId: songId || [],
                     },
                     serverId: ctx.data?.[0]?.serverId,
                 },
@@ -869,7 +876,7 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
                     },
                 ],
                 id: 'setRating',
-                label: 'Set rating',
+                label: t('action.setRating', { postProcess: 'sentenceCase' }),
                 leftIcon: <RiStarFill size="1.1rem" />,
                 onClick: () => {},
                 rightIcon: <RiArrowRightSFill size="1.2rem" />,
