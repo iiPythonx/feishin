@@ -476,7 +476,7 @@ export const NavidromeController: ControllerEndpoint = {
                 _start: query.startIndex,
                 album_artist_id: query.artistIds,
                 album_id: query.albumIds,
-                genre_id: query.genreIds ? query.genreIds[0] : undefined,
+                genre_id: query.genreIds,
                 starred: query.favorite,
                 title: query.searchTerm,
                 ...query._custom?.navidrome,
