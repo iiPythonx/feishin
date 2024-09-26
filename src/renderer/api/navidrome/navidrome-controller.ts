@@ -357,6 +357,7 @@ export const NavidromeController: ControllerEndpoint = {
         };
     },
     getRandomSongList: SubsonicController.getRandomSongList,
+    getScanStatus: SubsonicController.getScanStatus,
     getServerInfo: async (args) => {
         const { apiClientProps } = args;
 
@@ -475,7 +476,7 @@ export const NavidromeController: ControllerEndpoint = {
                 _start: query.startIndex,
                 album_artist_id: query.artistIds,
                 album_id: query.albumIds,
-                genre_id: query.genreIds,
+                genre_id: query.genreIds ? query.genreIds[0] : undefined,
                 starred: query.favorite,
                 title: query.searchTerm,
                 ...query._custom?.navidrome,
@@ -561,6 +562,7 @@ export const NavidromeController: ControllerEndpoint = {
 
         return null;
     },
+    rescan: SubsonicController.rescan,
     scrobble: SubsonicController.scrobble,
     search: SubsonicController.search,
     setRating: SubsonicController.setRating,

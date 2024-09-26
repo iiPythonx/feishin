@@ -700,6 +700,26 @@ export const SubsonicController: ControllerEndpoint = {
             totalRecordCount: res.body.randomSongs?.song?.length || 0,
         };
     },
+    getScanStatus: async (args: ScanStatusArgs): Promise<ScanStatus> => {
+        const { apiClientProps } = args;
+
+        if (!apiClientProps.server?.userId) {
+            throw new Error('No userId found');
+        }
+
+        const res = await ssApiClient(apiClientProps).getScanStatus();
+        if (res.status !== 200) {
+            throw new Error('Could not start scan');
+        }
+
+        const { scanning, count, folderCount } = res.body.scanStatus;
+
+        return {
+            folders: folderCount,
+            scanning,
+            tracks: count,
+        };
+    },
     getServerInfo: async (args) => {
         const { apiClientProps } = args;
 
@@ -1204,6 +1224,34 @@ export const SubsonicController: ControllerEndpoint = {
 
         return null;
     },
+    rescan: async (args: RescanArgs): Promise<ScanStatus> => {
+        const { full, apiClientProps } = args;
+
+        if (!apiClientProps.server?.userId) {
+            throw new Error('No userId found');
+        }
+
+        const res = await ssApiClient(apiClientProps).startScan({
+            query:
+                full !== undefined
+                    ? {
+                          fullScan: full,
+                      }
+                    : undefined,
+        });
+
+        if (res.status !== 200) {
+            throw new Error('Could not start scan');
+        }
+
+        const { scanning, count, folderCount } = res.body.scanStatus;
+
+        return {
+            folders: folderCount,
+            scanning,
+            tracks: count,
+        };
+    },
     scrobble: async (args) => {
         const { query, apiClientProps } = args;
 
@@ -1285,158 +1333,4 @@ export const SubsonicController: ControllerEndpoint = {
 
         return null;
     },
-    rescan: async (args: RescanArgs): Promise<ScanStatus> => {
-        const { full, apiClientProps } = args;
-
-        if (!apiClientProps.server?.userId) {
-            throw new Error('No userId found');
-        }
-
-        const res = await ssApiClient(apiClientProps).startScan({
-            query:
-                full !== undefined
-                    ? {
-                          fullScan: full,
-                      }
-                    : undefined,
-        });
-
-        if (res.status !== 200) {
-            throw new Error('Could not start scan');
-        }
-
-        const { scanning, count, folderCount } = res.body.scanStatus;
-
-        return {
-            folders: folderCount,
-            scanning,
-            tracks: count,
-        };
-    },
-    getScanStatus: async (args: ScanStatusArgs): Promise<ScanStatus> => {
-        const { apiClientProps } = args;
-
-        if (!apiClientProps.server?.userId) {
-            throw new Error('No userId found');
-        }
-
-        const res = await ssApiClient(apiClientProps).getScanStatus();
-        if (res.status !== 200) {
-            throw new Error('Could not start scan');
-        }
-
-        const { scanning, count, folderCount } = res.body.scanStatus;
-
-        return {
-            folders: folderCount,
-            scanning,
-            tracks: count,
-        };
-    },
 };
-
-// export const getAlbumArtistDetail = async (
-//   args: AlbumArtistDetailArgs,
-// ): Promise<SSAlbumArtistDetail> => {
-//   const { server, signal, query } = args;
-//   const defaultParams = getDefaultParams(server);
-
-//   const searchParams: SSAlbumArtistDetailParams = {
-//     id: query.id,
-//     ...defaultParams,
-//   };
-
-//   const data = await api
-//     .get('/getArtist.view', {
-//       prefixUrl: server?.url,
-//       searchParams,
-//       signal,
-//     })
-//     .json<SSAlbumArtistDetailResponse>();
-
-//   return data.artist;
-// };
-
-// const getAlbumArtistList = async (args: AlbumArtistListArgs): Promise<SSAlbumArtistList> => {
-//   const { signal, server, query } = args;
-//   const defaultParams = getDefaultParams(server);
-
-//   const searchParams: SSAlbumArtistListParams = {
-//     musicFolderId: query.musicFolderId,
-//     ...defaultParams,
-//   };
-
-//   const data = await api
-//     .get('rest/getArtists.view', {
-//       prefixUrl: server?.url,
-//       searchParams,
-//       signal,
-//     })
-//     .json<SSAlbumArtistListResponse>();
-
-//   const artists = (data.artists?.index || []).flatMap((index: SSArtistIndex) => index.artist);
-
-//   return {
-//     items: artists,
-//     startIndex: query.startIndex,
-//     totalRecordCount: null,
-//   };
-// };
-
-// const getGenreList = async (args: GenreListArgs): Promise<SSGenreList> => {
-//   const { server, signal } = args;
-//   const defaultParams = getDefaultParams(server);
-
-//   const data = await api
-//     .get('rest/getGenres.view', {
-//       prefixUrl: server?.url,
-//       searchParams: defaultParams,
-//       signal,
-//     })
-//     .json<SSGenreListResponse>();
-
-//   return data.genres.genre;
-// };
-
-// const getAlbumDetail = async (args: AlbumDetailArgs): Promise<SSAlbumDetail> => {
-//   const { server, query, signal } = args;
-//   const defaultParams = getDefaultParams(server);
-
-//   const searchParams = {
-//     id: query.id,
-//     ...defaultParams,
-//   };
-
-//   const data = await api
-//     .get('rest/getAlbum.view', {
-//       prefixUrl: server?.url,
-//       searchParams: parseSearchParams(searchParams),
-//       signal,
-//     })
-//     .json<SSAlbumDetailResponse>();
-
-//   const { song: songs, ...dataWithoutSong } = data.album;
-//   return { ...dataWithoutSong, songs };
-// };
-
-// const getAlbumList = async (args: AlbumListArgs): Promise<SSAlbumList> => {
-//   const { server, query, signal } = args;
-//   const defaultParams = getDefaultParams(server);
-
-//   const searchParams = {
-//     ...defaultParams,
-//   };
-//   const data = await api
-//     .get('rest/getAlbumList2.view', {
-//       prefixUrl: server?.url,
-//       searchParams: parseSearchParams(searchParams),
-//       signal,
-//     })
-//     .json<SSAlbumListResponse>();
-
-//   return {
-//     items: data.albumList2.album,
-//     startIndex: query.startIndex,
-//     totalRecordCount: null,
-//   };
-// };
