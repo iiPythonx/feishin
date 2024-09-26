@@ -190,7 +190,7 @@ export const AlbumDetailContent = ({ tableRef, background }: AlbumDetailContentP
     });
 
     const relatedAlbumGenresRequest: AlbumListQuery = {
-        genres: detailQuery.data?.genres ? [detailQuery.data.genres[0].id] : undefined,
+        genres: detailQuery.data?.genres.length ? [detailQuery.data.genres[0].id] : undefined,
         limit: 15,
         sortBy: AlbumListSort.RANDOM,
         sortOrder: SortOrder.ASC,
