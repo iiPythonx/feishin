@@ -12,6 +12,7 @@ const discordRpc = isElectron() ? window.electron.discordRpc : null;
 export const useDiscordRpc = () => {
     const discordSettings = useDiscordSetttings();
     const [lastImageUrl, setLastImageUrl] = useState('icon');
+    const [lastUniqueId, setlastUniqueId] = useState('');
     const [firstChangeHandled, setFirstChangeHandled] = useState(false);
 
     useEffect(() => {
@@ -20,7 +21,6 @@ export const useDiscordRpc = () => {
         return () => discordRpc?.quit();
     }, [discordSettings.clientId, discordSettings.enabled]);
 
-    // Experimental shit
     const updateActivity = useCallback(
         async (
             current: (QueueSong | PlayerStatus | number | undefined)[],
@@ -31,14 +31,14 @@ export const useDiscordRpc = () => {
 
             // Handle change detection
             const song = current[0] as QueueSong;
-            const trackChanged =
-                previous[0] && (previous[0] as QueueSong).uniqueId !== song.uniqueId;
+            const trackChanged = lastUniqueId !== song.uniqueId;
             if (
                 Math.abs((current[1] as number) - (previous[1] as number)) > 1.2 ||
                 trackChanged ||
                 current[2] !== previous[2]
             ) {
                 setFirstChangeHandled(true);
+                if (trackChanged) setlastUniqueId(song.uniqueId);
 
                 const start = Math.round(Date.now() - (current[1] as number) * 1000);
                 const end = Math.round(start + song.duration);
@@ -49,8 +49,6 @@ export const useDiscordRpc = () => {
                     instance: false,
                     largeImageKey: undefined,
                     largeImageText: song.album ? song.album : undefined,
-                    // @ts-ignore
-                    name: song.artistName,
                     smallImageKey: status,
                     smallImageText: status.charAt(0).toUpperCase() + status.slice(1),
                     state: `by ${song.artistName}`,
@@ -65,6 +63,9 @@ export const useDiscordRpc = () => {
                     activity.smallImageKey = 'paused';
                 }
 
+                // @ts-ignore
+                if (discordSettings.enableCustomName) activity.name = song.artistName;
+
                 // Handle forwarding album art
                 let imageUrl = lastImageUrl;
                 if (trackChanged || !firstChangeHandled) {
@@ -74,12 +75,12 @@ export const useDiscordRpc = () => {
                         const image = await axios({
                             method: 'GET',
                             responseType: 'blob',
-                            url: song.imageUrl,
+                            url: song.imageUrl.replace(/&size=\d+/, '&size=100'),
                         });
 
                         // Upload file to Pizza
                         const form = new FormData();
-                        form.append('file', new File([image.data], 'file.jpg'));
+                        form.append('file', new File([image.data], 'file.jpg')); // Yes, uploading a PNG as a JPG is ok
                         const response = await axios({
                             data: form,
                             headers: {
@@ -102,8 +103,11 @@ export const useDiscordRpc = () => {
             discordSettings.proxyType,
             discordSettings.proxyUrl,
             discordSettings.showAsListening,
+            discordSettings.enableCustomName,
             lastImageUrl,
             setLastImageUrl,
+            lastUniqueId,
+            setlastUniqueId,
             firstChangeHandled,
             setFirstChangeHandled,
         ],

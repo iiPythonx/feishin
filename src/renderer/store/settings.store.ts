@@ -213,6 +213,7 @@ export interface SettingsState {
     };
     discord: {
         clientId: string;
+        enableCustomName: boolean;
         enabled: boolean;
         proxyType: string;
         proxyUrl: string;
@@ -231,7 +232,6 @@ export interface SettingsState {
         albumBackgroundBlur: number;
         artistItems: SortableItem<ArtistItem>[];
         buttonSize: number;
-        defaultFullPlaylist: boolean;
         disabledContextMenu: { [k in ContextMenuItemType]?: boolean };
         doubleClickQueueAll: boolean;
         externalLinks: boolean;
@@ -283,6 +283,9 @@ export interface SettingsState {
         showMatch: boolean;
         showProvider: boolean;
         sources: LyricSource[];
+        translationApiKey: string;
+        translationApiProvider: string | null;
+        translationTargetLanguage: string | null;
     };
     playback: {
         audioDeviceId?: string | null;
@@ -363,6 +366,7 @@ const initialState: SettingsState = {
     },
     discord: {
         clientId: '1117545345690374277',
+        enableCustomName: false,
         enabled: false,
         proxyType: 'pizza',
         proxyUrl: '',
@@ -381,7 +385,6 @@ const initialState: SettingsState = {
         albumBackgroundBlur: 6,
         artistItems,
         buttonSize: 20,
-        defaultFullPlaylist: true,
         disabledContextMenu: {},
         doubleClickQueueAll: true,
         externalLinks: true,
@@ -464,6 +467,9 @@ const initialState: SettingsState = {
         showMatch: true,
         showProvider: true,
         sources: [],
+        translationApiKey: '',
+        translationApiProvider: '',
+        translationTargetLanguage: 'en',
     },
     playback: {
         audioDeviceId: undefined,

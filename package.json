@@ -2,7 +2,7 @@
     "name": "feishin",
     "productName": "Feishin",
     "description": "Feishin music server",
-    "version": "0.9.0",
+    "version": "0.10.0",
     "scripts": {
         "build": "concurrently \"npm run build:main\" \"npm run build:renderer\" \"npm run build:remote\"",
         "build:main": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.main.prod.ts",
@@ -14,9 +14,7 @@
         "lint": "concurrently \"npm run lint:code\" \"npm run lint:styles\"",
         "lint:code": "cross-env NODE_ENV=development eslint . --ext .js,.jsx,.ts,.tsx --fix",
         "lint:styles": "npx stylelint **/*.tsx --fix",
-        "package": "node --import tsx ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never",
-        "package:pr": "node --import tsx ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never --win --linux",
-        "package:dev": "node --import tsx ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never --dir",
+        "package": "node --import tsx ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never --win --linux",
         "postinstall": "node --import tsx .erb/scripts/check-native-dep.js && electron-builder install-app-deps && cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.dev.dll.ts",
         "start": "node --import tsx ./.erb/scripts/check-port-in-use.js && npm run start:renderer",
         "start:main": "cross-env NODE_ENV=development  NODE_OPTIONS=\"--import tsx\" electron -r ts-node/register/transpile-only ./src/main/main.ts",
@@ -45,7 +43,7 @@
         ]
     },
     "build": {
-        "productName": "Feishin",
+        "productName": "feishin",
         "appId": "org.jeffvli.feishin",
         "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
         "asar": true,
@@ -59,8 +57,7 @@
         "electronVersion": "31.2.0",
         "win": {
             "target": [
-                "nsis",
-                "zip"
+                "nsis"
             ],
             "icon": "assets/icons/icon.ico"
         },
@@ -249,7 +246,6 @@
         "@xhayper/discord-rpc": "^1.0.24",
         "audiomotion-analyzer": "^4.5.0",
         "auto-text-size": "^0.2.3",
-        "audiomotion-analyzer": "^4.5.0",
         "axios": "^1.6.0",
         "clsx": "^2.0.0",
         "cmdk": "^0.2.0",

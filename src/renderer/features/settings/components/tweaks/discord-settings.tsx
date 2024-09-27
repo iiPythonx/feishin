@@ -137,6 +137,27 @@ export const DiscordSettings = () => {
                 postProcess: 'sentenceCase',
             }),
         },
+        {
+            control: (
+                <Switch
+                    checked={settings.enableCustomName}
+                    onChange={(e) => {
+                        setSettings({
+                            discord: {
+                                ...settings,
+                                enableCustomName: e.currentTarget.checked,
+                            },
+                        });
+                    }}
+                />
+            ),
+            description: t('setting.discordCustomname', { context: 'description' }),
+            isHidden: !(isElectron() && settings.enabled),
+            note: 'Requires Vesktop',
+            title: t('setting.discordCustomname', {
+                postProcess: 'sentenceCase',
+            }),
+        },
     ];
 
     return <SettingsSection options={discordOptions} />;
