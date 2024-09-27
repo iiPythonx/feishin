@@ -20,13 +20,14 @@ export const IsUpdatedDialog = () => {
             position={{ bottom: '5rem', right: '1rem' }}
             styles={{
                 root: {
+                    borderRadius: '18px',
                     marginBottom: '50px',
                     right: '1rem',
                 },
             }}
         >
             <Stack>
-                <Text>A new version of Feishin has been installed ({version})</Text>
+                <Text>Feishin {version} has been installed</Text>
                 <Group noWrap>
                     <Button
                         component="a"
