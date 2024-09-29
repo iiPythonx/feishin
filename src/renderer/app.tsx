@@ -20,7 +20,13 @@ import { ContextMenuProvider } from '/@/renderer/features/context-menu';
 import { useHandlePlayQueueAdd } from '/@/renderer/features/player/hooks/use-handle-playqueue-add';
 import { PlayQueueHandlerContext } from '/@/renderer/features/player';
 import { getMpvProperties } from '/@/renderer/features/settings/components/playback/mpv-settings';
-import { PlayerState, useCssSettings, usePlayerStore, useQueueControls } from '/@/renderer/store';
+import {
+    PlayerState,
+    useCssSettings,
+    useFullScreenPlayerStoreActions,
+    usePlayerStore,
+    useQueueControls,
+} from '/@/renderer/store';
 import { FontType, PlaybackType, PlayerStatus, WebAudio } from '/@/renderer/types';
 import '@ag-grid-community/styles/ag-grid.css';
 import { WebAudioContext } from '/@/renderer/features/player/context/webaudio-context';
@@ -42,6 +48,7 @@ const utils = isElectron() ? window.electron.utils : null;
 
 export const App = () => {
     const theme = useTheme();
+    const { setStore: setFullScreenPlayerStore } = useFullScreenPlayerStoreActions();
     const accent = useSettingsStore((store) => store.general.accent);
     const language = useSettingsStore((store) => store.general.language);
     const nativeImageAspect = useSettingsStore((store) => store.general.nativeAspectRatio);
@@ -56,6 +63,8 @@ export const App = () => {
     const cssRef = useRef<HTMLStyleElement>();
     useDiscordRpc();
     useServerVersion();
+
+    setFullScreenPlayerStore({ expanded: false });
 
     useEffect(() => {
         if (type === FontType.SYSTEM && system) {
