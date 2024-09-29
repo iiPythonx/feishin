@@ -48,7 +48,6 @@ const utils = isElectron() ? window.electron.utils : null;
 
 export const App = () => {
     const theme = useTheme();
-    const { setStore: setFullScreenPlayerStore } = useFullScreenPlayerStoreActions();
     const accent = useSettingsStore((store) => store.general.accent);
     const language = useSettingsStore((store) => store.general.language);
     const nativeImageAspect = useSettingsStore((store) => store.general.nativeAspectRatio);
@@ -56,6 +55,7 @@ export const App = () => {
     const { enabled, content } = useCssSettings();
     const { type: playbackType } = usePlaybackSettings();
     const { bindings } = useHotkeySettings();
+    const { setStore: setFullScreenPlayerStore } = useFullScreenPlayerStoreActions();
     const handlePlayQueueAdd = useHandlePlayQueueAdd();
     const { clearQueue, restoreQueue } = useQueueControls();
     const remoteSettings = useRemoteSettings();
@@ -63,8 +63,6 @@ export const App = () => {
     const cssRef = useRef<HTMLStyleElement>();
     useDiscordRpc();
     useServerVersion();
-
-    setFullScreenPlayerStore({ expanded: false });
 
     useEffect(() => {
         if (type === FontType.SYSTEM && system) {
@@ -143,6 +141,8 @@ export const App = () => {
 
     // Start the mpv instance on startup
     useEffect(() => {
+        setFullScreenPlayerStore({ expanded: false });
+
         const initializeMpv = async () => {
             if (playbackType === PlaybackType.LOCAL) {
                 const isRunning: boolean | undefined = await mpvPlayer?.isRunning();
@@ -177,7 +177,7 @@ export const App = () => {
             mpvPlayer?.stop();
             mpvPlayer?.cleanup();
         };
-    }, [clearQueue, playbackType]);
+    }, [clearQueue, playbackType, setFullScreenPlayerStore]);
 
     useEffect(() => {
         if (isElectron()) {
