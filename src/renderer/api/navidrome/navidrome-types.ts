@@ -113,6 +113,7 @@ const album = z.object({
     coverArtId: z.string().optional(), // Removed after v0.48.0
     coverArtPath: z.string().optional(), // Removed after v0.48.0
     createdAt: z.string(),
+    date: z.string(),
     duration: z.number(),
     fullText: z.string(),
     genre: z.string(),
