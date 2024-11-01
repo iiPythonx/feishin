@@ -469,6 +469,7 @@ export const AlbumDetailContent = ({ tableRef, background }: AlbumDetailContentP
                         context={{
                             currentSong,
                             isFocused,
+                            itemType: LibraryItem.SONG,
                             onCellContextMenu,
                             status,
                         }}

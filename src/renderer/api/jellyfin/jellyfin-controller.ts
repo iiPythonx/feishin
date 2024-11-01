@@ -295,10 +295,14 @@ export const JellyfinController: ControllerEndpoint = {
                 userId: apiClientProps.server?.userId,
             },
             query: {
-                AlbumArtistIds: query.artistIds
-                    ? formatCommaDelimitedString(query.artistIds)
-                    : undefined,
-                ContributingArtistIds: query.compilation ? query.artistIds?.[0] : undefined,
+                ...(!query.compilation &&
+                    query.artistIds && {
+                        AlbumArtistIds: formatCommaDelimitedString(query.artistIds),
+                    }),
+                ...(query.compilation &&
+                    query.artistIds && {
+                        ContributingArtistIds: query.artistIds[0],
+                    }),
                 GenreIds: query.genres ? query.genres.join(',') : undefined,
                 IncludeItemTypes: 'MusicAlbum',
                 IsFavorite: query.favorite,
@@ -452,7 +456,6 @@ export const JellyfinController: ControllerEndpoint = {
                 Fields: 'ChildCount, Genres, DateCreated, ParentId, Overview',
                 IncludeItemTypes: 'Playlist',
                 Limit: query.limit,
-                MediaTypes: 'Audio',
                 Recursive: true,
                 SearchTerm: query.searchTerm,
                 SortBy: playlistListSortMap.jellyfin[query.sortBy],
