@@ -340,7 +340,7 @@ export const AudioPlayer = forwardRef(
             // Set the current replaygain
             if (current) {
                 const newVolume = calculateReplayGain(current) * volume;
-                webAudio.gain.gain.setValueAtTime(newVolume, 0);
+                webAudio.gain.gain.setValueAtTime(Math.max(0, newVolume), 0);
             }
 
             // Set the next track replaygain right before the end of this track
@@ -348,7 +348,10 @@ export const AudioPlayer = forwardRef(
             const next = sources[3 - currentPlayer];
             if (next && current) {
                 const newVolume = calculateReplayGain(next) * volume;
-                webAudio.gain.gain.setValueAtTime(newVolume, (current.duration - 1) / 1000);
+                webAudio.gain.gain.setValueAtTime(
+                    Math.max(0, newVolume),
+                    Math.max(0, (current.duration - 1) / 1000),
+                );
             }
         }, [
             calculateReplayGain,

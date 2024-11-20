@@ -191,7 +191,7 @@ export const PosterCard = ({
             </Skeleton>
             <DetailContainer>
                 <Stack spacing="sm">
-                    {controls.cardRows.map((row, index) => (
+                    {(controls?.cardRows || []).map((row, index) => (
                         <Skeleton
                             key={`${index}-${row.arrayProperty}`}
                             visible

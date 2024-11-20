@@ -255,7 +255,9 @@
         "translationApiKey": "klíč api překladů",
         "translationApiKey_description": "klíč api pro překlady (podporuje pouze koncový bod globální služby)",
         "translationTargetLanguage": "cílový jazyk překladu",
-        "translationTargetLanguage_description": "cílový jazyk pro překlad"
+        "translationTargetLanguage_description": "cílový jazyk pro překlad",
+        "lastfmApiKey": "klíč API {{lastfm}}",
+        "lastfmApiKey_description": "klíč API pro {{lastfm}}. vyžadováno pro obaly alb"
     },
     "action": {
         "editPlaylist": "upravit $t(entity.playlist_one)",

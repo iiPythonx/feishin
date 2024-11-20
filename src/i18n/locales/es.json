@@ -255,7 +255,9 @@
         "translationApiKey": "clave api de traducción",
         "translationApiKey_description": "Clave API para la traducción (solo para el punto final del servicio global)",
         "translationTargetLanguage": "idioma final de la traducción",
-        "translationTargetLanguage_description": "lengua de destino de la traducción"
+        "translationTargetLanguage_description": "lengua de destino de la traducción",
+        "lastfmApiKey_description": "la clave API para {{lastfm}}. Requerida para la portada",
+        "lastfmApiKey": "Clave API para {{lastfm}}"
     },
     "action": {
         "editPlaylist": "editar $t(entity.playlist_one)",

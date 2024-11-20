@@ -1,5 +1,5 @@
-name: Feature request
-description: Request a feature to be added to Feishin 🎉
+name: Feature request - NOT ACCEPTING NEW FEATURE REQUESTS
+description: Feature requests are currently closed. The application is actively being rewritten https://github.com/audioling/audioling.
 labels: ['enhancement']
 body:
     - type: textarea
@@ -18,5 +18,3 @@ body:
           options:
               - label: 'Yes'
                 required: false
-      validations:
-          required: false

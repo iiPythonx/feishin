@@ -387,7 +387,9 @@
         "translationApiKey": "翻译api密钥",
         "translationApiKey_description": "翻译api密钥（仅支持全球服务节点）",
         "translationTargetLanguage": "目标翻译语言",
-        "translationTargetLanguage_description": "目标翻译语言"
+        "translationTargetLanguage_description": "目标翻译语言",
+        "lastfmApiKey": "{{lastfm}} API 密钥",
+        "lastfmApiKey_description": "{{lastfm}} 的 API 密钥。封面艺术图所需"
     },
     "error": {
         "remotePortWarning": "重启服务器使新端口生效",

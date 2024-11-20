@@ -202,7 +202,7 @@ export const AlbumCard = ({
                     <ImageSection />
                 </Skeleton>
                 <DetailSection style={{ width: '100%' }}>
-                    {cardRows.map((_row: CardRow<Album>, index: number) => (
+                    {(cardRows || []).map((_row: CardRow<Album>, index: number) => (
                         <Skeleton
                             visible
                             height={15}

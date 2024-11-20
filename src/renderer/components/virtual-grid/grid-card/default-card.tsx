@@ -234,7 +234,7 @@ export const DefaultCard = ({
                 </ImageContainer>
                 <DetailContainer>
                     <Stack spacing="sm">
-                        {controls.cardRows.map((row, index) => (
+                        {(controls?.cardRows || []).map((row, index) => (
                             <Skeleton
                                 key={`${index}-${columnIndex}-${row.arrayProperty}`}
                                 visible
