@@ -91,7 +91,6 @@
         "hotkey_globalSearch": "globální vyhledávání",
         "gaplessAudio_description": "nastavení přehrávače mpv pro přehrávání bez mezer",
         "remoteUsername_description": "nastavení uživatelského jména pro server vzdáleného ovládání. pokud je jméno i heslo prázdné, bude autentifikace zakázána",
-        "disableAutomaticUpdates": "vypnout automatické aktualizace",
         "exitToTray_description": "ukončit aplikaci do systémové lišty",
         "followLyric_description": "přesouvat texty s aktuální pozicí přehrávání",
         "hotkey_favoritePreviousSong": "oblíbit $t(common.previousSong)",

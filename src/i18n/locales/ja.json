@@ -89,7 +89,6 @@
         "hotkey_globalSearch": "グローバル検索",
         "gaplessAudio_description": "mpv用にギャップレス再生を設定します",
         "remoteUsername_description": "リモートコントロール サーバーのユーザ名を設定します。 ユーザー名とパスワードの両方が空の場合、認証は無効になります",
-        "disableAutomaticUpdates": "自動更新を無効化",
         "exitToTray_description": "アプリケーション終了ボタンが押された際、システムトレイに格納します",
         "followLyric_description": "現在の再生位置に歌詞をスクロールします",
         "hotkey_favoritePreviousSong": "$t(common.previousSong) をお気に入り",

@@ -320,7 +320,6 @@ export interface SettingsState {
         songs: DataTableProps;
     };
     window: {
-        disableAutoUpdate: boolean;
         exitToTray: boolean;
         minimizeToTray: boolean;
         startMinimized: boolean;
@@ -666,7 +665,6 @@ const initialState: SettingsState = {
         },
     },
     window: {
-        disableAutoUpdate: false,
         exitToTray: false,
         minimizeToTray: false,
         startMinimized: false,

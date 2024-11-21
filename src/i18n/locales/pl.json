@@ -481,7 +481,6 @@
         "globalMediaHotkeys": "globalne skróty klawiszowe multimediów",
         "hotkey_globalSearch": "globalne wyszukiwanie",
         "gaplessAudio_description": "ustaw dźwięk bez przerw dla mpv",
-        "disableAutomaticUpdates": "wyłącz automatyczne aktualizacje",
         "exitToTray_description": "zamknij aplikację do zasobnika systemowego",
         "followLyric_description": "przewiń tekst do obecnego momentu",
         "hotkey_favoritePreviousSong": "ulubiona $t(common.previousSong)",

@@ -28,8 +28,6 @@ import {
     screen,
 } from 'electron';
 import electronLocalShortcut from 'electron-localshortcut';
-import log from 'electron-log/main';
-import { autoUpdater } from 'electron-updater';
 import { disableMediaKeys, enableMediaKeys } from './features/core/player/media-keys';
 import { store } from './features/core/settings/index';
 import MenuBuilder from './menu';
@@ -40,20 +38,11 @@ import {
     isWindows,
     resolveHtmlPath,
     createLog,
-    autoUpdaterLogInterface,
 } from './utils';
 import './features';
 import type { TitleTheme } from '/@/renderer/types';
 
 declare module 'node-mpv';
-
-export default class AppUpdater {
-    constructor() {
-        log.transports.file.level = 'info';
-        autoUpdater.logger = autoUpdaterLogInterface;
-        autoUpdater.checkForUpdatesAndNotify();
-    }
-}
 
 protocol.registerSchemesAsPrivileged([{ privileges: { bypassCSP: true }, scheme: 'feishin' }]);
 
@@ -482,11 +471,6 @@ const createWindow = async (first = true) => {
         shell.openExternal(edata.url);
         return { action: 'deny' };
     });
-
-    if (store.get('disable_auto_updates') !== true) {
-        // eslint-disable-next-line
-        new AppUpdater();
-    }
 
     const theme = store.get('theme') as TitleTheme | undefined;
     nativeTheme.themeSource = theme || 'dark';

@@ -12,28 +12,6 @@ export const GeneralSettings = () => {
         {
             control: (
                 <Switch
-                    aria-label="Go to playlist songs page by default"
-                    defaultChecked={settings.defaultFullPlaylist}
-                    onChange={(e) =>
-                        setSettings({
-                            general: {
-                                ...settings,
-                                defaultFullPlaylist: e.currentTarget.checked,
-                            },
-                        })
-                    }
-                />
-            ),
-            description: t('setting.skipPlaylistPage', {
-                context: 'description',
-                postProcess: 'sentenceCase',
-            }),
-            isHidden: false,
-            title: t('setting.skipPlaylistPage', { postProcess: 'sentenceCase' }),
-        },
-        {
-            control: (
-                <Switch
                     defaultChecked={settings.externalLinks}
                     onChange={(e) => {
                         setSettings({

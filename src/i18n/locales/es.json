@@ -88,7 +88,6 @@
         "hotkey_globalSearch": "búsqueda global",
         "gaplessAudio_description": "establece la configuración de audio sin pausas para mpv",
         "remoteUsername_description": "establece el nombre de usuario para el control remoto del servidor. si el usuario y la contraseña están vacíos, la autenticación será deshabilitada",
-        "disableAutomaticUpdates": "desactiva las actualizaciones automáticas",
         "exitToTray_description": "sale de la aplicación a la bandeja del sistema",
         "followLyric_description": "desplaza la letra a la posición de reproducción actual",
         "hotkey_favoritePreviousSong": "$t(common.previousSong) favorita",

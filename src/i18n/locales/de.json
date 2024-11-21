@@ -530,7 +530,6 @@
         "disableLibraryUpdateOnStartup": "Beim Start nicht nach neuen Versionen suchen",
         "discordApplicationId_description": "Die Application-ID für {{discord}} Rich Presence (Standard: {{defaultId}})",
         "audioPlayer_description": "Wählen Sie den Audioplayer aus, der für die Wiedergabe verwendet werden soll",
-        "disableAutomaticUpdates": "Automatische Updates deaktivieren",
         "crossfadeDuration_description": "Legt die Dauer der Überblendung fest",
         "customFontPath": "Benutzerdefinierter Pfad für Schriftarten",
         "crossfadeDuration": "Dauer der Überblendung",

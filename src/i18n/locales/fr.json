@@ -381,7 +381,6 @@
         "applicationHotkeys_description": "configurer les raccourcis clavier d’application. activer la case à cocher pour définir comme raccourci clavier global (bureau uniquement)",
         "crossfadeStyle_description": "sélectionnez le style du fondu enchaîné à utiliser pour le lecteur audio",
         "customFontPath": "chemin de police personnalisé",
-        "disableAutomaticUpdates": "désactiver les mises à jour automatique",
         "customFontPath_description": "définit le chemin de police personnalisé pour l'application",
         "remotePort_description": "définit le port du serveur de contrôle à distance",
         "hotkey_skipBackward": "reculer",

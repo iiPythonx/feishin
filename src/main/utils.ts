@@ -76,21 +76,3 @@ export const createLog = (data: {
 }) => {
     logMethod[data.type](`%c${data.message}`, `color: ${logColor[data.type]}`);
 };
-
-export const autoUpdaterLogInterface = {
-    debug: (message: string) => {
-        createLog({ message: `[SYSTEM] ${message}`, type: 'debug' });
-    },
-
-    error: (message: string) => {
-        createLog({ message: `[SYSTEM] ${message}`, type: 'error' });
-    },
-
-    info: (message: string) => {
-        createLog({ message: `[SYSTEM] ${message}`, type: 'info' });
-    },
-
-    warn: (message: string) => {
-        createLog({ message: `[SYSTEM] ${message}`, type: 'warning' });
-    },
-};

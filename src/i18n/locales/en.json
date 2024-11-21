@@ -515,7 +515,6 @@
         "customCss_description": "Edit the Custom CSS for the player here.",
         "customFontPath": "custom font path",
         "customFontPath_description": "sets the path to the custom font to use for the application",
-        "disableAutomaticUpdates": "disable automatic updates",
         "disableLibraryUpdateOnStartup": "disable checking for new versions on startup",
         "discordApplicationId": "Application ID",
         "discordApplicationId_description": "the application id for discord rich presence.",

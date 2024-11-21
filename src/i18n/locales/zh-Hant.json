@@ -255,7 +255,6 @@
         "crossfadeStyle_description": "選擇用于音頻播放器的淡入淡出風格",
         "customFontPath": "自定義字體路徑",
         "customFontPath_description": "設置應用使用的自定義字體路徑",
-        "disableAutomaticUpdates": "禁用自動更新",
         "disableLibraryUpdateOnStartup": "禁用啓動時查找新版本",
         "discordApplicationId": "{{discord}} 應用 id",
         "discordApplicationId_description": "{{discord}} rich presence 應用 id（默認爲 {{defaultId}}）",
