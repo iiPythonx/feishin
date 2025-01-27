@@ -19,6 +19,10 @@ import nl from './locales/nl.json';
 import zhHant from './locales/zh-Hant.json';
 import fa from './locales/fa.json';
 import ko from './locales/ko.json';
+import ta from './locales/ta.json';
+import id from './locales/id.json';
+import fi from './locales/fi.json';
+import hu from './locales/hu.json';
 
 const resources = {
     en: { translation: en },
@@ -39,6 +43,10 @@ const resources = {
     cs: { translation: cs },
     nl: { translation: nl },
     'nb-NO': { translation: nbNO },
+    ta: { translation: ta },
+    id: { translation: id },
+    fi: { translation: fi },
+    hu: { translation: hu },
 };
 
 export const languages = [
@@ -61,6 +69,18 @@ export const languages = [
     {
         label: 'Français',
         value: 'fr',
+    },
+    {
+        label: 'Bahasa Indonesia',
+        value: 'id',
+    },
+    {
+        label: 'Suomeksi',
+        value: 'fi',
+    },
+    {
+        label: 'Magyar',
+        value: 'hu',
     },
     {
         label: 'Italiano',
@@ -105,6 +125,10 @@ export const languages = [
     {
         label: 'Svenska',
         value: 'sv',
+    },
+    {
+        label: 'Tamil',
+        value: 'ta',
     },
     {
         label: '简体中文',

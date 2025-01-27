@@ -53,7 +53,8 @@
         "openIn": {
             "lastfm": "Ouvrir dans Last.fm",
             "musicbrainz": "Ouvrir dans MusicBrainz"
-        }
+        },
+        "moveToNext": "passer au suivant"
     },
     "common": {
         "backward": "en arrière",
@@ -315,7 +316,8 @@
             "playSimilarSongs": "$t(player.playSimilarSongs)",
             "showDetails": "obtenir des informations",
             "download": "télécharger",
-            "playShuffled": "$t(player.shuffle)"
+            "playShuffled": "$t(player.shuffle)",
+            "moveToNext": "$t(action.moveToNext)"
         },
         "albumArtistList": {
             "title": "$t(entity.albumArtist_other)"
@@ -588,7 +590,9 @@
         "transcodeNote": "prend effet après 1 (web) - 2 (mpv) chansons",
         "trayEnabled_description": "afficher ou masquer l'icône et le menu de la barre d'état système. si désactivé, désactive également la réduction et la sortie vers la barre d'état système",
         "doubleClickBehavior_description": "si vrai, toutes les pistes correspondantes dans une recherche de piste seront mises en file d'attente. sinon, seule celle sur laquelle vous avez cliqué sera mise en file d'attente",
-        "albumBackgroundBlur": "taille du flou de l'image d'arrière-plan de l'album"
+        "albumBackgroundBlur": "taille du flou de l'image d'arrière-plan de l'album",
+        "lastfmApiKey": "clé API {{lastfm}}",
+        "lastfmApiKey_description": "la clé API pour {{lastfm}} est requise pour la pochette d'album"
     },
     "form": {
         "deletePlaylist": {

@@ -8,10 +8,29 @@
         "skip_back": "برو عقب",
         "shuffle": "شافل",
         "repeat_off": "تکرار غیرفعال",
-        "pause": "pause",
+        "pause": "ایست",
         "unfavorite": "حذف از موردعلاقه‌ها",
         "shuffle_off": "شافل غیرفعال",
-        "skip_forward": "برو جلو"
+        "skip_forward": "برو جلو",
+        "queue_moveToTop": "جابجا کردن انتخاب شده به پایین",
+        "queue_clear": "خالی کردن صف",
+        "queue_remove": "حذف انتخاب شده",
+        "addLast": "افزودن به پایان",
+        "next": "پسین",
+        "play": "پخش",
+        "playbackSpeed": "تندی پخش",
+        "playRandom": "پخش تصادفی",
+        "previous": "پیشین",
+        "mute": "بی‌صدا کردن",
+        "playbackFetchCancel": "دارد طول می‌کشد... برای لفو کردن اعلان را ببندید",
+        "playbackFetchInProgress": "بارگذاری قطعه‌ها…",
+        "queue_moveToBottom": "جابجا کردن انتخاب شده به بالا",
+        "addNext": "افزودن به پسین",
+        "favorite": "مورد علاقه",
+        "playSimilarSongs": "پخش آهنگ‌های همگون",
+        "playbackFetchNoResults": "هیچ آهنگی پیدا نشد",
+        "viewQueue": "دیدن صف",
+        "muted": "بی‌صدا"
     },
     "action": {
         "editPlaylist": "ویرایش $t(entity.playlist_one)",
@@ -30,7 +49,12 @@
         "moveToBottom": "انتقال به پایین",
         "setRating": "تعیین امتیاز",
         "toggleSmartPlaylistEditor": "تغییر $t(entity.smartPlaylist) ویرایشگر",
-        "removeFromFavorites": "حذف از $t(entity.favorite_other)"
+        "removeFromFavorites": "حذف از $t(entity.favorite_other)",
+        "openIn": {
+            "lastfm": "باز کردن در Last.fm",
+            "musicbrainz": "باز کردن در MusicBranz"
+        },
+        "moveToNext": "جابجا کردن به بعدی"
     },
     "setting": {
         "hotkey_skipBackward": "برو عقب",
@@ -71,7 +95,7 @@
         "mpvExecutablePath": "مسیر اجرای MPV",
         "audioDevice": "دستگاه صوتی",
         "hotkey_rate2": "امتیاز ۲ ستاره",
-        "playButtonBehavior_description": "رفتار پیش‌فرض دکمهٔ پخش را هنگامی که آهنگی به صف اضافه می‌شود معین می‌کند",
+        "playButtonBehavior_description": "رفتار پیش‌فرض دکمهٔ پخش را هنگامی که آهنگی به صف افزوده می‌شود را معین می‌کند",
         "exitToTray": "خروج به tray",
         "hotkey_rate4": "امتیاز ۴ ستاره",
         "enableRemote": "فعال کردن کنترل از راه دور سرویس‌دهنده",
@@ -92,7 +116,27 @@
         "customFontPath_description": "مسیر قلم سفارشی را برای استفاده در اپلیکیشن مشخص کنید",
         "gaplessAudio_optionWeak": "ضعیف (توصیه شده)",
         "hotkey_playbackStop": "توقف",
-        "font_description": "قلم مورد استفادهٔ اپلیکیشن را معین می‌کند"
+        "font_description": "قلم مورد استفادهٔ اپلیکیشن را معین می‌کند",
+        "accentColor_description": "رنگ شاخص را برای نرم‌افزار مشخص می‌کند",
+        "applicationHotkeys": "کلیدهای میان‌بر نرم‌افزار",
+        "accentColor": "رنگ شاخص",
+        "albumBackgroundBlur": "اندازه‌ی مبهمی نگاره‌ی پس‌زمینه‌ی آلبوم",
+        "albumBackgroundBlur_description": "مقدار مبهمی‌ای که روی نگاره‌ی پس‌زمینه‌ی آلبوم اعمال می‌شود را تنظیم می‌کند",
+        "albumBackground": "نگاره‌ی پس‌زمینه‌ی آلبوم",
+        "albumBackground_description": "یک نگاره‌ی پس‌زمینه برای صفحات آلبوم دارای نگار آلبوم هستند، می‌افزاید",
+        "artistConfiguration": "پیکربندی صفحه‌ی هنرمند آلبوم",
+        "applicationHotkeys_description": "پیکربندی کلیدهای میان‌بر نرم‌افزار. برای تنظیم یک کلید میان‌بر عمومی مربع چک را فعال کنید (فقط پخش‌کننده‌ی میزکار)",
+        "clearCache": "پاک‌سازی کَش مرورگر",
+        "clearQueryCache": "پاک‌سازی کَش فیشین",
+        "clearCacheSuccess": "با موفقیت کَش پاک شد",
+        "artistConfiguration_description": "پیکربندی اینکه چه آیتمی‌هایی و در چه ترتیبی در صفحه‌ی هنرمند آلبوم نمایش داده شوند",
+        "buttonSize": "اندازه‌ی دکمه‌ی پخش نوار",
+        "contextMenu": "پیکربندی فهرست زمینه (کلیک راست)",
+        "buttonSize_description": "اندازه‌ی دکمه‌های پخش نوار",
+        "audioExclusiveMode_description": "حالت اختصاصی خروجی را فعال می‌کند. در این حالت، سامانه معمولاً قفل است و فقط mpv می‌تواند خروجی صدا دهد",
+        "clearQueryCache_description": "یک 'پاک‌سازی نرم' از فیشین. این فهرست‌های پخش و فراداده‌ی قطعه‌ها را تازه می‌کند و متن شعرهای ذخیره شده را بازنشانی می‌کند. پیکربندی‌ها، اعتبارنامه‌های سرویس‌دهنده و نگاره‌های کَش شده حفظ می‌شوند",
+        "clearCache_description": "یک 'پاک‌سازی سخت' فیشین. افزون بر پاک‌سازی کَش فیشین، کَش مرورگر هم تهی می‌شود (نگاره‌های ذخیره شده و باقی دارایی‌ها). اعتبارنامه‌ها و پیکربندی‌ها حفظ می‌شوند",
+        "contextMenu_description": "به شما اجازه می‌دهد که آیتم‌های نمایش داده شده در فهرستی که وقتی روی یک آیتم کلیک راست می‌کنید پدیدار می‌شود، را پنهان کنید. آیتم‌هایی که منتخب نیستند پنهان می‌شوند"
     },
     "common": {
         "backward": "به عقب",
@@ -161,17 +205,29 @@
         "menu": "منو",
         "restartRequired": "راه‌اندازی دوباره لازم است",
         "previousSong": "$t(entity.track_one) پیشین",
-        "noResultsFromQuery": "جست و جو نتیجه‌ای نداشت",
+        "noResultsFromQuery": "جست‌وجو نتیجه‌ای نداشت",
         "quit": "خروج",
         "expand": "گسترش",
-        "search": "جست و جو",
+        "search": "جست‌وجو",
         "saveAs": "ذخیره کن با اسم",
         "disc": "دیسک",
         "yes": "بله",
         "random": "تصادفی",
         "size": "حجم",
         "biography": "زندگی‌نامه",
-        "note": "توجه"
+        "note": "توجه",
+        "albumGain": "گین آلبوم",
+        "close": "بستن",
+        "albumPeak": "اوج آلبوم",
+        "mbid": "شناسه‌ی MusicBrainz",
+        "reload": "بارگذاری مجدد",
+        "setting": "پیکربندی",
+        "trackGain": "گین قطعه",
+        "trackPeak": "اوج قطعه",
+        "translation": "ترجمه",
+        "preview": "پیش‌نمایش",
+        "share": "اشتراک‌گذاری",
+        "codec": "کدک"
     },
     "error": {
         "remotePortWarning": "برای تعیین port تازه، سرویس دهنده را دوباره راه‌اندازی کنید",
@@ -187,7 +243,15 @@
         "serverNotSelectedError": "سرویس‌دهنده‌ای انتخاب نشده",
         "remoteDisableError": "هنگام $t(common.disable) سرویس دهنده خطایی رخ داد",
         "mpvRequired": "وجود MPV ضروری است",
-        "audioDeviceFetchError": "هنگام دسترسی به دستگاه صوتی خطایی رخ داد"
+        "audioDeviceFetchError": "هنگام دسترسی به دستگاه صوتی خطایی رخ داد",
+        "localFontAccessDenied": "دسترسی به فونت‌های محلی پذیرفته نشد",
+        "loginRateError": "تلاش‌های بسیار برای ورود انجام داده‌اید،‌لطفاً بعد از چند ثانیه دوباره امتحان کنید",
+        "networkError": "خطای شبکه رخ داد",
+        "badAlbum": "شما این صفحه را می‌بینید چون‌که این آهنگ قسمتی از یک آلبوم نیست. شما احتمالا این مسأله را به این خاطر می‌بینید که آهنگی در پوشه‌ی سطح بالای آهنگ‌هایتان دارید. جلی‌فین فقط قطعه‌هایی را گروه‌بندی می‌کند که در یک پوشه قرار دارند.",
+        "invalidServer": "سرویس‌دهنده‌ی نامعتبر",
+        "openError": "نمی‌توان پرونده را باز کرد",
+        "endpointNotImplementedError": "نقطه‌ی پایان {{endpoint}} برای {{serverType}} قرار داده نشده است",
+        "systemFontError": "خطایی هنگام تلاش برای دریافت فونت‌های سیستم رخ داد"
     },
     "filter": {
         "mostPlayed": "بیشتر پخش شده",
@@ -200,13 +264,13 @@
         "owner": "$t(common.owner)",
         "title": "عنوان",
         "rating": "امتیاز",
-        "search": "جست و جو",
+        "search": "جست‌وجو",
         "bitrate": "بیت‌ریت",
         "genre": "$t(entity.genre_one)",
-        "recentlyAdded": "به تازگی اضافه شده",
+        "recentlyAdded": "به تازگی افزوده شده",
         "note": "توجه",
         "name": "نام",
-        "dateAdded": "تاریخ اضافه شدن",
+        "dateAdded": "تاریخ افزوده شدن",
         "releaseDate": "تاریخ انتشار",
         "albumCount": "$t(entity.album_other) عدد",
         "path": "مسیر",
@@ -229,7 +293,9 @@
         "fromYear": "از سال",
         "criticRating": "امتیاز منتقدین",
         "album": "$t(entity.album_one)",
-        "trackNumber": "قطعه"
+        "trackNumber": "قطعه",
+        "communityRating": "رتبه بندی جامعه",
+        "isCompilation": "مخلوط است"
     },
     "form": {
         "deletePlaylist": {
@@ -251,38 +317,61 @@
             "input_url": "نشانی",
             "input_password": "رمز عبور",
             "input_name": "نام سرویس‌دهنده",
-            "success": "سرویس‌دهنده اضافه شد",
+            "success": "سرویس‌دهنده افزوده شد",
             "input_savePassword": "ذخیرهٔ رمز",
-            "error_savePassword": "هنگام ذخیره رمز خطایی رخ داد"
+            "error_savePassword": "هنگام ذخیره رمز خطایی رخ داد",
+            "ignoreCors": "نادیده گرفتن هسته‌ها ($t(common.restartRequired))",
+            "input_legacyAuthentication": "فعال‌سازی احراز هویت سنتی",
+            "ignoreSsl": "نادیده گرفتن ssl ($t(common.restartRequired))"
         },
         "addToPlaylist": {
-            "success": "$t(entity.song_other) به {{numOfPlaylists}}$t(entity.playlist_other) اضافه شد",
+            "success": "$t(entity.song_other) به {{numOfPlaylists}}$t(entity.playlist_other) افزوده شد",
             "title": "افزودن به $t(entity.playlist_one)",
-            "input_playlists": "$t(entity.playlist_other)"
+            "input_playlists": "$t(entity.playlist_other)",
+            "input_skipDuplicates": "پرش از تکراری‌ها"
         },
         "lyricSearch": {
             "input_name": "$t(common.name)",
-            "input_artist": "$t(entity.artist_one)"
+            "input_artist": "$t(entity.artist_one)",
+            "title": "جست‌وجو در متن شعر"
         },
         "editPlaylist": {
-            "title": "ویرایش $t(entity.playlist_one)"
+            "title": "ویرایش $t(entity.playlist_one)",
+            "success": "$t(entity.playlist_one) با موفقیت بروزرسانی شد",
+            "publicJellyfinNote": "جلی‌فین به دلیلی این‌که فهرست پخش عمومی‌ست یا خصوصی را فاش نمی‌کند. اگر می‌خواهید این عمومی باقی بماند، لطفاٌ ورودی پیش‌رو را منتخب داشته باشید"
+        },
+        "queryEditor": {
+            "input_optionMatchAny": "همخوانی داشتن هر کدام",
+            "input_optionMatchAll": "همخوانی داشتن همه"
+        },
+        "shareItem": {
+            "expireInvalid": "انقضا باید در آینده باشد",
+            "description": "بازنمود",
+            "setExpiration": "تنظیم انقضا",
+            "success": "پیوند اشتراک‌گذاری در کلیپ‌بورد کپی شد (یا اینجا را کلیک کنید تا باز شود)",
+            "allowDownloading": "اجازه دادن بارگیری",
+            "createFailed": "ناکامی در ساخت پیوند اشتراک‌گذاری (آیا اشتراک‌گذاری فعال است؟)"
+        },
+        "updateServer": {
+            "success": "سرویس‌دهنده با موفقیت بروزرسانی شد",
+            "title": "بروزرسانی سرویس‌دهنده"
         }
     },
     "entity": {
         "genre_one": "ژانر",
-        "genre_other": "ژانر",
+        "genre_other": "ژانرها",
         "playlistWithCount_one": "{{count}} فهرست پخش",
         "playlistWithCount_other": "{{count}} فهرست پخش",
         "playlist_one": "فهرست پخش",
-        "playlist_other": "فهرست پخش",
+        "playlist_other": "فهرست‌های پخش",
         "artist_one": "هنرمند",
-        "artist_other": "هنرمند",
+        "artist_other": "هنرمندان",
         "folderWithCount_one": "{{count}} پوشه",
         "folderWithCount_other": "{{count}} پوشه",
         "albumArtist_one": "هنرمند آلبوم",
-        "albumArtist_other": "هنرمند آلبوم",
+        "albumArtist_other": "هنرمندان آلبوم",
         "track_one": "قطعه",
-        "track_other": "قطعه",
+        "track_other": "قطعه‌ها",
         "albumArtistCount_one": "{{count}} هنرمند آلبوم",
         "albumArtistCount_other": "{{count}} هنرمند آلبوم",
         "albumWithCount_one": "{{count}} آلبوم",
@@ -292,13 +381,167 @@
         "artistWithCount_one": "{{count}} هنرمند",
         "artistWithCount_other": "{{count}} هنرمند",
         "folder_one": "پوشه",
-        "folder_other": "پوشه",
+        "folder_other": "پوشه‌ها",
         "smartPlaylist": "$t(entity.playlist_one) هوشمند",
         "album_one": "آلبوم",
-        "album_other": "آلبوم",
+        "album_other": "آلبوم‌ها",
         "genreWithCount_one": "{{count}} ژانر",
         "genreWithCount_other": "{{count}} ژانر",
         "trackWithCount_one": "{{count}} قطعه",
-        "trackWithCount_other": "{{count}} قطعه"
+        "trackWithCount_other": "{{count}} قطعه",
+        "play_one": "{{count}} بار پخش",
+        "play_other": "{{count}} بار پخش",
+        "song_one": "آهنگ",
+        "song_other": "آهنگ‌ها"
+    },
+    "page": {
+        "albumList": {
+            "title": "$t(entity.album_other)",
+            "artistAlbums": "آلبوم‌های {{artist}}",
+            "genreAlbums": "\"{{genre}}\" $t(entity.album_other)"
+        },
+        "appMenu": {
+            "settings": "$t(common.setting_other)",
+            "selectServer": "گزینش سرویس‌دهنده",
+            "expandSidebar": "گسترش نوار کناری",
+            "collapseSidebar": "فروکش نوار کناری",
+            "goBack": "بازگشت",
+            "openBrowserDevtools": "باز کردن ابزارهای توسعه مرورگر",
+            "quit": "$t(common.quit)",
+            "goForward": "پیش رفتن",
+            "manageServers": "مدیریت سرویس‌دهنده‌ها",
+            "version": "نسخه‌ی {{version}}"
+        },
+        "albumArtistDetail": {
+            "appearsOn": "مشاهده می‌شود در",
+            "about": "درباره‌ی {{artist}}",
+            "recentReleases": "عرضه‌های اخیر",
+            "viewAllTracks": "نمایش همه‌ی $t(entity.track_other)",
+            "topSongsFrom": "قطعه‌های برتر از {{title}}",
+            "viewAll": "نمایش همه",
+            "viewDiscography": "نمایش کاتالوگ",
+            "relatedArtists": "$t(entity.artist_other) مربوطه",
+            "topSongs": "قطعه‌های برتر"
+        },
+        "contextMenu": {
+            "addFavorite": "$t(action.addToFavorites)",
+            "addLast": "$t(player.addLast)",
+            "addNext": "$t(player.addNext)",
+            "addToFavorites": "$t(action.addToFavorites)",
+            "numberSelected": "{{count}} تا انتخاب شده",
+            "play": "$t(player.play)",
+            "removeFromFavorites": "$t(action.removeFromFavorites)",
+            "deselectAll": "$t(action.deselectAll)",
+            "download": "بارگیری",
+            "shareItem": "اشتراک‌گذاری آیتم",
+            "removeFromPlaylist": "$t(action.removeFromPlaylist)",
+            "showDetails": "دریافت داده",
+            "playSimilarSongs": "$t(player.playSimilarSongs)",
+            "removeFromQueue": "$t(action.removeFromQueue)",
+            "playShuffled": "$t(player.shuffle)",
+            "addToPlaylist": "$t(action.addToPlaylist)",
+            "createPlaylist": "$t(action.createPlaylist)",
+            "moveToBottom": "$t(action.moveToBottom)",
+            "moveToTop": "$t(action.moveToTop)",
+            "setRating": "$t(action.setRating)",
+            "deletePlaylist": "$t(action.deletePlaylist)",
+            "moveToNext": "$t(action.moveToNext)"
+        },
+        "fullscreenPlayer": {
+            "related": "موارد مربوطه",
+            "visualizer": "تجسم یافته",
+            "config": {
+                "dynamicImageBlur": "اندازه مبهمی نگاره",
+                "dynamicIsImage": "فعال‌سازی نگاره به عنوان پس‌زمینه",
+                "lyricOffset": "انحراف متن شعر (میلی‌ثانیه)",
+                "unsynchronized": "همگام نشده",
+                "dynamicBackground": "پس‌زمینه پویا",
+                "followCurrentLyric": "دنبال کردن متن شعر کنونی",
+                "lyricAlignment": "هم‌ترازی متن شعر",
+                "lyricGap": "فاصله‌ی متن شعر",
+                "showLyricProvider": "نمایش فراهم‌گر متن شعر",
+                "useImageAspectRatio": "استفاده از نسبت نمای نگاره",
+                "lyricSize": "اندازه‌ی متن شعر",
+                "opacity": "شفافی",
+                "showLyricMatch": "نمایش همخوانی متن شعر",
+                "synchronized": "همگام شده"
+            },
+            "noLyrics": "هیچ متن شعری پیدا نشد",
+            "lyrics": "متن شعرها",
+            "upNext": "در ادامه"
+        },
+        "home": {
+            "mostPlayed": "بیشترین پخش‌شده‌ها",
+            "title": "$t(common.home)",
+            "explore": "در کتاب‌خانه‌ی خود کاوش کنید",
+            "newlyAdded": "عرضه‌های تازه افزوده شده",
+            "recentlyPlayed": "تازه پخش شده‌ها"
+        },
+        "playlist": {
+            "reorder": "مرتب کردن دوباره زمانی فقط زمانی فعال شود که مرتب‌سازی بر اساس شناسه است"
+        },
+        "setting": {
+            "advanced": "پیشرفته",
+            "windowTab": "پنجره",
+            "generalTab": "همگانی",
+            "hotkeysTab": "کلیدهای میان‌بر",
+            "playbackTab": "پخش"
+        },
+        "sidebar": {
+            "genres": "$t(entity.genre_other)",
+            "playlists": "$t(entity.playlist_other)",
+            "search": "$t(common.search)",
+            "albumArtists": "$t(entity.albumArtist_other)",
+            "albums": "$t(entity.album_other)",
+            "folders": "$t(entity.folder_other)",
+            "artists": "$t(entity.artist_other)",
+            "home": "$t(common.home)",
+            "nowPlaying": "پخش کنونی",
+            "tracks": "$t(entity.track_other)",
+            "settings": "$t(common.setting_other)",
+            "shared": "$t(entity.playlist_other) اشتراک‌گذاری شده"
+        },
+        "albumDetail": {
+            "moreFromArtist": "موارد بیشتر از این $t(entity.artist_one)",
+            "moreFromGeneric": "موارد بیشتر از {{item}}",
+            "released": "عرضه شده"
+        },
+        "manageServers": {
+            "title": "مدیریت سرویس‌دهنده‌ها",
+            "url": "آدرس",
+            "serverDetails": "ریزگان سرویس‌دهنده",
+            "removeServer": "حذف سرویس‌دهنده",
+            "username": "نام کاربری",
+            "editServerDetailsTooltip": "ویرایش ریزگان سرویس‌دهنده"
+        },
+        "genreList": {
+            "showAlbums": "نمایش $t(entity.genre_one) $t(entity.album_other)",
+            "title": "$t(entity.genre_other)",
+            "showTracks": "نمایش $t(entity.genre_one) $t(entity.track_other)"
+        },
+        "globalSearch": {
+            "commands": {
+                "goToPage": "رفتن به صفحه‌ی",
+                "searchFor": "جست‌و‌جو برای {{query}}",
+                "serverCommands": "فرمان‌های سرویس‌دهنده"
+            },
+            "title": "فرمان‌ها"
+        },
+        "playlistList": {
+            "title": "$t(entity.playlist_other)"
+        },
+        "trackList": {
+            "title": "$t(entity.track_other)",
+            "artistTracks": "قطعه‌های {{artist}}",
+            "genreTracks": "$t(entity.track_other) \"{{genre}}\""
+        },
+        "albumArtistList": {
+            "title": "$t(entity.albumArtist_other)"
+        },
+        "itemDetail": {
+            "copyPath": "کپی کردن مسیر در کلیپ‌بورد",
+            "copiedPath": "مسیر با موفقیت کپی شد",
+            "openFile": "نمایش قطعه در مدیر پرونده"
+        }
     }
 }

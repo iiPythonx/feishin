@@ -29,7 +29,7 @@ const getCoverArtUrl = (args: {
         `?id=${args.coverArtId}` +
         `&${args.credential}` +
         '&v=1.13.0' +
-        '&c=feishin' +
+        '&c=Feishin' +
         `&size=${size}`
     );
 };
@@ -37,7 +37,6 @@ const getCoverArtUrl = (args: {
 const normalizeSong = (
     item: z.infer<typeof ssType._response.song>,
     server: ServerListItem | null,
-    deviceId: string,
     size?: number,
 ): QueueSong => {
     const imageUrl =
@@ -48,7 +47,7 @@ const normalizeSong = (
             size: size || 300,
         }) || null;
 
-    const streamUrl = `${server?.url}/rest/stream.view?id=${item.id}&v=1.13.0&c=feishin_${deviceId}&${server?.credential}`;
+    const streamUrl = `${server?.url}/rest/stream.view?id=${item.id}&v=1.13.0&c=Feishin&${server?.credential}`;
 
     return {
         album: item.album || '',
@@ -215,7 +214,7 @@ const normalizeAlbum = (
         songCount: item.songCount,
         songs:
             (item as z.infer<typeof ssType._response.album>).song?.map((song) =>
-                normalizeSong(song, server, ''),
+                normalizeSong(song, server),
             ) || [],
         uniqueId: nanoid(),
         updatedAt: item.created,

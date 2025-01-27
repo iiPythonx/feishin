@@ -41,7 +41,7 @@ const getCoverArtUrl = (args: {
         `?id=${args.coverArtId}` +
         `&${args.credential}` +
         '&v=1.13.0' +
-        '&c=feishin' +
+        '&c=Feishin' +
         `&size=${size}`
     );
 };
@@ -57,7 +57,6 @@ const normalizePlayDate = (item: WithDate): string | null => {
 const normalizeSong = (
     item: z.infer<typeof ndType._response.song> | z.infer<typeof ndType._response.playlistSong>,
     server: ServerListItem | null,
-    deviceId: string,
     imageSize?: number,
 ): Song => {
     let id;
@@ -127,7 +126,7 @@ const normalizeSong = (
         serverId: server?.id || 'unknown',
         serverType: ServerType.NAVIDROME,
         size: item.size,
-        streamUrl: `${server?.url}/rest/stream.view?id=${id}&v=1.13.0&c=feishin_${deviceId}&${server?.credential}`,
+        streamUrl: `${server?.url}/rest/stream.view?id=${id}&v=1.13.0&c=Feishin&${server?.credential}`,
         trackNumber: item.trackNumber,
         uniqueId: nanoid(),
         updatedAt: item.updatedAt,
@@ -193,7 +192,7 @@ const normalizeAlbum = (
         serverType: ServerType.NAVIDROME,
         size: item.size,
         songCount: item.songCount,
-        songs: item.songs ? item.songs.map((song) => normalizeSong(song, server, '')) : undefined,
+        songs: item.songs ? item.songs.map((song) => normalizeSong(song, server)) : undefined,
         uniqueId: nanoid(),
         updatedAt: item.updatedAt,
         userFavorite: item.starred,
