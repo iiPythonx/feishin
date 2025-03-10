@@ -15,6 +15,7 @@ import {
     genreListSortMap,
     Song,
     ControllerEndpoint,
+    ServerListItem,
 } from '../types';
 import { VersionInfo, getFeatures, hasFeature } from '/@/renderer/api/utils';
 import { ServerFeature, ServerFeatures } from '/@/renderer/api/features-types';
@@ -24,9 +25,18 @@ import { ssNormalize } from '/@/renderer/api/subsonic/subsonic-normalize';
 import { SubsonicController } from '/@/renderer/api/subsonic/subsonic-controller';
 
 const VERSION_INFO: VersionInfo = [
+    ['0.55.0', { [ServerFeature.BFR]: [1] }],
     ['0.49.3', { [ServerFeature.SHARING_ALBUM_SONG]: [1] }],
     ['0.48.0', { [ServerFeature.PLAYLISTS_SMART]: [1] }],
 ];
+
+const excludeMissing = (server: ServerListItem | null) => {
+    if (hasFeature(server, ServerFeature.BFR)) {
+        return { missing: false };
+    }
+
+    return undefined;
+};
 
 export const NavidromeController: ControllerEndpoint = {
     addToPlaylist: async (args) => {
@@ -159,6 +169,7 @@ export const NavidromeController: ControllerEndpoint = {
                 _start: query.startIndex,
                 name: query.searchTerm,
                 ...query._custom?.navidrome,
+                role: hasFeature(apiClientProps.server, ServerFeature.BFR) ? 'albumartist' : '',
             },
         });
 
@@ -231,6 +242,7 @@ export const NavidromeController: ControllerEndpoint = {
                 name: query.searchTerm,
                 ...query._custom?.navidrome,
                 starred: query.favorite,
+                ...excludeMissing(apiClientProps.server),
             },
         });
 
@@ -368,6 +380,10 @@ export const NavidromeController: ControllerEndpoint = {
             throw new Error('Failed to ping server');
         }
 
+        if (ping.body.serverVersion?.includes('pr-2709')) {
+            ping.body.serverVersion = '0.55.0';
+        }
+
         const navidromeFeatures: Record<string, number[]> = getFeatures(
             VERSION_INFO,
             ping.body.serverVersion!,
@@ -391,6 +407,7 @@ export const NavidromeController: ControllerEndpoint = {
         }
 
         const features: ServerFeatures = {
+            bfr: !!navidromeFeatures[ServerFeature.BFR],
             lyricsMultipleStructured: !!navidromeFeatures[SubsonicExtensions.SONG_LYRICS],
             playlistsSmart: !!navidromeFeatures[ServerFeature.PLAYLISTS_SMART],
             publicPlaylist: true,
@@ -480,6 +497,7 @@ export const NavidromeController: ControllerEndpoint = {
                 starred: query.favorite,
                 title: query.searchTerm,
                 ...query._custom?.navidrome,
+                ...excludeMissing(apiClientProps.server),
             },
         });
 

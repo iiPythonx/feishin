@@ -2,7 +2,14 @@ import { Group, Table } from '@mantine/core';
 import { RiCheckFill, RiCloseFill } from 'react-icons/ri';
 import { TFunction, useTranslation } from 'react-i18next';
 import { ReactNode } from 'react';
-import { Album, AlbumArtist, AnyLibraryItem, LibraryItem, Song } from '/@/renderer/api/types';
+import {
+    Album,
+    AlbumArtist,
+    AnyLibraryItem,
+    LibraryItem,
+    RelatedArtist,
+    Song,
+} from '/@/renderer/api/types';
 import { formatDurationString, formatSizeString } from '/@/renderer/utils';
 import { replaceURLWithHTMLLinks } from '/@/renderer/utils/linkify';
 import { Spoiler, Text } from '/@/renderer/components';
@@ -46,8 +53,8 @@ const handleRow = <T extends AnyLibraryItem>(t: TFunction, item: T, rule: ItemDe
     );
 };
 
-const formatArtists = (isAlbumArtist: boolean) => (item: Album | Song) =>
-    (isAlbumArtist ? item.albumArtists : item.artists)?.map((artist, index) => (
+const formatArtists = (artists: RelatedArtist[] | undefined | null) =>
+    artists?.map((artist, index) => (
         <span key={artist.id || artist.name}>
             {index > 0 && <Separator />}
             {artist.id ? (
@@ -106,7 +113,7 @@ const BoolField = (key: boolean) =>
 
 const AlbumPropertyMapping: ItemDetailRow<Album>[] = [
     { key: 'name', label: 'common.title' },
-    { label: 'entity.albumArtist_one', render: formatArtists(true) },
+    { label: 'entity.albumArtist_one', render: (item) => formatArtists(item.albumArtists) },
     { label: 'entity.genre_other', render: FormatGenre },
     {
         label: 'common.duration',
@@ -198,8 +205,8 @@ const AlbumArtistPropertyMapping: ItemDetailRow<AlbumArtist>[] = [
 const SongPropertyMapping: ItemDetailRow<Song>[] = [
     { key: 'name', label: 'common.title' },
     { key: 'path', label: 'common.path', render: SongPath },
-    { label: 'entity.albumArtist_one', render: formatArtists(true) },
-    { key: 'artists', label: 'entity.artist_other', render: formatArtists(false) },
+    { label: 'entity.albumArtist_one', render: (item) => formatArtists(item.albumArtists) },
+    { key: 'artists', label: 'entity.artist_other', render: (item) => formatArtists(item.artists) },
     {
         key: 'album',
         label: 'entity.album_one',
@@ -270,22 +277,42 @@ const SongPropertyMapping: ItemDetailRow<Song>[] = [
     { label: 'filter.comment', render: formatComment },
 ];
 
+const handleParticipants = (item: Album | Song) => {
+    if (item.participants) {
+        return Object.entries(item.participants).map(([role, participants]) => {
+            return (
+                <tr key={role}>
+                    <td>
+                        {role.slice(0, 1).toLocaleUpperCase()}
+                        {role.slice(1)}
+                    </td>
+                    <td>{formatArtists(participants)}</td>
+                </tr>
+            );
+        });
+    }
+
+    return [];
+};
+
 export const ItemDetailsModal = ({ item }: ItemDetailsModalProps) => {
     const { t } = useTranslation();
-    let body: ReactNode;
+    let body: ReactNode[] = [];
 
     switch (item.itemType) {
         case LibraryItem.ALBUM:
             body = AlbumPropertyMapping.map((rule) => handleRow(t, item, rule));
+            body.push(...handleParticipants(item));
             break;
         case LibraryItem.ALBUM_ARTIST:
             body = AlbumArtistPropertyMapping.map((rule) => handleRow(t, item, rule));
             break;
         case LibraryItem.SONG:
             body = SongPropertyMapping.map((rule) => handleRow(t, item, rule));
+            body.push(...handleParticipants(item));
             break;
         default:
-            body = null;
+            body = [];
     }
 
     return (

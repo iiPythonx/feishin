@@ -88,10 +88,7 @@ export const AlbumArtistListGridView = ({ itemCount, gridRef }: AlbumArtistListG
                             server,
                             signal,
                         },
-                        query: {
-                            limit,
-                            ...filter,
-                        },
+                        query,
                     }),
                 { cacheTime: 1000 * 60 * 1 },
             );

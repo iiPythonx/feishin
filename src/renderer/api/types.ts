@@ -168,6 +168,7 @@ export type Album = {
     mbzId: string | null;
     name: string;
     originalDate: string | null;
+    participants: Record<string, RelatedArtist[]> | null;
     playCount: number | null;
     releaseDate: string | null;
     releaseYear: number | null;
@@ -212,6 +213,7 @@ export type Song = {
     lastPlayedAt: string | null;
     lyrics: string | null;
     name: string;
+    participants: Record<string, RelatedArtist[]> | null;
     path: string | null;
     peak: GainInfo | null;
     playCount: number;

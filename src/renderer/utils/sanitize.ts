@@ -23,6 +23,9 @@ const addStyles = (output: string[], styles: CSSStyleDeclaration) => {
             } else if (typeof value === 'number') {
                 output.push(`${key}:${value}${priorityString};`);
             }
+        } else if (styles.getPropertyValue(key)) {
+            // These will not override the value unless not declared !important
+            output.push(`${key}: ${styles.getPropertyValue(key)} !important;`);
         }
     }
 };
