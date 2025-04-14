@@ -59,7 +59,7 @@
             "package.json"
         ],
         "afterSign": ".erb/scripts/notarize.js",
-        "electronVersion": "31.2.0",
+        "electronVersion": "35.1.5",
         "win": {
             "target": [
                 "nsis"
