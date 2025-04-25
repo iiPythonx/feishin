@@ -281,7 +281,10 @@ const normalizeAlbumArtist = (
     }
 
     return {
-        albumCount: item.stats?.albumartist?.albumCount || item.albumCount,
+        albumCount: Math.max(
+            item.stats?.albumartist?.albumCount || item.albumCount,
+            item.stats?.artist?.albumCount || 0,
+        ),
         backgroundImageUrl: null,
         biography: item.biography || null,
         duration: null,

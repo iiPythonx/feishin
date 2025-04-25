@@ -82,8 +82,8 @@ export const Sidebar = () => {
     const translatedSidebarItemMap = useMemo(
         () => ({
             Albums: t('page.sidebar.albums', { postProcess: 'titleCase' }),
-            Artists: t('page.sidebar.artists', { postProcess: 'titleCase' }),
-            Folders: t('page.sidebar.folders', { postProcess: 'titleCase' }),
+            Artists: t('page.sidebar.albumArtists', { postProcess: 'titleCase' }),
+            'Artists-all': t('page.sidebar.artists', { postProcess: 'titleCase' }),
             Genres: t('page.sidebar.genres', { postProcess: 'titleCase' }),
             Home: t('page.sidebar.home', { postProcess: 'titleCase' }),
             'Now Playing': t('page.sidebar.nowPlaying', { postProcess: 'titleCase' }),

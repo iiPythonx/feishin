@@ -154,7 +154,6 @@ export const JellyfinController: ControllerEndpoint = {
         const { query, apiClientProps } = args;
 
         const res = await jfApiClient(apiClientProps).deletePlaylist({
-            body: null,
             params: {
                 id: query.id,
             },
@@ -330,6 +329,41 @@ export const JellyfinController: ControllerEndpoint = {
     },
     getAlbumListCount: async ({ apiClientProps, query }) =>
         JellyfinController.getAlbumList({
+            apiClientProps,
+            query: { ...query, limit: 1, startIndex: 0 },
+        }).then((result) => result!.totalRecordCount!),
+    getArtistList: async (args) => {
+        const { query, apiClientProps } = args;
+
+        const res = await jfApiClient(apiClientProps).getArtistList({
+            query: {
+                Fields: 'Genres, DateCreated, ExternalUrls, Overview',
+                ImageTypeLimit: 1,
+                Limit: query.limit,
+                ParentId: query.musicFolderId,
+                Recursive: true,
+                SearchTerm: query.searchTerm,
+                SortBy: albumArtistListSortMap.jellyfin[query.sortBy] || 'SortName,Name',
+                SortOrder: sortOrderMap.jellyfin[query.sortOrder],
+                StartIndex: query.startIndex,
+                UserId: apiClientProps.server?.userId || undefined,
+            },
+        });
+
+        if (res.status !== 200) {
+            throw new Error('Failed to get album artist list');
+        }
+
+        return {
+            items: res.body.Items.map((item) =>
+                jfNormalize.albumArtist(item, apiClientProps.server),
+            ),
+            startIndex: query.startIndex,
+            totalRecordCount: res.body.TotalRecordCount,
+        };
+    },
+    getArtistListCount: async ({ apiClientProps, query }) =>
+        JellyfinController.getArtistList({
             apiClientProps,
             query: { ...query, limit: 1, startIndex: 0 },
         }).then((result) => result!.totalRecordCount!),
@@ -561,6 +595,7 @@ export const JellyfinController: ControllerEndpoint = {
             totalRecordCount: res.body.Items.length || 0,
         };
     },
+    getRoles: async () => [],
     getServerInfo: async (args) => {
         const { apiClientProps } = args;
 
@@ -777,7 +812,6 @@ export const JellyfinController: ControllerEndpoint = {
         const { apiClientProps, query } = args;
 
         const res = await jfApiClient(apiClientProps).movePlaylistItem({
-            body: null,
             params: {
                 itemId: query.trackId,
                 newIdx: query.endingIndex.toString(),
@@ -796,7 +830,6 @@ export const JellyfinController: ControllerEndpoint = {
 
         for (const chunk of chunks) {
             const res = await jfApiClient(apiClientProps).removeFromPlaylist({
-                body: null,
                 params: {
                     id: query.id,
                 },

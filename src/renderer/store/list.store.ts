@@ -7,6 +7,7 @@ import {
     AlbumArtistListSort,
     AlbumListArgs,
     AlbumListSort,
+    ArtistListArgs,
     GenreListArgs,
     GenreListSort,
     LibraryItem,
@@ -27,6 +28,7 @@ export const generatePageKey = (page: string, id?: string) => {
 export type AlbumListFilter = Omit<AlbumListArgs['query'], 'startIndex' | 'limit'>;
 export type SongListFilter = Omit<SongListArgs['query'], 'startIndex' | 'limit'>;
 export type AlbumArtistListFilter = Omit<AlbumArtistListArgs['query'], 'startIndex' | 'limit'>;
+export type ArtistListFilter = Omit<ArtistListArgs['query'], 'startIndex' | 'limit'>;
 export type PlaylistListFilter = Omit<PlaylistListArgs['query'], 'startIndex' | 'limit'>;
 export type GenreListFilter = Omit<GenreListArgs['query'], 'startIndex' | 'limit'>;
 
@@ -34,6 +36,7 @@ type FilterType =
     | AlbumListFilter
     | SongListFilter
     | AlbumArtistListFilter
+    | ArtistListFilter
     | PlaylistListFilter
     | GenreListFilter;
 
@@ -499,6 +502,36 @@ export const useListStore = create<ListSlice>()(
                             autoFit: true,
                             columns: [],
                             followCurrentSong: false,
+                            pagination: {
+                                currentPage: 1,
+                                itemsPerPage: 100,
+                                totalItems: 1,
+                                totalPages: 1,
+                            },
+                            rowHeight: 60,
+                            scrollOffset: 0,
+                        },
+                    },
+                    artist: {
+                        display: ListDisplayType.POSTER,
+                        filter: {
+                            role: '',
+                            sortBy: AlbumArtistListSort.NAME,
+                            sortOrder: SortOrder.DESC,
+                        },
+                        grid: { itemGap: 10, itemSize: 200, scrollOffset: 0 },
+                        table: {
+                            autoFit: true,
+                            columns: [
+                                {
+                                    column: TableColumn.ROW_INDEX,
+                                    width: 50,
+                                },
+                                {
+                                    column: TableColumn.TITLE_COMBINED,
+                                    width: 500,
+                                },
+                            ],
                             pagination: {
                                 currentPage: 1,
                                 itemsPerPage: 100,

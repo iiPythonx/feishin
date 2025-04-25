@@ -3,8 +3,8 @@ import { useGeneralSettings, useSettingsStoreActions } from '/@/renderer/store';
 
 const SIDEBAR_ITEMS: Array<[string, string]> = [
     ['Albums', 'page.sidebar.albums'],
-    ['Artists', 'page.sidebar.artists'],
-    ['Folders', 'page.sidebar.folders'],
+    ['Artists', 'page.sidebar.albumArtists'],
+    ['Artists-all', 'page.sidebar.artists'],
     ['Genres', 'page.sidebar.genres'],
     ['Home', 'page.sidebar.home'],
     ['Now Playing', 'page.sidebar.nowPlaying'],

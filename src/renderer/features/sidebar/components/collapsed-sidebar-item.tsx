@@ -46,7 +46,7 @@ const TextWrapper = styled.div`
     overflow: hidden;
     text-align: center;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: pre-line;
 `;
 
 const ActiveTabIndicator = styled(motion.div)`
@@ -90,7 +90,6 @@ const _CollapsedSidebarItem = forwardRef<HTMLDivElement, CollapsedSidebarItemPro
                     <Text
                         $secondary={!isMatch}
                         fw="600"
-                        overflow="hidden"
                         size="xs"
                     >
                         {label}

@@ -30,6 +30,22 @@ const VERSION_INFO: VersionInfo = [
     ['0.48.0', { [ServerFeature.PLAYLISTS_SMART]: [1] }],
 ];
 
+const NAVIDROME_ROLES: Array<string | { label: string; value: string }> = [
+    { label: 'all artists', value: '' },
+    'arranger',
+    'artist',
+    'composer',
+    'conductor',
+    'director',
+    'djmixer',
+    'engineer',
+    'lyricist',
+    'mixer',
+    'performer',
+    'producer',
+    'remixer',
+];
+
 const excludeMissing = (server: ServerListItem | null) => {
     if (hasFeature(server, ServerFeature.BFR)) {
         return { missing: false };
@@ -105,7 +121,6 @@ export const NavidromeController: ControllerEndpoint = {
         const { query, apiClientProps } = args;
 
         const res = await ndApiClient(apiClientProps).deletePlaylist({
-            body: null,
             params: {
                 id: query.id,
             },
@@ -261,6 +276,47 @@ export const NavidromeController: ControllerEndpoint = {
             apiClientProps,
             query: { ...query, limit: 1, startIndex: 0 },
         }).then((result) => result!.totalRecordCount!),
+    getArtistList: async (args) => {
+        const { query, apiClientProps } = args;
+
+        const res = await ndApiClient(apiClientProps).getAlbumArtistList({
+            query: {
+                _end: query.startIndex + (query.limit || 0),
+                _order: sortOrderMap.navidrome[query.sortOrder],
+                _sort: albumArtistListSortMap.navidrome[query.sortBy],
+                _start: query.startIndex,
+                name: query.searchTerm,
+                ...query._custom?.navidrome,
+                role: query.role || undefined,
+            },
+        });
+
+        if (res.status !== 200) {
+            throw new Error('Failed to get artist list');
+        }
+
+        return {
+            items: res.body.data.map((albumArtist) =>
+                // Navidrome native API will return only external URL small/medium/large
+                // image URL. Set large image to undefined to force `albumArtist` to use
+                // /rest/getCoverArt.view?id=ar-...
+                ndNormalize.albumArtist(
+                    {
+                        ...albumArtist,
+                        largeImageUrl: undefined,
+                    },
+                    apiClientProps.server,
+                ),
+            ),
+            startIndex: query.startIndex,
+            totalRecordCount: Number(res.body.headers.get('x-total-count') || 0),
+        };
+    },
+    getArtistListCount: async ({ apiClientProps, query }) =>
+        NavidromeController.getArtistList({
+            apiClientProps,
+            query: { ...query, limit: 1, startIndex: 0 },
+        }).then((result) => result!.totalRecordCount!),
     getDownloadUrl: SubsonicController.getDownloadUrl,
     getGenreList: async (args) => {
         const { query, apiClientProps } = args;
@@ -369,6 +425,8 @@ export const NavidromeController: ControllerEndpoint = {
         };
     },
     getRandomSongList: SubsonicController.getRandomSongList,
+    getRoles: async ({ apiClientProps }) =>
+        hasFeature(apiClientProps.server, ServerFeature.BFR) ? NAVIDROME_ROLES : [],
     getScanStatus: SubsonicController.getScanStatus,
     getServerInfo: async (args) => {
         const { apiClientProps } = args;
@@ -565,7 +623,6 @@ export const NavidromeController: ControllerEndpoint = {
         const { query, apiClientProps } = args;
 
         const res = await ndApiClient(apiClientProps).removeFromPlaylist({
-            body: null,
             params: {
                 id: query.id,
             },

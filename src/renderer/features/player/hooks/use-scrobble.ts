@@ -342,8 +342,12 @@ export const useScrobble = () => {
                 //    a single track on repeat one, or one track added to the queue
                 //    multiple times in a row and playback goes normally (no next/previous)
                 equalityFn: (a, b) =>
+                    // compute whether the song changed
                     (a[0] as QueueSong)?.uniqueId === (b[0] as QueueSong)?.uniqueId &&
-                    a[2] === b[2],
+                    // compute whether the position changed. This should imply 1
+                    a[2] === b[2] &&
+                    // compute whether the same player: relevant for repeat one and repeat all (one track)
+                    a[3] === b[3],
             },
         );
 

@@ -99,6 +99,12 @@ export const controller: GeneralController = {
     getAlbumListCount(args) {
         return apiController('getAlbumListCount', args.apiClientProps.server?.type)?.(args);
     },
+    getArtistList(args) {
+        return apiController('getArtistList', args.apiClientProps.server?.type)?.(args);
+    },
+    getArtistListCount(args) {
+        return apiController('getArtistListCount', args.apiClientProps.server?.type)?.(args);
+    },
     getDownloadUrl(args) {
         return apiController('getDownloadUrl', args.apiClientProps.server?.type)?.(args);
     },
@@ -125,6 +131,9 @@ export const controller: GeneralController = {
     },
     getRandomSongList(args) {
         return apiController('getRandomSongList', args.apiClientProps.server?.type)?.(args);
+    },
+    getRoles(args) {
+        return apiController('getRoles', args.apiClientProps.server?.type)?.(args);
     },
     getScanStatus(args) {
         return apiController('getScanStatus', args.apiClientProps.server?.type)?.(args);

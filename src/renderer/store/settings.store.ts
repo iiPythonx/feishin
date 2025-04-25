@@ -35,7 +35,7 @@ export type SidebarItemType = {
     route: AppRoute | string;
 };
 
-export const sidebarItems = [
+export const sidebarItems: SidebarItemType[] = [
     {
         disabled: true,
         id: 'Now Playing',
@@ -64,20 +64,20 @@ export const sidebarItems = [
     {
         disabled: false,
         id: 'Artists',
-        label: i18n.t('page.sidebar.artists'),
+        label: i18n.t('page.sidebar.albumArtists'),
         route: AppRoute.LIBRARY_ALBUM_ARTISTS,
+    },
+    {
+        disabled: false,
+        id: 'Artists-all',
+        label: i18n.t('page.sidebar.artists'),
+        route: AppRoute.LIBRARY_ARTISTS,
     },
     {
         disabled: false,
         id: 'Genres',
         label: i18n.t('page.sidebar.genres'),
         route: AppRoute.LIBRARY_GENRES,
-    },
-    {
-        disabled: true,
-        id: 'Folders',
-        label: i18n.t('page.sidebar.folders'),
-        route: AppRoute.LIBRARY_FOLDERS,
     },
     {
         disabled: true,
@@ -749,7 +749,7 @@ export const useSettingsStore = create<SettingsSlice>()(
         {
             merge: mergeOverridingColumns,
             name: 'store_settings',
-            version: 8,
+            version: 9,
         },
     ),
 );

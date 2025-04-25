@@ -518,6 +518,51 @@ export const SubsonicController: ControllerEndpoint = {
 
         return totalRecordCount;
     },
+    getArtistList: async (args) => {
+        const { query, apiClientProps } = args;
+
+        const res = await ssApiClient(apiClientProps).getArtists({
+            query: {
+                musicFolderId: query.musicFolderId,
+            },
+        });
+
+        if (res.status !== 200) {
+            throw new Error('Failed to get artist list');
+        }
+
+        let artists = (res.body.artists?.index || []).flatMap((index) => index.artist);
+        console.log(artists.length);
+        if (query.role) {
+            artists = artists.filter(
+                (artist) => !artist.roles || artist.roles.includes(query.role!),
+            );
+        }
+
+        let results = artists.map((artist) =>
+            ssNormalize.albumArtist(artist, apiClientProps.server, 300),
+        );
+
+        if (query.searchTerm) {
+            const searchResults = filter(results, (artist) => {
+                return artist.name.toLowerCase().includes(query.searchTerm!.toLowerCase());
+            });
+
+            results = searchResults;
+        }
+
+        if (query.sortBy) {
+            results = sortAlbumArtistList(results, query.sortBy, query.sortOrder);
+        }
+
+        return {
+            items: results,
+            startIndex: query.startIndex,
+            totalRecordCount: results?.length || 0,
+        };
+    },
+    getArtistListCount: async (args) =>
+        SubsonicController.getArtistList(args).then((res) => res!.totalRecordCount!),
     getDownloadUrl: (args) => {
         const { apiClientProps, query } = args;
 
@@ -713,6 +758,32 @@ export const SubsonicController: ControllerEndpoint = {
             startIndex: 0,
             totalRecordCount: res.body.randomSongs?.song?.length || 0,
         };
+    },
+    getRoles: async (args) => {
+        const { apiClientProps } = args;
+
+        const res = await ssApiClient(apiClientProps).getArtists({});
+
+        if (res.status !== 200) {
+            throw new Error('Failed to get artist list');
+        }
+
+        const roles = new Set<string>();
+
+        for (const index of res.body.artists?.index || []) {
+            for (const artist of index.artist) {
+                for (const role of artist.roles || []) {
+                    roles.add(role);
+                }
+            }
+        }
+
+        const final: Array<string | { label: string; value: string }> = Array.from(roles).sort();
+        // Always add 'all artist' filter, even if there are no other roles
+        // This is relevant when switching from a server which has roles to one with
+        // no roles.
+        final.splice(0, 0, { label: 'all artists', value: '' });
+        return final;
     },
     getScanStatus: async (args: ScanStatusArgs): Promise<ScanStatus> => {
         const { apiClientProps } = args;
@@ -1281,6 +1352,7 @@ export const SubsonicController: ControllerEndpoint = {
 
         return null;
     },
+
     search: async (args) => {
         const { query, apiClientProps } = args;
 

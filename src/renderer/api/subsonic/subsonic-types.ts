@@ -162,6 +162,7 @@ const albumArtist = z.object({
     coverArt: z.string().optional(),
     id,
     name: z.string(),
+    roles: z.array(z.string()).optional(),
     starred: z.string().optional(),
 });
 
@@ -175,6 +176,7 @@ const artistListEntry = albumArtist.pick({
     coverArt: true,
     id: true,
     name: true,
+    roles: true,
     starred: true,
 });
 

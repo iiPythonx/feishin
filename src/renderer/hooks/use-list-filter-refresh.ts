@@ -27,44 +27,42 @@ export const useListFilterRefresh = ({
 
     const queryKeyFn: ((serverId: string, query: Record<any, any>) => QueryKey) | null =
         useMemo(() => {
-            if (itemType === LibraryItem.ALBUM) {
-                return queryKeys.albums.list;
+            switch (itemType) {
+                case LibraryItem.ALBUM:
+                    return queryKeys.albums.list;
+                case LibraryItem.ALBUM_ARTIST:
+                    return queryKeys.albumArtists.list;
+                case LibraryItem.ARTIST:
+                    return queryKeys.artists.list;
+                case LibraryItem.GENRE:
+                    return queryKeys.genres.list;
+                case LibraryItem.PLAYLIST:
+                    return queryKeys.playlists.list;
+                case LibraryItem.SONG:
+                    return queryKeys.songs.list;
+                default:
+                    return null;
             }
-            if (itemType === LibraryItem.ALBUM_ARTIST) {
-                return queryKeys.albumArtists.list;
-            }
-            if (itemType === LibraryItem.PLAYLIST) {
-                return queryKeys.playlists.list;
-            }
-            if (itemType === LibraryItem.SONG) {
-                return queryKeys.songs.list;
-            }
-            if (itemType === LibraryItem.GENRE) {
-                return queryKeys.genres.list;
-            }
-
-            return null;
         }, [itemType]);
 
     const queryFn: ((args: any) => Promise<BasePaginatedResponse<any> | null | undefined>) | null =
         useMemo(() => {
-            if (itemType === LibraryItem.ALBUM) {
-                return api.controller.getAlbumList;
+            switch (itemType) {
+                case LibraryItem.ALBUM:
+                    return api.controller.getAlbumList;
+                case LibraryItem.ALBUM_ARTIST:
+                    return api.controller.getAlbumArtistList;
+                case LibraryItem.ARTIST:
+                    return api.controller.getArtistList;
+                case LibraryItem.GENRE:
+                    return api.controller.getGenreList;
+                case LibraryItem.PLAYLIST:
+                    return api.controller.getPlaylistList;
+                case LibraryItem.SONG:
+                    return api.controller.getSongList;
+                default:
+                    return null;
             }
-            if (itemType === LibraryItem.ALBUM_ARTIST) {
-                return api.controller.getAlbumArtistList;
-            }
-            if (itemType === LibraryItem.PLAYLIST) {
-                return api.controller.getPlaylistList;
-            }
-            if (itemType === LibraryItem.SONG) {
-                return api.controller.getSongList;
-            }
-            if (itemType === LibraryItem.GENRE) {
-                return api.controller.getGenreList;
-            }
-
-            return null;
         }, [itemType]);
 
     const handleRefreshTable = useCallback(

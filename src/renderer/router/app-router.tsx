@@ -8,6 +8,7 @@ import { ModalsProvider } from '@mantine/modals';
 import { BaseContextModal } from '/@/renderer/components';
 import { AddToPlaylistContextModal } from '/@/renderer/features/playlists';
 import { ShareItemContextModal } from '/@/renderer/features/sharing';
+import ArtistListRoute from '/@/renderer/features/artists/routes/artist-list-route';
 
 const NowPlayingRoute = lazy(
     () => import('/@/renderer/features/now-playing/routes/now-playing-route'),
@@ -143,6 +144,11 @@ export const AppRouter = () => {
                                     element={<AlbumDetailRoute />}
                                     errorElement={<RouteErrorBoundary />}
                                     path={AppRoute.LIBRARY_ALBUMS_DETAIL}
+                                />
+                                <Route
+                                    element={<ArtistListRoute />}
+                                    errorElement={<RouteErrorBoundary />}
+                                    path={AppRoute.LIBRARY_ARTISTS}
                                 />
                                 <Route
                                     element={<DummyAlbumDetailRoute />}

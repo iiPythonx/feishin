@@ -236,7 +236,6 @@ const normalizeAlbum = (
         })),
         id: item.Id,
         imagePlaceholderUrl: null,
-        participants: null,
         imageUrl: getAlbumCoverArtUrl({
             baseUrl: server?.url || '',
             item,
@@ -248,6 +247,7 @@ const normalizeAlbum = (
         mbzId: item.ProviderIds?.MusicBrainzAlbum || null,
         name: item.Name,
         originalDate: null,
+        participants: null,
         playCount: item.UserData?.PlayCount || 0,
         releaseDate: item.PremiereDate?.split('T')[0] || null,
         releaseYear: item.ProductionYear || null,

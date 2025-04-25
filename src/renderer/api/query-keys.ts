@@ -231,6 +231,9 @@ export const queryKeys: Record<
             return [serverId, 'playlists', 'songList'] as const;
         },
     },
+    roles: {
+        list: (serverId: string) => [serverId, 'roles'] as const,
+    },
     search: {
         list: (serverId: string, query?: SearchQuery) => {
             if (query) return [serverId, 'search', 'list', query] as const;
