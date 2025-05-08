@@ -17,15 +17,21 @@ const AlbumArtistDetailRoute = () => {
     const server = useCurrentServer();
     const { enableBackgroundArtist, backgroundBlurSize } = useBackgroundSettings();
 
-    const { albumArtistId } = useParams() as { albumArtistId: string };
+    const { albumArtistId, artistId } = useParams() as {
+        albumArtistId?: string;
+        artistId?: string;
+    };
+
+    const routeId = (artistId || albumArtistId) as string;
+
     const handlePlayQueueAdd = usePlayQueueAdd();
     const playButtonBehavior = usePlayButtonBehavior();
     const detailQuery = useAlbumArtistDetail({
-        query: { id: albumArtistId },
+        query: { id: routeId },
         serverId: server?.id,
     });
     const { color: background, colorId } = useFastAverageColor({
-        id: albumArtistId,
+        id: routeId,
         src: detailQuery.data?.imageUrl,
         srcLoaded: !detailQuery.isLoading,
     });
@@ -35,19 +41,19 @@ const AlbumArtistDetailRoute = () => {
     const handlePlay = () => {
         handlePlayQueueAdd?.({
             byItemType: {
-                id: [albumArtistId],
+                id: [routeId],
                 type: LibraryItem.ALBUM_ARTIST,
             },
             playType: playButtonBehavior,
         });
     };
 
-    if (!background || colorId !== albumArtistId) {
+    if (!background || colorId !== routeId) {
         return <Spinner container />;
     }
 
     return (
-        <AnimatedPage key={`album-artist-detail-${albumArtistId}`}>
+        <AnimatedPage key={`album-artist-detail-${routeId}`}>
             <NativeScrollArea
                 ref={scrollAreaRef}
                 pageHeaderProps={{

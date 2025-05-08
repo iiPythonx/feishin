@@ -129,7 +129,7 @@ const AlbumListRoute = () => {
 
     const artist = searchParams.get('artistName');
     const title = artist
-        ? t('page.albumList.artistAlbums', { artist })
+        ? t('page.albumList.artistAlbums', { artist, postProcess: 'sentenceCase' })
         : genreId
           ? t('page.albumList.genreAlbums', { genre: titleCase(genreTitle) })
           : undefined;

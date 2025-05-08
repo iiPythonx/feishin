@@ -62,6 +62,7 @@ root.render(
         <Notifications
             containerWidth="300px"
             position="bottom-center"
+            zIndex={5}
         />
         <App />
     </PersistQueryClientProvider>,

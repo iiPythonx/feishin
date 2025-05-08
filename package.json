@@ -2,7 +2,7 @@
     "name": "feishin",
     "productName": "Feishin",
     "description": "Feishin music server",
-    "version": "0.12.3",
+    "version": "0.12.6",
     "scripts": {
         "build": "concurrently \"npm run build:main\" \"npm run build:renderer\" \"npm run build:remote\"",
         "build:main": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.main.prod.ts",
@@ -295,7 +295,11 @@
         "zustand": "^4.3.9"
     },
     "resolutions": {
-        "styled-components": "^6"
+        "styled-components": "^6",
+        "entities": "2.2.0"
+    },
+    "overrides": {
+        "entities": "2.2.0"
     },
     "devEngines": {
         "runtime": {

@@ -284,7 +284,7 @@ const normalizeAlbumArtist = (
         ) || [];
 
     return {
-        albumCount: null,
+        albumCount: item.AlbumCount ?? null,
         backgroundImageUrl: null,
         biography: item.Overview || null,
         duration: item.RunTimeTicks / 10000,
@@ -308,7 +308,7 @@ const normalizeAlbumArtist = (
         serverId: server?.id || '',
         serverType: ServerType.JELLYFIN,
         similarArtists,
-        songCount: null,
+        songCount: item.SongCount ?? null,
         userFavorite: item.UserData?.IsFavorite || false,
         userRating: null,
     };

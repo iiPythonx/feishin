@@ -12,18 +12,22 @@ import { ListContext } from '/@/renderer/context/list-context';
 
 const AlbumArtistDetailTopSongsListRoute = () => {
     const tableRef = useRef<AgGridReactType | null>(null);
-    const { albumArtistId } = useParams() as { albumArtistId: string };
+    const { albumArtistId, artistId } = useParams() as {
+        albumArtistId?: string;
+        artistId?: string;
+    };
+    const routeId = (artistId || albumArtistId) as string;
     const server = useCurrentServer();
     const pageKey = LibraryItem.SONG;
 
     const detailQuery = useAlbumArtistDetail({
-        query: { id: albumArtistId },
+        query: { id: routeId },
         serverId: server?.id,
     });
 
     const topSongsQuery = useTopSongsList({
         options: { enabled: !!detailQuery?.data?.name },
-        query: { artist: detailQuery?.data?.name || '', artistId: albumArtistId },
+        query: { artist: detailQuery?.data?.name || '', artistId: routeId },
         serverId: server?.id,
     });
 
@@ -31,10 +35,10 @@ const AlbumArtistDetailTopSongsListRoute = () => {
 
     const providerValue = useMemo(() => {
         return {
-            id: albumArtistId,
+            id: routeId,
             pageKey,
         };
-    }, [albumArtistId, pageKey]);
+    }, [routeId, pageKey]);
 
     return (
         <AnimatedPage>

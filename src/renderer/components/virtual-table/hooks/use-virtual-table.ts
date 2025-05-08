@@ -388,8 +388,8 @@ export const useVirtualTable = <TFilter extends BaseQuery<any>>({
                     break;
                 case LibraryItem.ARTIST:
                     navigate(
-                        generatePath(AppRoute.LIBRARY_ALBUM_ARTISTS_DETAIL, {
-                            albumArtistId: e.data.id,
+                        generatePath(AppRoute.LIBRARY_ARTISTS_DETAIL, {
+                            artistId: e.data.id,
                         }),
                     );
                     break;

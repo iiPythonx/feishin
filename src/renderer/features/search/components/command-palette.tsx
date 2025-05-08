@@ -2,6 +2,7 @@
 import { useCallback, useState, Fragment, useRef } from 'react';
 import { ActionIcon, Group, Kbd, ScrollArea } from '@mantine/core';
 import { useDisclosure, useDebouncedValue } from '@mantine/hooks';
+import { useTranslation } from 'react-i18next';
 import { RiSearchLine, RiCloseFill } from 'react-icons/ri';
 import { generatePath, useNavigate } from 'react-router';
 import styled from 'styled-components';
@@ -37,6 +38,7 @@ export const CommandPalette = ({ modalProps }: CommandPaletteProps) => {
     const activePage = pages[pages.length - 1];
     const isHome = activePage === CommandPalettePages.HOME;
     const searchInputRef = useRef<HTMLInputElement>(null);
+    const { t } = useTranslation();
 
     const popPage = useCallback(() => {
         setPages((pages) => {
@@ -187,13 +189,17 @@ export const CommandPalette = ({ modalProps }: CommandPaletteProps) => {
                                     }}
                                 >
                                     <LibraryCommandItem
+                                        disabled={artist?.albumCount === 0}
                                         handlePlayQueueAdd={handlePlayQueueAdd}
                                         id={artist.id}
                                         imageUrl={artist.imageUrl}
                                         itemType={LibraryItem.ALBUM_ARTIST}
                                         subtitle={
-                                            (artist?.albumCount || 0) > 0
-                                                ? `${artist.albumCount} albums`
+                                            artist?.albumCount !== undefined &&
+                                            artist?.albumCount !== null
+                                                ? t('entity.albumWithCount', {
+                                                      count: artist.albumCount,
+                                                  })
                                                 : undefined
                                         }
                                         title={artist.name}

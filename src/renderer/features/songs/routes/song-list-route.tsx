@@ -122,9 +122,12 @@ const TrackListRoute = () => {
 
     const artist = searchParams.get('artistName');
     const title = artist
-        ? t('page.trackList.artistTracks', { artist })
+        ? t('page.trackList.artistTracks', { artist, postProcess: 'sentenceCase' })
         : genreId
-          ? t('page.trackList.genreTracks', { genre: titleCase(genreTitle) })
+          ? t('page.trackList.genreTracks', {
+                genre: titleCase(genreTitle),
+                postProcess: 'sentenceCase',
+            })
           : undefined;
 
     return (

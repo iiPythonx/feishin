@@ -1,6 +1,6 @@
 {
     "common": {
-        "backward": "voltar",
+        "backward": "para trás",
         "areYouSure": "tem certeza?",
         "add": "adicionar",
         "ascending": "ascendente",
@@ -27,7 +27,7 @@
         "title": "titulo",
         "create": "criar",
         "confirm": "confirmar",
-        "home": "inicio",
+        "home": "início",
         "comingSoon": "em breve…",
         "channel_one": "canal",
         "channel_many": "canais",
@@ -56,9 +56,9 @@
         "path": "caminho",
         "no": "não",
         "owner": "dono",
-        "forward": "avançar",
+        "forward": "para frente",
         "forceRestartRequired": "reinicie para aplicar as alterações… feche a notificação para reiniciar",
-        "setting": "contexto",
+        "setting": "configuração",
         "version": "versão",
         "filter_one": "filtro",
         "filter_many": "filtros",
@@ -74,7 +74,7 @@
         "restartRequired": "é necessário reiniciar",
         "previousSong": "anterior $t(entity.track_one)",
         "noResultsFromQuery": "a consulta não retornou resultados",
-        "quit": "abandonar",
+        "quit": "sair",
         "search": "procurar",
         "saveAs": "salvar como",
         "yes": "sim",
@@ -87,7 +87,11 @@
         "preview": "pré-visualizar",
         "share": "compartilhar",
         "close": "fechar",
-        "translation": "tradução"
+        "translation": "tradução",
+        "albumGain": "ganho do álbum",
+        "trackPeak": "pico da faixa",
+        "albumPeak": "pico do álbum",
+        "trackGain": "ganho da faixa"
     },
     "action": {
         "goToPage": "vá para página",
@@ -116,7 +120,8 @@
     "form": {
         "deletePlaylist": {
             "title": "deletar $t(entity.playlist_one)",
-            "input_confirm": "escreva o nome da $t(entity.playlist_one) para confirmar"
+            "input_confirm": "escreva o nome da $t(entity.playlist_one) para confirmar",
+            "success": "$t(entity.playlist_one) deletada com sucesso"
         },
         "addServer": {
             "title": "adicionar servidor",
@@ -128,19 +133,25 @@
             "input_url": "url",
             "success": "servidor adicionado com sucesso",
             "input_name": "nome do servidor",
-            "input_username": "nome de usuário"
+            "input_username": "nome de usuário",
+            "ignoreCors": "ignorar CORS ($t(common.restartRequired))"
         },
         "createPlaylist": {
             "title": "criar $t(entity.playlist_one)",
             "input_public": "público",
             "input_description": "$t(common.description)",
-            "success": "$t(entity.playlist_one) criada com sucesso"
+            "success": "$t(entity.playlist_one) criada com sucesso",
+            "input_owner": "$t(common.owner)",
+            "input_name": "$t(common.name)"
         },
         "updateServer": {
-            "title": "atualizar servidor"
+            "title": "atualizar servidor",
+            "success": "servidor atualizado com sucesso"
         },
         "editPlaylist": {
-            "title": "editar $t(entity.playlist_one)"
+            "title": "editar $t(entity.playlist_one)",
+            "publicJellyfinNote": "O Jellyfin por algum motivo não expõe se uma playlist é pública ou não. Se você deseja que ela permaneça pública, por favor selecione a seguinte entrada",
+            "success": "$t(entity.playlist_one) atualizada com sucesso"
         },
         "addToPlaylist": {
             "title": "adicionar à $t(entity.playlist_one)",
@@ -149,14 +160,52 @@
             "success": "adicionado $t(entity.trackWithCount, {\"count\": {{message}} }) para $t(entity.playlistWithCount, {\"count\": {{numOfPlaylists}} })"
         },
         "lyricSearch": {
-            "title": "pesquisa de letras"
+            "title": "pesquisa de letras",
+            "input_artist": "$t(entity.artist_one)",
+            "input_name": "$t(common.name)"
+        },
+        "shareItem": {
+            "createFailed": "falha ao criar compartilhamento (o compartilhamento está ativado?)",
+            "setExpiration": "definir expiração",
+            "success": "link de compartilhamento copiado para a área de transferência (ou clique aqui para abrir)",
+            "allowDownloading": "permitir downloads",
+            "description": "descrição",
+            "expireInvalid": "a expiração deve ser uma data futura"
+        },
+        "queryEditor": {
+            "input_optionMatchAny": "corresponder qualquer um",
+            "input_optionMatchAll": "corresponder todos"
         }
     },
     "setting": {
         "discordIdleStatus_description": "quando ativado, atualiza o status enquanto o player está ocioso",
         "discordUpdateInterval_description": "o tempo em segundos entre cada atualização (mínimo 15 segundos)",
         "playButtonBehavior_description": "define o comportamento padrão do botão play ao adicionar músicas à fila",
-        "discordApplicationId": "{{discord}} ID do aplicativo"
+        "discordApplicationId": "{{discord}} ID do aplicativo",
+        "audioPlayer": "player de áudio",
+        "applicationHotkeys": "teclas de atalho da aplicação",
+        "applicationHotkeys_description": "configure as teclas de atalho da aplicação. clique na caixa de seleção para definir como tecla de atalho global (somente desktop)",
+        "contextMenu": "configuração do menu de contexto (clique do botão direito do mouse)",
+        "clearQueryCache": "limpar cache do feishin",
+        "clearCache": "limpar cache do navegador",
+        "clearQueryCache_description": "uma 'limpeza leve' do feishin. isso irá renovar playlists, metadados de faixas, e resetar letras salvas. as configurações, as credenciais de servidor e o cache de imagens serão mantidos",
+        "audioPlayer_description": "selecione o player de áudio usado para reprodução",
+        "audioExclusiveMode": "modo de áudio exclusivo",
+        "buttonSize": "tamanho do botão da barra de reprodução",
+        "albumBackground_description": "adiciona uma imagem de fundo contendo a arte do álbum para a página de álbum",
+        "clearCache_description": "uma 'limpeza geral' do feishin. em adição a limpar o cache do feishin, limpa o cache do navegador (imagens salvas e outros recursos). as credenciais de servidor e as configurações serão mantidas",
+        "clearCacheSuccess": "cache limpo com sucesso",
+        "audioDevice": "dispositivo de áudio",
+        "audioDevice_description": "selecione o dispositivo de áudio usado para reprodução (somente player web)",
+        "audioExclusiveMode_description": "ativar modo de saída exclusiva. Neste modo, o sistema é geralmente bloqueado, e apenas mpv terá saída de áudio",
+        "accentColor": "cor de realce",
+        "accentColor_description": "define a cor de realce para a aplicação",
+        "artistConfiguration": "configuração da página de artista de álbum",
+        "artistConfiguration_description": "configure quais itens serão mostrados, e em qual ordem, na página de artista de álbum",
+        "buttonSize_description": "o tamanho dos botões da barra de reprodução",
+        "albumBackgroundBlur": "tamanho de desfoque da imagem de fundo do álbum",
+        "albumBackgroundBlur_description": "ajusta a quantidade de desfoque aplicada para a imagem de fundo do álbum",
+        "albumBackground": "imagem de fundo do álbum"
     },
     "table": {
         "config": {
@@ -184,22 +233,142 @@
             "title": "$t(entity.albumArtist_other)"
         },
         "genreList": {
-            "title": "$t(entity.genre_other)"
+            "title": "$t(entity.genre_other)",
+            "showTracks": "mostrar $t(entity.genre_one) $t(entity.track_other)",
+            "showAlbums": "mostrar $t(entity.genre_one) $t(entity.album_other)"
         },
         "trackList": {
-            "title": "$t(entity.track_other)"
+            "title": "$t(entity.track_other)",
+            "artistTracks": "faixas de {{artist}}",
+            "genreTracks": "\"{{genre}}\" $t(entity.track_other)"
         },
         "globalSearch": {
-            "title": "comandos"
+            "title": "comandos",
+            "commands": {
+                "serverCommands": "comandos do servidor",
+                "goToPage": "ir para a página",
+                "searchFor": "buscar por {{query}}"
+            }
         },
         "sidebar": {
-            "home": "$t(common.home)"
+            "home": "$t(common.home)",
+            "tracks": "$t(entity.track_other)",
+            "shared": "$t(entity.playlist_other) compartilhada",
+            "albums": "$t(entity.album_other)",
+            "genres": "$t(entity.genre_other)",
+            "folders": "$t(entity.folder_other)",
+            "albumArtists": "$t(entity.albumArtist_other)",
+            "artists": "$t(entity.artist_other)",
+            "nowPlaying": "tocando agora",
+            "playlists": "$t(entity.playlist_other)",
+            "search": "$t(common.search)",
+            "settings": "$t(common.setting_other)"
         },
         "playlistList": {
             "title": "$t(entity.playlist_other)"
         },
         "albumList": {
-            "title": "$t(entity.album_other)"
+            "title": "$t(entity.album_other)",
+            "artistAlbums": "álbuns de {{artist}}",
+            "genreAlbums": "\"{{genre}}\" $t(entity.album_other)"
+        },
+        "appMenu": {
+            "openBrowserDevtools": "abrir ferramentas do desenvolvedor",
+            "quit": "$t(common.quit)",
+            "selectServer": "selecionar servidor",
+            "collapseSidebar": "recolher barra lateral",
+            "expandSidebar": "expandir barra lateral",
+            "goBack": "voltar",
+            "goForward": "avançar",
+            "version": "versão {{version}}",
+            "manageServers": "gerenciar servidores",
+            "settings": "$t(common.setting_other)"
+        },
+        "contextMenu": {
+            "moveToTop": "$t(action.moveToTop)",
+            "moveToBottom": "$t(action.moveToBottom)",
+            "removeFromFavorites": "$t(action.removeFromFavorites)",
+            "numberSelected": "{{count}} selecionado",
+            "addFavorite": "$t(action.addToFavorites)",
+            "addLast": "$t(player.addLast)",
+            "addNext": "$t(player.addNext)",
+            "addToFavorites": "$t(action.addToFavorites)",
+            "playSimilarSongs": "$t(player.playSimilarSongs)",
+            "removeFromQueue": "$t(action.removeFromQueue)",
+            "play": "$t(player.play)",
+            "playShuffled": "$t(player.shuffle)",
+            "createPlaylist": "$t(action.createPlaylist)",
+            "download": "baixar",
+            "shareItem": "compartilhar item",
+            "showDetails": "obter informações",
+            "addToPlaylist": "$t(action.addToPlaylist)",
+            "deletePlaylist": "$t(action.deletePlaylist)",
+            "deselectAll": "$t(action.deselectAll)",
+            "moveToNext": "$t(action.moveToNext)",
+            "removeFromPlaylist": "$t(action.removeFromPlaylist)",
+            "setRating": "$t(action.setRating)"
+        },
+        "albumArtistDetail": {
+            "viewAllTracks": "ver todas as $t(entity.track_other)",
+            "appearsOn": "aparece em",
+            "recentReleases": "lançamentos recentes",
+            "viewDiscography": "ver discografia",
+            "relatedArtists": "$t(entity.artist_other) relacionados",
+            "viewAll": "ver tudo",
+            "topSongsFrom": "músicas mais tocadas de {{title}}",
+            "topSongs": "músicas mais tocadas",
+            "about": "Sobre {{artist}}"
+        },
+        "fullscreenPlayer": {
+            "config": {
+                "unsynchronized": "não sincronizado",
+                "dynamicIsImage": "habilitar imagem de fundo",
+                "dynamicImageBlur": "tamanho do desfoque da imagem",
+                "lyricAlignment": "alinhamento da letra",
+                "showLyricMatch": "exibir correspondência da letra",
+                "showLyricProvider": "exibir origem da letra",
+                "synchronized": "sincronizado",
+                "lyricOffset": "deslocamento da letra (ms)",
+                "followCurrentLyric": "acompanhar letra",
+                "useImageAspectRatio": "usar proporção da imagem",
+                "lyricGap": "espaçamento da letra",
+                "lyricSize": "tamanho da letra",
+                "dynamicBackground": "fundo dinâmico",
+                "opacity": "opacidade"
+            },
+            "related": "relacionado",
+            "visualizer": "visualizador",
+            "upNext": "a seguir",
+            "lyrics": "letra",
+            "noLyrics": "nenhuma letra encontrada"
+        },
+        "albumDetail": {
+            "moreFromArtist": "mais deste $t(entity.artist_one)",
+            "moreFromGeneric": "mais de {{item}}",
+            "released": "lançado"
+        },
+        "itemDetail": {
+            "copyPath": "copiar caminho para a área de transferência",
+            "copiedPath": "caminho copiado com sucesso",
+            "openFile": "mostrar faixa no gerenciador de arquivos"
+        },
+        "manageServers": {
+            "serverDetails": "detalhes do servidor",
+            "url": "URL",
+            "username": "nome de usuário",
+            "editServerDetailsTooltip": "editar detalhes do servidor",
+            "removeServer": "remover servidor",
+            "title": "gerenciar servidores"
+        },
+        "setting": {
+            "generalTab": "geral",
+            "hotkeysTab": "teclas de atalho",
+            "windowTab": "janela",
+            "advanced": "avançado",
+            "playbackTab": "reprodução"
+        },
+        "playlist": {
+            "reorder": "reordenar apenas disponível quando ordenado pelo id"
         }
     },
     "filter": {
@@ -229,13 +398,55 @@
         "recentlyAdded": "adicionado recentemente",
         "releaseDate": "data de lançamento",
         "recentlyPlayed": "tocado recentemente",
-        "criticRating": "Nota da crítica",
+        "criticRating": "avaliação da crítica",
         "isFavorited": "é favoritado",
-        "releaseYear": "ano de lançamento"
+        "releaseYear": "ano de lançamento",
+        "rating": "avaliação",
+        "artist": "$t(entity.artist_one)",
+        "bpm": "bpm",
+        "channels": "$t(common.channel_other)",
+        "comment": "comentário",
+        "owner": "$t(common.owner)",
+        "path": "caminho",
+        "id": "id",
+        "bitrate": "bitrate",
+        "isRated": "possui avaliação",
+        "note": "nota",
+        "albumCount": "número de $t(entity.album_other)",
+        "genre": "$t(entity.genre_one)"
     },
     "player": {
         "playbackFetchNoResults": "nenhuma música encontrada",
-        "playbackFetchInProgress": "carregando músicas…"
+        "playbackFetchInProgress": "carregando músicas…",
+        "skip_forward": "avançar",
+        "mute": "mudo",
+        "playSimilarSongs": "tocar músicas similares",
+        "skip": "pular",
+        "stop": "parar",
+        "addNext": "adicionar a seguir",
+        "muted": "mudo",
+        "queue_clear": "limpar fila",
+        "toggleFullscreenPlayer": "alternar player de tela cheia",
+        "addLast": "adicionar no final",
+        "next": "próximo",
+        "play": "tocar",
+        "playRandom": "tocar aleatório",
+        "shuffle_off": "aleatório desativado",
+        "queue_moveToBottom": "mover selecionados para o topo",
+        "queue_moveToTop": "mover selecionados para o fim",
+        "skip_back": "retroceder",
+        "unfavorite": "remover favorito",
+        "playbackSpeed": "velocidade de reprodução",
+        "previous": "anterior",
+        "favorite": "favorito",
+        "playbackFetchCancel": "isso está demorando um pouco... feche a notificação para cancelar",
+        "queue_remove": "remover selecionados",
+        "repeat": "repetir",
+        "repeat_all": "repetir tudo",
+        "repeat_off": "repetição desativada",
+        "shuffle": "tocar aleatório",
+        "pause": "pausar",
+        "viewQueue": "ver fila"
     },
     "entity": {
         "albumArtist_one": "artista do álbum",
@@ -277,12 +488,19 @@
         "genreWithCount_one": "{{count}} gênero",
         "genreWithCount_many": "{{count}} gêneros",
         "genreWithCount_other": "{{count}} gêneros",
-        "trackWithCount_one": "faixa",
-        "trackWithCount_many": "faixas",
-        "trackWithCount_other": "faixas",
+        "trackWithCount_one": "{{count}} faixa",
+        "trackWithCount_many": "{{count}} faixas",
+        "trackWithCount_other": "{{count}} faixas",
         "track_one": "faixa",
         "track_many": "faixas",
-        "track_other": "faixas"
+        "track_other": "faixas",
+        "smartPlaylist": "$t(entity.playlist_one) inteligente",
+        "song_one": "música",
+        "song_many": "músicas",
+        "song_other": "músicas",
+        "play_one": "{{count}} reprodução",
+        "play_many": "{{count}} reproduções",
+        "play_other": "{{count}} reproduções"
     },
     "error": {
         "remotePortWarning": "reinicie o servidor para aplicar a nova porta",

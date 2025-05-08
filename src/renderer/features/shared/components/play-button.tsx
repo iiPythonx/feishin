@@ -15,7 +15,7 @@ const MotionButton = styled(UnstyledButton)`
         fill: var(--btn-filled-fg);
     }
 
-    &:hover {
+    &:hover:not([disabled]) {
         background: var(--btn-filled-bg);
         transform: scale(1.1);
 
@@ -26,6 +26,10 @@ const MotionButton = styled(UnstyledButton)`
 
     &:active {
         transform: scale(0.95);
+    }
+
+    &:disabled {
+        opacity: 0.6;
     }
 
     transition: background-color 0.2s ease-in-out;

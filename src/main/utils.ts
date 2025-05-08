@@ -35,6 +35,10 @@ export const hotkeyToElectronAccelerator = (hotkey: string) => {
     let accelerator = hotkey;
 
     const replacements = {
+        arrowdown: 'Down',
+        arrowleft: 'Left',
+        arrowright: 'Right',
+        arrowup: 'Up',
         mod: 'CmdOrCtrl',
         numpad: 'num',
         numpadadd: 'numadd',

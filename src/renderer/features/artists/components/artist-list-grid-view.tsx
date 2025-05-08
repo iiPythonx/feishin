@@ -156,12 +156,12 @@ export const ArtistListGridView = ({ itemCount, gridRef }: ArtistListGridViewPro
                         itemCount={itemCount || 0}
                         itemGap={grid?.itemGap ?? 10}
                         itemSize={grid?.itemSize || 200}
-                        itemType={LibraryItem.ALBUM_ARTIST}
+                        itemType={LibraryItem.ARTIST}
                         loading={itemCount === undefined || itemCount === null}
                         minimumBatchSize={40}
                         route={{
-                            route: AppRoute.LIBRARY_ALBUM_ARTISTS_DETAIL,
-                            slugs: [{ idProperty: 'id', slugProperty: 'albumArtistId' }],
+                            route: AppRoute.LIBRARY_ARTISTS_DETAIL,
+                            slugs: [{ idProperty: 'id', slugProperty: 'artistId' }],
                         }}
                         width={width}
                         onScroll={handleGridScroll}

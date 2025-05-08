@@ -280,11 +280,25 @@ const normalizeAlbumArtist = (
         });
     }
 
+    let albumCount: number;
+    let songCount: number;
+
+    if (item.stats) {
+        albumCount = Math.max(
+            item.stats.albumartist?.albumCount ?? 0,
+            item.stats.artist?.albumCount ?? 0,
+        );
+        songCount = Math.max(
+            item.stats.albumartist?.songCount ?? 0,
+            item.stats.artist?.songCount ?? 0,
+        );
+    } else {
+        albumCount = item.albumCount;
+        songCount = item.songCount;
+    }
+
     return {
-        albumCount: Math.max(
-            item.stats?.albumartist?.albumCount || item.albumCount,
-            item.stats?.artist?.albumCount || 0,
-        ),
+        albumCount,
         backgroundImageUrl: null,
         biography: item.biography || null,
         duration: null,
@@ -309,7 +323,7 @@ const normalizeAlbumArtist = (
                 imageUrl: artist?.artistImageUrl || null,
                 name: artist.name,
             })) || null,
-        songCount: item.stats?.albumartist?.songCount || item.songCount,
+        songCount,
         userFavorite: item.starred,
         userRating: item.rating,
     };

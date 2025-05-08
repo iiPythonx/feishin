@@ -431,6 +431,7 @@ const providerIds = z.object({
 });
 
 const albumArtist = z.object({
+    AlbumCount: z.number().optional(),
     BackdropImageTags: z.array(z.string()),
     ChannelId: z.null(),
     DateCreated: z.string(),
@@ -446,6 +447,7 @@ const albumArtist = z.object({
     ProviderIds: providerIds.optional(),
     RunTimeTicks: z.number(),
     ServerId: z.string(),
+    SongCount: z.number().optional(),
     Type: z.string(),
     UserData: userData.optional(),
 });

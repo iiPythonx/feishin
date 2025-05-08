@@ -20,7 +20,8 @@
         "openIn": {
             "lastfm": "открыть на Last.fm",
             "musicbrainz": "открыть на MusicBrainz"
-        }
+        },
+        "moveToNext": "следующий"
     },
     "common": {
         "backward": "назад",
@@ -437,13 +438,15 @@
         },
         "albumDetail": {
             "moreFromArtist": "больше от $t(entity.artist_one)",
-            "moreFromGeneric": "больше из {{item}}"
+            "moreFromGeneric": "больше из {{item}}",
+            "released": "выпущен"
         },
         "setting": {
             "playbackTab": "воспроизведение",
             "generalTab": "общее",
             "hotkeysTab": "горячие клавиши",
-            "windowTab": "окно"
+            "windowTab": "окно",
+            "advanced": "расширенные"
         },
         "albumArtistList": {
             "title": "$t(entity.albumArtist_other)"
@@ -540,7 +543,8 @@
             "title": "поиск слов песни"
         },
         "editPlaylist": {
-            "title": "редактировать $t(entity.playlist_one)"
+            "title": "редактировать $t(entity.playlist_one)",
+            "success": "$t(entity.playlist_one) обновлён успешно"
         },
         "shareItem": {
             "success": "ссылка скопирована в буфер обмена (нажмите здесь, чтобы открыть)",

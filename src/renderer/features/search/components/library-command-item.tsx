@@ -53,6 +53,7 @@ const StyledImage = styled.img`
 const ActionsContainer = styled(Flex)``;
 
 interface LibraryCommandItemProps {
+    disabled?: boolean;
     handlePlayQueueAdd?: (options: PlayQueueAddOptions) => void;
     id: string;
     imageUrl: string | null;
@@ -62,6 +63,7 @@ interface LibraryCommandItemProps {
 }
 
 export const LibraryCommandItem = ({
+    disabled,
     id,
     imageUrl,
     subtitle,
@@ -154,6 +156,7 @@ export const LibraryCommandItem = ({
             >
                 <Button
                     compact
+                    disabled={disabled}
                     size="md"
                     tooltip={{
                         label: t('player.play', { postProcess: 'sentenceCase' }),
@@ -166,6 +169,7 @@ export const LibraryCommandItem = ({
                 </Button>
                 <Button
                     compact
+                    disabled={disabled}
                     size="md"
                     tooltip={{
                         label: t('player.addLast', { postProcess: 'sentenceCase' }),
@@ -179,6 +183,7 @@ export const LibraryCommandItem = ({
                 </Button>
                 <Button
                     compact
+                    disabled={disabled}
                     size="md"
                     tooltip={{
                         label: t('player.addNext', { postProcess: 'sentenceCase' }),

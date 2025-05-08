@@ -478,6 +478,9 @@ const createWindow = async (first = true) => {
 
 app.commandLine.appendSwitch('disable-features', 'HardwareMediaKeyHandling,MediaSessionService');
 
+// https://github.com/electron/electron/issues/46538#issuecomment-2808806722
+app.commandLine.appendSwitch('gtk-version', '3');
+
 // Must duplicate with the one in renderer process settings.store.ts
 enum BindingActions {
     GLOBAL_SEARCH = 'globalSearch',

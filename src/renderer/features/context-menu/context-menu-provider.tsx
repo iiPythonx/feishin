@@ -97,6 +97,18 @@ const JELLYFIN_IGNORED_MENU_ITEMS: ContextMenuItemType[] = ['setRating', 'shareI
 
 const utils = isElectron() ? window.electron.utils : null;
 
+function RatingIcon({ rating }: { rating: number }) {
+    return (
+        <Rating
+            readOnly
+            style={{
+                pointerEvents: 'none',
+            }}
+            value={rating}
+        />
+    );
+}
+
 export interface ContextMenuProviderProps {
     children: ReactNode;
 }
@@ -835,62 +847,32 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
                 children: [
                     {
                         id: 'zeroStar',
-                        label: (
-                            <Rating
-                                readOnly
-                                value={0}
-                            />
-                        ),
+                        label: <RatingIcon rating={0} />,
                         onClick: () => handleUpdateRating(0),
                     },
                     {
                         id: 'oneStar',
-                        label: (
-                            <Rating
-                                readOnly
-                                value={1}
-                            />
-                        ),
+                        label: <RatingIcon rating={1} />,
                         onClick: () => handleUpdateRating(1),
                     },
                     {
                         id: 'twoStar',
-                        label: (
-                            <Rating
-                                readOnly
-                                value={2}
-                            />
-                        ),
+                        label: <RatingIcon rating={2} />,
                         onClick: () => handleUpdateRating(2),
                     },
                     {
                         id: 'threeStar',
-                        label: (
-                            <Rating
-                                readOnly
-                                value={3}
-                            />
-                        ),
+                        label: <RatingIcon rating={3} />,
                         onClick: () => handleUpdateRating(3),
                     },
                     {
                         id: 'fourStar',
-                        label: (
-                            <Rating
-                                readOnly
-                                value={4}
-                            />
-                        ),
+                        label: <RatingIcon rating={4} />,
                         onClick: () => handleUpdateRating(4),
                     },
                     {
                         id: 'fiveStar',
-                        label: (
-                            <Rating
-                                readOnly
-                                value={5}
-                            />
-                        ),
+                        label: <RatingIcon rating={5} />,
                         onClick: () => handleUpdateRating(5),
                     },
                 ],

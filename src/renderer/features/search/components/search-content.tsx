@@ -4,7 +4,7 @@ import { MutableRefObject } from 'react';
 import { generatePath, useNavigate } from 'react-router';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { AppRoute } from '../../../router/routes';
-import { LibraryItem, QueueSong } from '/@/renderer/api/types';
+import { LibraryItem, QueueSong, SongListQuery } from '/@/renderer/api/types';
 import { VirtualGridAutoSizerContainer } from '/@/renderer/components/virtual-grid';
 import { VirtualTable } from '/@/renderer/components/virtual-table';
 import { useCurrentSongRowStyles } from '/@/renderer/components/virtual-table/hooks/use-current-song-row-styles';
@@ -80,7 +80,7 @@ export const SearchContent = ({ tableRef }: SearchContentProps) => {
 
     const { rowClassRules } = useCurrentSongRowStyles({ tableRef });
 
-    const tableProps = useVirtualTable({
+    const tableProps = useVirtualTable<SongListQuery>({
         contextMenu: contextMenuItems(),
         customFilters: filter,
         itemType,
@@ -96,6 +96,7 @@ export const SearchContent = ({ tableRef }: SearchContentProps) => {
                 key={`table-${itemType}-${tableProps.rowHeight}-${server?.id}`}
                 ref={tableRef}
                 context={{
+                    itemType,
                     query: searchParams.get('query'),
                 }}
                 getRowId={(data) => data.data.id}

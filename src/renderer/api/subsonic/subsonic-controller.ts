@@ -193,7 +193,7 @@ export const SubsonicController: ControllerEndpoint = {
 
         return {
             ...ssNormalize.albumArtist(artist, apiClientProps.server, 300),
-            albums: artist.album.map((album) => ssNormalize.album(album, apiClientProps.server)),
+            albums: artist.album?.map((album) => ssNormalize.album(album, apiClientProps.server)),
             similarArtists:
                 artistInfo?.similarArtist?.map((artist) =>
                     ssNormalize.albumArtist(artist, apiClientProps.server, 300),
@@ -308,7 +308,7 @@ export const SubsonicController: ControllerEndpoint = {
                     return [];
                 }
 
-                return artist.body.artist.album;
+                return artist.body.artist.album ?? [];
             });
 
             return {
@@ -958,7 +958,9 @@ export const SubsonicController: ControllerEndpoint = {
             };
         }
 
-        if (query.albumIds || query.artistIds) {
+        const artistIds = query.albumArtistIds || query.artistIds;
+
+        if (query.albumIds || artistIds) {
             if (query.albumIds) {
                 for (const albumId of query.albumIds) {
                     fromAlbumPromises.push(
@@ -971,8 +973,8 @@ export const SubsonicController: ControllerEndpoint = {
                 }
             }
 
-            if (query.artistIds) {
-                for (const artistId of query.artistIds) {
+            if (artistIds) {
+                for (const artistId of artistIds) {
                     artistDetailPromises.push(
                         ssApiClient(apiClientProps).getArtist({
                             query: {
@@ -989,7 +991,7 @@ export const SubsonicController: ControllerEndpoint = {
                         return [];
                     }
 
-                    return artist.body.artist.album;
+                    return artist.body.artist.album ?? [];
                 });
 
                 const albumIds = albums.map((album) => album.id);

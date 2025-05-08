@@ -20,6 +20,7 @@ import {
     getAlbumArtistSongsById,
     getSongsByQuery,
     getGenreSongsById,
+    getArtistSongsById,
 } from '/@/renderer/features/player/utils';
 import { queryKeys } from '/@/renderer/api/query-keys';
 import { useTranslation } from 'react-i18next';
@@ -119,6 +120,13 @@ export const useHandlePlayQueueAdd = () => {
                             queryClient,
                             server,
                         });
+                    } else if (itemType === LibraryItem.ARTIST) {
+                        songList = await getArtistSongsById({
+                            id,
+                            query,
+                            queryClient,
+                            server,
+                        });
                     } else if (itemType === LibraryItem.GENRE) {
                         songList = await getGenreSongsById({ id, query, queryClient, server });
                     } else if (itemType === LibraryItem.SONG) {
@@ -162,7 +170,7 @@ export const useHandlePlayQueueAdd = () => {
             if (!songs || songs?.length === 0)
                 return toast.warn({
                     message: t('common.noResultsFromQuery', { postProcess: 'sentenceCase' }),
-                    title: t('player.playbackFetchNoResults'),
+                    title: t('player.playbackFetchNoResults', { postProcess: 'sentenceCase' }),
                 });
 
             if (initialIndex) {

@@ -146,8 +146,45 @@ export const getAlbumArtistSongsById = async (args: {
     const { id, queryClient, server, query } = args;
 
     const queryFilter: SongListQuery = {
-        artistIds: id || [],
+        albumArtistIds: id || [],
         sortBy: SongListSort.ALBUM_ARTIST,
+        sortOrder: SortOrder.ASC,
+        startIndex: 0,
+        ...query,
+    };
+
+    const queryKey = queryKeys.songs.list(server?.id, queryFilter);
+
+    const res = await queryClient.fetchQuery(
+        queryKey,
+        async ({ signal }) =>
+            api.controller.getSongList({
+                apiClientProps: {
+                    server,
+                    signal,
+                },
+                query: queryFilter,
+            }),
+        {
+            cacheTime: 1000 * 60,
+            staleTime: 1000 * 60,
+        },
+    );
+
+    return res;
+};
+
+export const getArtistSongsById = async (args: {
+    id: string[];
+    query?: Partial<SongListQuery>;
+    queryClient: QueryClient;
+    server: ServerListItem;
+}) => {
+    const { id, queryClient, server, query } = args;
+
+    const queryFilter: SongListQuery = {
+        artistIds: id,
+        sortBy: SongListSort.ALBUM,
         sortOrder: SortOrder.ASC,
         startIndex: 0,
         ...query,

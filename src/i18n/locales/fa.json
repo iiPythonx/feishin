@@ -6,11 +6,11 @@
         "skip": "رد کن",
         "toggleFullscreenPlayer": "تغییر به پخش‌کنندهٔ تمام‌صفحه",
         "skip_back": "برو عقب",
-        "shuffle": "شافل",
+        "shuffle": "پخش تصادفی",
         "repeat_off": "تکرار غیرفعال",
         "pause": "ایست",
         "unfavorite": "حذف از موردعلاقه‌ها",
-        "shuffle_off": "شافل غیرفعال",
+        "shuffle_off": "پخش تصادفی غیر فعال",
         "skip_forward": "برو جلو",
         "queue_moveToTop": "جابجا کردن انتخاب شده به پایین",
         "queue_clear": "خالی کردن صف",
@@ -48,7 +48,7 @@
         "deselectAll": "لغو انتخاب همه",
         "moveToBottom": "انتقال به پایین",
         "setRating": "تعیین امتیاز",
-        "toggleSmartPlaylistEditor": "تغییر $t(entity.smartPlaylist) ویرایشگر",
+        "toggleSmartPlaylistEditor": "تغییر ویرایشگر $t(entity.smartPlaylist)",
         "removeFromFavorites": "حذف از $t(entity.favorite_other)",
         "openIn": {
             "lastfm": "باز کردن در Last.fm",
@@ -136,7 +136,44 @@
         "audioExclusiveMode_description": "حالت اختصاصی خروجی را فعال می‌کند. در این حالت، سامانه معمولاً قفل است و فقط mpv می‌تواند خروجی صدا دهد",
         "clearQueryCache_description": "یک 'پاک‌سازی نرم' از فیشین. این فهرست‌های پخش و فراداده‌ی قطعه‌ها را تازه می‌کند و متن شعرهای ذخیره شده را بازنشانی می‌کند. پیکربندی‌ها، اعتبارنامه‌های سرویس‌دهنده و نگاره‌های کَش شده حفظ می‌شوند",
         "clearCache_description": "یک 'پاک‌سازی سخت' فیشین. افزون بر پاک‌سازی کَش فیشین، کَش مرورگر هم تهی می‌شود (نگاره‌های ذخیره شده و باقی دارایی‌ها). اعتبارنامه‌ها و پیکربندی‌ها حفظ می‌شوند",
-        "contextMenu_description": "به شما اجازه می‌دهد که آیتم‌های نمایش داده شده در فهرستی که وقتی روی یک آیتم کلیک راست می‌کنید پدیدار می‌شود، را پنهان کنید. آیتم‌هایی که منتخب نیستند پنهان می‌شوند"
+        "contextMenu_description": "به شما اجازه می‌دهد که آیتم‌های نمایش داده شده در فهرستی که وقتی روی یک آیتم کلیک راست می‌کنید پدیدار می‌شود، را پنهان کنید. آیتم‌هایی که منتخب نیستند پنهان می‌شوند",
+        "crossfadeStyle": "شیوه‌ی crossfade",
+        "customCssEnable_description": "اجازه دادن برای نوشتن css سفارشی.",
+        "translationApiKey": "کلید API ترجمه",
+        "webAudio_description": "از صدای وب بهره‌مند می‌شود. این قابلیت‌های پیشرفته‌ای مانند گین بازپخش (replygain) را فعال می‌کند. غیرفعال کنید اگر غیر از این را تجربه می‌کنید",
+        "windowBarStyle_description": "گزینش سبک نوار پنجره",
+        "translationApiKey_description": "کلید API برای ترجمه (پشتیبانی فقط برای نقطه‌ی پایانی سرویس‌دهنده‌ی جهانی)",
+        "theme": "تم",
+        "hotkey_togglePreviousSongFavorite": "تغییر وضعیت برای مورد علاقه‌ی $t(common.previousSong)",
+        "transcode": "فعال‌سازی رمزگردانی",
+        "transcode_description": "رمزگردانی به فرمت‌های گوناگون را فعال می‌کند",
+        "transcodeBitrate": "نرخ انتقال رمزگردانی",
+        "startMinimized": "پنهان‌شده آغاز کن",
+        "theme_description": "تم مورد استفاده در نرم‌افزار را می‌گزیند",
+        "themeLight": "تم (روشن)",
+        "transcodeBitrate_description": "نرخ انتقال برای رمزگردانی را انتخاب می‌کند. 0 بدان معناست سرور آن را انتخاب کند",
+        "transcodeFormat": "فرمت رمزگردانی",
+        "transcodeFormat_description": "فرمت رمزگردانی را انتخاب می‌کند. برای اینکه سرور آن را انتخاب کند، خالی بگذارید",
+        "customCssEnable": "فعال کردن css سفارشی",
+        "translationTargetLanguage": "زبان هدف ترجمه",
+        "hotkey_toggleCurrentSongFavorite": "تغییر وضعیت مورد علاقه برای $t(common.currentSong)",
+        "themeDark_description": "تم تاریک را برای استفاده‌ی نرم‌افزار می‌گزیند",
+        "volumeWheelStep_description": "اندازه‌ای از حجم صدا را در زمان اسکرول کردن روی نوار لغزنده تغییر داده شود",
+        "trayEnabled": "نمایش سینی",
+        "trayEnabled_description": "نمایش/پنهان کردن آیکون/فهرست در سینی. اگر غیرفعال باشد، کوچک کردن/خروج به سینی را نیز غیرفعال می‌کند",
+        "useSystemTheme_description": "از روشنی یا تاریکی که سیستم تعریف کرده است، پیروی می‌کند",
+        "crossfadeDuration": "زمان محو کردن گذار قطعه به قطعه‌ی بعدی",
+        "themeLight_description": "تم روشن را برای استفاده‌ی نرم‌افزار می‌گزیند",
+        "volumeWidth": "عرض نوار لغزنده‌ی حجم صدا",
+        "crossfadeStyle_description": "شیوه‌ی crossfade که می‌خواهید پخش‌کننده از آن استفاده کند را انتخاب کنید",
+        "startMinimized_description": "نرم‌افزار را در سینی اجرا کن",
+        "volumeWidth_description": "عرضی که نوار لغزنده‌ی حجم صدا داشته باشد",
+        "themeDark": "تم (تاریک)",
+        "useSystemTheme": "استفاده از تم سیستم",
+        "volumeWheelStep": "گام چرخ حجم صدا",
+        "webAudio": "استفاده از صدای وب",
+        "windowBarStyle": "سبک نوار پنجره",
+        "crossfadeDuration_description": "زمان افکت crossfade را مشخص می‌کند"
     },
     "common": {
         "backward": "به عقب",
@@ -183,9 +220,9 @@
         "forceRestartRequired": "برای اعمال تغییرها دوباره راه‌اندازی کنید… اعلان را برای راه‌اندازی دوباره ببندید",
         "version": "نسخه",
         "title": "عنوان",
-        "filter_one": "فیلتر",
-        "filter_other": "فیلتر",
-        "filters": "فیلتر",
+        "filter_one": "پالایش",
+        "filter_other": "پالایش",
+        "filters": "پالایش",
         "create": "ساختن",
         "bitrate": "بیت‌ریت",
         "saveAndReplace": "ذخیره و جایگزین",
@@ -467,7 +504,7 @@
                 "synchronized": "همگام شده"
             },
             "noLyrics": "هیچ متن شعری پیدا نشد",
-            "lyrics": "متن شعرها",
+            "lyrics": "متن شعر",
             "upNext": "در ادامه"
         },
         "home": {
@@ -542,6 +579,47 @@
             "copyPath": "کپی کردن مسیر در کلیپ‌بورد",
             "copiedPath": "مسیر با موفقیت کپی شد",
             "openFile": "نمایش قطعه در مدیر پرونده"
+        }
+    },
+    "table": {
+        "column": {
+            "size": "$t(common.size)",
+            "lastPlayed": "آخرین بار پخش شده",
+            "discNumber": "دیسک",
+            "songCount": "$t(entity.track_other)",
+            "title": "عنوان",
+            "trackNumber": "قطعه",
+            "favorite": "مورد علاقه",
+            "genre": "$t(entity.genre_one)",
+            "comment": "دیدگاه",
+            "playCount": "تعداد پخش",
+            "rating": "امتیاز",
+            "path": "مسیر",
+            "releaseYear": "سال",
+            "dateAdded": "تاریخ افزوده شدن",
+            "releaseDate": "تاریخ عرضه"
+        },
+        "config": {
+            "general": {
+                "followCurrentSong": "آهنگ کنونی را دنبال کن",
+                "displayType": "نوع نمایش",
+                "itemSize": "اندازه‌ی آیتم (px)",
+                "size": "$t(common.size)",
+                "tableColumns": "ستون‌های جدول",
+                "autoFitColumns": "تطبیق دادن ستون‌ها به شیوه‌ی خودکار",
+                "gap": "$t(common.gap)",
+                "itemGap": "فاصله‌ی آیتم (px)"
+            },
+            "view": {
+                "card": "کارت"
+            },
+            "label": {
+                "playCount": "تعداد پخش",
+                "dateAdded": "تاریخ افزوده شدن",
+                "discNumber": "شماره‌ی دیسک",
+                "lastPlayed": "آخرین بار پخش شده",
+                "actions": "$t(common.action_other)"
+            }
         }
     }
 }

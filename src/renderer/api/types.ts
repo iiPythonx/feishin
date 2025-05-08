@@ -493,6 +493,7 @@ export interface SongListQuery extends BaseQuery<SongListSort> {
         jellyfin?: Partial<z.infer<typeof jfType._parameters.songList>>;
         navidrome?: Partial<z.infer<typeof ndType._parameters.songList>>;
     };
+    albumArtistIds?: string[];
     albumIds?: string[];
     artistIds?: string[];
     favorite?: boolean;

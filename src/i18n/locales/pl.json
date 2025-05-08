@@ -20,7 +20,8 @@
         "openIn": {
             "lastfm": "Otwórz w Last.fm",
             "musicbrainz": "Otwórz w MusicBrainz"
-        }
+        },
+        "moveToNext": "przesuń na następne"
     },
     "common": {
         "increase": "zwiększ",
@@ -113,7 +114,8 @@
         "trackPeak": "peak utworu",
         "codec": "kodek",
         "preview": "podgląd",
-        "close": "zamknij"
+        "close": "zamknij",
+        "translation": "tłumaczenie"
     },
     "entity": {
         "genre_one": "gatunek",
@@ -161,7 +163,13 @@
         "genreWithCount_many": "{{count}} gatunków",
         "trackWithCount_one": "{{count}} utwór",
         "trackWithCount_few": "{{count}} utwory",
-        "trackWithCount_many": "{{count}} utworów"
+        "trackWithCount_many": "{{count}} utworów",
+        "play_one": "{{count}} odtworzenie",
+        "play_few": "{{count}} odtworzenia",
+        "play_many": "{{count}} odtworzeń",
+        "song_one": "piosenka",
+        "song_few": "piosenki",
+        "song_many": "piosenek"
     },
     "error": {
         "remotePortWarning": "uruchom ponownie serwer aby używać nowego portu",
@@ -259,7 +267,7 @@
             "error_savePassword": "wystąpił błąd podczas próby zapisania hasła"
         },
         "addToPlaylist": {
-            "success": "dodano {{message}} $t(entity.track_other) do {{numOfPlaylists}} $t(entity.playlist_other)",
+            "success": "dodano $t(entity.trackWithCount, {\"count\": {{message}} }) do $t(entity.playlistWithCount, {\"count\": {{numOfPlaylists}} })",
             "title": "dodano do $t(entity.playlist_one)",
             "input_skipDuplicates": "pomiń duplikaty",
             "input_playlists": "$t(entity.playlist_other)"
@@ -278,7 +286,9 @@
             "title": "wyszukiwanie tekstów"
         },
         "editPlaylist": {
-            "title": "edytuj $t(entity.playlist_one)"
+            "title": "edytuj $t(entity.playlist_one)",
+            "success": "$t(entity.playlist_one) zaktualizowana pomyślnie",
+            "publicJellyfinNote": "Z jakiegoś powodu Jellyfin nie udostępnia informacji na temat publiczności playlisty. Jeżeli chcesz, aby ta pozostała publiczna, mniej wybraną poniższą opcję"
         },
         "shareItem": {
             "allowDownloading": "zezwól na pobieranie",
@@ -304,11 +314,14 @@
                 "useImageAspectRatio": "użyj współczynnika proporcji obrazu",
                 "lyricGap": "odstępy tekstu",
                 "dynamicImageBlur": "rozmiar rozmycia obrazu",
-                "dynamicIsImage": "włącz obraz w tle"
+                "dynamicIsImage": "włącz obraz w tle",
+                "lyricOffset": "opóźnienie tekstów (ms)"
             },
             "upNext": "następny",
             "lyrics": "tekst",
-            "related": "powiązane"
+            "related": "powiązane",
+            "visualizer": "wizualizer",
+            "noLyrics": "nie znaleziono tekstu"
         },
         "appMenu": {
             "selectServer": "wybierz serwer",
@@ -340,11 +353,16 @@
             "numberSelected": "zaznaczono {{count}}",
             "removeFromQueue": "$t(action.removeFromQueue)",
             "shareItem": "udostępnij pozycję",
-            "showDetails": "zobacz informacje"
+            "showDetails": "zobacz informacje",
+            "download": "pobierz",
+            "playShuffled": "$t(player.shuffle)",
+            "playSimilarSongs": "$t(player.playSimilarSongs)",
+            "moveToNext": "$t(action.moveToNext)"
         },
         "albumDetail": {
             "moreFromArtist": "więcej od $t(entity.artist_one)",
-            "moreFromGeneric": "więcej od {{item}}"
+            "moreFromGeneric": "więcej od {{item}}",
+            "released": "wydany"
         },
         "albumArtistList": {
             "title": "$t(entity.albumArtist_other)"
@@ -384,7 +402,8 @@
             "playbackTab": "odtworzenia",
             "generalTab": "ogólne",
             "hotkeysTab": "skróty klawiszowe",
-            "windowTab": "okno"
+            "windowTab": "okno",
+            "advanced": "zaawansowane"
         },
         "trackList": {
             "title": "$t(entity.track_other)",
@@ -417,6 +436,17 @@
             "copyPath": "kopiuj ścieżkę do schowka",
             "copiedPath": "ścieżka została skopiowana pomyślnie",
             "openFile": "pokaż utwór w menedżerze plików"
+        },
+        "manageServers": {
+            "title": "zarządzaj serwerami",
+            "url": "URL",
+            "username": "nazwa użytkownika",
+            "removeServer": "usuń serwer",
+            "serverDetails": "szczegóły serwera",
+            "editServerDetailsTooltip": "edytuj szczegóły serwera"
+        },
+        "playlist": {
+            "reorder": "zmiana kolejności jest możliwa tylko podczas sortowania według id"
         }
     },
     "player": {
@@ -431,7 +461,7 @@
         "skip_back": "przeskocz do tyłu",
         "favorite": "ulubione",
         "next": "następny",
-        "shuffle": "losowa kolejność",
+        "shuffle": "odtwarzaj losowo",
         "playbackFetchNoResults": "nie znaleziono utworów",
         "playbackFetchInProgress": "wczytywanie utworów…",
         "addNext": "dodaj następny",
@@ -448,7 +478,9 @@
         "shuffle_off": "losowa kolejność wyłączona",
         "addLast": "dodaj na końcu",
         "mute": "wycisz",
-        "skip_forward": "przeskocz do przodu"
+        "skip_forward": "przeskocz do przodu",
+        "viewQueue": "zobacz kolejkę",
+        "playSimilarSongs": "odtwarzaj podobne"
     },
     "setting": {
         "crossfadeStyle_description": "wybierz styl przenikania, który ma być używany do odtwarzania dźwięku",
@@ -471,7 +503,7 @@
         "hotkey_rate1": "oceń na 1 gwiazdkę",
         "hotkey_skipForward": "przeskocz do przodu",
         "disableLibraryUpdateOnStartup": "wyłącz wyszukiwanie aktualizacji podczas uruchamiania aplikacji",
-        "discordApplicationId_description": "id dla aplikacji {{discord}} obszernie obecne (domyślnie {{defaultId}})",
+        "discordApplicationId_description": "id dla aplikacji {{discord}} rich presence (domyślnie {{defaultId}})",
         "gaplessAudio": "dźwięk bez przerw",
         "hotkey_playbackPlay": "odtwarzaj",
         "hotkey_togglePreviousSongFavorite": "dodaj $t(common.previousSong) do ulubionych",
@@ -500,7 +532,7 @@
         "crossfadeDuration_description": "ustaw czas trwania efektu przenikania",
         "language": "język",
         "hotkey_toggleShuffle": "przełącz kolejność losową",
-        "discordRichPresence_description": "włącz status odtwarzania w {{discord}} rich presence. Dzięki temu będą wyświetlane informacje takie jak: {{icon}}, {{playing}} i {{paused}}. ",
+        "discordRichPresence_description": "włącz status odtwarzania w {{discord}} (rich presence). Dzięki temu będą wyświetlane informacje takie jak: {{icon}}, {{playing}} i {{paused}}. ",
         "audioDevice": "urządzenia dźwiękowe",
         "hotkey_rate2": "oceń na 2 gwiazdki",
         "exitToTray": "zamknij do zasobnika",
@@ -521,7 +553,7 @@
         "customFontPath": "niestandardowa ścieżka czcionki",
         "followLyric": "podążaj za tekstem",
         "crossfadeDuration": "czas trwania przenikania",
-        "discordIdleStatus": "pokaż obszerne informacje w stanie bezczynności",
+        "discordIdleStatus": "pokaż status w stanie bezczynności",
         "audioPlayer": "odtwarzacz dźwięku",
         "hotkey_zoomOut": "oddal",
         "hotkey_unfavoriteCurrentSong": "usuń $t(common.currentSong) z ulubionych",
@@ -536,7 +568,7 @@
         "customFontPath_description": "ustaw ścieżkę dla niestandardowych czcionek dla aplikacji",
         "gaplessAudio_optionWeak": "słabe (rekomendowane)",
         "hotkey_playbackStop": "zatrzymaj",
-        "discordRichPresence": "{{discord}} obszernie obecny",
+        "discordRichPresence": "Status {{discord}} (rich presence)",
         "font_description": "ustaw czcionkę dla aplikacji",
         "playButtonBehavior_optionPlay": "$t(player.play)",
         "minimumScrobblePercentage": "minimalny czas trwania scrobble (procentowy)",
@@ -629,7 +661,52 @@
         "genreBehavior": "domyślne zachowanie strony gatunek",
         "externalLinks_description": "umożliwia wyświetlanie linków zewnętrznych (Last.fm, MusicBrainz) na stronach artystów/albumów",
         "homeConfiguration": "konfiguracja strony głównej",
-        "homeConfiguration_description": "konfiguracja elementów wyświetlanych na stronie głównej i ich kolejności"
+        "homeConfiguration_description": "konfiguracja elementów wyświetlanych na stronie głównej i ich kolejności",
+        "albumBackground_description": "dodaje obraz tła dla stron albumu zawierających grafikę albumu",
+        "albumBackgroundBlur": "rozmiar rozmycia obrazu tła albumu",
+        "albumBackgroundBlur_description": "dostosowywuje ilość rozmycia nakladanego na obraz tła albumu",
+        "albumBackground": "obraz tła albumu",
+        "artistConfiguration_description": "skonfiguruj jakie elementy są pokazywane, i w jakiej kolejności, na stronie albumu wykonawcy",
+        "discordListening_description": "pokazuje status jako słucha zamiast w grze",
+        "transcodeNote": "przynosi efekt po 1 (web) - 2 (mpv) piosenkach",
+        "transcode_description": "włącza transkodowanie na inne formaty",
+        "transcodeBitrate": "bitrate do transkodowania",
+        "transcode": "włącz transkodowanie",
+        "translationApiProvider": "usługodawca do api tłumaczeń",
+        "translationApiProvider_description": "wybór usługodawcy do api tłumaczeń",
+        "translationApiKey": "klucz api do tłumaczeń",
+        "transcodeFormat_description": "wybiera format do transkodowania. zostaw pusty aby serwer wybrał format",
+        "translationApiKey_description": "klucz api do tłumaczenia (Obsługuje tylko globalny endpoint)",
+        "homeFeature": "karuzela polecanych na stronie głównej",
+        "customCssEnable": "włącz niestandardowy css",
+        "customCssEnable_description": "pozwalaj na pisanie niestandardowego css.",
+        "customCssNotice": "Ostrzeżenie: chociaż istnieje pewne filtrowanie (uniemożliwia używanie url() i content:), używanie niestandardowego CSS-a może stwarzać ryzyko przez zmiany w interfejsie.",
+        "customCss_description": "zawartość niestandardowego css. Uwaga: content i zdalne url są niedozwolonymi właściwościami. Podgląd twojej zawartości jest pokazana poniżej. Dodatkowe pola których nie ustawiłeś, są obecne z powodu sanityzacji.",
+        "customCss": "niestandardowy css",
+        "doubleClickBehavior": "zakolejkuj wszystkie wyszukane utwory gdy podwójnie kliknięto",
+        "trayEnabled_description": "pokaż/ukryj ikonę/menu w zasobniku. jeżeli wyłączone, wyłącza też minimalizowanie.wyjście do zasobnika",
+        "webAudio_description": "używaj web audio. włącza to zaawansowane funkcje takie jak replaygain. wyłącz jeżeli nie działa poprawnie",
+        "artistConfiguration": "konfiguracja strony albumu wykonawcy",
+        "playButtonBehavior_optionPlayShuffled": "$t(player.shuffle)",
+        "playerbarOpenDrawer_description": "pozwala przełączyć na odtwarzacz pełnoekranowy po kliknięciu paska odtwarzania",
+        "playerbarOpenDrawer": "przełącznik pełnego ekranu na pasku odtwarzania",
+        "imageAspectRatio": "używaj natywnych proporcji okładki",
+        "volumeWidth": "szerokość paska głośności",
+        "discordListening": "pokazuj status jako słucha",
+        "imageAspectRatio_description": "jeżeli włączone, okładka będzie pokazywana z użyciem jej natywnych proporcji. dla okładek które nie mają proporcji 1:1, pozostałe miejsce będzie puste",
+        "volumeWidth_description": "szerokość paska głośności",
+        "contextMenu_description": "pozwala ci na ukrycie elementów które są pokazywane w menu po kliknięciu prawym przyciskiem myszy na element. elementy które zostały odznaczone będą ukryte",
+        "contextMenu": "konfiguracja menu kontekstowego (pod prawym przyciskiem myszy)",
+        "transcodeBitrate_description": "wybiera bitrate do transkodowania. 0 pozwala wybrać to serwerowi",
+        "transcodeFormat": "format do transkodowania",
+        "translationTargetLanguage_description": "język do którego będzie tłumaczona treść",
+        "trayEnabled": "pokazuj w zasobniku",
+        "webAudio": "używaj web audio",
+        "homeFeature_description": "ustawienie powoduje to czy wyświetlana jest karuzela z polecanymi utworami na stronie głównej",
+        "doubleClickBehavior_description": "jeżeli włączone, wszystkie pasujące utwory w wyszukiwaniu zostaną zakolejkowane. w przeciwnym wypadku, tylko kliknięty będzie zakolejkowany",
+        "lastfmApiKey": "klucz API {{lastfm}}",
+        "lastfmApiKey_description": "klucz API dla {{lastfm}}. wymagany dla okładek",
+        "translationTargetLanguage": "docelowy język tłumaczenia"
     },
     "table": {
         "config": {
@@ -645,7 +722,8 @@
                 "autoFitColumns": "automatyczne dopasowanie kolumn",
                 "size": "$t(common.size)",
                 "itemSize": "rozmiar elementu (px)",
-                "itemGap": "odstęp między elementami (px)"
+                "itemGap": "odstęp między elementami (px)",
+                "followCurrentSong": "śledź aktualną piosenkę"
             },
             "label": {
                 "releaseDate": "data premiery",
@@ -674,7 +752,8 @@
                 "favorite": "$t(common.favorite)",
                 "year": "$t(common.year)",
                 "albumArtist": "$t(entity.albumArtist_one)",
-                "codec": "$t(common.codec)"
+                "codec": "$t(common.codec)",
+                "songCount": "$t(entity.track_other)"
             }
         },
         "column": {
