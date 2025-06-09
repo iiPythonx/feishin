@@ -249,9 +249,6 @@ export const FullScreenPlayerImage = () => {
                     align="center"
                     order={1}
                     overflow="hidden"
-                    style={{
-                        textShadow: 'var(--fullscreen-player-text-shadow)',
-                    }}
                     w="100%"
                     weight={900}
                 >
@@ -263,9 +260,6 @@ export const FullScreenPlayerImage = () => {
                     component={Link}
                     order={3}
                     overflow="hidden"
-                    style={{
-                        textShadow: 'var(--fullscreen-player-text-shadow)',
-                    }}
                     to={generatePath(AppRoute.LIBRARY_ALBUMS_DETAIL, {
                         albumId: currentSong?.albumId || '',
                     })}
@@ -278,9 +272,6 @@ export const FullScreenPlayerImage = () => {
                     align="center"
                     key="fs-artists"
                     order={3}
-                    style={{
-                        textShadow: 'var(--fullscreen-player-text-shadow)',
-                    }}
                 >
                     {currentSong?.artists?.map((artist, index) => (
                         <Fragment key={`fs-artist-${artist.id}`}>
