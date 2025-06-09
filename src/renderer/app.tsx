@@ -242,18 +242,24 @@ export const App = () => {
                 components: {
                     Modal: {
                         styles: {
-                            body: { background: 'var(--modal-bg)', padding: '1rem !important' },
+                            body: { 
+                                background: 'rgba(var(--modal-bg-rgb), .65)', 
+                                padding: '1rem !important',
+                                borderRadius: "0px 0px 18px 18px",
+                                backdropFilter: "blur(1rem)"
+                            },
                             close: { marginRight: '0.5rem' },
                             content: { borderRadius: '5px' },
                             header: {
-                                background: 'var(--modal-header-bg)',
+                                background: 'rgba(var(--modal-bg-rgb), .95)',
                                 paddingBottom: '1rem',
+                                borderRadius: "18px 18px 0px 0px"
                             },
                             title: { fontSize: 'medium', fontWeight: 500 },
                         },
                     },
                 },
-                defaultRadius: 'xs',
+                defaultRadius: 'xl',
                 dir: 'ltr',
                 focusRing: 'auto',
                 focusRingStyles: {

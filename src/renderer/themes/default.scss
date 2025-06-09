@@ -9,6 +9,7 @@
     --generic-border-color: rgba(37, 37, 37, 20.5%);
     --main-bg: rgb(5, 5, 6);
     --main-bg-transparent: 18, 18, 18;
+    --modal-bg-rgb: 5, 5, 6;
     --main-fg: rgb(225, 225, 225);
     --main-fg-secondary: rgb(150, 150, 150);
     --window-bar-bg: rgb(16, 16, 16);
@@ -66,7 +67,7 @@
     --btn-outline-border: 1px rgba(140, 140, 140, 50%) solid;
     --btn-outline-border-hover: 1px rgba(255, 255, 255, 50%) solid;
     --btn-outline-radius: 5rem;
-    --input-bg: rgb(35, 35, 35);
+    --input-bg: rgb(19, 19, 19);
     --input-fg: rgb(193, 193, 193);
     --input-placeholder-fg: rgb(107, 108, 109);
     --input-active-fg: rgb(193, 193, 193);
@@ -225,4 +226,18 @@
 .mantine-Badge-root {
     background: rgb(var(--main-bg-transparent), 80%);
     backdrop-filter: blur(3rem);
+}
+
+.mantine-Overlay-root {
+    backdrop-filter: blur(0.25rem);    
+}
+
+.mantine-Input-input {
+    border-radius: 6px;
+    border: 0.0625rem solid #1b1d20
+}
+
+.mantine-Paper-root {
+    border-radius: 18px !important;
+    background: transparent
 }

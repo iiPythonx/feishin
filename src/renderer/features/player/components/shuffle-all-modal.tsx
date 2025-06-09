@@ -3,7 +3,7 @@ import { closeAllModals, openModal } from '@mantine/modals';
 import { QueryClient } from '@tanstack/react-query';
 import merge from 'lodash/merge';
 import { useMemo } from 'react';
-import { RiAddBoxFill, RiAddCircleFill, RiPlayFill } from 'react-icons/ri';
+import { RiFileList3Fill, RiAddCircleFill, RiPlayFill } from 'react-icons/ri';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
@@ -141,8 +141,8 @@ export const ShuffleAllModal = ({
     return (
         <Stack spacing="md">
             <NumberInput
-                label="How many tracks?"
-                max={500}
+                label="Track count"
+                max={500} // i checked, this is not an arbitrary limit seemingly, sad.
                 min={1}
                 onChange={(e) => setStore({ limit: e ? Number(e) : 500 })}
                 required
@@ -210,12 +210,12 @@ export const ShuffleAllModal = ({
             <Group grow>
                 <Button
                     disabled={!limit}
-                    leftIcon={<RiAddBoxFill size="1rem" />}
+                    leftIcon={<RiFileList3Fill size="1rem" />}
                     onClick={() => handlePlay(Play.LAST)}
                     type="submit"
                     variant="default"
                 >
-                    Add
+                    Append
                 </Button>
                 <Button
                     disabled={!limit}
