@@ -33,7 +33,9 @@ export const Visualizer = () => {
                 gradient: 'prism',
                 mode: 4,
                 showPeaks: false,
-                smoothing: 0.8,
+                showBgColor: false,
+                overlay: true,
+                smoothing: 0.8
             });
             setMotion(audioMotion);
             audioMotion.connectInput(gain);
