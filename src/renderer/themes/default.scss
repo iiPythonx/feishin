@@ -95,8 +95,9 @@
     --paper-bg: rgb(20, 20, 20);
     --placeholder-bg: rgba(53, 53, 53, 100%);
     --placeholder-fg: rgba(126, 126, 126);
-    --card-default-bg: rgb(32, 32, 32);
-    --card-default-bg-hover: rgb(44, 44, 44);
+    // These are getting replaced because they're causing theme issues, if this is problematic undo it pls :3
+    //--card-default-bg: rgb(32, 32, 32);
+    //--card-default-bg-hover: rgb(44, 44, 44);
     --card-default-radius: 5px;
     --card-poster-bg: transparent;
     --card-poster-bg-hover: transparent;
@@ -200,6 +201,20 @@
     .current-song > .row-index.playing .current-song-index {
         display: none;
     }
+}
+
+.ag-row-focus, .ag-row-selected {
+    border-radius: 8px;
+}
+
+.ag-row {
+    img {
+        border-radius: 6px;
+    }
+}
+
+.ag-header {
+    border-radius: 8px 8px 0px 0px !important
 }
 
 .full-screen-player-queue-container {

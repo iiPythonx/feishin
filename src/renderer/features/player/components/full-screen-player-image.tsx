@@ -21,7 +21,7 @@ const Image = styled(motion.img)<any>`
     object-fit: ${({ $useAspectRatio }) => ($useAspectRatio ? 'contain' : 'cover')};
     object-position: 50% 100%;
     filter: drop-shadow(0 0 5px rgb(0 0 0 / 40%)) drop-shadow(0 0 5px rgb(0 0 0 / 40%));
-    border-radius: 5px;
+    border-radius: 16px;
 `;
 
 const ImageContainer = styled(motion.div)`

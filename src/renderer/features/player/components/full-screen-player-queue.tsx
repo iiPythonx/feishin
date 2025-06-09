@@ -64,7 +64,7 @@ const GridContainer = styled.div<TransparentGridContainerProps>`
     padding: 1rem;
     /* stylelint-disable-next-line color-function-notation */
     background: rgb(var(--main-bg-transparent), ${({ opacity }) => opacity}%);
-    border-radius: 5px;
+    border-radius: 16px;
 `;
 
 export const FullScreenPlayerQueue = () => {

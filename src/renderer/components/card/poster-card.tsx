@@ -37,6 +37,10 @@ const PosterCardContainer = styled.div<{ $isHidden?: boolean }>`
     pointer-events: auto;
     opacity: ${({ $isHidden }) => ($isHidden ? 0 : 1)};
 
+    img { 
+        border-radius: 16px !important;
+    }
+
     .card-controls {
         opacity: 0;
     }
@@ -65,6 +69,10 @@ const ImageContainerStyles = css`
         transition: all 0.2s ease-in-out;
     }
 
+    img { 
+        border-radius: 16px !important;
+    }
+
     &:hover {
         &::before {
             opacity: 0.5;
@@ -90,6 +98,8 @@ const Image = styled(SimpleImg)`
     height: 100% !important;
     max-height: 100%;
     border: 0;
+
+    border-radius: 16px;
 
     img {
         height: 100%;

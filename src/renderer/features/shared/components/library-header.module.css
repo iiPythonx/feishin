@@ -20,6 +20,8 @@
     .image {
         width: 175px !important;
         height: 175px;
+
+        border-radius: 16px;
     }
 
     @container (max-width: 599px) {
