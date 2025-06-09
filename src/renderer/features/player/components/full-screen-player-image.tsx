@@ -20,7 +20,6 @@ const Image = styled(motion.img)<any>`
     height: 100%;
     object-fit: ${({ $useAspectRatio }) => ($useAspectRatio ? 'contain' : 'cover')};
     object-position: 50% 100%;
-    filter: drop-shadow(0 0 5px rgb(0 0 0 / 40%)) drop-shadow(0 0 5px rgb(0 0 0 / 40%));
     border-radius: 16px;
 `;
 
@@ -306,11 +305,11 @@ export const FullScreenPlayerImage = () => {
                 >
                     {currentSong?.container && (
                         <Badge size="lg">
-                            {currentSong?.container} {currentSong?.bitRate}
+                            {currentSong?.container.replaceAll("audio/", "")} {currentSong?.bitRate}
                         </Badge>
                     )}
                     {currentSong?.releaseYear && (
-                        <Badge size="lg">{currentSong?.releaseYear}</Badge>
+                        <Badge size="lg">YEAR {currentSong?.releaseYear}</Badge>
                     )}
                 </Group>
             </MetadataContainer>
