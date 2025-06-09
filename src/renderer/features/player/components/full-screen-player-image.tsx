@@ -290,9 +290,6 @@ export const FullScreenPlayerImage = () => {
                                 $link
                                 $secondary
                                 component={Link}
-                                style={{
-                                    textShadow: 'var(--fullscreen-player-text-shadow)',
-                                }}
                                 to={generatePath(AppRoute.LIBRARY_ALBUM_ARTISTS_DETAIL, {
                                     albumArtistId: artist.id,
                                 })}
