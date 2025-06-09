@@ -215,3 +215,28 @@ button {
   src: url('https://fonts.gstatic.com/ea/notosansjp/v5/NotoSansJP-Regular.woff2') format('truetype');
   unicode-range: U+3000-9FFF, U+ff??; /* Japanese glyphs */
 }
+
+.mantine-Menu-dropdown,
+.mantine-Popover-dropdown {
+    background: #2020209c !important;
+    backdrop-filter: blur(3rem);
+    border-radius: 8px;
+
+    input,
+    .mantine-MultiSelect-input {
+        background-color: rgba(46, 46, 46, 0.486) !important;
+        border-radius: 8px;
+    }
+}
+
+.card-controls {
+    backdrop-filter: blur(4px);
+}
+
+.mantine-Modal-content {
+    border-radius: 8px !important;
+}
+
+#default.layout {
+    background: var(--main-bg) !important;
+}

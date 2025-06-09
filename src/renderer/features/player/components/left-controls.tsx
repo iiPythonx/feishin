@@ -45,7 +45,6 @@ const Image = styled(motion.div)`
     width: 60px;
     height: 60px;
     cursor: pointer;
-    background-color: var(--placeholder-bg);
     filter: drop-shadow(0 5px 6px rgb(0 0 0 / 50%));
 
     ${fadeIn};
@@ -63,6 +62,7 @@ const Image = styled(motion.div)`
 const PlayerbarImage = styled.img`
     width: 100%;
     height: 100%;
+    border-radius: 8px;
     object-fit: var(--image-fit);
 `;
 
