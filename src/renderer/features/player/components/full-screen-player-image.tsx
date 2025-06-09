@@ -21,6 +21,20 @@ const Image = styled(motion.img)<any>`
     object-fit: ${({ $useAspectRatio }) => ($useAspectRatio ? 'contain' : 'cover')};
     object-position: 50% 100%;
     border-radius: 16px;
+    z-index: 1;
+`;
+
+const BlurImage = styled(motion.img)<any>`
+    position: absolute;
+    max-width: 110%;
+    height: 110%;
+    width: 110%;
+    object-fit: ${({ $useAspectRatio }) => ($useAspectRatio ? 'contain' : 'cover')};
+    object-position: 50% 100%; 
+    border-radius: 16px;
+    z-index: 0;
+    top: -5%;
+    filter: blur(2rem)
 `;
 
 const ImageContainer = styled(motion.div)`
@@ -237,6 +251,12 @@ export const FullScreenPlayerImage = () => {
                             variants={imageVariants}
                         />
                     )}
+
+                <BlurImage
+                    src={imageState.topImage}
+                    $useAspectRatio={useImageAspectRatio}
+                    aria-hidden
+                />
                 </AnimatePresence>
             </ImageContainer>
             <MetadataContainer
