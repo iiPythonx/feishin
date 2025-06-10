@@ -103,7 +103,7 @@ export const App = () => {
 
     useEffect(() => {
         if (enabled && content) {
-            // Yes, CSS is sanitized here as well. Prevent a suer from changing the
+            // Yes, CSS is sanitized here as well. Prevent a suer from changing the <- nice typo
             // localStorage to bypass sanitizing.
             const sanitized = sanitizeCss(content);
             if (!cssRef.current) {

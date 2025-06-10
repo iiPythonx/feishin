@@ -53,6 +53,8 @@ const showToast = ({ type, ...props }: NotificationProps) => {
                 background: 'var(--toast-bg)',
                 border: '2px solid var(--generic-border-color)',
                 bottom: '90px',
+                borderRadius: "18px",
+                backdropFilter: "blur(2rem)"
             },
             title: {
                 color: 'var(--toast-title-fg)',

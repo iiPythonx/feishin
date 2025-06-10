@@ -25,6 +25,7 @@ const WindowsContainer = styled.div`
     color: var(--window-bar-fg);
     background-color: var(--window-bar-bg);
     -webkit-app-region: drag;
+    border-bottom: var(--sidebar-border)
 `;
 
 const WindowsButtonGroup = styled.div`
