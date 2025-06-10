@@ -246,3 +246,7 @@
     backdrop-filter: blur(2rem);
     background: rgb(var(--main-bg-transparent), 80%);
 }
+
+.mantine-Menu-item {
+    border-radius: 0px;
+}
