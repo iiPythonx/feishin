@@ -120,6 +120,8 @@ export const AlbumDetailContent = ({ background, tableRef }: AlbumDetailContentP
         const rowData: (QueueSong | { id: string; name: string })[] = [];
         const discTranslated = t('common.disc', { postProcess: 'upperCase' });
 
+        const onlyOneDisc = new Set(detailQuery.data.songs.map(song => song.discNumber)).size === 1;
+
         for (const song of detailQuery.data.songs) {
             if (song.discNumber !== discNumber || song.discSubtitle !== discSubtitle) {
                 discNumber = song.discNumber;
@@ -133,13 +135,13 @@ export const AlbumDetailContent = ({ background, tableRef }: AlbumDetailContentP
                     name += `: ${discSubtitle}`;
                 }
 
-                rowData.push({ id, name });
+                if (!(onlyOneDisc && tableConfig.hideDiscOne)) rowData.push({ id, name });
             }
             rowData.push(song);
         }
 
         return rowData;
-    }, [detailQuery.data?.songs, t]);
+    }, [detailQuery.data?.songs, t, tableConfig.hideDiscOne]);
 
     const [pagination, setPagination] = useSetState({
         artist: 0,

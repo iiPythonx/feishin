@@ -167,6 +167,7 @@ export enum GenreTarget {
 export type DataTableProps = {
     autoFit: boolean;
     columns: PersistedTableColumn[];
+    hideDiscOne?: boolean;
     followCurrentSong?: boolean;
     rowHeight: number;
 };
@@ -526,6 +527,7 @@ const initialState: SettingsState = {
                     width: 100,
                 },
             ],
+            hideDiscOne: true,
             rowHeight: 60,
         },
         fullScreen: {
