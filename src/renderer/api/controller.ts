@@ -139,6 +139,9 @@ export const controller: GeneralController = {
     getRandomSongList(args) {
         return apiController('getRandomSongList', args.apiClientProps.server?.type)?.(args);
     },
+    getScanStatus(args) {
+        return apiController('getScanStatus', args.apiClientProps.server?.type)?.(args);
+    },
     getRoles(args) {
         return apiController('getRoles', args.apiClientProps.server?.type)?.(args);
     },
@@ -177,6 +180,9 @@ export const controller: GeneralController = {
     },
     removeFromPlaylist(args) {
         return apiController('removeFromPlaylist', args.apiClientProps.server?.type)?.(args);
+    },
+    rescan(args) {
+        return apiController('rescan', args.apiClientProps.server?.type)?.(args);
     },
     scrobble(args) {
         return apiController('scrobble', args.apiClientProps.server?.type)?.(args);

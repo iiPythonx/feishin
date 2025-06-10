@@ -203,6 +203,7 @@ export interface SettingsState {
         albumBackground: boolean;
         artistBackground: boolean;
         headerBackgroundBlur: number;
+        serverRescan: boolean;
     };
     discord: {
         clientId: string;
@@ -356,7 +357,8 @@ const initialState: SettingsState = {
     tweaks: {
         artistBackground: true,
         albumBackground: true,
-        headerBackgroundBlur: 6
+        headerBackgroundBlur: 6,
+        serverRescan: false
     },
     discord: {
         clientId: '1117545345690374277',

@@ -537,6 +537,19 @@ const albumInfo = z.object({
     }),
 });
 
+const scanParameters = z.object({
+    fullScan: z.boolean().optional(),
+});
+
+const scanStatus = z.object({
+    scanStatus: z.object({
+        count: z.number().optional(),
+        folderCount: z.number().optional(),
+        lastScan: z.string().optional(),
+        scanning: z.boolean(),
+    }),
+});
+
 export const ssType = {
     _parameters: {
         albumInfo: albumInfoParameters,
@@ -559,6 +572,7 @@ export const ssType = {
         getStarred: getStarredParameters,
         randomSongList: randomSongListParameters,
         removeFavorite: removeFavoriteParameters,
+        scan: scanParameters,
         scrobble: scrobbleParameters,
         search3: search3Parameters,
         setRating: setRatingParameters,
@@ -597,6 +611,7 @@ export const ssType = {
         playlistListEntry,
         randomSongList,
         removeFavorite,
+        scanStatus,
         scrobble,
         search3,
         serverInfo,

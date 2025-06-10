@@ -14,6 +14,8 @@ import {
     LibraryItem,
     Played,
     playlistListSortMap,
+    RescanArgs,
+    ScanStatus,
     Song,
     songListSortMap,
     sortOrderMap,
@@ -667,6 +669,21 @@ export const JellyfinController: ControllerEndpoint = {
 
             return acc;
         }, []);
+    },
+    rescan: async (args: RescanArgs): Promise<ScanStatus> => {
+        const { apiClientProps } = args;
+
+        if (!apiClientProps.server?.userId) {
+            throw new Error('No userId found');
+        }
+
+        const res = await jfApiClient(apiClientProps).refresh({});
+
+        if (res.status !== 204) {
+            throw new Error('Failed to start scan');
+        }
+
+        return { scanning: true };
     },
     getSongDetail: async (args) => {
         const { apiClientProps, query } = args;

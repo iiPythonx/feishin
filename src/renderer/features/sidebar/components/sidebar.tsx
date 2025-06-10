@@ -26,11 +26,13 @@ import {
 import {
     SidebarItemType,
     useGeneralSettings,
+    useTweaksSettings,
     useWindowSettings,
 } from '/@/renderer/store/settings.store';
 import { fadeIn } from '/@/renderer/styles';
 import { ServerType } from '/@/shared/types/domain-types';
 import { Platform } from '/@/shared/types/types';
+import { RescanProvider, RescanSidebar } from '/@/renderer/features/sidebar/components/rescan';
 
 const SidebarContainer = styled.div<{ $windowBarStyle: Platform }>`
     height: 100%;
@@ -76,6 +78,7 @@ export const Sidebar = () => {
     const { setSideBar } = useAppStoreActions();
     const { windowBarStyle } = useWindowSettings();
     const { sidebarPlaylistList } = useGeneralSettings();
+    const { serverRescan } = useTweaksSettings();
     const imageUrl = useCurrentSong()?.imageUrl;
     const server = useCurrentServer();
 
@@ -176,6 +179,17 @@ export const Sidebar = () => {
                         mx="1rem"
                         my="0.5rem"
                     />
+                    {serverRescan && (
+                        <>
+                            <RescanProvider>
+                                <RescanSidebar />
+                            </RescanProvider>
+                            <Divider
+                                mx="1rem"
+                                my="0.5rem"
+                            />
+                        </>
+                    )}    
                     {sidebarPlaylistList && (
                         <>
                             <Group

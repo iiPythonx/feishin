@@ -1161,6 +1161,20 @@ export type TopSongListQuery = {
     limit?: number;
 };
 
+
+// Rescan
+export type RescanArgs = {
+    full?: boolean;
+} & BaseEndpointArgs;
+
+export type ScanStatus = {
+    folders?: number;
+    scanning: boolean;
+    tracks?: number;
+};
+
+export type ScanStatusArgs = BaseEndpointArgs;
+
 // Top Songs List
 export type TopSongListResponse = BasePaginatedResponse<Song[]> | null | undefined;
 
@@ -1203,6 +1217,7 @@ export type ControllerEndpoint = {
     getPlaylistListCount: (args: PlaylistListArgs) => Promise<number>;
     getPlaylistSongList: (args: PlaylistSongListArgs) => Promise<SongListResponse>;
     getRandomSongList: (args: RandomSongListArgs) => Promise<SongListResponse>;
+    getScanStatus?: (args: ScanStatusArgs) => Promise<ScanStatus>;
     getRoles: (args: BaseEndpointArgs) => Promise<Array<string | { label: string; value: string }>>;
     getServerInfo: (args: ServerInfoArgs) => Promise<ServerInfo>;
     getSimilarSongs: (args: SimilarSongsArgs) => Promise<Song[]>;
@@ -1216,6 +1231,7 @@ export type ControllerEndpoint = {
     getUserList?: (args: UserListArgs) => Promise<UserListResponse>;
     movePlaylistItem?: (args: MoveItemArgs) => Promise<void>;
     removeFromPlaylist: (args: RemoveFromPlaylistArgs) => Promise<RemoveFromPlaylistResponse>;
+    rescan: (args: RescanArgs) => Promise<ScanStatus>;
     scrobble: (args: ScrobbleArgs) => Promise<ScrobbleResponse>;
     search: (args: SearchArgs) => Promise<SearchResponse>;
     setRating?: (args: SetRatingArgs) => Promise<RatingResponse>;

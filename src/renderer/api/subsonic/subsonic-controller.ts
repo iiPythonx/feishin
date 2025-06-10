@@ -13,6 +13,9 @@ import {
     GenreListSort,
     LibraryItem,
     PlaylistListSort,
+    RescanArgs,
+    ScanStatus,
+    ScanStatusArgs,
     Song,
     sortAlbumArtistList,
     sortAlbumList,
@@ -782,6 +785,26 @@ export const SubsonicController: ControllerEndpoint = {
         final.splice(0, 0, { label: 'all artists', value: '' });
         return final;
     },
+    getScanStatus: async (args: ScanStatusArgs): Promise<ScanStatus> => {
+        const { apiClientProps } = args;
+
+        if (!apiClientProps.server?.userId) {
+            throw new Error('No userId found');
+        }
+
+        const res = await ssApiClient(apiClientProps).getScanStatus();
+        if (res.status !== 200) {
+            throw new Error('Could not start scan');
+        }
+
+        const { scanning, count, folderCount } = res.body.scanStatus;
+
+        return {
+            folders: folderCount,
+            scanning,
+            tracks: count,
+        };
+    },
     getServerInfo: async (args) => {
         const { apiClientProps } = args;
 
@@ -1272,6 +1295,34 @@ export const SubsonicController: ControllerEndpoint = {
         }
 
         return url;
+    },
+    rescan: async (args: RescanArgs): Promise<ScanStatus> => {
+        const { full, apiClientProps } = args;
+
+        if (!apiClientProps.server?.userId) {
+            throw new Error('No userId found');
+        }
+
+        const res = await ssApiClient(apiClientProps).startScan({
+            query:
+                full !== undefined
+                    ? {
+                        fullScan: full,
+                    }
+                    : undefined,
+        });
+
+        if (res.status !== 200) {
+            throw new Error('Could not start scan');
+        }
+
+        const { scanning, count, folderCount } = res.body.scanStatus;
+
+        return {
+            folders: folderCount,
+            scanning,
+            tracks: count,
+        };
     },
     removeFromPlaylist: async ({ apiClientProps, query }) => {
         const res = await ssApiClient(apiClientProps).updatePlaylist({

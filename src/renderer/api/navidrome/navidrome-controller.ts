@@ -449,6 +449,7 @@ export const NavidromeController: ControllerEndpoint = {
     getRandomSongList: SubsonicController.getRandomSongList,
     getRoles: async ({ apiClientProps }) =>
         hasFeature(apiClientProps.server, ServerFeature.BFR) ? NAVIDROME_ROLES : [],
+    getScanStatus: SubsonicController.getScanStatus,
     getServerInfo: async (args) => {
         const { apiClientProps } = args;
 
@@ -699,6 +700,7 @@ export const NavidromeController: ControllerEndpoint = {
 
         return null;
     },
+    rescan: SubsonicController.rescan,
     scrobble: SubsonicController.scrobble,
     search: SubsonicController.search,
     setRating: SubsonicController.setRating,
