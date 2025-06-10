@@ -199,6 +199,11 @@ export interface SettingsState {
         content: string;
         enabled: boolean;
     };
+    tweaks: {
+        albumBackground: boolean;
+        artistBackground: boolean;
+        headerBackgroundBlur: number;
+    };
     discord: {
         clientId: string;
         enabled: boolean;
@@ -216,8 +221,6 @@ export interface SettingsState {
     general: {
         accent: string;
         albumArtRes?: null | number;
-        albumBackground: boolean;
-        albumBackgroundBlur: number;
         artistItems: SortableItem<ArtistItem>[];
         buttonSize: number;
         disabledContextMenu: { [k in ContextMenuItemType]?: boolean };
@@ -350,6 +353,11 @@ const initialState: SettingsState = {
         content: '',
         enabled: false,
     },
+    tweaks: {
+        artistBackground: true,
+        albumBackground: true,
+        headerBackgroundBlur: 6
+    },
     discord: {
         clientId: '1117545345690374277',
         enabled: false,
@@ -367,8 +375,6 @@ const initialState: SettingsState = {
     general: {
         accent: 'rgb(53, 116, 252)',
         albumArtRes: undefined,
-        albumBackground: false,
-        albumBackgroundBlur: 6,
         artistItems,
         buttonSize: 20,
         disabledContextMenu: {},
@@ -448,8 +454,8 @@ const initialState: SettingsState = {
         delayMs: 0,
         fetch: false,
         follow: true,
-        fontSize: 46,
-        fontSizeUnsync: 20,
+        fontSize: 33,
+        fontSizeUnsync: 33,
         gap: 5,
         gapUnsync: 0,
         showMatch: true,
@@ -799,3 +805,5 @@ export const useFontSettings = () => useSettingsStore((state) => state.font, sha
 export const useDiscordSetttings = () => useSettingsStore((state) => state.discord, shallow);
 
 export const useCssSettings = () => useSettingsStore((state) => state.css, shallow);
+
+export const useTweaksSettings = () => useSettingsStore((state) => state.tweaks, shallow);

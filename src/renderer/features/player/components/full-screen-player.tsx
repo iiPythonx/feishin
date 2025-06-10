@@ -301,7 +301,7 @@ const Controls = () => {
                                     w="100%"
                                 />
                                 <Slider
-                                    defaultValue={lyricConfig.fontSize}
+                                    defaultValue={lyricConfig.fontSizeUnsync}
                                     label={(e) =>
                                         `${t('page.fullscreenPlayer.config.unsynchronized', {
                                             postProcess: 'sentenceCase',

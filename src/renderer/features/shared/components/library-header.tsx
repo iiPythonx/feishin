@@ -10,7 +10,7 @@ import styles from './library-header.module.css';
 
 import { Text } from '/@/renderer/components';
 import { ItemImagePlaceholder } from '/@/renderer/features/shared/components/item-image-placeholder';
-import { useGeneralSettings } from '/@/renderer/store';
+import { useTweaksSettings } from '/@/renderer/store';
 import { LibraryItem } from '/@/shared/types/domain-types';
 
 interface LibraryHeaderProps {
@@ -30,7 +30,7 @@ export const LibraryHeader = forwardRef(
     ) => {
         const { t } = useTranslation();
         const [isImageError, setIsImageError] = useState<boolean | null>(false);
-        const { albumBackground } = useGeneralSettings();
+        const { albumBackground } = useTweaksSettings();
 
         const onImageError = () => {
             setIsImageError(true);

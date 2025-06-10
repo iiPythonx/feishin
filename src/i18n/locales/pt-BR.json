@@ -203,8 +203,8 @@
         "artistConfiguration": "configuração da página de artista de álbum",
         "artistConfiguration_description": "configure quais itens serão mostrados, e em qual ordem, na página de artista de álbum",
         "buttonSize_description": "o tamanho dos botões da barra de reprodução",
-        "albumBackgroundBlur": "tamanho de desfoque da imagem de fundo do álbum",
-        "albumBackgroundBlur_description": "ajusta a quantidade de desfoque aplicada para a imagem de fundo do álbum",
+        "headerBackgroundBlur": "tamanho de desfoque da imagem de fundo do álbum",
+        "headerBackgroundBlur_description": "ajusta a quantidade de desfoque aplicada para a imagem de fundo do álbum",
         "albumBackground": "imagem de fundo do álbum"
     },
     "table": {

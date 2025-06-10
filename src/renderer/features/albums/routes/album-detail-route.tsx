@@ -10,15 +10,15 @@ import { useAlbumDetail } from '/@/renderer/features/albums/queries/album-detail
 import { usePlayQueueAdd } from '/@/renderer/features/player';
 import { AnimatedPage, LibraryHeaderBar } from '/@/renderer/features/shared';
 import { useFastAverageColor } from '/@/renderer/hooks';
-import { useCurrentServer, useGeneralSettings } from '/@/renderer/store';
-import { usePlayButtonBehavior } from '/@/renderer/store/settings.store';
+import { useCurrentServer } from '/@/renderer/store';
+import { usePlayButtonBehavior, useTweaksSettings } from '/@/renderer/store/settings.store';
 import { LibraryItem } from '/@/shared/types/domain-types';
 
 const AlbumDetailRoute = () => {
     const tableRef = useRef<AgGridReactType | null>(null);
     const scrollAreaRef = useRef<HTMLDivElement>(null);
     const headerRef = useRef<HTMLDivElement>(null);
-    const { albumBackground, albumBackgroundBlur } = useGeneralSettings();
+    const { albumBackground, headerBackgroundBlur } = useTweaksSettings();
 
     const { albumId } = useParams() as { albumId: string };
     const server = useCurrentServer();
@@ -69,7 +69,7 @@ const AlbumDetailRoute = () => {
                 <AlbumDetailHeader
                     background={{
                         background,
-                        blur: (albumBackground && albumBackgroundBlur) || 0,
+                        blur: (albumBackground && headerBackgroundBlur) || 0,
                     }}
                     ref={headerRef}
                 />
