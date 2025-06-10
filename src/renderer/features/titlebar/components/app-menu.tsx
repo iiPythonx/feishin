@@ -176,15 +176,12 @@ export const AppMenu = () => {
             <DropdownMenu.Divider />
             <DropdownMenu.Item
                 component="a"
-                href="https://github.com/jeffvli/feishin/releases"
+                href="https://github.com/iiPythonx/feishin/tree/custom"
                 icon={<RiGithubLine />}
                 rightSection={<RiExternalLinkLine />}
                 target="_blank"
             >
-                {t('page.appMenu.version', {
-                    postProcess: 'sentenceCase',
-                    version: packageJson.version,
-                })}
+                Version {packageJson.version} (iiPython)
             </DropdownMenu.Item>
             {isElectron() && (
                 <>
