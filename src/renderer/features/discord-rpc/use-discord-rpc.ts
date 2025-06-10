@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useDiscordSetttings, usePlayerStore } from '/@/renderer/store';
 import { SetActivity } from '@xhayper/discord-rpc';
-import { PlayerStatus } from '/@/shared/types/types';
-import { QueueSong } from '/@/shared/types/domain-types';
 import axios from 'axios';
 import isElectron from 'is-electron';
+import { useCallback, useEffect, useState } from 'react';
+
+import { useDiscordSetttings, usePlayerStore } from '/@/renderer/store';
+import { QueueSong } from '/@/shared/types/domain-types';
+import { PlayerStatus } from '/@/shared/types/types';
 
 const discordRpc = isElectron() ? window.api.discordRpc : null;
 
@@ -22,8 +23,8 @@ export const useDiscordRpc = () => {
 
     const updateActivity = useCallback(
         async (
-            current: (QueueSong | PlayerStatus | number | undefined)[],
-            previous: (QueueSong | PlayerStatus | number | undefined)[],
+            current: (number | PlayerStatus | QueueSong | undefined)[],
+            previous: (number | PlayerStatus | QueueSong | undefined)[],
         ) => {
             if (!current[0] || (current[0] && current[2] === 'paused' && current[1] === 0))
                 return discordRpc?.clearActivity();

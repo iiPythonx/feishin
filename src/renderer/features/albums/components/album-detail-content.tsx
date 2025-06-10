@@ -120,7 +120,8 @@ export const AlbumDetailContent = ({ background, tableRef }: AlbumDetailContentP
         const rowData: (QueueSong | { id: string; name: string })[] = [];
         const discTranslated = t('common.disc', { postProcess: 'upperCase' });
 
-        const onlyOneDisc = new Set(detailQuery.data.songs.map(song => song.discNumber)).size === 1;
+        const onlyOneDisc =
+            new Set(detailQuery.data.songs.map((song) => song.discNumber)).size === 1;
 
         for (const song of detailQuery.data.songs) {
             if (song.discNumber !== discNumber || song.discSubtitle !== discSubtitle) {

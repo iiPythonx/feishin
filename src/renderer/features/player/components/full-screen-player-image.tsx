@@ -30,11 +30,11 @@ const BlurImage = styled(motion.img)<any>`
     height: 110%;
     width: 110%;
     object-fit: ${({ $useAspectRatio }) => ($useAspectRatio ? 'contain' : 'cover')};
-    object-position: 50% 100%; 
+    object-position: 50% 100%;
     border-radius: 16px;
     z-index: 0;
     top: -5%;
-    filter: blur(2rem)
+    filter: blur(2rem);
 `;
 
 const ImageContainer = styled(motion.div)`
@@ -252,11 +252,11 @@ export const FullScreenPlayerImage = () => {
                         />
                     )}
 
-                <BlurImage
-                    src={imageState.topImage}
-                    $useAspectRatio={useImageAspectRatio}
-                    aria-hidden
-                />
+                    <BlurImage
+                        $useAspectRatio={useImageAspectRatio}
+                        aria-hidden
+                        src={imageState.topImage}
+                    />
                 </AnimatePresence>
             </ImageContainer>
             <MetadataContainer
@@ -325,7 +325,7 @@ export const FullScreenPlayerImage = () => {
                 >
                     {currentSong?.container && (
                         <Badge size="lg">
-                            {currentSong?.container.replaceAll("audio/", "")} {currentSong?.bitRate}
+                            {currentSong?.container.replaceAll('audio/', '')} {currentSong?.bitRate}
                         </Badge>
                     )}
                     {currentSong?.releaseYear && (

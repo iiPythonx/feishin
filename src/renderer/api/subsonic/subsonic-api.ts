@@ -145,14 +145,6 @@ export const contract = c.router({
             200: ssType._response.serverInfo,
         },
     },
-    startScan: {
-        method: 'GET',
-        path: 'startScan.view',
-        query: ssType._parameters.scan,
-        responses: {
-            200: ssType._response.scanStatus,
-        },
-    },
     getSimilarSongs: {
         method: 'GET',
         path: 'getSimilarSongs',
@@ -238,6 +230,14 @@ export const contract = c.router({
         query: ssType._parameters.setRating,
         responses: {
             200: ssType._response.setRating,
+        },
+    },
+    startScan: {
+        method: 'GET',
+        path: 'startScan.view',
+        query: ssType._parameters.scan,
+        responses: {
+            200: ssType._response.scanStatus,
         },
     },
     updatePlaylist: {

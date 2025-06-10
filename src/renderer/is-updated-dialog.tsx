@@ -28,8 +28,9 @@ export function IsUpdatedDialog() {
         >
             <Stack
                 style={{
-                    borderRadius: "18px"
-                }}>
+                    borderRadius: '18px',
+                }}
+            >
                 <Text>A new version of Feishin has been installed ({version})</Text>
                 <Group noWrap>
                     <Button

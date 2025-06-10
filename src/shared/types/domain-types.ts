@@ -1094,6 +1094,19 @@ export type RandomSongListQuery = {
 
 export type RandomSongListResponse = SongListResponse;
 
+// Rescan
+export type RescanArgs = BaseEndpointArgs & {
+    full?: boolean;
+};
+
+export type ScanStatus = {
+    folders?: number;
+    scanning: boolean;
+    tracks?: number;
+};
+
+export type ScanStatusArgs = BaseEndpointArgs;
+
 export type ScrobbleArgs = BaseEndpointArgs & {
     query: ScrobbleQuery;
     serverId?: string;
@@ -1161,20 +1174,6 @@ export type TopSongListQuery = {
     limit?: number;
 };
 
-
-// Rescan
-export type RescanArgs = {
-    full?: boolean;
-} & BaseEndpointArgs;
-
-export type ScanStatus = {
-    folders?: number;
-    scanning: boolean;
-    tracks?: number;
-};
-
-export type ScanStatusArgs = BaseEndpointArgs;
-
 // Top Songs List
 export type TopSongListResponse = BasePaginatedResponse<Song[]> | null | undefined;
 
@@ -1217,8 +1216,8 @@ export type ControllerEndpoint = {
     getPlaylistListCount: (args: PlaylistListArgs) => Promise<number>;
     getPlaylistSongList: (args: PlaylistSongListArgs) => Promise<SongListResponse>;
     getRandomSongList: (args: RandomSongListArgs) => Promise<SongListResponse>;
-    getScanStatus?: (args: ScanStatusArgs) => Promise<ScanStatus>;
     getRoles: (args: BaseEndpointArgs) => Promise<Array<string | { label: string; value: string }>>;
+    getScanStatus?: (args: ScanStatusArgs) => Promise<ScanStatus>;
     getServerInfo: (args: ServerInfoArgs) => Promise<ServerInfo>;
     getSimilarSongs: (args: SimilarSongsArgs) => Promise<Song[]>;
     getSongDetail: (args: SongDetailArgs) => Promise<SongDetailResponse>;

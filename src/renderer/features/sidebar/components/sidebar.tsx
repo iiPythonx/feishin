@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import { Button, MotionStack, Tooltip } from '/@/renderer/components';
 import { CreatePlaylistForm } from '/@/renderer/features/playlists';
 import { ActionBar } from '/@/renderer/features/sidebar/components/action-bar';
+import { RescanProvider, RescanSidebar } from '/@/renderer/features/sidebar/components/rescan';
 import { SidebarIcon } from '/@/renderer/features/sidebar/components/sidebar-icon';
 import { SidebarItem } from '/@/renderer/features/sidebar/components/sidebar-item';
 import { SidebarPlaylistList } from '/@/renderer/features/sidebar/components/sidebar-playlist-list';
@@ -32,7 +33,6 @@ import {
 import { fadeIn } from '/@/renderer/styles';
 import { ServerType } from '/@/shared/types/domain-types';
 import { Platform } from '/@/shared/types/types';
-import { RescanProvider, RescanSidebar } from '/@/renderer/features/sidebar/components/rescan';
 
 const SidebarContainer = styled.div<{ $windowBarStyle: Platform }>`
     height: 100%;
@@ -189,7 +189,7 @@ export const Sidebar = () => {
                                 my="0.5rem"
                             />
                         </>
-                    )}    
+                    )}
                     {sidebarPlaylistList && (
                         <>
                             <Group

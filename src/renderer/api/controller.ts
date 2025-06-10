@@ -139,11 +139,11 @@ export const controller: GeneralController = {
     getRandomSongList(args) {
         return apiController('getRandomSongList', args.apiClientProps.server?.type)?.(args);
     },
-    getScanStatus(args) {
-        return apiController('getScanStatus', args.apiClientProps.server?.type)?.(args);
-    },
     getRoles(args) {
         return apiController('getRoles', args.apiClientProps.server?.type)?.(args);
+    },
+    getScanStatus(args) {
+        return apiController('getScanStatus', args.apiClientProps.server?.type)?.(args);
     },
     getServerInfo(args) {
         return apiController('getServerInfo', args.apiClientProps.server?.type)?.(args);

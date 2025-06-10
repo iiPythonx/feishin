@@ -3,7 +3,7 @@ import { closeAllModals, openModal } from '@mantine/modals';
 import { QueryClient } from '@tanstack/react-query';
 import merge from 'lodash/merge';
 import { useMemo } from 'react';
-import { RiFileList3Fill, RiAddCircleFill, RiPlayFill } from 'react-icons/ri';
+import { RiAddCircleFill, RiFileList3Fill, RiPlayFill } from 'react-icons/ri';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';

@@ -3,10 +3,7 @@ import {
     SettingOption,
     SettingsSection,
 } from '/@/renderer/features/settings/components/settings-section';
-import {
-    useSettingsStoreActions,
-    useTweaksSettings,
-} from '/@/renderer/store';
+import { useSettingsStoreActions, useTweaksSettings } from '/@/renderer/store';
 
 export const RandomSettings = () => {
     const settings = useTweaksSettings();
@@ -28,8 +25,8 @@ export const RandomSettings = () => {
                 />
             ),
             description: 'Adds a button to the sidebar allowing you to trigger a rescan.',
-            title: 'Enable server rescan'
-        }
+            title: 'Enable server rescan',
+        },
     ];
 
     return <SettingsSection options={randomOptions} />;

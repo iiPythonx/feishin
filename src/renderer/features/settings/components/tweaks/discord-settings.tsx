@@ -6,14 +6,11 @@ import {
     SettingOption,
     SettingsSection,
 } from '/@/renderer/features/settings/components/settings-section';
-import {
-    useDiscordSetttings,
-    useSettingsStoreActions,
-} from '/@/renderer/store';
+import { useDiscordSetttings, useSettingsStoreActions } from '/@/renderer/store';
 
 const PROXY_TYPE_OPTIONS = [
     { label: 'ndip', value: 'ndip' },
-    { label: 'pizza', value: 'pizza' }
+    { label: 'pizza', value: 'pizza' },
 ];
 
 export const DiscordSettings = () => {
@@ -38,7 +35,7 @@ export const DiscordSettings = () => {
             ),
             description: 'Enable playback status in Rich Presence.',
             isHidden: !isElectron(),
-            title: 'Discord RPC (modified)'
+            title: 'Discord RPC (modified)',
         },
         {
             control: (
@@ -55,18 +52,18 @@ export const DiscordSettings = () => {
                 />
             ),
             description: 'The application ID for Rich Presence.',
+            isHidden: !(isElectron() && settings.enabled),
             title: t('setting.discordApplicationId', {
                 discord: 'Discord',
                 postProcess: 'sentenceCase',
             }),
-            isHidden: !(isElectron() && settings.enabled),
         },
         {
             control: (
                 <Select
                     data={PROXY_TYPE_OPTIONS}
-                    disabled={!isElectron()}
                     defaultValue={settings.proxyType ?? 'pizza'}
+                    disabled={!isElectron()}
                     onChange={(e) => {
                         if (!e) return;
                         setSettings({
@@ -80,8 +77,8 @@ export const DiscordSettings = () => {
                 />
             ),
             description: 'The image proxy you want to forward images to.',
-            title: 'Image proxy type',
             isHidden: !(isElectron() && settings.enabled),
+            title: 'Image proxy type',
         },
         {
             control: (
@@ -98,8 +95,8 @@ export const DiscordSettings = () => {
                 />
             ),
             description: 'The URL of your selfhosted ndip instance, leave blank for Pizza.',
-            title: 'Image proxy URL',
             isHidden: !(isElectron() && settings.enabled),
+            title: 'Image proxy URL',
         },
         {
             control: (
@@ -116,8 +113,8 @@ export const DiscordSettings = () => {
                 />
             ),
             description: 'Show status as listening instead of playing.',
-            title: 'Enable listening status',
             isHidden: !(isElectron() && settings.enabled),
+            title: 'Enable listening status',
         },
         {
             control: (
@@ -133,10 +130,11 @@ export const DiscordSettings = () => {
                     }}
                 />
             ),
-            description: 'This will show the artist name you are listening to instead of just Feishin.',
+            description:
+                'This will show the artist name you are listening to instead of just Feishin.',
+            isHidden: !(isElectron() && settings.enabled),
             note: 'Requires Vesktop',
             title: 'Enable artist name',
-            isHidden: !(isElectron() && settings.enabled),
         },
     ];
 

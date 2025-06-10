@@ -33,11 +33,11 @@ export const Visualizer = () => {
                 gradient: 'prism',
                 mode: 4,
                 overlay: true,
+                overlay: true,
+                showBgColor: false,
                 showBgColor: false,
                 showPeaks: false,
-                showBgColor: false,
-                overlay: true,
-                smoothing: 0.8
+                smoothing: 0.8,
             });
             setMotion(audioMotion);
             audioMotion.connectInput(gain);

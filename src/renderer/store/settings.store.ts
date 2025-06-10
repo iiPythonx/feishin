@@ -167,8 +167,8 @@ export enum GenreTarget {
 export type DataTableProps = {
     autoFit: boolean;
     columns: PersistedTableColumn[];
-    hideDiscOne?: boolean;
     followCurrentSong?: boolean;
+    hideDiscOne?: boolean;
     rowHeight: number;
 };
 
@@ -199,19 +199,13 @@ export interface SettingsState {
         content: string;
         enabled: boolean;
     };
-    tweaks: {
-        albumBackground: boolean;
-        artistBackground: boolean;
-        headerBackgroundBlur: number;
-        serverRescan: boolean;
-    };
     discord: {
         clientId: string;
         enabled: boolean;
-        showAsListening: boolean;
-        showArtistName: boolean;
         proxyType: string;
         proxyUrl: string;
+        showArtistName: boolean;
+        showAsListening: boolean;
     };
     font: {
         builtIn: string;
@@ -313,6 +307,12 @@ export interface SettingsState {
         sideQueue: DataTableProps;
         songs: DataTableProps;
     };
+    tweaks: {
+        albumBackground: boolean;
+        artistBackground: boolean;
+        headerBackgroundBlur: number;
+        serverRescan: boolean;
+    };
     window: {
         disableAutoUpdate: boolean;
         exitToTray: boolean;
@@ -354,19 +354,13 @@ const initialState: SettingsState = {
         content: '',
         enabled: false,
     },
-    tweaks: {
-        artistBackground: true,
-        albumBackground: true,
-        headerBackgroundBlur: 6,
-        serverRescan: false
-    },
     discord: {
         clientId: '1117545345690374277',
         enabled: false,
-        showAsListening: false,
-        showArtistName: false,
         proxyType: 'pizza',
-        proxyUrl: ''
+        proxyUrl: '',
+        showArtistName: false,
+        showAsListening: false,
     },
     font: {
         builtIn: 'Inter',
@@ -660,6 +654,12 @@ const initialState: SettingsState = {
             ],
             rowHeight: 60,
         },
+    },
+    tweaks: {
+        albumBackground: true,
+        artistBackground: true,
+        headerBackgroundBlur: 6,
+        serverRescan: false,
     },
     window: {
         disableAutoUpdate: false,

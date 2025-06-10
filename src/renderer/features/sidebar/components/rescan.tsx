@@ -1,13 +1,8 @@
 import { Group, UnstyledButton } from '@mantine/core';
-import { CollapsedSidebarButton } from '/@/renderer/features/sidebar/components/collapsed-sidebar-button';
-import { useCurrentServer } from '/@/renderer/store';
-import { RiRefreshFill, RiScan2Line, RiScanLine } from 'react-icons/ri';
-import { api } from '/@/renderer/api';
-import styled from 'styled-components';
 import {
+    createContext,
     MutableRefObject,
     ReactNode,
-    createContext,
     useCallback,
     useContext,
     useEffect,
@@ -15,11 +10,17 @@ import {
     useRef,
     useState,
 } from 'react';
-import { ServerType } from '/@/shared/types/domain-types';
+import { RiRefreshFill, RiScan2Line, RiScanLine } from 'react-icons/ri';
+import styled from 'styled-components';
+
+import { api } from '/@/renderer/api';
 import { DropdownMenu, toast } from '/@/renderer/components';
+import { CollapsedSidebarButton } from '/@/renderer/features/sidebar/components/collapsed-sidebar-button';
 import { SidebarItem } from '/@/renderer/features/sidebar/components/sidebar-item';
-import { ScanStatus } from '/@/shared/types/domain-types';
+import { useCurrentServer } from '/@/renderer/store';
 import { rotating } from '/@/renderer/styles';
+import { ServerType } from '/@/shared/types/domain-types';
+import { ScanStatus } from '/@/shared/types/domain-types';
 
 const SpinningRefresh = styled(RiRefreshFill)`
     ${rotating}
@@ -50,7 +51,7 @@ const RescanMenu = ({
 }) => {
     const server = useCurrentServer();
     const {
-        scanStatus: { scanning, folders, tracks },
+        scanStatus: { folders, scanning, tracks },
         setScanStatus,
     } = useContext(RescanContext);
 
@@ -113,8 +114,8 @@ const RescanMenu = ({
         <>
             {scanning && (
                 <DropdownMenu.Item
-                    disabled
                     closeMenuOnClick={false}
+                    disabled
                 >
                     Currently scanning...
                 </DropdownMenu.Item>

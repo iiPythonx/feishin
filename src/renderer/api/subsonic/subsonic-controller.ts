@@ -797,7 +797,7 @@ export const SubsonicController: ControllerEndpoint = {
             throw new Error('Could not start scan');
         }
 
-        const { scanning, count, folderCount } = res.body.scanStatus;
+        const { count, folderCount, scanning } = res.body.scanStatus;
 
         return {
             folders: folderCount,
@@ -1296,34 +1296,6 @@ export const SubsonicController: ControllerEndpoint = {
 
         return url;
     },
-    rescan: async (args: RescanArgs): Promise<ScanStatus> => {
-        const { full, apiClientProps } = args;
-
-        if (!apiClientProps.server?.userId) {
-            throw new Error('No userId found');
-        }
-
-        const res = await ssApiClient(apiClientProps).startScan({
-            query:
-                full !== undefined
-                    ? {
-                        fullScan: full,
-                    }
-                    : undefined,
-        });
-
-        if (res.status !== 200) {
-            throw new Error('Could not start scan');
-        }
-
-        const { scanning, count, folderCount } = res.body.scanStatus;
-
-        return {
-            folders: folderCount,
-            scanning,
-            tracks: count,
-        };
-    },
     removeFromPlaylist: async ({ apiClientProps, query }) => {
         const res = await ssApiClient(apiClientProps).updatePlaylist({
             query: {
@@ -1337,6 +1309,34 @@ export const SubsonicController: ControllerEndpoint = {
         }
 
         return null;
+    },
+    rescan: async (args: RescanArgs): Promise<ScanStatus> => {
+        const { apiClientProps, full } = args;
+
+        if (!apiClientProps.server?.userId) {
+            throw new Error('No userId found');
+        }
+
+        const res = await ssApiClient(apiClientProps).startScan({
+            query:
+                full !== undefined
+                    ? {
+                          fullScan: full,
+                      }
+                    : undefined,
+        });
+
+        if (res.status !== 200) {
+            throw new Error('Could not start scan');
+        }
+
+        const { count, folderCount, scanning } = res.body.scanStatus;
+
+        return {
+            folders: folderCount,
+            scanning,
+            tracks: count,
+        };
     },
     scrobble: async (args) => {
         const { apiClientProps, query } = args;

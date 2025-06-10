@@ -5,10 +5,7 @@ import {
     SettingOption,
     SettingsSection,
 } from '/@/renderer/features/settings/components/settings-section';
-import {
-    useSettingsStoreActions,
-    useTweaksSettings,
-} from '/@/renderer/store/settings.store';
+import { useSettingsStoreActions, useTweaksSettings } from '/@/renderer/store/settings.store';
 
 export const BackgroundSettings = () => {
     const { t } = useTranslation();

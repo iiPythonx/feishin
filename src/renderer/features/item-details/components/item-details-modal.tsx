@@ -63,6 +63,7 @@ const formatArtists = (artists: null | RelatedArtist[] | undefined) =>
             {artist.id ? (
                 <Text
                     $link
+                    color={'#C1C2C5 !important'} // idk why this is hardcoded, but it is for the normal attributes too, so nohting i can do unless i want these to stick out
                     component={Link}
                     overflow="visible"
                     size="md"
@@ -73,7 +74,6 @@ const formatArtists = (artists: null | RelatedArtist[] | undefined) =>
                               })
                             : ''
                     }
-                    color={"#C1C2C5 !important"} // idk why this is hardcoded, but it is for the normal attributes too, so nohting i can do unless i want these to stick out
                 >
                     {artist.name || '—'}
                 </Text>
@@ -103,11 +103,11 @@ const FormatGenre = (item: Album | AlbumArtist | Playlist | Song) => {
             {index > 0 && <Separator />}
             <Text
                 $link
+                color={'#C1C2C5 !important'}
                 component={Link}
                 overflow="visible"
                 size="md"
                 to={genre.id ? generatePath(genreRoute, { genreId: genre.id }) : ''}
-                color={"#C1C2C5 !important"}
             >
                 {genre.name || '—'}
             </Text>
@@ -246,6 +246,7 @@ const SongPropertyMapping: ItemDetailRow<Song>[] = [
             song.album && (
                 <Text
                     $link
+                    color={'#C1C2C5 !important'}
                     component={Link}
                     overflow="visible"
                     size="md"
@@ -256,7 +257,6 @@ const SongPropertyMapping: ItemDetailRow<Song>[] = [
                               })
                             : ''
                     }
-                    color={"#C1C2C5 !important"}
                 >
                     {song.album}
                 </Text>
@@ -272,7 +272,11 @@ const SongPropertyMapping: ItemDetailRow<Song>[] = [
     },
     { label: 'filter.isCompilation', render: (song) => BoolField(song.compilation || false) },
     { key: 'container', label: 'common.codec' },
-    { key: 'bitRate', label: 'common.bitrate', render: (song) => `${Math.round(song.bitRate / 100) * 100} kbps` },
+    {
+        key: 'bitRate',
+        label: 'common.bitrate',
+        render: (song) => `${Math.round(song.bitRate / 100) * 100} kbps`,
+    },
     { key: 'channels', label: 'common.channel_other' },
     { key: 'size', label: 'common.size', render: (song) => formatSizeString(song.size) },
     {
@@ -307,7 +311,7 @@ const SongPropertyMapping: ItemDetailRow<Song>[] = [
     },
     { label: 'filter.comment', render: formatComment },
     { key: 'id', label: 'Song ID' },
-    { key: 'path', label: 'common.path', render: SongPath }
+    { key: 'path', label: 'common.path', render: SongPath },
 ];
 
 const handleTags = (item: Album | Song, t: TFunction) => {

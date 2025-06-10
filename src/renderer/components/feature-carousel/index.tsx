@@ -233,10 +233,10 @@ export const FeatureCarousel = ({ data }: FeatureCarouselProps) => {
                                                 });
                                             }}
                                             size="lg"
-                                            variant="default"
                                             style={{
-                                                background: "rgb(var(--main-bg-transparent), 80%)"
+                                                background: 'rgb(var(--main-bg-transparent), 80%)',
                                             }}
+                                            variant="default"
                                         >
                                             <RiPlayCircleLine size="2rem" />
                                         </Button>
