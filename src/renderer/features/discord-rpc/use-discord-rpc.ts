@@ -63,6 +63,7 @@ export const useDiscordRpc = () => {
                     activity.smallImageKey = 'paused';
                 }
 
+                // @ts-ignore: Name is a totally valid field, but it's not typed, so ymmv
                 if (discordSettings.showArtistName) activity.name = song.artistName;
 
                 // Handle forwarding album art
