@@ -43,7 +43,8 @@ export const Select = ({ maxWidth, width, ...props }: SelectProps) => {
         <StyledSelect
             styles={{
                 dropdown: {
-                    background: 'var(--dropdown-menu-bg)',
+                    background: 'rgba(32, 32, 32, 95%);',
+                    borderRadius: '6px',
                     filter: 'drop-shadow(0 0 5px rgb(0, 0, 0, 20%))',
                 },
                 input: {
@@ -64,6 +65,7 @@ export const Select = ({ maxWidth, width, ...props }: SelectProps) => {
                         background: 'none',
                         color: 'var(--primary-color)',
                     },
+                    borderRadius: '6px',
                     color: 'var(--dropdown-menu-fg)',
                     padding: '.3rem',
                 },
