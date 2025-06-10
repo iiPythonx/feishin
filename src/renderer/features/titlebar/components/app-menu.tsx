@@ -176,7 +176,7 @@ export const AppMenu = () => {
             <DropdownMenu.Divider />
             <DropdownMenu.Item
                 component="a"
-                href="https://github.com/iiPythonx/feishin/tree/custom"
+                href="https://github.com/iiPythonx/feishin/tree/restart"
                 icon={<RiGithubLine />}
                 rightSection={<RiExternalLinkLine />}
                 target="_blank"
