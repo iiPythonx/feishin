@@ -1,18 +1,18 @@
 import { SetContextMenuItems } from '/@/renderer/features/context-menu/events';
 
 export const QUEUE_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
-    { divider: true, id: 'removeFromQueue' },
+    { divider: false, id: 'removeFromQueue' },
     { id: 'moveToNextOfQueue' },
     { id: 'moveToBottomOfQueue' },
-    { divider: true, id: 'moveToTopOfQueue' },
-    { divider: true, id: 'addToPlaylist' },
+    { divider: false, id: 'moveToTopOfQueue' },
+    { divider: false, id: 'addToPlaylist' },
     { id: 'addToFavorites' },
-    { divider: true, id: 'removeFromFavorites' },
+    { divider: false, id: 'removeFromFavorites' },
     { children: true, disabled: false, id: 'setRating' },
-    { disabled: false, divider: true, id: 'deselectAll' },
+    { disabled: false, divider: false, id: 'deselectAll' },
     { id: 'download' },
-    { divider: true, id: 'shareItem' },
-    { divider: true, id: 'showDetails' },
+    { divider: false, id: 'shareItem' },
+    { divider: false, id: 'showDetails' },
 ];
 
 export const SONG_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
@@ -20,22 +20,22 @@ export const SONG_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
     { id: 'playLast' },
     { id: 'playNext' },
     { id: 'playShuffled' },
-    { divider: true, id: 'playSimilarSongs' },
-    { divider: true, id: 'addToPlaylist' },
+    { divider: false, id: 'playSimilarSongs' },
+    { divider: false, id: 'addToPlaylist' },
     { id: 'addToFavorites' },
-    { divider: true, id: 'removeFromFavorites' },
-    { children: true, disabled: false, divider: true, id: 'setRating' },
+    { divider: false, id: 'removeFromFavorites' },
+    { children: true, disabled: false, divider: false, id: 'setRating' },
     { id: 'download' },
-    { divider: true, id: 'shareItem' },
-    { divider: true, id: 'showDetails' },
+    { divider: false, id: 'shareItem' },
+    { divider: false, id: 'showDetails' },
 ];
 
 export const SONG_ALBUM_PAGE: SetContextMenuItems = [
     { id: 'play' },
     { id: 'playLast' },
     { id: 'playNext' },
-    { divider: true, id: 'playShuffled' },
-    { divider: true, id: 'addToPlaylist' },
+    { divider: false, id: 'playShuffled' },
+    { divider: false, id: 'addToPlaylist' },
 ];
 
 export const PLAYLIST_SONG_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
@@ -43,72 +43,72 @@ export const PLAYLIST_SONG_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
     { id: 'playLast' },
     { id: 'playNext' },
     { id: 'playShuffled' },
-    { divider: true, id: 'playSimilarSongs' },
+    { divider: false, id: 'playSimilarSongs' },
     { id: 'addToPlaylist' },
-    { divider: true, id: 'removeFromPlaylist' },
+    { divider: false, id: 'removeFromPlaylist' },
     { id: 'addToFavorites' },
-    { divider: true, id: 'removeFromFavorites' },
+    { divider: false, id: 'removeFromFavorites' },
     { children: true, disabled: false, id: 'setRating' },
     { id: 'download' },
-    { divider: true, id: 'shareItem' },
-    { divider: true, id: 'showDetails' },
+    { divider: false, id: 'shareItem' },
+    { divider: false, id: 'showDetails' },
 ];
 
 export const SMART_PLAYLIST_SONG_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
     { id: 'play' },
     { id: 'playLast' },
     { id: 'playNext' },
-    { divider: true, id: 'playShuffled' },
-    { divider: true, id: 'playSimilarSongs' },
-    { divider: true, id: 'addToPlaylist' },
+    { divider: false, id: 'playShuffled' },
+    { divider: false, id: 'playSimilarSongs' },
+    { divider: false, id: 'addToPlaylist' },
     { id: 'addToFavorites' },
-    { divider: true, id: 'removeFromFavorites' },
+    { divider: false, id: 'removeFromFavorites' },
     { children: true, disabled: false, id: 'setRating' },
     { id: 'download' },
-    { divider: true, id: 'shareItem' },
-    { divider: true, id: 'showDetails' },
+    { divider: false, id: 'shareItem' },
+    { divider: false, id: 'showDetails' },
 ];
 
 export const ALBUM_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
     { id: 'play' },
     { id: 'playLast' },
     { id: 'playNext' },
-    { divider: true, id: 'playShuffled' },
-    { divider: true, id: 'addToPlaylist' },
+    { divider: false, id: 'playShuffled' },
+    { divider: false, id: 'addToPlaylist' },
     { id: 'addToFavorites' },
     { id: 'removeFromFavorites' },
-    { children: true, disabled: false, divider: true, id: 'setRating' },
-    { divider: true, id: 'shareItem' },
-    { divider: true, id: 'showDetails' },
+    { children: true, disabled: false, divider: false, id: 'setRating' },
+    { divider: false, id: 'shareItem' },
+    { divider: false, id: 'showDetails' },
 ];
 
 export const GENRE_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
     { id: 'play' },
     { id: 'playLast' },
     { id: 'playNext' },
-    { divider: true, id: 'playShuffled' },
-    { divider: true, id: 'addToPlaylist' },
+    { divider: false, id: 'playShuffled' },
+    { divider: false, id: 'addToPlaylist' },
 ];
 
 export const ARTIST_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
     { id: 'play' },
     { id: 'playLast' },
     { id: 'playNext' },
-    { divider: true, id: 'playShuffled' },
-    { divider: true, id: 'addToPlaylist' },
+    { divider: false, id: 'playShuffled' },
+    { divider: false, id: 'addToPlaylist' },
     { id: 'addToFavorites' },
-    { divider: true, id: 'removeFromFavorites' },
+    { divider: false, id: 'removeFromFavorites' },
     { children: true, disabled: false, id: 'setRating' },
-    { divider: true, id: 'shareItem' },
-    { divider: true, id: 'showDetails' },
+    { divider: false, id: 'shareItem' },
+    { divider: false, id: 'showDetails' },
 ];
 
 export const PLAYLIST_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
     { id: 'play' },
     { id: 'playLast' },
     { id: 'playNext' },
-    { divider: true, id: 'playShuffled' },
-    { divider: true, id: 'shareItem' },
-    { divider: true, id: 'deletePlaylist' },
-    { divider: true, id: 'showDetails' },
+    { divider: false, id: 'playShuffled' },
+    { divider: false, id: 'shareItem' },
+    { divider: false, id: 'deletePlaylist' },
+    { divider: false, id: 'showDetails' },
 ];
