@@ -5,7 +5,7 @@ import { Group, Image, Stack } from '@mantine/core';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
+import { RiArrowLeftSLine, RiArrowRightSLine, RiPlayCircleLine } from 'react-icons/ri';
 import { generatePath, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -16,7 +16,6 @@ import { usePlayQueueAdd } from '/@/renderer/features/player/hooks/use-playqueue
 import { AppRoute } from '/@/renderer/router/routes';
 import { usePlayButtonBehavior } from '/@/renderer/store';
 import { Album, LibraryItem } from '/@/shared/types/domain-types';
-import { Play } from '/@/shared/types/types';
 
 const Carousel = styled(motion.div)`
     position: relative;
@@ -234,32 +233,27 @@ export const FeatureCarousel = ({ data }: FeatureCarouselProps) => {
                                                 });
                                             }}
                                             size="lg"
-                                            style={{ borderRadius: '5rem' }}
-                                            variant="outline"
+                                            variant="default"
+                                            style={{
+                                                background: "rgb(var(--main-bg-transparent), 80%)"
+                                            }}
                                         >
-                                            {t(
-                                                playType === Play.NOW
-                                                    ? 'player.play'
-                                                    : playType === Play.NEXT
-                                                      ? 'player.addNext'
-                                                      : 'player.addLast',
-                                                { postProcess: 'titleCase' },
-                                            )}
+                                            <RiPlayCircleLine size="2rem" />
                                         </Button>
                                         <Group spacing="sm">
                                             <Button
+                                                compact
                                                 onClick={handlePrevious}
-                                                radius="lg"
-                                                size="sm"
-                                                variant="outline"
+                                                size="lg"
+                                                variant="default"
                                             >
                                                 <RiArrowLeftSLine size="2rem" />
                                             </Button>
                                             <Button
+                                                compact
                                                 onClick={handleNext}
-                                                radius="lg"
-                                                size="sm"
-                                                variant="outline"
+                                                size="lg"
+                                                variant="default"
                                             >
                                                 <RiArrowRightSLine size="2rem" />
                                             </Button>
