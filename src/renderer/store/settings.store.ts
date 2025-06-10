@@ -201,10 +201,10 @@ export interface SettingsState {
     discord: {
         clientId: string;
         enabled: boolean;
-        enableIdle: boolean;
         showAsListening: boolean;
-        showServerImage: boolean;
-        updateInterval: number;
+        showArtistName: boolean;
+        proxyType: string;
+        proxyUrl: string;
     };
     font: {
         builtIn: string;
@@ -350,12 +350,12 @@ const initialState: SettingsState = {
         enabled: false,
     },
     discord: {
-        clientId: '1165957668758900787',
+        clientId: '1117545345690374277',
         enabled: false,
-        enableIdle: false,
         showAsListening: false,
-        showServerImage: false,
-        updateInterval: 15,
+        showArtistName: false,
+        proxyType: 'pizza',
+        proxyUrl: ''
     },
     font: {
         builtIn: 'Inter',

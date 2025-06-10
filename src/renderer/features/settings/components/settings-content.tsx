@@ -36,6 +36,12 @@ const AdvancedTab = lazy(() =>
     })),
 );
 
+const TweaksTab = lazy(() =>
+    import('/@/renderer/features/settings/components/tweaks/tweaks-tab').then((module) => ({
+        default: module.TweaksTab,
+    })),
+);
+
 const TabContainer = styled.div`
     width: 100%;
     height: 100%;
@@ -75,6 +81,7 @@ export const SettingsContent = () => {
                     <Tabs.Tab value="advanced">
                         {t('page.setting.advanced', { postProcess: 'sentenceCase' })}
                     </Tabs.Tab>
+                    <Tabs.Tab value="tweaks">Tweaks</Tabs.Tab>
                 </Tabs.List>
                 <Tabs.Panel value="general">
                     <GeneralTab />
@@ -92,6 +99,9 @@ export const SettingsContent = () => {
                 )}
                 <Tabs.Panel value="advanced">
                     <AdvancedTab />
+                </Tabs.Panel>
+                <Tabs.Panel value="tweaks">
+                    <TweaksTab />
                 </Tabs.Panel>
             </Tabs>
         </TabContainer>
