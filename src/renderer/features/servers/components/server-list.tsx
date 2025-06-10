@@ -68,7 +68,36 @@ export const ServerList = () => {
                     transform: 'translateY(-3.5rem)',
                     zIndex: 2000,
                 }}
-            >
+            ></Group>
+            <Stack>
+                <Accordion variant="separated">
+                    {serverListQuery &&
+                        Object.keys(serverListQuery).map((serverId) => {
+                            const server = serverListQuery[serverId];
+                            return (
+                                <Accordion.Item
+                                    key={server.id}
+                                    value={server.name}
+                                >
+                                    <Accordion.Control icon={<RiServerFill size={15} />}>
+                                        <Group position="apart">
+                                            <Text
+                                                weight={server.id === currentServer?.id ? 800 : 400}
+                                            >
+                                                {titleCase(server?.type)} - {server?.name}
+                                            </Text>
+                                        </Group>
+                                    </Accordion.Control>
+                                    <Accordion.Panel>
+                                        <ServerListItem server={server} />
+                                    </Accordion.Panel>
+                                </Accordion.Item>
+                            );
+                        })}
+                </Accordion>
+
+                <Divider />
+
                 <Button
                     autoFocus
                     compact
@@ -79,33 +108,9 @@ export const ServerList = () => {
                 >
                     {t('form.addServer.title', { postProcess: 'titleCase' })}
                 </Button>
-            </Group>
-            <Stack>
-                <Accordion variant="separated">
-                    {Object.keys(serverListQuery)?.map((serverId) => {
-                        const server = serverListQuery[serverId];
-                        return (
-                            <Accordion.Item
-                                key={server.id}
-                                value={server.name}
-                            >
-                                <Accordion.Control icon={<RiServerFill size={15} />}>
-                                    <Group position="apart">
-                                        <Text weight={server.id === currentServer?.id ? 800 : 400}>
-                                            {titleCase(server?.type)} - {server?.name}
-                                        </Text>
-                                    </Group>
-                                </Accordion.Control>
-                                <Accordion.Panel>
-                                    <ServerListItem server={server} />
-                                </Accordion.Panel>
-                            </Accordion.Item>
-                        );
-                    })}
-                </Accordion>
+
                 {isElectron() && (
                     <>
-                        <Divider />
                         <Group>
                             <Switch
                                 checked={ignoreCORS === 'true'}
