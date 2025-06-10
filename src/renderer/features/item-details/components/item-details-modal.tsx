@@ -73,7 +73,7 @@ const formatArtists = (artists: null | RelatedArtist[] | undefined) =>
                               })
                             : ''
                     }
-                    weight={500}
+                    color={"#C1C2C5 !important"} // idk why this is hardcoded, but it is for the normal attributes too, so nohting i can do unless i want these to stick out
                 >
                     {artist.name || '—'}
                 </Text>
@@ -107,7 +107,7 @@ const FormatGenre = (item: Album | AlbumArtist | Playlist | Song) => {
                 overflow="visible"
                 size="md"
                 to={genre.id ? generatePath(genreRoute, { genreId: genre.id }) : ''}
-                weight={500}
+                color={"#C1C2C5 !important"}
             >
                 {genre.name || '—'}
             </Text>
@@ -236,7 +236,6 @@ const PlaylistPropertyMapping: ItemDetailRow<Playlist>[] = [
 
 const SongPropertyMapping: ItemDetailRow<Song>[] = [
     { key: 'name', label: 'common.title' },
-    { key: 'path', label: 'common.path', render: SongPath },
     { label: 'entity.albumArtist_one', render: (item) => formatArtists(item.albumArtists) },
     { key: 'artists', label: 'entity.artist_other', render: (item) => formatArtists(item.artists) },
     {
@@ -257,7 +256,7 @@ const SongPropertyMapping: ItemDetailRow<Song>[] = [
                               })
                             : ''
                     }
-                    weight={500}
+                    color={"#C1C2C5 !important"}
                 >
                     {song.album}
                 </Text>
@@ -273,7 +272,7 @@ const SongPropertyMapping: ItemDetailRow<Song>[] = [
     },
     { label: 'filter.isCompilation', render: (song) => BoolField(song.compilation || false) },
     { key: 'container', label: 'common.codec' },
-    { key: 'bitRate', label: 'common.bitrate', render: (song) => `${song.bitRate} kbps` },
+    { key: 'bitRate', label: 'common.bitrate', render: (song) => `${Math.round(song.bitRate / 100) * 100} kbps` },
     { key: 'channels', label: 'common.channel_other' },
     { key: 'size', label: 'common.size', render: (song) => formatSizeString(song.size) },
     {
@@ -307,7 +306,8 @@ const SongPropertyMapping: ItemDetailRow<Song>[] = [
         render: (song) => (song.peak?.track !== undefined ? `${song.peak.track}` : null),
     },
     { label: 'filter.comment', render: formatComment },
-    { key: 'id', label: 'filter.id' },
+    { key: 'id', label: 'Song ID' },
+    { key: 'path', label: 'common.path', render: SongPath }
 ];
 
 const handleTags = (item: Album | Song, t: TFunction) => {
