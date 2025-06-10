@@ -7,6 +7,7 @@ import {
     RiAlbumFill,
     RiPlayFill,
     RiPlayListFill,
+    RiShuffleFill,
     RiUserVoiceFill,
 } from 'react-icons/ri';
 import styled from 'styled-components';
@@ -168,6 +169,21 @@ export const LibraryCommandItem = ({
                 >
                     <RiPlayFill />
                 </Button>
+                {itemType !== LibraryItem.SONG && (
+                    <Button
+                        compact
+                        disabled={disabled}
+                        onClick={(e) => handlePlay(e, id, Play.SHUFFLE)}
+                        size="md"
+                        tooltip={{
+                            label: t('player.shuffle', { postProcess: 'sentenceCase' }),
+                            openDelay: 500,
+                        }}
+                        variant="default"
+                    >
+                        <RiShuffleFill />
+                    </Button>
+                )}
                 <Button
                     compact
                     disabled={disabled}

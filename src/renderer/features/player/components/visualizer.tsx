@@ -32,6 +32,8 @@ export const Visualizer = () => {
                 connectSpeakers: false,
                 gradient: 'prism',
                 mode: 4,
+                overlay: true,
+                showBgColor: false,
                 showPeaks: false,
                 showBgColor: false,
                 overlay: true,

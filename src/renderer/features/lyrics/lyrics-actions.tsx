@@ -42,7 +42,7 @@ export const LyricsActions = ({
         setSettings({
             lyrics: {
                 ...useSettingsStore.getState().lyrics,
-                delayMs: e,
+                delayMs: Number(e),
             },
         });
     };

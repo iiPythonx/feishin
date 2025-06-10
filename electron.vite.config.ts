@@ -13,6 +13,7 @@ const config: UserConfig = {
             rollupOptions: {
                 external: ['source-map-support'],
             },
+            sourcemap: true,
         },
         define: {
             'import.meta.env.IS_LINUX': JSON.stringify(currentOSEnv === 'linux'),

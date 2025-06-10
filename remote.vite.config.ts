@@ -23,6 +23,7 @@ export default defineConfig({
                 entryFileNames: '[name].js',
             },
         },
+        sourcemap: true,
     },
     plugins: [
         react(),
