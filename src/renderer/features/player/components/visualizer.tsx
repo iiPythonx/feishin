@@ -33,8 +33,6 @@ export const Visualizer = () => {
                 gradient: 'prism',
                 mode: 4,
                 overlay: true,
-                overlay: true,
-                showBgColor: false,
                 showBgColor: false,
                 showPeaks: false,
                 smoothing: 0.8,
