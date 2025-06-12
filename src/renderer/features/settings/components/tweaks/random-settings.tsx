@@ -27,6 +27,23 @@ export const RandomSettings = () => {
             description: 'Adds a button to the sidebar allowing you to trigger a rescan.',
             title: 'Enable server rescan',
         },
+        {
+            control: (
+                <Switch
+                    checked={settings.floatingPlayer}
+                    onChange={(e) => {
+                        setSettings({
+                            tweaks: {
+                                ...settings,
+                                floatingPlayer: e.currentTarget.checked,
+                            },
+                        });
+                    }}
+                />
+            ),
+            description: 'Makes the playerbar float and the body a bit longer. Your window style should be Windows or macOS. ',
+            title: 'Floating Playerbar',
+        },
     ];
 
     return <SettingsSection options={randomOptions} />;

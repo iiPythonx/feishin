@@ -312,6 +312,7 @@ export interface SettingsState {
         artistBackground: boolean;
         headerBackgroundBlur: number;
         serverRescan: boolean;
+        floatingPlayer: boolean;
     };
     window: {
         disableAutoUpdate: boolean;

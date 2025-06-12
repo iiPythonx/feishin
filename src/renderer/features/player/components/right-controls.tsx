@@ -28,6 +28,7 @@ import {
     useSettingsStore,
     useSidebarStore,
     useSpeed,
+    useTweaksSettings,
     useVolume,
 } from '/@/renderer/store';
 import { LibraryItem, QueueSong, ServerType, Song } from '/@/shared/types/domain-types';
@@ -57,6 +58,7 @@ export const RightControls = () => {
 
     const speed = useSpeed();
     const volumeWidth = useSettingsStore((state) => state.general.volumeWidth);
+    const { floatingPlayer } = useTweaksSettings();
 
     const updateRatingMutation = useSetRating({});
     const addToFavoritesMutation = useCreateFavorite({});
@@ -205,6 +207,12 @@ export const RightControls = () => {
             h="100%"
             px="1rem"
             py="0.5rem"
+            style={{
+                ...(floatingPlayer && {
+                    right: '30%',
+                    position: 'relative',
+                }),
+            }}
         >
             <Group h="calc(100% / 3)">
                 {showRating && (

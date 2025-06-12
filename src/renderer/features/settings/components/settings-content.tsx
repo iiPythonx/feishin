@@ -4,7 +4,11 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import { Tabs } from '/@/renderer/components';
-import { useSettingsStore, useSettingsStoreActions } from '/@/renderer/store/settings.store';
+import {
+    useSettingsStore,
+    useSettingsStoreActions,
+    useTweaksSettings,
+} from '/@/renderer/store/settings.store';
 
 const GeneralTab = lazy(() =>
     import('/@/renderer/features/settings/components/general/general-tab').then((module) => ({
@@ -53,6 +57,7 @@ export const SettingsContent = () => {
     const { t } = useTranslation();
     const currentTab = useSettingsStore((state) => state.tab);
     const { setSettings } = useSettingsStoreActions();
+    const { floatingPlayer } = useTweaksSettings();
 
     return (
         <TabContainer>
@@ -83,15 +88,40 @@ export const SettingsContent = () => {
                     </Tabs.Tab>
                     <Tabs.Tab value="tweaks">Tweaks</Tabs.Tab>
                 </Tabs.List>
-                <Tabs.Panel value="general">
-                    <GeneralTab />
-                </Tabs.Panel>
+                {(floatingPlayer && (
+                    <Tabs.Panel
+                        value="general"
+                        style={{
+                            maxHeight: '80%',
+                            overflow: 'scroll',
+                        }}
+                    >
+                        <GeneralTab />
+                    </Tabs.Panel>
+                )) || (
+                    <Tabs.Panel value="general">
+                        <GeneralTab />
+                    </Tabs.Panel>
+                )}
                 <Tabs.Panel value="playback">
                     <PlaybackTab />
                 </Tabs.Panel>
-                <Tabs.Panel value="hotkeys">
-                    <HotkeysTab />
-                </Tabs.Panel>
+                {(floatingPlayer && (
+                    <Tabs.Panel
+                        value="hotkeys"
+                        style={{
+                            maxHeight: '80%',
+                            overflow: 'scroll',
+                        }}
+                    >
+                        <HotkeysTab />
+                    </Tabs.Panel>
+                )) || (
+                    <Tabs.Panel value="hotkeys">
+                        <HotkeysTab />
+                    </Tabs.Panel>
+                )}
+
                 {isElectron() && (
                     <Tabs.Panel value="window">
                         <ApplicationTab />

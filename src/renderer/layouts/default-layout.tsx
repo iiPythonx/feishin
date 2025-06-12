@@ -13,6 +13,7 @@ import {
     useHotkeySettings,
     useSettingsStore,
     useSettingsStoreActions,
+    useTweaksSettings,
     useWindowSettings,
 } from '/@/renderer/store/settings.store';
 import { Platform, PlaybackType } from '/@/shared/types/types';
@@ -26,20 +27,29 @@ if (!isElectron()) {
     });
 }
 
-const Layout = styled.div<{ $windowBarStyle: Platform }>`
+const Layout = styled.div<{ 
+    $windowBarStyle: Platform,
+    $floatingPlayer: boolean
+ }>`
     display: grid;
     grid-template-areas:
         'window-bar'
         'main-content'
         'player';
-    grid-template-rows: ${(props) =>
-        props.$windowBarStyle === Platform.WINDOWS || props.$windowBarStyle === Platform.MACOS
-            ? '30px calc(100vh - 120px) 90px'
-            : '0px calc(100vh - 90px) 90px'};
+    grid-template-rows: ${(props) => {
+        if (props.$floatingPlayer) return '30px';
+        if (
+            props.$windowBarStyle === Platform.WINDOWS ||
+            props.$windowBarStyle === Platform.MACOS
+        ) return '30px calc(100vh - 120px) 90px';
+        return '0px calc(100vh - 90px) 90px';
+    }};
+
     grid-template-columns: 1fr;
     gap: 0;
     height: 100%;
     overflow: hidden;
+    background-color: var(--main-bg)
 `;
 
 const WindowBar = lazy(() =>
@@ -60,6 +70,10 @@ export const DefaultLayout = ({ shell }: DefaultLayoutProps) => {
     const localSettings = isElectron() ? window.api.localSettings : null;
     const settings = useGeneralSettings();
     const { setSettings } = useSettingsStoreActions();
+
+    const { floatingPlayer } = useTweaksSettings();
+
+    console.log(floatingPlayer)
 
     const updateZoom = (increase: number) => {
         const newVal = settings.zoomFactor + increase;
@@ -90,6 +104,7 @@ export const DefaultLayout = ({ shell }: DefaultLayoutProps) => {
         <>
             <Layout
                 $windowBarStyle={windowBarStyle}
+                $floatingPlayer={floatingPlayer}
                 id="default-layout"
             >
                 {windowBarStyle !== Platform.WEB && <WindowBar />}

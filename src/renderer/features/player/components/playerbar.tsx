@@ -28,7 +28,6 @@ import { PlaybackType } from '/@/shared/types/types';
 const PlayerbarContainer = styled.div`
     width: 100vw;
     height: 100%;
-    border-top: var(--playerbar-border-top);
 `;
 
 const PlayerbarControlsGrid = styled.div`

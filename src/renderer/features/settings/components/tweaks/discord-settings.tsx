@@ -35,7 +35,7 @@ export const DiscordSettings = () => {
             ),
             description: 'Enable playback status in Rich Presence.',
             isHidden: !isElectron(),
-            title: 'Discord RPC (modified)',
+            title: 'Discord RPC',
         },
         {
             control: (
@@ -52,6 +52,7 @@ export const DiscordSettings = () => {
                 />
             ),
             description: 'The application ID for Rich Presence.',
+            note: "You shouldn't need to change this",
             isHidden: !(isElectron() && settings.enabled),
             title: t('setting.discordApplicationId', {
                 discord: 'Discord',
@@ -133,7 +134,7 @@ export const DiscordSettings = () => {
             description:
                 'This will show the artist name you are listening to instead of just Feishin.',
             isHidden: !(isElectron() && settings.enabled),
-            note: 'Requires Vesktop',
+            note: 'Requires Vesktop or another client utilizing ARRPC ',
             title: 'Enable artist name',
         },
     ];

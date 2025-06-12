@@ -24,6 +24,7 @@
     --sidebar-handle-bg: #0c0b0b;
     --sidebar-border: 2px rgba(18, 18, 18, 70%) solid;
     --playerbar-bg: rgb(0, 0, 0);
+    --playerbar-bg-rgb: 0,0,0;
     --playerbar-bg-active: rgb(5, 5, 6);
     --playerbar-btn-main-fg: rgb(0, 0, 0);
     --playerbar-btn-main-fg-hover: rgb(0, 0, 0);
@@ -265,4 +266,8 @@
 
 .mantine-Slider-track::before {
     background-color: var(--input-bg) !important;
+}
+
+body {
+    background-color: var(--main-bg) !important
 }
