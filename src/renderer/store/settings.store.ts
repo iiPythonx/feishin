@@ -310,9 +310,9 @@ export interface SettingsState {
     tweaks: {
         albumBackground: boolean;
         artistBackground: boolean;
+        floatingPlayer: boolean;
         headerBackgroundBlur: number;
         serverRescan: boolean;
-        floatingPlayer: boolean;
     };
     window: {
         disableAutoUpdate: boolean;
@@ -659,6 +659,7 @@ const initialState: SettingsState = {
     tweaks: {
         albumBackground: true,
         artistBackground: true,
+        floatingPlayer: false,
         headerBackgroundBlur: 6,
         serverRescan: false,
     },

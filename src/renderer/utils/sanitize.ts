@@ -1,11 +1,4 @@
-import DomPurify, { Config } from 'dompurify';
-
-const SANITIZE_OPTIONS: Config = {
-    ALLOWED_ATTR: ['href'],
-    ALLOWED_TAGS: ['a', 'b', 'div', 'em', 'i', 'p', 'span', 'strong'],
-    // allow http://, https://, and // (mapped to https)
-    ALLOWED_URI_REGEXP: /^(http(s?):)?\/\/.+/i,
-};
+import DomPurify from 'dompurify';
 
 const regex = /(url\("?)(?!data:)/gim;
 
@@ -87,9 +80,9 @@ DomPurify.addHook('afterSanitizeAttributes', (node: Element) => {
 });
 
 export const sanitize = (text: string): string => {
-    return text.replace("<style>", "")
+    return text.replace('<style>', '');
 };
 
 export const sanitizeCss = (text: string): string => {
-    return text.replace("<style>", "")
+    return text.replace('<style>', '');
 };

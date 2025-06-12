@@ -1,5 +1,4 @@
 import { Stack } from '@mantine/core';
-import isElectron from 'is-electron';
 
 import { ApplicationSettings } from '/@/renderer/features/settings/components/general/application-settings';
 import { ArtistSettings } from '/@/renderer/features/settings/components/general/artist-settings';
