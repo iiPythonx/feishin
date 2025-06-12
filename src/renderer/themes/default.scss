@@ -34,7 +34,7 @@
     --playerbar-btn-bg: #c5c5c5;
     --playerbar-btn-bg-hover: transparent;
     --playerbar-border-top: 1px rgba(50, 50, 50, 30%) solid;
-    --playerbar-slider-track-bg: #3c3f43;
+    --playerbar-slider-track-bg: var(--input-bg);
     --playerbar-slider-track-progress-bg: #ccc;
     --tooltip-bg: #fff;
     --tooltip-fg: #000;
@@ -79,10 +79,10 @@
     --dropdown-menu-bg-hover: rgb(62, 62, 62);
     --dropdown-menu-border: 1px var(--generic-border-color) solid;
     --dropdown-menu-border-radius: 8px;
-    --switch-track-bg: rgb(50, 50, 50);
+    --switch-track-bg: var(--input-bg);
     --switch-track-enabled-bg: var(--primary-color);
     --switch-thumb-bg: rgb(255, 255, 255);
-    --slider-track-bg: rgb(31, 31, 31);
+    --slider-track-bg: var(--input-bg);
     --slider-thumb-bg: rgb(255, 255, 255);
     --skeleton-bg: rgba(81, 75, 75, 0.08);
     --toast-title-fg: rgb(255, 255, 255);
@@ -215,6 +215,8 @@
     }
 }
 
+// Custom theme fixes and changes below
+
 .ag-header {
     border-radius: 8px 8px 0px 0px !important
 }
@@ -238,7 +240,7 @@
     border: 0.0625rem solid #1b1d20
 }
 
-.mantine-Paper-root {
+.mantine-Paper-root:not(.mantine-Dialog-root) {
     border-radius: 18px !important;
     background: transparent
 }
@@ -254,4 +256,13 @@
 
 .mantine-Accordion-control, .mantine-Accordion-item, .mantine-Accordion-panel {
      background: transparent !important
+}
+
+// Below stuff are issues with the default theme, lmao
+.mantine-ColorInput-input {
+    background: var(--input-bg);
+}
+
+.mantine-Slider-track::before {
+    background-color: var(--input-bg) !important;
 }

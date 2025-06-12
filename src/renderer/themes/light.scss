@@ -131,3 +131,55 @@ body[data-theme='defaultLight'] {
         }
     }
 }
+
+// Custom theme fixes and changes below
+
+.ag-header {
+    border-radius: 8px 8px 0px 0px !important
+}
+
+.full-screen-player-queue-container {
+    border-radius: 16px;
+    backdrop-filter: blur(3rem);
+}
+
+.mantine-Badge-root {
+    background: rgb(var(--main-bg-transparent), 80%);
+    backdrop-filter: blur(3rem);
+}
+
+.mantine-Overlay-root {
+    backdrop-filter: blur(0.25rem);    
+}
+
+.mantine-Input-input {
+    border-radius: 6px;
+    border: 0.0625rem solid #1b1d20
+}
+
+.mantine-Paper-root:not(.mantine-Dialog-root) {
+    border-radius: 18px !important;
+    background: transparent
+}
+
+.mantine-HoverCard-dropdown {
+    backdrop-filter: blur(2rem);
+    background: rgb(var(--main-bg-transparent), 80%);
+}
+
+.mantine-Menu-item {
+    border-radius: 0px;
+}
+
+.mantine-Accordion-control, .mantine-Accordion-item, .mantine-Accordion-panel {
+     background: transparent !important
+}
+
+// Below stuff are issues with the default theme, lmao
+.mantine-ColorInput-input {
+    background: var(--input-bg);
+}
+
+.mantine-Slider-track::before {
+    background-color: var(--input-bg) !important;
+}

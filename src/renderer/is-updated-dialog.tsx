@@ -23,6 +23,8 @@ export function IsUpdatedDialog() {
                 root: {
                     marginBottom: '50px',
                     right: '1rem',
+                    backgroundColor: "rgba(var(--modal-bg-rgb), .85) !important",
+                    backdropFilter: "blur(2rem)"
                 },
             }}
         >
