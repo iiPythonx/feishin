@@ -1,9 +1,8 @@
-import { Code } from '@mantine/core';
-import { closeAllModals, openModal } from '@mantine/modals';
+import { Code, Divider } from '@mantine/core';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Button, ConfirmModal, Switch, Text, Textarea } from '/@/renderer/components';
+import { Button, Switch, Text, Textarea } from '/@/renderer/components';
 import { SettingsOptions } from '/@/renderer/features/settings/components/settings-option';
 import { useCssSettings, useSettingsStoreActions } from '/@/renderer/store';
 import { sanitizeCss } from '/@/renderer/utils/sanitize';
@@ -23,29 +22,6 @@ export const StylesSettings = () => {
                 content: css,
                 enabled,
             },
-        });
-    };
-
-    const handleResetToDefault = () => {
-        setSettings({
-            css: {
-                content,
-                enabled: true,
-            },
-        });
-        closeAllModals();
-    };
-
-    const openConfirmModal = () => {
-        openModal({
-            children: (
-                <ConfirmModal onConfirm={handleResetToDefault}>
-                    <Text color="red !important">
-                        {t('setting.customCssNotice', { postProcess: 'sentenceCase' })}
-                    </Text>
-                </ConfirmModal>
-            ),
-            title: t('setting.customCssEnable', { postProcess: 'sentenceCase' }),
         });
     };
 
@@ -97,11 +73,8 @@ export const StylesSettings = () => {
                                 </Button>
                             </>
                         }
-                        description={t('setting.customCss', {
-                            context: 'description',
-                            postProcess: 'sentenceCase',
-                        })}
-                        title={t('setting.customCss', { postProcess: 'sentenceCase' })}
+                        description={'Insert the content of your custom CSS here. Sanitization is disabled, so anything can be placed in the input and will render.'}
+                        title={'Custom CSS'}
                     />
                     {open && (
                         <>
@@ -118,6 +91,7 @@ export const StylesSettings = () => {
                     )}
                 </>
             )}
+            <Divider />
         </>
     );
 };

@@ -87,14 +87,9 @@ DomPurify.addHook('afterSanitizeAttributes', (node: Element) => {
 });
 
 export const sanitize = (text: string): string => {
-    return DomPurify.sanitize(text, SANITIZE_OPTIONS);
+    return text.replace("<style>", "")
 };
 
 export const sanitizeCss = (text: string): string => {
-    return (DomPurify as any).sanitize(text, {
-        ALLOWED_ATTR: [],
-        ALLOWED_TAGS: ['style'],
-        RETURN_DOM: true,
-        WHOLE_DOCUMENT: true,
-    }).innerText;
+    return text.replace("<style>", "")
 };
