@@ -56,16 +56,12 @@ export const StylesSettings = () => {
                     <Switch
                         checked={enabled}
                         onChange={(e) => {
-                            if (!e.currentTarget.checked) {
-                                setSettings({
-                                    css: {
-                                        content,
-                                        enabled: false,
-                                    },
-                                });
-                            } else {
-                                openConfirmModal();
-                            }
+                            setSettings({
+                                css: {
+                                    content,
+                                    enabled: e.currentTarget.checked,
+                                },
+                            });
                         }}
                     />
                 }
