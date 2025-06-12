@@ -38,6 +38,7 @@ const MainContentContainer = styled.div<{
 
     gap: 0;
     background: var(--main-bg);
+    height: 1920px;
 `;
 
 export const MainContent = ({ shell }: { shell?: boolean }) => {

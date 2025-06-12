@@ -92,7 +92,7 @@ export const SettingsContent = () => {
                     <Tabs.Panel
                         value="general"
                         style={{
-                            maxHeight: '80%',
+                            maxHeight: '75%',
                             overflow: 'scroll',
                         }}
                     >
