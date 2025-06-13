@@ -1,7 +1,7 @@
 import { Center, Group, Stack } from '@mantine/core';
 import { openModal } from '@mantine/modals';
 import { useTranslation } from 'react-i18next';
-import { RiCheckFill, RiEdit2Line, RiHome4Line } from 'react-icons/ri';
+import { RiEdit2Line, RiErrorWarningFill, RiRestartFill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 
 import { Button, PageHeader, Text } from '/@/renderer/components';
@@ -64,20 +64,20 @@ const ActionRequiredRoute = () => {
                                     noWrap
                                     position="center"
                                 >
-                                    <RiCheckFill
-                                        color="var(--success-color)"
-                                        size={30}
+                                    <RiErrorWarningFill
+                                        color="var(--warning-color)"
+                                        size={50}
                                     />
-                                    <Text size="xl">No issues found</Text>
+                                    <Text size="xl">Cannot connect to server</Text>
                                 </Group>
                                 <Button
                                     component={Link}
                                     disabled={!canReturnHome}
-                                    leftIcon={<RiHome4Line />}
+                                    leftIcon={<RiRestartFill />}
                                     to={AppRoute.HOME}
                                     variant="filled"
                                 >
-                                    Go back
+                                    Try again
                                 </Button>
                             </>
                         )}
@@ -92,9 +92,7 @@ const ActionRequiredRoute = () => {
                                     onClick={handleManageServersModal}
                                     variant="filled"
                                 >
-                                    {t('page.appMenu.manageServers', {
-                                        postProcess: 'sentenceCase',
-                                    })}
+                                    {"Edit servers"}
                                 </Button>
                             </Group>
                         )}

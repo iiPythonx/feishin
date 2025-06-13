@@ -42,6 +42,7 @@ import {
     SortOrder,
 } from '/@/shared/types/domain-types';
 import { CardRow, Play, TableColumn } from '/@/shared/types/types';
+import { BsArrowRight } from 'react-icons/bs';
 
 const ContentContainer = styled.div`
     position: relative;
@@ -546,12 +547,10 @@ export const AlbumArtistDetailContent = ({ background }: AlbumArtistDetailConten
                                                     albumArtistId: routeId,
                                                 },
                                             )}
-                                            uppercase
+                                            size='17px'
                                             variant="subtle"
                                         >
-                                            {t('page.albumArtistDetail.viewAll', {
-                                                postProcess: 'sentenceCase',
-                                            })}
+                                            {<BsArrowRight />}
                                         </Button>
                                     </Group>
                                 </Group>

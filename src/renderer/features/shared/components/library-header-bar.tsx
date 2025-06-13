@@ -17,6 +17,7 @@ const HeaderContainer = styled.div`
     width: 100%;
     height: 100%;
     padding: 0 1rem;
+    backdrop-filter: blur(1rem);
 `;
 
 export const LibraryHeaderBar = ({ children }: LibraryHeaderBarProps) => {
