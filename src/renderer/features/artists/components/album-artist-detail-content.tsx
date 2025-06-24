@@ -502,7 +502,7 @@ export const AlbumArtistDetailContent = ({ background }: AlbumArtistDetailConten
                         >
                             <Box
                                 component="section"
-                                maw="1280px"
+                                width="100%"
                             >
                                 <TextTitle
                                     order={2}
