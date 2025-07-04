@@ -1,12 +1,14 @@
 import isElectron from 'is-electron';
 import { useTranslation } from 'react-i18next';
 
-import { Select, Switch, TextInput } from '/@/renderer/components';
 import {
     SettingOption,
     SettingsSection,
 } from '/@/renderer/features/settings/components/settings-section';
 import { useDiscordSetttings, useSettingsStoreActions } from '/@/renderer/store';
+import { Switch } from '/@/shared/components/switch/switch';
+import { TextInput } from '/@/shared/components/text-input/text-input';
+import { Select } from '/@/shared/components/select/select';
 
 const PROXY_TYPE_OPTIONS = [
     { label: 'ndip', value: 'ndip' },
@@ -52,7 +54,7 @@ export const DiscordSettings = () => {
                 />
             ),
             description: 'The application ID for Rich Presence.',
-            note: "You shouldn't need to change this",
+            note: "You shouldn't need to change this.",
             isHidden: !(isElectron() && settings.enabled),
             title: t('setting.discordApplicationId', {
                 discord: 'Discord',

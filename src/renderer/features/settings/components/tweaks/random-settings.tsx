@@ -1,9 +1,9 @@
-import { Switch } from '/@/renderer/components';
 import {
     SettingOption,
     SettingsSection,
 } from '/@/renderer/features/settings/components/settings-section';
 import { useSettingsStoreActions, useTweaksSettings } from '/@/renderer/store';
+import { Switch } from '/@/shared/components/switch/switch';
 
 export const RandomSettings = () => {
     const settings = useTweaksSettings();

@@ -15,7 +15,6 @@ import {
     useHotkeySettings,
     useSettingsStore,
     useSettingsStoreActions,
-    useTweaksSettings,
     useWindowSettings,
 } from '/@/renderer/store/settings.store';
 import { Platform, PlaybackType } from '/@/shared/types/types';
@@ -47,10 +46,6 @@ export const DefaultLayout = ({ shell }: DefaultLayoutProps) => {
     const localSettings = isElectron() ? window.api.localSettings : null;
     const settings = useGeneralSettings();
     const { setSettings } = useSettingsStoreActions();
-
-    const { floatingPlayer } = useTweaksSettings();
-
-    console.log(floatingPlayer)
 
     const updateZoom = (increase: number) => {
         const newVal = settings.zoomFactor + increase;

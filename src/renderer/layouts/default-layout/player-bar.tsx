@@ -7,7 +7,6 @@ import { useGeneralSettings } from '/@/renderer/store/settings.store';
 
 export const PlayerBar = () => {
     const { playerbarOpenDrawer } = useGeneralSettings();
-    const { floatingPlayer } = useTweaksSettings();
 
     return (
         <div

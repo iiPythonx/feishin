@@ -4,6 +4,7 @@ import { PasswordSettings } from '/@/renderer/features/settings/components/windo
 import { UpdateSettings } from '/@/renderer/features/settings/components/window/update-settings';
 import { WindowSettings } from '/@/renderer/features/settings/components/window/window-settings';
 import { CacheSettings } from '/@/renderer/features/settings/components/window/cache-settngs';
+import { Stack } from '/@/shared/components/stack/stack';
 
 const utils = isElectron() ? window.api.utils : null;
 

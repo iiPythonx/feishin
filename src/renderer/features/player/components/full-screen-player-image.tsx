@@ -204,12 +204,6 @@ export const FullScreenPlayerImage = () => {
                             variants={imageVariants}
                         />
                     )}
-
-                    <BlurImage
-                        $useAspectRatio={useImageAspectRatio}
-                        aria-hidden
-                        src={imageState.topImage}
-                    />
                 </AnimatePresence>
             </div>
             <Stack

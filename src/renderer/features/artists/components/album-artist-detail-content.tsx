@@ -529,10 +529,12 @@ export const AlbumArtistDetailContent = ({ background }: AlbumArtistDetailConten
                                                     albumArtistId: routeId,
                                                 },
                                             )}
-                                            size='17px'
+                                            uppercase
                                             variant="subtle"
                                         >
-                                            {<BsArrowRight />}
+                                            {t('page.albumArtistDetail.viewAll', {
+                                                postProcess: 'sentenceCase',
+                                            })}
                                         </Button>
                                     </Group>
                                 </Group>

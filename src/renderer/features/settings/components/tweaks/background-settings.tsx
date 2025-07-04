@@ -1,11 +1,12 @@
 import { useTranslation } from 'react-i18next';
 
-import { Slider, Switch } from '/@/renderer/components';
 import {
     SettingOption,
     SettingsSection,
 } from '/@/renderer/features/settings/components/settings-section';
 import { useSettingsStoreActions, useTweaksSettings } from '/@/renderer/store/settings.store';
+import { Switch } from '/@/shared/components/switch/switch';
+import { Slider } from '/@/shared/components/slider/slider';
 
 export const BackgroundSettings = () => {
     const { t } = useTranslation();

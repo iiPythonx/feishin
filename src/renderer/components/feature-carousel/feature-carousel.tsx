@@ -21,6 +21,7 @@ import { Stack } from '/@/shared/components/stack/stack';
 import { TextTitle } from '/@/shared/components/text-title/text-title';
 import { Text } from '/@/shared/components/text/text';
 import { Album, LibraryItem } from '/@/shared/types/domain-types';
+import { Play } from '/@/shared/types/types';
 
 const variants: Variants = {
     animate: {
@@ -163,7 +164,6 @@ export const FeatureCarousel = ({ data }: FeatureCarouselProps) => {
                                         </PlayButton>
                                         <Group gap="sm">
                                             <Button
-                                                compact
                                                 onClick={handlePrevious}
                                                 radius="lg"
                                                 variant="subtle"
@@ -171,7 +171,6 @@ export const FeatureCarousel = ({ data }: FeatureCarouselProps) => {
                                                 <Icon icon="arrowLeftS" />
                                             </Button>
                                             <Button
-                                                compact
                                                 onClick={handleNext}
                                                 radius="lg"
                                                 variant="subtle"

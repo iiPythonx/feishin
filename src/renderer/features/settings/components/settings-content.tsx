@@ -2,12 +2,12 @@ import isElectron from 'is-electron';
 import { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Tabs } from '/@/renderer/components';
 import {
     useSettingsStore,
     useSettingsStoreActions,
     useTweaksSettings,
 } from '/@/renderer/store/settings.store';
+import { Tabs } from '/@/shared/components/tabs/tabs';
 
 const GeneralTab = lazy(() =>
     import('/@/renderer/features/settings/components/general/general-tab').then((module) => ({
@@ -44,13 +44,6 @@ const TweaksTab = lazy(() =>
         default: module.TweaksTab,
     })),
 );
-
-const TabContainer = styled.div`
-    width: 100%;
-    height: 100%;
-    padding: 1rem;
-    overflow: scroll;
-`;
 
 export const SettingsContent = () => {
     const { t } = useTranslation();
