@@ -1,18 +1,24 @@
-import { Divider, Group, SelectItem, Stack } from '@mantine/core';
 import { closeAllModals, openModal } from '@mantine/modals';
 import { QueryClient } from '@tanstack/react-query';
 import merge from 'lodash/merge';
 import { useMemo } from 'react';
-import { RiAddCircleFill, RiFileList3Fill, RiPlayFill } from 'react-icons/ri';
-import { create } from 'zustand';
+import { useTranslation } from 'react-i18next';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
+import { createWithEqualityFn } from 'zustand/traditional';
 
 import i18n from '/@/i18n/i18n';
 import { api } from '/@/renderer/api';
 import { queryKeys } from '/@/renderer/api/query-keys';
-import { Button, Checkbox, NumberInput, Select } from '/@/renderer/components';
 import { useAuthStore } from '/@/renderer/store';
+import { Button } from '/@/shared/components/button/button';
+import { Checkbox } from '/@/shared/components/checkbox/checkbox';
+import { Divider } from '/@/shared/components/divider/divider';
+import { Group } from '/@/shared/components/group/group';
+import { Icon } from '/@/shared/components/icon/icon';
+import { NumberInput } from '/@/shared/components/number-input/number-input';
+import { Select } from '/@/shared/components/select/select';
+import { Stack } from '/@/shared/components/stack/stack';
 import {
     GenreListResponse,
     GenreListSort,
@@ -33,7 +39,7 @@ interface ShuffleAllSlice extends RandomSongListQuery {
     enableMinYear: boolean;
 }
 
-const useShuffleAllStore = create<ShuffleAllSlice>()(
+const useShuffleAllStore = createWithEqualityFn<ShuffleAllSlice>()(
     persist(
         immer((set, get) => ({
             actions: {
@@ -58,7 +64,7 @@ const useShuffleAllStore = create<ShuffleAllSlice>()(
     ),
 );
 
-const PLAYED_DATA: SelectItem[] = [
+const PLAYED_DATA: { label: string; value: Played }[] = [
     { label: 'all tracks', value: Played.All },
     { label: 'only unplayed tracks', value: Played.Never },
     { label: 'only played tracks', value: Played.Played },
@@ -81,6 +87,7 @@ export const ShuffleAllModal = ({
     queryClient,
     server,
 }: ShuffleAllModalProps) => {
+    const { t } = useTranslation();
     const { enableMaxYear, enableMinYear, genre, limit, maxYear, minYear, musicFolderId, played } =
         useShuffleAllStore();
     const { setStore } = useShuffleAllStoreActions();
@@ -139,7 +146,7 @@ export const ShuffleAllModal = ({
     }, [musicFolders]);
 
     return (
-        <Stack spacing="md">
+        <Stack gap="md">
             <NumberInput
                 label="Track count"
                 max={500} // i checked, this is not an arbitrary limit seemingly, sad.
@@ -157,8 +164,8 @@ export const ShuffleAllModal = ({
                     rightSection={
                         <Checkbox
                             checked={enableMinYear}
-                            mr="0.5rem"
                             onChange={(e) => setStore({ enableMinYear: e.currentTarget.checked })}
+                            style={{ marginRight: '0.5rem' }}
                         />
                     }
                     value={minYear}
@@ -172,8 +179,8 @@ export const ShuffleAllModal = ({
                     rightSection={
                         <Checkbox
                             checked={enableMaxYear}
-                            mr="0.5rem"
                             onChange={(e) => setStore({ enableMaxYear: e.currentTarget.checked })}
+                            style={{ marginRight: '0.5rem' }}
                         />
                     }
                     value={maxYear}
@@ -210,7 +217,7 @@ export const ShuffleAllModal = ({
             <Group grow>
                 <Button
                     disabled={!limit}
-                    leftIcon={<RiFileList3Fill size="1rem" />}
+                    leftSection={<Icon icon="mediaPlayLast" />}
                     onClick={() => handlePlay(Play.LAST)}
                     type="submit"
                     variant="default"
@@ -219,22 +226,22 @@ export const ShuffleAllModal = ({
                 </Button>
                 <Button
                     disabled={!limit}
-                    leftIcon={<RiAddCircleFill size="1rem" />}
+                    leftSection={<Icon icon="mediaPlayNext" />}
                     onClick={() => handlePlay(Play.NEXT)}
                     type="submit"
                     variant="default"
                 >
-                    Add next
+                    {t('player.addNext', { postProcess: 'sentenceCase' })}
                 </Button>
             </Group>
             <Button
                 disabled={!limit}
-                leftIcon={<RiPlayFill size="1rem" />}
+                leftSection={<Icon icon="mediaPlay" />}
                 onClick={() => handlePlay(Play.NOW)}
                 type="submit"
                 variant="filled"
             >
-                Play
+                {t('player.play', { postProcess: 'sentenceCase' })}
             </Button>
         </Stack>
     );

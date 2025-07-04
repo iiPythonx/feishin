@@ -292,19 +292,32 @@ export const JellyfinController: ControllerEndpoint = {
 
         const yearsFilter = yearsGroup.length ? yearsGroup.join(',') : undefined;
 
+        let artistQuery:
+            | Omit<z.infer<typeof jfType._parameters.albumList>, 'IncludeItemTypes'>
+            | undefined;
+
+        if (query.artistIds) {
+            // Based mostly off of observation, this is the behavior I've seen:
+            // ContributingArtistIds is the _closest_ to where the album is a compilation and the artist is involved
+            // AlbumArtistIds is where the artist is an album artist
+            // ArtistIds is all credits
+            if (query.compilation) {
+                artistQuery = {
+                    ContributingArtistIds: formatCommaDelimitedString(query.artistIds),
+                };
+            } else if (query.compilation === false) {
+                artistQuery = { AlbumArtistIds: formatCommaDelimitedString(query.artistIds) };
+            } else {
+                artistQuery = { ArtistIds: formatCommaDelimitedString(query.artistIds) };
+            }
+        }
+
         const res = await jfApiClient(apiClientProps).getAlbumList({
             params: {
                 userId: apiClientProps.server?.userId,
             },
             query: {
-                ...(!query.compilation &&
-                    query.artistIds && {
-                        AlbumArtistIds: formatCommaDelimitedString(query.artistIds),
-                    }),
-                ...(query.compilation &&
-                    query.artistIds && {
-                        ContributingArtistIds: query.artistIds[0],
-                    }),
+                ...artistQuery,
                 Fields: 'People, Tags',
                 GenreIds: query.genres ? query.genres.join(',') : undefined,
                 IncludeItemTypes: 'MusicAlbum',

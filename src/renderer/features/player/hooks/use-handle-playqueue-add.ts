@@ -5,7 +5,6 @@ import { useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { queryKeys } from '/@/renderer/api/query-keys';
-import { toast } from '/@/renderer/components/toast/index';
 import { PlayersRef } from '/@/renderer/features/player/ref/players-ref';
 import { updateSong } from '/@/renderer/features/player/update-remote-song';
 import {
@@ -20,6 +19,7 @@ import {
 import { useCurrentServer, usePlayerControls, usePlayerStore } from '/@/renderer/store';
 import { useGeneralSettings, usePlaybackType } from '/@/renderer/store/settings.store';
 import { setQueue, setQueueNext } from '/@/renderer/utils/set-transcoded-queue-data';
+import { toast } from '/@/shared/components/toast/toast';
 import {
     instanceOfCancellationError,
     LibraryItem,
@@ -75,7 +75,9 @@ export const useHandlePlayQueueAdd = () => {
             if (!server) return toast.error({ message: 'No server selected', type: 'error' });
             const { byData, byItemType, initialIndex, initialSongId, playType, query } = options;
             let songs: null | QueueSong[] = null;
-            let initialSongIndex = 0;
+            // Allow this to be undefined for "play shuffled". If undefined, default to 0,
+            // otherwise, choose the selected item in the queue
+            let initialSongIndex: number | undefined;
 
             if (byItemType) {
                 let songList: SongListResponse | undefined;

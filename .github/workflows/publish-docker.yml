@@ -24,11 +24,9 @@ jobs:
                   password: ${{ secrets.GITHUB_TOKEN }}
             - name: Extract metadata (tags, labels) for Docker
               id: meta
-              uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+              uses: docker/metadata-action@v5
               with:
                   images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-                  tags: |
-                      type=raw,value=latest,enable={{is_default_branch}}
             - name: Set up QEMU
               uses: docker/setup-qemu-action@v3
             - name: Setup Docker buildx
@@ -41,6 +39,6 @@ jobs:
                   tags: ${{ steps.meta.outputs.tags }}
                   labels: ${{ steps.meta.outputs.labels }}
                   platforms: |
-                    linux/amd64
-                    linux/arm/v7
-                    linux/arm64/v8
+                      linux/amd64
+                      linux/arm/v7
+                      linux/arm64/v8

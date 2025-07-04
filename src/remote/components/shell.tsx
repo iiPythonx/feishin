@@ -1,76 +1,71 @@
-import {
-    AppShell,
-    Container,
-    Flex,
-    Grid,
-    Header,
-    Image,
-    MediaQuery,
-    Skeleton,
-    Title,
-} from '@mantine/core';
+import { AppShell, Flex, Grid, Image } from '@mantine/core';
 
 import { ImageButton } from '/@/remote/components/buttons/image-button';
 import { ReconnectButton } from '/@/remote/components/buttons/reconnect-button';
 import { ThemeButton } from '/@/remote/components/buttons/theme-button';
 import { RemoteContainer } from '/@/remote/components/remote-container';
 import { useConnected } from '/@/remote/store';
+import { Center } from '/@/shared/components/center/center';
+import { Group } from '/@/shared/components/group/group';
+import { Spinner } from '/@/shared/components/spinner/spinner';
 
 export const Shell = () => {
     const connected = useConnected();
 
     return (
         <AppShell
-            header={
-                <Header height={60}>
-                    <Grid>
-                        <Grid.Col span="auto">
-                            <div>
-                                <Image
-                                    fit="contain"
-                                    height={60}
-                                    src="/favicon.ico"
-                                    width={60}
-                                />
-                            </div>
-                        </Grid.Col>
-                        <MediaQuery
-                            smallerThan="sm"
-                            styles={{ display: 'none' }}
-                        >
-                            <Grid.Col
-                                sm={6}
-                                xs={0}
-                            >
-                                <Title ta="center">Feishin Remote</Title>
-                            </Grid.Col>
-                        </MediaQuery>
-
-                        <Grid.Col span="auto">
-                            <Flex
-                                direction="row"
-                                justify="right"
-                            >
-                                <ReconnectButton />
-                                <ImageButton />
-                                <ThemeButton />
-                            </Flex>
-                        </Grid.Col>
-                    </Grid>
-                </Header>
-            }
+            h="100vh"
             padding="md"
+            w="100vw"
         >
-            <Container>
+            <AppShell.Header style={{ background: 'var(--theme-colors-surface)' }}>
+                <Grid
+                    px="md"
+                    py="sm"
+                >
+                    <Grid.Col span={4}>
+                        <Flex
+                            align="center"
+                            direction="row"
+                            h="100%"
+                            justify="flex-start"
+                            style={{
+                                justifySelf: 'flex-start',
+                            }}
+                        >
+                            <Image
+                                fit="contain"
+                                height={32}
+                                src="/favicon.ico"
+                                width={32}
+                            />
+                        </Flex>
+                    </Grid.Col>
+                    <Grid.Col span={8}>
+                        <Group
+                            gap="sm"
+                            justify="flex-end"
+                            wrap="nowrap"
+                        >
+                            <ReconnectButton />
+                            <ImageButton />
+                            <ThemeButton />
+                        </Group>
+                    </Grid.Col>
+                </Grid>
+            </AppShell.Header>
+            <AppShell.Main pt="60px">
                 {connected ? (
                     <RemoteContainer />
                 ) : (
-                    <Skeleton
-                        height={300}
-                        width="100%"
-                    />
+                    <Center
+                        h="100vh"
+                        w="100vw"
+                    >
+                        <Spinner />
+                    </Center>
                 )}
-            </Container>
+            </AppShell.Main>
         </AppShell>
     );
 };

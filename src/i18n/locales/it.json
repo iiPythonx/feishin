@@ -209,7 +209,7 @@
         "hotkey_toggleShuffle": "attiva/disattiva mescolamento",
         "theme": "tema",
         "playbackStyle_description": "selezione lo stile di riproduzione da usare per il player audio",
-        "discordRichPresence_description": "abilita lo status del playback nello stato attività di {{discord}}. Le chiavi immagine sono: {{icon}}, {{playing}} e {{paused}} ",
+        "discordRichPresence_description": "abilita lo status del playback nello stato attività di {{discord}}. Le chiavi immagine sono: {{icon}}, {{playing}} e {{paused}}",
         "mpvExecutablePath": "percorso eseguibile mpv",
         "audioDevice": "device audio",
         "hotkey_rate2": "voto 2 stelle",

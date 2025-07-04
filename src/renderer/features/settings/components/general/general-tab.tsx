@@ -11,7 +11,7 @@ import { ThemeSettings } from '/@/renderer/features/settings/components/general/
 
 export const GeneralTab = () => {
     return (
-        <Stack spacing="md">
+        <Stack gap="md">
             <ApplicationSettings />
             <ThemeSettings />
             <ControlSettings />

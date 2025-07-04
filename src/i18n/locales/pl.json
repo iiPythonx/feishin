@@ -533,7 +533,7 @@
         "crossfadeDuration_description": "ustaw czas trwania efektu przenikania",
         "language": "język",
         "hotkey_toggleShuffle": "przełącz kolejność losową",
-        "discordRichPresence_description": "włącz status odtwarzania w {{discord}} (rich presence). Dzięki temu będą wyświetlane informacje takie jak: {{icon}}, {{playing}} i {{paused}}. ",
+        "discordRichPresence_description": "włącz status odtwarzania w {{discord}} (rich presence). Dzięki temu będą wyświetlane informacje takie jak: {{icon}}, {{playing}} i {{paused}}",
         "audioDevice": "urządzenia dźwiękowe",
         "hotkey_rate2": "oceń na 2 gwiazdki",
         "exitToTray": "zamknij do zasobnika",

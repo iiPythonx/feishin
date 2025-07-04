@@ -1,12 +1,19 @@
+import type { ServerInferResponses } from '@ts-rest/core';
+
 import dayjs from 'dayjs';
 import filter from 'lodash/filter';
 import orderBy from 'lodash/orderBy';
 import md5 from 'md5';
+import { z } from 'zod';
 
-import { ssApiClient } from '/@/renderer/api/subsonic/subsonic-api';
+import { contract, ssApiClient } from '/@/renderer/api/subsonic/subsonic-api';
 import { randomString } from '/@/renderer/utils';
 import { ssNormalize } from '/@/shared/api/subsonic/subsonic-normalize';
-import { AlbumListSortType, SubsonicExtensions } from '/@/shared/api/subsonic/subsonic-types';
+import {
+    AlbumListSortType,
+    ssType,
+    SubsonicExtensions,
+} from '/@/shared/api/subsonic/subsonic-types';
 import {
     AlbumListSort,
     ControllerEndpoint,
@@ -290,7 +297,7 @@ export const SubsonicController: ControllerEndpoint = {
         let type = ALBUM_LIST_SORT_MAPPING[query.sortBy] ?? AlbumListSortType.ALPHABETICAL_BY_NAME;
 
         if (query.artistIds) {
-            const promises: any[] = [];
+            const promises: Promise<ServerInferResponses<typeof contract.getArtist>>[] = [];
 
             for (const artistId of query.artistIds) {
                 promises.push(
@@ -312,8 +319,10 @@ export const SubsonicController: ControllerEndpoint = {
                 return artist.body.artist.album ?? [];
             });
 
+            const items = albums.map((album) => ssNormalize.album(album, apiClientProps.server));
+
             return {
-                items: albums.map((album) => ssNormalize.album(album, apiClientProps.server)),
+                items: sortAlbumList(items, query.sortBy, query.sortOrder),
                 startIndex: 0,
                 totalRecordCount: albums.length,
             };
@@ -350,8 +359,8 @@ export const SubsonicController: ControllerEndpoint = {
             type = AlbumListSortType.BY_YEAR;
         }
 
-        let fromYear;
-        let toYear;
+        let fromYear: number | undefined;
+        let toYear: number | undefined;
 
         if (query.minYear) {
             fromYear = query.minYear;
@@ -438,6 +447,33 @@ export const SubsonicController: ControllerEndpoint = {
             return totalRecordCount;
         }
 
+        if (query.artistIds) {
+            const promises: Promise<ServerInferResponses<typeof contract.getArtist>>[] = [];
+
+            for (const artistId of query.artistIds) {
+                promises.push(
+                    ssApiClient(apiClientProps).getArtist({
+                        query: {
+                            id: artistId,
+                        },
+                    }),
+                );
+            }
+
+            const artistResult = await Promise.all(promises);
+
+            const albums = artistResult.reduce((total: number, artist) => {
+                if (artist.status !== 200) {
+                    return 0;
+                }
+
+                const length = artist.body.artist.album?.length ?? 0;
+                return length + total;
+            }, 0);
+
+            return albums;
+        }
+
         if (query.favorite) {
             const res = await ssApiClient(apiClientProps).getStarred({
                 query: {
@@ -466,8 +502,8 @@ export const SubsonicController: ControllerEndpoint = {
             type = AlbumListSortType.BY_YEAR;
         }
 
-        let fromYear;
-        let toYear;
+        let fromYear: number | undefined;
+        let toYear: number | undefined;
 
         if (query.minYear) {
             fromYear = query.minYear;
@@ -881,9 +917,8 @@ export const SubsonicController: ControllerEndpoint = {
         return ssNormalize.song(res.body.song, apiClientProps.server);
     },
     getSongList: async ({ apiClientProps, query }) => {
-        const fromAlbumPromises: any[] = [];
-        const artistDetailPromises: any[] = [];
-        let results: any[] = [];
+        const fromAlbumPromises: Promise<ServerInferResponses<typeof contract.getAlbum>>[] = [];
+        const artistDetailPromises: Promise<ServerInferResponses<typeof contract.getArtist>>[] = [];
 
         if (query.searchTerm) {
             const res = await ssApiClient(apiClientProps).search3({
@@ -1006,6 +1041,8 @@ export const SubsonicController: ControllerEndpoint = {
                     );
                 }
             }
+
+            let results: z.infer<typeof ssType._response.song>[] = [];
 
             if (fromAlbumPromises) {
                 const albumsResult = await Promise.all(fromAlbumPromises);

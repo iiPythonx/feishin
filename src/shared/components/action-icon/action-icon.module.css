@@ -1,0 +1,104 @@
+.root {
+    --ai-size-xs: calc(1.875rem * var(--mantine-scale));
+    --ai-size-sm: calc(2.25rem * var(--mantine-scale));
+    --ai-size-md: calc(2.625rem * var(--mantine-scale));
+    --ai-size-lg: calc(3.125rem * var(--mantine-scale));
+    --ai-size-xl: calc(3.75rem * var(--mantine-scale));
+
+    font-weight: 500;
+    transition:
+        background-color 0.2s ease-in-out,
+        border-color 0.2s ease-in-out;
+
+    &[data-disabled='true'] {
+        opacity: 0.6;
+    }
+
+    &[data-variant='default'] {
+        color: var(--theme-colors-foreground);
+        background: var(--theme-colors-surface);
+        border: 1px solid transparent;
+
+        &:hover {
+            background: lighten(var(--theme-colors-surface), 5%);
+        }
+
+        &:focus-visible {
+            background: lighten(var(--theme-colors-surface), 10%);
+        }
+    }
+
+    &[data-variant='outline'] {
+        --button-border: var(--theme-colors-border);
+
+        color: var(--theme-colors-foreground);
+        border: 1px solid var(--theme-colors-border);
+
+        &:hover {
+            border: 1px solid lighten(var(--theme-colors-border), 10%);
+        }
+
+        &:focus-visible {
+            border: 1px solid lighten(var(--theme-colors-border), 10%);
+        }
+    }
+
+    &[data-variant='filled'] {
+        color: var(--theme-colors-primary-contrast);
+        background: var(--theme-colors-primary-filled);
+        border: 1px solid transparent;
+        transition: background-color 0.2s ease-in-out;
+
+        &:hover,
+        &:focus-visible {
+            background: darken(var(--theme-colors-primary-filled), 10%);
+        }
+
+        svg {
+            color: var(--theme-colors-primary-contrast);
+            fill: var(--theme-colors-primary-contrast);
+        }
+    }
+
+    &[data-variant='subtle'] {
+        color: var(--theme-colors-foreground);
+        background: transparent;
+
+        &:hover,
+        &:active,
+        &:focus-visible {
+            @mixin dark {
+                background: lighten(var(--theme-colors-background), 5%);
+            }
+
+            @mixin light {
+                background: darken(var(--theme-colors-background), 5%);
+            }
+        }
+    }
+
+    &[data-variant='secondary'] {
+        border: 1px solid transparent;
+
+        &:hover {
+            background: darken(var(--theme-colors-surface), 5%);
+        }
+
+        &:focus-visible {
+            background: darken(var(--theme-colors-surface), 10%);
+        }
+    }
+
+    &[data-variant='transparent'] {
+        color: var(--theme-colors-foreground);
+        border: 1px solid transparent;
+
+        &:hover {
+            background: transparent;
+        }
+
+        &:focus-visible {
+            border: 1px solid lighten(var(--theme-colors-border), 10%);
+        }
+    }
+}

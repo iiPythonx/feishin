@@ -1,0 +1,62 @@
+.motion-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.player-button {
+    all: unset;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.5rem;
+    overflow: visible;
+
+    button {
+        display: flex;
+    }
+
+    &:focus-visible {
+        outline: 1px var(--theme-colors-primary-filled) solid;
+    }
+
+    &:disabled {
+        opacity: 0.5;
+    }
+
+    svg {
+        display: flex;
+    }
+}
+
+.player-button.active {
+    svg {
+        fill: var(--theme-colors-primary-filled);
+    }
+}
+
+.main {
+    background: var(--theme-colors-foreground) !important;
+    border-radius: 50%;
+
+    svg {
+        display: flex;
+        color: var(--theme-colors-background);
+        fill: var(--theme-colors-background);
+    }
+}
+
+.secondary {
+    color: var(--theme-colors-foreground);
+
+    svg {
+        color: var(--theme-colors-foreground);
+    }
+}
+
+.tertiary {
+    svg {
+        display: flex;
+    }
+}

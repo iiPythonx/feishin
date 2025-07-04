@@ -2,7 +2,6 @@ import type { AgGridReact as AgGridReactType } from '@ag-grid-community/react/li
 
 import isEmpty from 'lodash/isEmpty';
 import { useCallback, useMemo, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 import { api } from '/@/renderer/api';
@@ -17,7 +16,6 @@ import { usePlayQueueAdd } from '/@/renderer/features/player';
 import { AnimatedPage } from '/@/renderer/features/shared';
 import { queryClient } from '/@/renderer/lib/react-query';
 import { useCurrentServer, useListFilterByKey } from '/@/renderer/store';
-import { sentenceCase, titleCase } from '/@/renderer/utils';
 import {
     AlbumListQuery,
     GenreListSort,
@@ -27,7 +25,6 @@ import {
 import { Play } from '/@/shared/types/types';
 
 const AlbumListRoute = () => {
-    const { t } = useTranslation();
     const gridRef = useRef<null | VirtualInfiniteGridRef>(null);
     const tableRef = useRef<AgGridReactType | null>(null);
     const server = useCurrentServer();
@@ -135,11 +132,7 @@ const AlbumListRoute = () => {
     }, [albumArtistId, customFilters, genreId, handlePlay, pageKey]);
 
     const artist = searchParams.get('artistName');
-    const title = artist
-        ? sentenceCase(t('page.albumList.artistAlbums', { artist }))
-        : genreId
-          ? sentenceCase(t('page.albumList.genreAlbums', { genre: titleCase(genreTitle) }))
-          : undefined;
+    const title = artist ? artist : genreId ? genreTitle : undefined;
 
     return (
         <AnimatedPage>

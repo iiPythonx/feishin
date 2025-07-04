@@ -261,7 +261,7 @@
         "discordApplicationId_description": "{{discord}} rich presence 應用 id（默認爲 {{defaultId}}）",
         "discordIdleStatus": "顯示 rich presence 閑置狀態",
         "discordIdleStatus_description": "啓用後將會在播放器閑置時更新狀態",
-        "discordRichPresence_description": "在 {{discord}} rich presence 中顯示播放狀態。圖片鍵爲：{{icon}}、{{playing}} 和 {{paused}} ",
+        "discordRichPresence_description": "在 {{discord}} rich presence 中顯示播放狀態。圖片鍵爲：{{icon}}、{{playing}} 和 {{paused}}",
         "discordUpdateInterval": "{{discord}} rich presence 更新間隔",
         "discordUpdateInterval_description": "更新間隔秒數（至少 15 秒）",
         "enableRemote": "啓用遠程控制服務器",

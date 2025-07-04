@@ -3,7 +3,6 @@ import type { AgGridReact as AgGridReactType } from '@ag-grid-community/react/li
 
 import { useRef } from 'react';
 
-import { Paper } from '/@/renderer/components';
 import { VirtualGridContainer } from '/@/renderer/components/virtual-grid';
 import { NowPlayingHeader } from '/@/renderer/features/now-playing/components/now-playing-header';
 import { PlayQueue } from '/@/renderer/features/now-playing/components/play-queue';
@@ -17,12 +16,10 @@ const NowPlayingRoute = () => {
         <AnimatedPage>
             <VirtualGridContainer>
                 <NowPlayingHeader />
-                <Paper sx={{ borderTop: '1px solid var(--generic-border-color)' }}>
-                    <PlayQueueListControls
-                        tableRef={queueRef}
-                        type="nowPlaying"
-                    />
-                </Paper>
+                <PlayQueueListControls
+                    tableRef={queueRef}
+                    type="nowPlaying"
+                />
                 <PlayQueue
                     ref={queueRef}
                     type="nowPlaying"

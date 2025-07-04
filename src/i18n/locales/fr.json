@@ -100,6 +100,8 @@
         "cancel": "annuler",
         "forceRestartRequired": "redémarrer pour appliquer les changements… fermer la notification pour redémarrer",
         "setting": "paramètre",
+        "setting_one": "paramètre",
+        "setting_other": "paramètres",
         "version": "version",
         "title": "titre",
         "filter_one": "filtre",
@@ -150,7 +152,9 @@
         "codec": "codec",
         "translation": "traduction",
         "additionalParticipants": "participants additionnels",
-        "tags": "tags"
+        "tags": "tags",
+        "newVersion": "une nouvelle version vient d'être installé ({{version}})",
+        "viewReleaseNotes": "voir la note de version"
     },
     "error": {
         "remotePortWarning": "redémarrer le serveur pour appliquer le nouveau port",
@@ -234,7 +238,8 @@
             "home": "$t(common.home)",
             "artists": "$t(entity.artist_other)",
             "albumArtists": "$t(entity.albumArtist_other)",
-            "shared": "partagé $t(entity.playlist_other)"
+            "shared": "partagé $t(entity.playlist_other)",
+            "myLibrary": "ma bibliothèque"
         },
         "fullscreenPlayer": {
             "config": {
@@ -446,7 +451,7 @@
         "playbackStyle": "style de lecture",
         "hotkey_toggleShuffle": "basculer la lecture aléatoire",
         "playbackStyle_description": "sélectionnez le style de lecture à utiliser pour le lecteur audio",
-        "discordRichPresence_description": "active l'état de lecteur dans le status d'activité {{discord}}. Les images clés sont : {{icon}}, {{playing}}, et {{paused}} ",
+        "discordRichPresence_description": "active l'état de lecteur dans le status d'activité {{discord}}. Les images clés sont : {{icon}}, {{playing}}, et {{paused}}",
         "mpvExecutablePath": "chemin de l'exécutable mpv",
         "hotkey_rate2": "noter 2 étoiles",
         "playButtonBehavior_description": "définit le comportement par défaut du bouton play, lors de l'ajout de chanson à la file d'attente",
@@ -598,7 +603,19 @@
         "lastfmApiKey": "clé API {{lastfm}}",
         "lastfmApiKey_description": "la clé API pour {{lastfm}} . requise pour la pochette d'album",
         "discordServeImage": "servir l'image {{discord}} depuis le serveur",
-        "discordServeImage_description": "partage pochette du status d'activité {{discord}} depuis le serveur lui même, disponible uniquement pour jellyfin et navidrome"
+        "discordServeImage_description": "partage pochette du status d'activité {{discord}} depuis le serveur lui même, disponible uniquement pour jellyfin et navidrome",
+        "lastfm": "affiche les liens de last.fm",
+        "musicbrainz_description": "affiches les liens vers musicbrainz sur les pages des artistes/albums, quand mbid existes",
+        "lastfm_description": "affiche les liens vers last.fm sur les pages des artistes/albums",
+        "musicbrainz": "affiches les liens musicbrainz",
+        "neteaseTranslation": "Activer les traductions NetEase",
+        "neteaseTranslation_description": "Lorsque cette option est activée, récupère et affiche les paroles traduites de NetEase si elles sont disponibles.",
+        "preferLocalLyrics_description": "privilégier les paroles locales aux paroles distantes lorsqu'elles sont disponibles",
+        "preferLocalLyrics": "privilégier les paroles locales",
+        "discordPausedStatus_description": "quand activé, le status s'affichera lorsque le lecteur est en pause",
+        "discordPausedStatus": "afficher le status d'activité en pause",
+        "preservePitch": "préserver la hauteur",
+        "preservePitch_description": "préserver la hauteur lors du changement de la vitesse de lecture"
     },
     "form": {
         "deletePlaylist": {
@@ -639,7 +656,8 @@
         },
         "queryEditor": {
             "input_optionMatchAll": "correspondre à tous",
-            "input_optionMatchAny": "correspondre à n'importe quel"
+            "input_optionMatchAny": "correspondre à n'importe quel",
+            "title": "éditeur de requête"
         },
         "editPlaylist": {
             "title": "modifier $t(entity.playlist_one)",
@@ -729,7 +747,9 @@
             "view": {
                 "table": "liste",
                 "poster": "poster",
-                "card": "Carte"
+                "card": "Carte",
+                "grid": "grille",
+                "list": "liste"
             },
             "label": {
                 "releaseDate": "date de sortie",

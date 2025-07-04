@@ -1,0 +1,24 @@
+@value label from './sidebar-item.module.css';
+
+.list {
+    padding: var(--theme-spacing-sm) var(--theme-spacing-md);
+}
+
+.row {
+    position: relative;
+    display: flex;
+    width: 100%;
+}
+
+.row-hover {
+    :global(.label) {
+        margin-right: 135px;
+    }
+}
+
+.controls {
+    position: absolute;
+    top: 50%;
+    right: var(--theme-spacing-xs);
+    transform: translateY(-50%);
+}

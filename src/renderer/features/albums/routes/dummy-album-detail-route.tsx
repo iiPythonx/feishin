@@ -1,15 +1,13 @@
-import { Box, Center, Group, Stack } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RiErrorWarningLine, RiHeartFill, RiHeartLine, RiMoreFill } from 'react-icons/ri';
 import { generatePath, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
-import { styled } from 'styled-components';
+
+import styles from './dummy-album-detail-route.module.css';
 
 import { api } from '/@/renderer/api';
 import { queryKeys } from '/@/renderer/api/query-keys';
-import { Button, Spinner, Spoiler, Text } from '/@/renderer/components';
 import { useHandleGeneralContextMenu } from '/@/renderer/features/context-menu';
 import { SONG_ALBUM_PAGE } from '/@/renderer/features/context-menu/context-menu-items';
 import { usePlayQueueAdd } from '/@/renderer/features/player';
@@ -27,15 +25,15 @@ import { useCurrentServer } from '/@/renderer/store';
 import { usePlayButtonBehavior } from '/@/renderer/store/settings.store';
 import { formatDurationString } from '/@/renderer/utils';
 import { replaceURLWithHTMLLinks } from '/@/renderer/utils/linkify';
+import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
+import { Button } from '/@/shared/components/button/button';
+import { Center } from '/@/shared/components/center/center';
+import { Group } from '/@/shared/components/group/group';
+import { Icon } from '/@/shared/components/icon/icon';
+import { Spoiler } from '/@/shared/components/spoiler/spoiler';
+import { Stack } from '/@/shared/components/stack/stack';
+import { Text } from '/@/shared/components/text/text';
 import { LibraryItem, SongDetailResponse } from '/@/shared/types/domain-types';
-
-const DetailContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    padding: 1rem 2rem 5rem;
-    overflow: hidden;
-`;
 
 const DummyAlbumDetailRoute = () => {
     const cq = useContainerQuery();
@@ -55,7 +53,7 @@ const DummyAlbumDetailRoute = () => {
         queryKey,
     });
 
-    const { color: background, colorId } = useFastAverageColor({
+    const { background, colorId } = useFastAverageColor({
         id: albumId,
         src: detailQuery.data?.imageUrl,
         srcLoaded: !detailQuery.isLoading,
@@ -114,10 +112,6 @@ const DummyAlbumDetailRoute = () => {
         });
     };
 
-    if (!background || colorId !== albumId) {
-        return <Spinner container />;
-    }
-
     const metadataItems = [
         {
             id: 'releaseYear',
@@ -138,21 +132,22 @@ const DummyAlbumDetailRoute = () => {
                     background={background}
                     imageUrl={detailQuery?.data?.imageUrl}
                     item={{ route: AppRoute.LIBRARY_SONGS, type: LibraryItem.SONG }}
+                    loading={!background || colorId !== albumId}
                     title={detailQuery?.data?.name || ''}
                 >
-                    <Stack spacing="sm">
-                        <Group spacing="sm">
+                    <Stack gap="sm">
+                        <Group gap="sm">
                             {metadataItems.map((item, index) => (
                                 <Fragment key={`item-${item.id}-${index}`}>
-                                    {index > 0 && <Text $noSelect>•</Text>}
-                                    <Text $secondary={item.secondary}>{item.value}</Text>
+                                    {index > 0 && <Text isNoSelect>•</Text>}
+                                    <Text isMuted={item.secondary}>{item.value}</Text>
                                 </Fragment>
                             ))}
                         </Group>
                         <Group
+                            gap="md"
                             mah="4rem"
-                            spacing="md"
-                            sx={{
+                            style={{
                                 overflow: 'hidden',
                                 WebkitBoxOrient: 'vertical',
                                 WebkitLineClamp: 2,
@@ -160,9 +155,9 @@ const DummyAlbumDetailRoute = () => {
                         >
                             {detailQuery?.data?.albumArtists.map((artist) => (
                                 <Text
-                                    $link
                                     component={Link}
                                     fw={600}
+                                    isLink
                                     key={`artist-${artist.id}`}
                                     size="md"
                                     to={generatePath(AppRoute.LIBRARY_ALBUM_ARTISTS_DETAIL, {
@@ -177,55 +172,46 @@ const DummyAlbumDetailRoute = () => {
                     </Stack>
                 </LibraryHeader>
             </Stack>
-            <DetailContainer>
-                <Box component="section">
+            <div className={styles.detailContainer}>
+                <section>
                     <Group
-                        position="apart"
-                        spacing="sm"
+                        gap="sm"
+                        justify="space-between"
                     >
                         <Group>
                             <PlayButton onClick={() => handlePlay()} />
-                            <Button
-                                compact
+                            <ActionIcon
+                                icon="favorite"
+                                iconProps={{
+                                    fill: detailQuery?.data?.userFavorite ? 'primary' : undefined,
+                                }}
                                 loading={
                                     createFavoriteMutation.isLoading ||
                                     deleteFavoriteMutation.isLoading
                                 }
                                 onClick={handleFavorite}
                                 variant="subtle"
-                            >
-                                {detailQuery?.data?.userFavorite ? (
-                                    <RiHeartFill
-                                        color="red"
-                                        size={20}
-                                    />
-                                ) : (
-                                    <RiHeartLine size={20} />
-                                )}
-                            </Button>
-                            <Button
-                                compact
+                            />
+                            <ActionIcon
+                                icon="ellipsisHorizontal"
                                 onClick={(e) => {
                                     if (!detailQuery?.data) return;
                                     handleGeneralContextMenu(e, [detailQuery.data!]);
                                 }}
                                 variant="subtle"
-                            >
-                                <RiMoreFill size={20} />
-                            </Button>
+                            />
                         </Group>
                     </Group>
-                </Box>
+                </section>
                 {showGenres && (
-                    <Box component="section">
-                        <Group spacing="sm">
+                    <section>
+                        <Group gap="sm">
                             {detailQuery?.data?.genres?.map((genre) => (
                                 <Button
-                                    compact
                                     component={Link}
                                     key={`genre-${genre.id}`}
                                     radius={0}
-                                    size="md"
+                                    size="compact-md"
                                     to={generatePath(AppRoute.LIBRARY_GENRES_SONGS, {
                                         genreId: genre.id,
                                     })}
@@ -235,25 +221,26 @@ const DummyAlbumDetailRoute = () => {
                                 </Button>
                             ))}
                         </Group>
-                    </Box>
+                    </section>
                 )}
                 {comment && (
-                    <Box component="section">
+                    <section>
                         <Spoiler maxHeight={75}>{replaceURLWithHTMLLinks(comment)}</Spoiler>
-                    </Box>
+                    </section>
                 )}
-                <Box component="section">
+                <section>
                     <Center>
                         <Group mr={5}>
-                            <RiErrorWarningLine
-                                color="var(--danger-color)"
+                            <Icon
+                                fill="error"
+                                icon="error"
                                 size={30}
                             />
                         </Group>
                         <h2>{t('error.badAlbum', { postProcess: 'sentenceCase' })}</h2>
                     </Center>
-                </Box>
-            </DetailContainer>
+                </section>
+            </div>
         </AnimatedPage>
     );
 };

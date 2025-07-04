@@ -3,11 +3,11 @@ import type { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import i18n from '/@/i18n/i18n';
-import { Option } from '/@/renderer/components/option';
-import { MultiSelect } from '/@/renderer/components/select';
-import { Slider } from '/@/renderer/components/slider';
-import { Switch } from '/@/renderer/components/switch';
 import { useSettingsStore, useSettingsStoreActions } from '/@/renderer/store/settings.store';
+import { MultiSelect } from '/@/shared/components/multi-select/multi-select';
+import { Option } from '/@/shared/components/option/option';
+import { Slider } from '/@/shared/components/slider/slider';
+import { Switch } from '/@/shared/components/switch/switch';
 import { TableColumn, TableType } from '/@/shared/types/types';
 
 export const SONG_TABLE_COLUMNS = [
@@ -215,7 +215,7 @@ export const ALBUMARTIST_TABLE_COLUMNS = [
         value: TableColumn.PLAY_COUNT,
     },
     {
-        label: i18n.t('table.config.label.albumCount', { postProcess: 'titleCase' }),
+        label: i18n.t('filter.albumCount', { postProcess: 'titleCase' }),
         value: TableColumn.ALBUM_COUNT,
     },
     {
@@ -292,7 +292,7 @@ export const TableConfigDropdown = ({ type }: TableConfigDropdownProps) => {
     const { setSettings } = useSettingsStoreActions();
     const tableConfig = useSettingsStore((state) => state.tables);
 
-    const handleAddOrRemoveColumns = (values: TableColumn[]) => {
+    const handleAddOrRemoveColumns = (values: string[]) => {
         const existingColumns = tableConfig[type].columns;
 
         if (values.length === 0) {
@@ -444,8 +444,8 @@ export const TableConfigDropdown = ({ type }: TableConfigDropdownProps) => {
                         clearable
                         data={SONG_TABLE_COLUMNS}
                         defaultValue={tableConfig[type]?.columns.map((column) => column.column)}
-                        dropdownPosition="bottom"
                         onChange={handleAddOrRemoveColumns}
+                        variant="filled"
                         width={300}
                     />
                 </Option.Control>

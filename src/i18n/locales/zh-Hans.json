@@ -111,7 +111,9 @@
         "preview": "预览",
         "translation": "翻译",
         "additionalParticipants": "其他参与者",
-        "tags": "标签"
+        "tags": "标签",
+        "viewReleaseNotes": "查看发行说明",
+        "newVersion": "已安装新版本 ({{version}})"
     },
     "entity": {
         "albumArtist_other": "专辑艺术家",
@@ -180,6 +182,8 @@
         "followLyric_description": "滚动歌词到当前播放位置",
         "audioExclusiveMode": "音频独占模式",
         "font": "字体",
+        "neteaseTranslation": "启用网易云歌词翻译",
+        "neteaseTranslation_description": "启用后，在获取歌词时将包含并显示网易云音乐提供的翻译（如果存在）。",
         "crossfadeDuration_description": "设置淡入淡出持续时间",
         "audioDevice": "音频设备",
         "enableRemote": "启用远程控制服务器",
@@ -321,7 +325,7 @@
         "discordUpdateInterval": "{{discord}} rich presence 更新间隔",
         "discordApplicationId_description": "{{discord}} rich presence 应用 id（默认为 {{defaultId}}）",
         "discordUpdateInterval_description": "更新间隔秒数（至少 15 秒）",
-        "discordRichPresence_description": "在 {{discord}} rich presence 中显示播放状态。图片键为：{{icon}}、{{playing}} 和 {{paused}} ",
+        "discordRichPresence_description": "在 {{discord}} rich presence 中显示播放状态。图片键为：{{icon}}、{{playing}} 和 {{paused}}",
         "accentColor": "强调色",
         "accentColor_description": "设置应用的强调色",
         "replayGainPreamp_description": "调整应用在{{ReplayGain}}值上的前置放大增益",
@@ -393,7 +397,17 @@
         "lastfmApiKey": "{{lastfm}} API 密钥",
         "lastfmApiKey_description": "{{lastfm}} 的 API 密钥。封面艺术图所需",
         "discordServeImage": "从服务器提供 {{discord}} 图像",
-        "discordServeImage_description": "分享 {{discord}} 封面艺术图，来自 rich presence 服务器，仅适用于 jellyfin 和 navidrome"
+        "discordServeImage_description": "分享 {{discord}} 封面艺术图，来自 rich presence 服务器，仅适用于 jellyfin 和 navidrome",
+        "musicbrainz": "显示 musicbrainz 链接",
+        "musicbrainz_description": "在 mbid 的艺术家/专辑页面上显示 musicbrainz 的链接",
+        "lastfm": "显示 last.fm 链接",
+        "lastfm_description": "在艺术家/专辑页面上显示 last.fm 的链接",
+        "preferLocalLyrics_description": "优先选择本地歌词（如有），而不是远程歌词",
+        "preferLocalLyrics": "首选本地歌词",
+        "discordPausedStatus": "暂停时显示rich presence",
+        "discordPausedStatus_description": "启用后将在播放器暂停时显示状态",
+        "preservePitch": "保持音高",
+        "preservePitch_description": "在调整播放速度时保持音高"
     },
     "error": {
         "remotePortWarning": "重启服务器使新端口生效",
@@ -477,7 +491,8 @@
             "home": "$t(common.home)",
             "artists": "$t(entity.artist_other)",
             "albumArtists": "$t(entity.albumArtist_other)",
-            "shared": "共享$t(entity.playlist_other)"
+            "shared": "共享$t(entity.playlist_other)",
+            "myLibrary": "我的媒体库"
         },
         "fullscreenPlayer": {
             "config": {
@@ -653,7 +668,8 @@
         },
         "queryEditor": {
             "input_optionMatchAll": "匹配全部",
-            "input_optionMatchAny": "匹配任何"
+            "input_optionMatchAny": "匹配任何",
+            "title": "查询编辑器"
         },
         "editPlaylist": {
             "title": "编辑$t(entity.playlist_one)",
@@ -689,7 +705,9 @@
             "view": {
                 "table": "表格",
                 "poster": "海报",
-                "card": "卡片"
+                "card": "卡片",
+                "grid": "网格",
+                "list": "列表"
             },
             "label": {
                 "releaseDate": "发布日期",

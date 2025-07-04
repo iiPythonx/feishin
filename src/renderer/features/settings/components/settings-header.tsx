@@ -1,13 +1,18 @@
-import { Flex, Group } from '@mantine/core';
 import { closeAllModals, openModal } from '@mantine/modals';
 import { useTranslation } from 'react-i18next';
-import { RiSettings2Fill } from 'react-icons/ri';
 
-import { Button, ConfirmModal, PageHeader, SearchInput } from '/@/renderer/components';
+import { PageHeader } from '/@/renderer/components/page-header/page-header';
 import { useSettingSearchContext } from '/@/renderer/features/settings/context/search-context';
 import { LibraryHeaderBar } from '/@/renderer/features/shared';
+import { SearchInput } from '/@/renderer/features/shared/components/search-input';
 import { useContainerQuery } from '/@/renderer/hooks';
 import { useSettingsStoreActions } from '/@/renderer/store/settings.store';
+import { Button } from '/@/shared/components/button/button';
+import { Flex } from '/@/shared/components/flex/flex';
+import { Group } from '/@/shared/components/group/group';
+import { Icon } from '/@/shared/components/icon/icon';
+import { ConfirmModal } from '/@/shared/components/modal/modal';
+import { Text } from '/@/shared/components/text/text';
 
 export type SettingsHeaderProps = {
     setSearch: (search: string) => void;
@@ -28,7 +33,7 @@ export const SettingsHeader = ({ setSearch }: SettingsHeaderProps) => {
         openModal({
             children: (
                 <ConfirmModal onConfirm={handleResetToDefault}>
-                    {t('common.areYouSure', { postProcess: 'sentenceCase' })}
+                    <Text>{t('common.areYouSure', { postProcess: 'sentenceCase' })}</Text>
                 </ConfirmModal>
             ),
             title: t('common.resetToDefault', { postProcess: 'sentenceCase' }),
@@ -44,8 +49,11 @@ export const SettingsHeader = ({ setSearch }: SettingsHeaderProps) => {
                         justify="space-between"
                         w="100%"
                     >
-                        <Group noWrap>
-                            <RiSettings2Fill size="2rem" />
+                        <Group wrap="nowrap">
+                            <Icon
+                                icon="settings"
+                                size="5xl"
+                            />
                             <LibraryHeaderBar.Title>
                                 {t('common.setting', { count: 2, postProcess: 'titleCase' })}
                             </LibraryHeaderBar.Title>
@@ -56,10 +64,8 @@ export const SettingsHeader = ({ setSearch }: SettingsHeaderProps) => {
                                 onChange={(event) =>
                                     setSearch(event.target.value.toLocaleLowerCase())
                                 }
-                                openedWidth={cq.isMd ? 250 : cq.isSm ? 200 : 150}
                             />
                             <Button
-                                compact
                                 onClick={openResetConfirmModal}
                                 variant="default"
                             >

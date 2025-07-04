@@ -36,40 +36,32 @@ const getCoverArtUrl = (args: {
     );
 };
 
-const getArtists = (
+const getArtistList = (
+    artists?: typeof ssType._response.song._type.artists,
+    artistId?: number | string,
+    artistName?: string,
+) => {
+    return artists
+        ? artists.map((item) => ({
+              id: item.id.toString(),
+              imageUrl: null,
+              name: item.name,
+          }))
+        : [
+              {
+                  id: artistId?.toString() || '',
+                  imageUrl: null,
+                  name: artistName || '',
+              },
+          ];
+};
+
+const getParticipants = (
     item:
         | z.infer<typeof ssType._response.album>
         | z.infer<typeof ssType._response.albumListEntry>
         | z.infer<typeof ssType._response.song>,
 ) => {
-    const albumArtists: RelatedArtist[] = item.albumArtists
-        ? item.albumArtists.map((item) => ({
-              id: item.id.toString(),
-              imageUrl: null,
-              name: item.name,
-          }))
-        : [
-              {
-                  id: item.artistId?.toString() || '',
-                  imageUrl: null,
-                  name: item.artist || '',
-              },
-          ];
-
-    const artists: RelatedArtist[] = item.artists
-        ? item.artists.map((item) => ({
-              id: item.id.toString(),
-              imageUrl: null,
-              name: item.name,
-          }))
-        : [
-              {
-                  id: item.artistId?.toString() || '',
-                  imageUrl: null,
-                  name: item.artist || '',
-              },
-          ];
-
     let participants: null | Record<string, RelatedArtist[]> = null;
 
     if (item.contributors) {
@@ -94,7 +86,7 @@ const getArtists = (
         }
     }
 
-    return { albumArtists, artists, participants };
+    return participants;
 };
 
 const getGenres = (
@@ -139,9 +131,10 @@ const normalizeSong = (
 
     return {
         album: item.album || '',
+        albumArtists: getArtistList(item.albumArtists, item.artistId, item.artist),
         albumId: item.albumId?.toString() || '',
         artistName: item.artist || '',
-        ...getArtists(item),
+        artists: getArtistList(item.artists, item.artistId, item.artist),
         bitRate: item.bitRate || 0,
         bpm: item.bpm || null,
         channels: null,
@@ -167,6 +160,7 @@ const normalizeSong = (
         lastPlayedAt: null,
         lyrics: null,
         name: item.title,
+        participants: getParticipants(item),
         path: item.path,
         peak:
             item.replayGain && (item.replayGain.albumPeak || item.replayGain.trackPeak)
@@ -243,7 +237,8 @@ const normalizeAlbum = (
 
     return {
         albumArtist: item.artist,
-        ...getArtists(item),
+        albumArtists: getArtistList(item.artists, item.artistId, item.artist),
+        artists: [],
         backdropImageUrl: null,
         comment: null,
         createdAt: item.created,
@@ -258,6 +253,7 @@ const normalizeAlbum = (
         mbzId: null,
         name: item.name,
         originalDate: null,
+        participants: getParticipants(item),
         playCount: null,
         releaseDate: item.year ? new Date(Date.UTC(item.year, 0, 1)).toISOString() : null,
         releaseYear: item.year ? Number(item.year) : null,

@@ -491,7 +491,7 @@
         "discordListening": "Tampilkan status sebagai mendengarkan",
         "discordListening_description": "tampilkan status sebagai mendengarkan alih-alih bermain",
         "discordRichPresence": "status aktivitas {{discord}}",
-        "discordRichPresence_description": "aktifkan status pemutaran di status aktivitas {{discord}}. Gambar tombol adalah: {{icon}}, {{playing}}, dan {{paused}} ",
+        "discordRichPresence_description": "aktifkan status pemutaran di status aktivitas {{discord}}. Gambar tombol adalah: {{icon}}, {{playing}}, dan {{paused}}",
         "discordUpdateInterval": "interval pembaruan status aktivitas {{discord}}",
         "discordUpdateInterval_description": "waktu dalam detik antara setiap pembaruan (minimal 15 detik)",
         "doubleClickBehavior": "masukkan semua lagu yang dicari saat mengklik dua kali",

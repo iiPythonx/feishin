@@ -1,167 +1,82 @@
-import type { TooltipProps, UnstyledButtonProps } from '@mantine/core';
+import clsx from 'clsx';
+import { t } from 'i18next';
+import { forwardRef, ReactNode } from 'react';
 
-import { UnstyledButton } from '@mantine/core';
-import { motion } from 'framer-motion';
-/* stylelint-disable no-descending-specificity */
-import { ComponentPropsWithoutRef, forwardRef, ReactNode } from 'react';
-import styled, { css } from 'styled-components';
+import styles from './player-button.module.css';
 
-import { Tooltip } from '/@/renderer/components';
+import { ActionIcon, ActionIconProps } from '/@/shared/components/action-icon/action-icon';
+import { Tooltip, TooltipProps } from '/@/shared/components/tooltip/tooltip';
 
-type MantineButtonProps = ComponentPropsWithoutRef<'button'> & UnstyledButtonProps;
-interface PlayerButtonProps extends MantineButtonProps {
-    $isActive?: boolean;
+interface PlayerButtonProps extends Omit<ActionIconProps, 'icon' | 'variant'> {
     icon: ReactNode;
+    isActive?: boolean;
     tooltip?: Omit<TooltipProps, 'children'>;
     variant: 'main' | 'secondary' | 'tertiary';
 }
 
-const WrapperMainVariant = css`
-    margin: 0 0.5rem;
-`;
-
-type MotionWrapperProps = { variant: PlayerButtonProps['variant'] };
-
-const MotionWrapper = styled(motion.div)<MotionWrapperProps>`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    ${({ variant }) => variant === 'main' && WrapperMainVariant};
-`;
-
-const ButtonMainVariant = css`
-    padding: 0.5rem;
-    background: var(--playerbar-btn-main-bg);
-    border-radius: 50%;
-
-    svg {
-        display: flex;
-        fill: var(--playerbar-btn-main-fg);
-    }
-
-    &:focus-visible {
-        background: var(--playerbar-btn-main-bg-hover);
-    }
-
-    &:hover {
-        background: var(--playerbar-btn-main-bg-hover);
-
-        svg {
-            fill: var(--playerbar-btn-main-fg-hover);
-        }
-    }
-`;
-
-const ButtonSecondaryVariant = css`
-    padding: 0.5rem;
-`;
-
-const ButtonTertiaryVariant = css`
-    padding: 0.5rem;
-
-    svg {
-        display: flex;
-    }
-
-    &:focus-visible {
-        svg {
-            fill: var(--playerbar-btn-fg-hover);
-            stroke: var(--playerbar-btn-fg-hover);
-        }
-    }
-`;
-
-type StyledPlayerButtonProps = Omit<PlayerButtonProps, 'icon'>;
-
-const StyledPlayerButton = styled(UnstyledButton)<StyledPlayerButtonProps>`
-    all: unset;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 0.5rem;
-    overflow: visible;
-    cursor: default;
-    background: var(--playerbar-btn-bg-hover);
-
-    button {
-        display: flex;
-    }
-
-    &:focus-visible {
-        background: var(--playerbar-btn-bg-hover);
-        outline: 1px var(--primary-color) solid;
-    }
-
-    &:disabled {
-        opacity: 0.5;
-    }
-
-    svg {
-        display: flex;
-        fill: ${({ $isActive }) =>
-            $isActive ? 'var(--primary-color)' : 'var(--playerbar-btn-fg)'};
-        stroke: var(--playerbar-btn-fg);
-    }
-
-    &:hover {
-        color: var(--playerbar-btn-fg-hover);
-        background: var(--playerbar-btn-bg-hover);
-
-        svg {
-            fill: ${({ $isActive }) =>
-                $isActive ? 'var(--primary-color)' : 'var(--playerbar-btn-fg-hover)'};
-        }
-    }
-
-    ${({ variant }) =>
-        variant === 'main'
-            ? ButtonMainVariant
-            : variant === 'secondary'
-              ? ButtonSecondaryVariant
-              : ButtonTertiaryVariant};
-`;
-
-export const PlayerButton = forwardRef<HTMLDivElement, PlayerButtonProps>(
-    ({ icon, tooltip, variant, ...rest }: PlayerButtonProps, ref) => {
+export const PlayerButton = forwardRef<HTMLButtonElement, PlayerButtonProps>(
+    ({ icon, isActive, tooltip, variant, ...rest }: PlayerButtonProps, ref) => {
         if (tooltip) {
             return (
                 <Tooltip {...tooltip}>
-                    <MotionWrapper
+                    <ActionIcon
+                        className={clsx({
+                            [styles.active]: isActive,
+                        })}
                         ref={ref}
-                        variant={variant}
+                        {...rest}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            rest.onClick?.(e);
+                        }}
+                        variant="subtle"
                     >
-                        <StyledPlayerButton
-                            variant={variant}
-                            {...rest}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                rest.onClick?.(e);
-                            }}
-                        >
-                            {icon}
-                        </StyledPlayerButton>
-                    </MotionWrapper>
+                        {icon}
+                    </ActionIcon>
                 </Tooltip>
             );
         }
 
         return (
-            <MotionWrapper
+            <ActionIcon
+                className={clsx(styles.playerButton, styles[variant], {
+                    [styles.active]: isActive,
+                })}
                 ref={ref}
-                variant={variant}
+                {...rest}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    rest.onClick?.(e);
+                }}
+                variant="subtle"
             >
-                <StyledPlayerButton
-                    variant={variant}
-                    {...rest}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        rest.onClick?.(e);
-                    }}
-                >
-                    {icon}
-                </StyledPlayerButton>
-            </MotionWrapper>
+                {icon}
+            </ActionIcon>
+        );
+    },
+);
+
+interface PlayButtonProps extends Omit<ActionIconProps, 'icon' | 'variant'> {
+    isPaused?: boolean;
+}
+
+export const PlayButton = forwardRef<HTMLButtonElement, PlayButtonProps>(
+    ({ isPaused, ...props }: PlayButtonProps, ref) => {
+        return (
+            <ActionIcon
+                className={styles.main}
+                icon={isPaused ? 'mediaPlay' : 'mediaPause'}
+                iconProps={{
+                    size: 'lg',
+                }}
+                ref={ref}
+                tooltip={{
+                    label: isPaused
+                        ? (t('player.play', { postProcess: 'sentenceCase' }) as string)
+                        : (t('player.pause', { postProcess: 'sentenceCase' }) as string),
+                }}
+                {...props}
+            />
         );
     },
 );

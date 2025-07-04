@@ -1,4 +1,3 @@
-import { Checkbox, Group, Stack } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useFocusTrap } from '@mantine/hooks';
 import { closeAllModals } from '@mantine/modals';
@@ -8,22 +7,73 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { api } from '/@/renderer/api';
-import { Button, PasswordInput, SegmentedControl, TextInput, toast } from '/@/renderer/components';
+import JellyfinIcon from '/@/renderer/features/servers/assets/jellyfin.png';
+import NavidromeIcon from '/@/renderer/features/servers/assets/navidrome.png';
+import SubsonicIcon from '/@/renderer/features/servers/assets/opensubsonic.png';
 import { useAuthStoreActions } from '/@/renderer/store';
+import { Button } from '/@/shared/components/button/button';
+import { Checkbox } from '/@/shared/components/checkbox/checkbox';
+import { Group } from '/@/shared/components/group/group';
+import { PasswordInput } from '/@/shared/components/password-input/password-input';
+import { SegmentedControl } from '/@/shared/components/segmented-control/segmented-control';
+import { Stack } from '/@/shared/components/stack/stack';
+import { TextInput } from '/@/shared/components/text-input/text-input';
+import { Text } from '/@/shared/components/text/text';
+import { toast } from '/@/shared/components/toast/toast';
 import { AuthenticationResponse } from '/@/shared/types/domain-types';
 import { ServerType, toServerType } from '/@/shared/types/types';
 
 const localSettings = isElectron() ? window.api.localSettings : null;
 
-const SERVER_TYPES = [
-    { label: 'Jellyfin', value: ServerType.JELLYFIN },
-    { label: 'Navidrome', value: ServerType.NAVIDROME },
-    { label: 'Subsonic', value: ServerType.SUBSONIC },
-];
-
 interface AddServerFormProps {
-    onCancel: () => void;
+    onCancel: (() => void) | null;
 }
+
+function ServerIconWithLabel({ icon, label }: { icon: string; label: string }) {
+    return (
+        <Stack
+            align="center"
+            justify="center"
+        >
+            <img
+                height="50"
+                src={icon}
+                width="50"
+            />
+            <Text>{label}</Text>
+        </Stack>
+    );
+}
+
+const SERVER_TYPES = [
+    {
+        label: (
+            <ServerIconWithLabel
+                icon={JellyfinIcon}
+                label="Jellyfin"
+            />
+        ),
+        value: ServerType.JELLYFIN,
+    },
+    {
+        label: (
+            <ServerIconWithLabel
+                icon={NavidromeIcon}
+                label="Navidrome"
+            />
+        ),
+        value: ServerType.NAVIDROME,
+    },
+    {
+        label: (
+            <ServerIconWithLabel
+                icon={SubsonicIcon}
+                label="OpenSubsonic"
+            />
+        ),
+        value: ServerType.SUBSONIC,
+    },
+];
 
 export const AddServerForm = ({ onCancel }: AddServerFormProps) => {
     const { t } = useTranslation();
@@ -40,7 +90,7 @@ export const AddServerForm = ({ onCancel }: AddServerFormProps) => {
             type:
                 (localSettings
                     ? localSettings.env.SERVER_TYPE
-                    : toServerType(window.SERVER_TYPE)) ?? ServerType.JELLYFIN,
+                    : toServerType(window.SERVER_TYPE)) ?? ServerType.NAVIDROME,
             url: (localSettings ? localSettings.env.SERVER_URL : window.SERVER_URL) ?? 'https://',
             username: '',
         },
@@ -131,6 +181,8 @@ export const AddServerForm = ({ onCancel }: AddServerFormProps) => {
                 <SegmentedControl
                     data={SERVER_TYPES}
                     disabled={Boolean(serverLock)}
+                    p="md"
+                    withItemsBorders={false}
                     {...form.getInputProps('type')}
                 />
                 <Group grow>
@@ -186,13 +238,18 @@ export const AddServerForm = ({ onCancel }: AddServerFormProps) => {
                         {...form.getInputProps('legacyAuth', { type: 'checkbox' })}
                     />
                 )}
-                <Group position="right">
-                    <Button
-                        onClick={onCancel}
-                        variant="subtle"
-                    >
-                        {t('common.cancel', { postProcess: 'titleCase' })}
-                    </Button>
+                <Group
+                    grow
+                    justify="flex-end"
+                >
+                    {onCancel && (
+                        <Button
+                            onClick={onCancel}
+                            variant="subtle"
+                        >
+                            {t('common.cancel', { postProcess: 'titleCase' })}
+                        </Button>
+                    )}
                     <Button
                         disabled={isSubmitDisabled}
                         loading={isLoading}

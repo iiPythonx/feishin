@@ -105,7 +105,7 @@ const createMpv = async (data: {
     try {
         await mpv.start();
     } catch (error: any) {
-        console.log('mpv failed to start', error);
+        console.error('mpv failed to start', error);
     } finally {
         await mpv.setMultipleProperties(properties || {});
     }

@@ -1,22 +1,24 @@
 import { RiRestartLine } from 'react-icons/ri';
 
-import { RemoteButton } from '/@/remote/components/buttons/remote-button';
 import { useConnected, useReconnect } from '/@/remote/store';
+import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
 
 export const ReconnectButton = () => {
     const connected = useConnected();
     const reconnect = useReconnect();
 
     return (
-        <RemoteButton
-            $active={!connected}
-            mr={5}
+        <ActionIcon
             onClick={() => reconnect()}
-            size="xl"
-            tooltip={connected ? 'Reconnect' : 'Not connected. Reconnect.'}
+            tooltip={{
+                label: connected ? 'Reconnect' : 'Not connected. Reconnect.',
+            }}
             variant="default"
         >
-            <RiRestartLine size={30} />
-        </RemoteButton>
+            <RiRestartLine
+                color={connected ? 'var(--theme-colors-primary)' : 'var(--theme-colors-foreground)'}
+                size={30}
+            />
+        </ActionIcon>
     );
 };

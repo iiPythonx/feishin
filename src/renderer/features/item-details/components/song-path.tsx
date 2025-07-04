@@ -1,20 +1,19 @@
-import { ActionIcon, CopyButton, Group } from '@mantine/core';
 import isElectron from 'is-electron';
 import { useTranslation } from 'react-i18next';
-import { RiCheckFill, RiClipboardFill, RiExternalLinkFill } from 'react-icons/ri';
-import styled from 'styled-components';
 
-import { toast, Tooltip } from '/@/renderer/components';
+import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
+import { CopyButton } from '/@/shared/components/copy-button/copy-button';
+import { Group } from '/@/shared/components/group/group';
+import { Icon } from '/@/shared/components/icon/icon';
+import { Text } from '/@/shared/components/text/text';
+import { toast } from '/@/shared/components/toast/toast';
+import { Tooltip } from '/@/shared/components/tooltip/tooltip';
 
 const util = isElectron() ? window.api.utils : null;
 
 export type SongPathProps = {
     path: null | string;
 };
-
-const PathText = styled.div`
-    user-select: all;
-`;
 
 export const SongPath = ({ path }: SongPathProps) => {
     const { t } = useTranslation();
@@ -37,8 +36,11 @@ export const SongPath = ({ path }: SongPathProps) => {
                         )}
                         withinPortal
                     >
-                        <ActionIcon onClick={copy}>
-                            {copied ? <RiCheckFill /> : <RiClipboardFill />}
+                        <ActionIcon
+                            onClick={copy}
+                            variant="transparent"
+                        >
+                            {copied ? <Icon icon="check" /> : <Icon icon="clipboardCopy" />}
                         </ActionIcon>
                     </Tooltip>
                 )}
@@ -48,23 +50,23 @@ export const SongPath = ({ path }: SongPathProps) => {
                     label={t('page.itemDetail.openFile', { postProcess: 'sentenceCase' })}
                     withinPortal
                 >
-                    <ActionIcon>
-                        <RiExternalLinkFill
-                            onClick={() => {
-                                util.openItem(path).catch((error) => {
-                                    toast.error({
-                                        message: (error as Error).message,
-                                        title: t('error.openError', {
-                                            postProcess: 'sentenceCase',
-                                        }),
-                                    });
+                    <ActionIcon
+                        icon="externalLink"
+                        onClick={() => {
+                            util.openItem(path).catch((error) => {
+                                toast.error({
+                                    message: (error as Error).message,
+                                    title: t('error.openError', {
+                                        postProcess: 'sentenceCase',
+                                    }),
                                 });
-                            }}
-                        />
-                    </ActionIcon>
+                            });
+                        }}
+                        variant="transparent"
+                    />
                 </Tooltip>
             )}
-            <PathText>{path}</PathText>
+            <Text style={{ userSelect: 'all' }}>{path}</Text>
         </Group>
     );
 };

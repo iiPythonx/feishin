@@ -113,7 +113,9 @@
         "trackPeak": "Track-Spitzenpegel",
         "codec": "Codec",
         "albumPeak": "Album-Spitzenpegel",
-        "albumGain": "Album-Pegelverstärkung"
+        "albumGain": "Album-Pegelverstärkung",
+        "tags": "tags",
+        "viewReleaseNotes": "Release Notes anzeigen"
     },
     "error": {
         "remotePortWarning": "Starten Sie den Server neu, um den neuen Port anzuwenden",
@@ -237,7 +239,8 @@
             "description": "Beschreibung",
             "setExpiration": "Ablaufdatum setzen",
             "expireInvalid": "Ablaufdatum muss in der Zukunft liegen",
-            "allowDownloading": "Herunterladen zulassen"
+            "allowDownloading": "Herunterladen zulassen",
+            "success": "Link in die Zwischenablage kopiert (oder hier klicken um zu öffnen)"
         }
     },
     "entity": {
@@ -429,7 +432,8 @@
             "home": "$t(common.home)",
             "artists": "$t(entity.artist_other)",
             "albumArtists": "$t(entity.albumArtist_other)",
-            "shared": "$t(entity.playlist_other) geteilt"
+            "shared": "$t(entity.playlist_other) geteilt",
+            "myLibrary": "meine bibliothek"
         },
         "setting": {
             "playbackTab": "Wiedergabe",
@@ -516,7 +520,7 @@
         "playSimilarSongs": "Ähnliche Lieder abspielen"
     },
     "setting": {
-        "audioDevice_description": "Wählen Sie das Audiogerät aus, das für die Wiedergabe verwendet werden soll (nur Webplayer).",
+        "audioDevice_description": "Wählen Sie das Audiogerät aus, das für die Wiedergabe verwendet werden soll (nur Webplayer)",
         "audioExclusiveMode": "Audio-Exklusivmodus",
         "audioDevice": "Audiogerät",
         "accentColor": "Akzentfarbe",
@@ -670,12 +674,23 @@
         "windowBarStyle_description": "Wähle den Stil der Windows-Leiste",
         "hotkey_toggleCurrentSongFavorite": "$t(common.currentSong) zu Favoriten hinzufügen",
         "clearQueryCache_description": "\"Weiches\" Zurücksetzen. Dies wird Playlisten, Musik-Metadaten und gespeicherte Liedtexte zurücksetzen, Zugangsinformationen und zwischengespeicherte Bilder werden behalten",
-        "discordRichPresence_description": "Zeige deinen Wiedergabe-Status in {{discord}} als rich presence an. Angezeigte Bilder sind: {{icon}}, {{playing}}, und {{paused}} ",
+        "discordRichPresence_description": "Zeige deinen Wiedergabe-Status in {{discord}} als rich presence an. Angezeigte Bilder sind: {{icon}}, {{playing}}, und {{paused}}",
         "clearCache": "Browser-Zwischenspeicher löschen",
         "clearQueryCache": "feishins Zwischenspeicher leeren",
         "clearCache_description": "Hartes Zurücksetzen. Neben feishins Zwischenspeicher wird auch der des Browsers gelöscht (Bilder und andere Daten). Zugangsinformationen und Einstellungen werden behalten",
         "sidePlayQueueStyle": "Wiedergabelistenstil in der Seitenleiste",
         "zoom_description": "Setzt den Zoom (in %) für das Programm",
-        "zoom": "Zoom"
+        "zoom": "Zoom",
+        "albumBackground": "Album Hintergrund",
+        "customCss": "Benutzerdefiniert css",
+        "homeConfiguration": "Startseite Konfiguration",
+        "lastfmApiKey": "{{lastfm}} API-Schlüssel",
+        "lastfmApiKey_description": "Der API-Schlüssel für {{lastfm}}. wird für benötigt",
+        "discordListening": "Status als hört zu anzeigen",
+        "discordListening_description": "Status als hört zu statt als spielt anzeigen",
+        "lastfm": "zeige last.fm links",
+        "lastfm_description": "zeige links zu last.fm auf dem Künstler/Album-Seiten",
+        "musicbrainz": "Zeig musicbrainz links",
+        "customCssEnable": "aktiviere Benutzerdefinierte css"
     }
 }

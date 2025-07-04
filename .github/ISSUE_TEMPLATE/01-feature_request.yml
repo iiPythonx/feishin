@@ -1,0 +1,33 @@
+name: Feature request
+description: Request a feature to be added to Feishin
+title: '[Feature]: '
+labels: ['enhancement']
+body:
+    - type: checkboxes
+      id: check-duplicate
+      attributes:
+          label: I have already checked through the existing feature requests and found no duplicates
+          options:
+              - label: 'Yes'
+                required: true
+
+    - type: dropdown
+      id: server-specific
+      attributes:
+          label: Is this a server-specific feature?
+          options:
+              - Not server-specific
+              - OpenSubsonic
+              - Jellyfin
+              - Navidrome
+          default: 0
+      validations:
+          required: true
+
+    - type: textarea
+      id: solution
+      attributes:
+          label: What do you want to be added?
+          placeholder: I would like to see [...]
+      validations:
+          required: true

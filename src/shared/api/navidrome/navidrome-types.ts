@@ -205,6 +205,7 @@ const song = z.object({
     id: z.string(),
     imageFiles: z.string().optional(),
     largeImageUrl: z.string().optional(),
+    libraryPath: z.string().optional(),
     lyrics: z.string().optional(),
     mbzAlbumArtistId: z.string().optional(),
     mbzAlbumId: z.string().optional(),

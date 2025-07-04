@@ -1,13 +1,11 @@
 import type { AgGridReact as AgGridReactType } from '@ag-grid-community/react/lib/agGridReact';
 
-import { Box, Group } from '@mantine/core';
 import { closeAllModals, openModal } from '@mantine/modals';
+import { motion } from 'motion/react';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RiArrowDownSLine, RiArrowUpSLine } from 'react-icons/ri';
 import { generatePath, useNavigate, useParams } from 'react-router';
 
-import { Button, Paper, Text, toast } from '/@/renderer/components';
 import { PlaylistDetailSongListContent } from '/@/renderer/features/playlists/components/playlist-detail-song-list-content';
 import { PlaylistDetailSongListHeader } from '/@/renderer/features/playlists/components/playlist-detail-song-list-header';
 import { PlaylistQueryBuilder } from '/@/renderer/features/playlists/components/playlist-query-builder';
@@ -19,6 +17,11 @@ import { usePlaylistSongList } from '/@/renderer/features/playlists/queries/play
 import { AnimatedPage } from '/@/renderer/features/shared';
 import { AppRoute } from '/@/renderer/router/routes';
 import { useCurrentServer, usePlaylistDetailStore } from '/@/renderer/store';
+import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
+import { Box } from '/@/shared/components/box/box';
+import { Group } from '/@/shared/components/group/group';
+import { Text } from '/@/shared/components/text/text';
+import { toast } from '/@/shared/components/toast/toast';
 import {
     PlaylistSongListQuery,
     ServerType,
@@ -171,25 +174,23 @@ const PlaylistDetailSongListRoute = () => {
             />
 
             {(isSmartPlaylist || showQueryBuilder) && (
-                <Box>
-                    <Paper
+                <motion.div>
+                    <Box
                         h="100%"
                         mah="35vh"
+                        p="md"
                         w="100%"
                     >
-                        <Group p="1rem">
-                            <Button
-                                compact
+                        <Group pb="md">
+                            <ActionIcon
+                                icon={isQueryBuilderExpanded ? 'arrowUpS' : 'arrowDownS'}
+                                iconProps={{
+                                    size: 'md',
+                                }}
                                 onClick={handleToggleExpand}
-                                variant="default"
-                            >
-                                {isQueryBuilderExpanded ? (
-                                    <RiArrowUpSLine size={20} />
-                                ) : (
-                                    <RiArrowDownSLine size={20} />
-                                )}
-                            </Button>
-                            <Text>Query Editor</Text>
+                                size="xs"
+                            />
+                            <Text>{t('form.queryEditor.title', { postProcess: 'titleCase' })}</Text>
                         </Group>
                         {isQueryBuilderExpanded && (
                             <PlaylistQueryBuilder
@@ -204,8 +205,8 @@ const PlaylistDetailSongListRoute = () => {
                                 sortOrder={detailQuery?.data?.rules?.order || 'asc'}
                             />
                         )}
-                    </Paper>
-                </Box>
+                    </Box>
+                </motion.div>
             )}
             <PlaylistDetailSongListContent
                 songs={

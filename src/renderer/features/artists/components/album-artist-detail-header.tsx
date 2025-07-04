@@ -1,25 +1,28 @@
-import { Group, Rating, Stack } from '@mantine/core';
 import { forwardRef, Fragment, Ref } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 
-import { Text } from '/@/renderer/components';
 import { useAlbumArtistDetail } from '/@/renderer/features/artists/queries/album-artist-detail-query';
 import { LibraryHeader, useSetRating } from '/@/renderer/features/shared';
 import { AppRoute } from '/@/renderer/router/routes';
 import { useCurrentServer } from '/@/renderer/store';
 import { formatDurationString } from '/@/renderer/utils';
+import { Group } from '/@/shared/components/group/group';
+import { Rating } from '/@/shared/components/rating/rating';
+import { Stack } from '/@/shared/components/stack/stack';
+import { Text } from '/@/shared/components/text/text';
 import { LibraryItem, ServerType } from '/@/shared/types/domain-types';
 
 interface AlbumArtistDetailHeaderProps {
     background: {
-        background: string;
+        background?: string;
         blur: number;
     };
+    loading: boolean;
 }
 
 export const AlbumArtistDetailHeader = forwardRef(
-    ({ background }: AlbumArtistDetailHeaderProps, ref: Ref<HTMLDivElement>) => {
+    ({ background, loading }: AlbumArtistDetailHeaderProps, ref: Ref<HTMLDivElement>) => {
         const { albumArtistId, artistId } = useParams() as {
             albumArtistId?: string;
             artistId?: string;
@@ -78,6 +81,7 @@ export const AlbumArtistDetailHeader = forwardRef(
             <LibraryHeader
                 imageUrl={detailQuery?.data?.imageUrl}
                 item={{ route: AppRoute.LIBRARY_ALBUM_ARTISTS, type: LibraryItem.ALBUM_ARTIST }}
+                loading={loading}
                 ref={ref}
                 title={detailQuery?.data?.name || ''}
                 {...background}
@@ -88,13 +92,13 @@ export const AlbumArtistDetailHeader = forwardRef(
                             .filter((i) => i.enabled)
                             .map((item, index) => (
                                 <Fragment key={`item-${item.id}-${index}`}>
-                                    {index > 0 && <Text $noSelect>•</Text>}
-                                    <Text $secondary={item.secondary}>{item.value}</Text>
+                                    {index > 0 && <Text isNoSelect>•</Text>}
+                                    <Text isMuted={item.secondary}>{item.value}</Text>
                                 </Fragment>
                             ))}
                         {showRating && (
                             <>
-                                <Text $noSelect>•</Text>
+                                <Text isNoSelect>•</Text>
                                 <Rating
                                     onChange={handleUpdateRating}
                                     readOnly={

@@ -405,7 +405,7 @@ const enableServer = (config: RemoteConfig): Promise<void> => {
                             }
                             case 'proxy': {
                                 const toFetch = currentState.song?.imageUrl?.replaceAll(
-                                    /&(size|width|height=\d+)/g,
+                                    /&(size|width|height)=\d+/g,
                                     '',
                                 );
 

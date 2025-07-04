@@ -175,7 +175,9 @@ const normalizeSong = (
         lastPlayedAt: normalizePlayDate(item),
         lyrics: item.lyrics ? item.lyrics : null,
         name: item.title,
-        path: item.path,
+        // Thankfully, Windows is merciful and allows a mix of separators. So, we can use the
+        // POSIX separator here instead
+        path: (item.libraryPath ? item.libraryPath + '/' : '') + item.path,
         peak:
             item.rgAlbumPeak || item.rgTrackPeak
                 ? { album: item.rgAlbumPeak, track: item.rgTrackPeak }

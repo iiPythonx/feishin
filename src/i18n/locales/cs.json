@@ -124,7 +124,7 @@
         "hotkey_toggleShuffle": "přepnutí náhodného přehrávání",
         "theme": "motiv",
         "playbackStyle_description": "nastavení způsobu přehrávání pro přehrávač zvuku",
-        "discordRichPresence_description": "povolit stav přehrávání v {{discord}} rich presence. Klíče obrázků jsou: {{icon}}, {{playing}}, {{paused}} ",
+        "discordRichPresence_description": "povolit stav přehrávání v {{discord}} rich presence. Klíče obrázků jsou: {{icon}}, {{playing}}, {{paused}}",
         "mpvExecutablePath": "cesta ke spustitelnému souboru mpv",
         "audioDevice": "zvukové zařízení",
         "hotkey_rate2": "hodnocení 2 hvězdami",
@@ -171,7 +171,7 @@
         "hotkey_zoomOut": "oddálení",
         "hotkey_unfavoriteCurrentSong": "zrušení oblíbení u $t(common.currentSong)",
         "hotkey_rate0": "vymazání hodnocení",
-        "discordApplicationId": "aplikační id pro {{discord}}",
+        "discordApplicationId": "id aplikace pro {{discord}}",
         "applicationHotkeys_description": "nastavení klávesových zkratek aplikace. přepněte pole pro nastavení jako globální zkratku (pouze na počítači)",
         "floatingQueueArea_description": "zobrazit ikonu přejetí myší na pravé straně obrazovky pro zobrazení fronty",
         "hotkey_volumeMute": "ztlumení",
@@ -259,7 +259,19 @@
         "lastfmApiKey": "klíč API {{lastfm}}",
         "lastfmApiKey_description": "klíč API pro {{lastfm}}. vyžadováno pro obaly alb",
         "discordServeImage": "načítat obrázky {{discord}} ze serveru",
-        "discordServeImage_description": "sdílet obaly alb pro {{discord}} rich presence ze samotného serveru, dostupné pouze pro jellyfin a navidrome"
+        "discordServeImage_description": "sdílet obaly alb pro {{discord}} rich presence ze samotného serveru, dostupné pouze pro jellyfin a navidrome",
+        "lastfm": "zobrazit odkazy na last.fm",
+        "lastfm_description": "na stránkách umělců a alb zobrazit odkazy na last.fm",
+        "musicbrainz": "zobrazit odkazy na musicbrainz",
+        "musicbrainz_description": "na stránkách umělců a alb, kde existuje mbid, zobrazit odkazy na musicbrainz",
+        "neteaseTranslation": "Povolit překlady NetEase",
+        "neteaseTranslation_description": "Pokud je povoleno, načte a zobrazí přeložené texty ze služby NetEase, pokud jsou dostupné.",
+        "preferLocalLyrics": "preferovat místní texty",
+        "preferLocalLyrics_description": "preferovat místní texty před vzdálenými, pokud jsou dostupné",
+        "discordPausedStatus": "zobrazit rich presence při pozastavení",
+        "discordPausedStatus_description": "pokud je povoleno, bude při pozastavení přehrávače zobrazen stav",
+        "preservePitch": "zachovat výšku",
+        "preservePitch_description": "zachová výšku při úpravě rychlosti přehrávání"
     },
     "action": {
         "editPlaylist": "upravit $t(entity.playlist_one)",
@@ -367,7 +379,7 @@
         "size": "velikost",
         "biography": "biografie",
         "note": "poznámka",
-        "albumGain": "zisk (gain) alba",
+        "albumGain": "gain alba",
         "albumPeak": "vrchol alba",
         "close": "zavřít",
         "mbid": "ID MusicBrainz",
@@ -379,14 +391,18 @@
         "preview": "náhled",
         "translation": "překlad",
         "additionalParticipants": "další přispívající",
-        "tags": "štítky"
+        "tags": "štítky",
+        "viewReleaseNotes": "zobrazit seznam změn",
+        "newVersion": "byla nainstalována nová verze ({{version}})"
     },
     "table": {
         "config": {
             "view": {
                 "card": "karta",
                 "table": "tabulka",
-                "poster": "plakát"
+                "poster": "plakát",
+                "list": "seznam",
+                "grid": "mřížka"
             },
             "general": {
                 "displayType": "typ zobrazení",
@@ -538,7 +554,8 @@
             "home": "$t(common.home)",
             "artists": "$t(entity.artist_other)",
             "albumArtists": "$t(entity.albumArtist_other)",
-            "shared": "$t(entity.playlist_other) sdíleny"
+            "shared": "$t(entity.playlist_other) sdíleny",
+            "myLibrary": "moje knihovna"
         },
         "fullscreenPlayer": {
             "config": {
@@ -714,7 +731,8 @@
         },
         "queryEditor": {
             "input_optionMatchAll": "shoda všeho",
-            "input_optionMatchAny": "shoda libovolného"
+            "input_optionMatchAny": "shoda libovolného",
+            "title": "editor dotazů"
         },
         "lyricSearch": {
             "input_name": "$t(common.name)",

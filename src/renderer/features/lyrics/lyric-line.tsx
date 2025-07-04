@@ -1,8 +1,10 @@
-import { TitleProps } from '@mantine/core';
+import clsx from 'clsx';
 import { ComponentPropsWithoutRef } from 'react';
-import styled from 'styled-components';
 
-import { TextTitle } from '/@/renderer/components/text-title';
+import styles from './lyric-line.module.css';
+
+import { Box } from '/@/shared/components/box/box';
+import { Stack } from '/@/shared/components/stack/stack';
 
 interface LyricLineProps extends ComponentPropsWithoutRef<'div'> {
     alignment: 'center' | 'left' | 'right';
@@ -10,39 +12,23 @@ interface LyricLineProps extends ComponentPropsWithoutRef<'div'> {
     text: string;
 }
 
-const StyledText = styled(TextTitle)<TitleProps & { $alignment: string; $fontSize: number }>`
-    padding: 0 1rem;
-    font-size: ${(props) => props.$fontSize}px;
-    font-weight: 600;
-    color: var(--main-fg);
-    text-align: ${(props) => props.$alignment};
-    opacity: 0.5;
+export const LyricLine = ({ alignment, className, fontSize, text, ...props }: LyricLineProps) => {
+    const lines = text.split('_BREAK_');
 
-    transition:
-        opacity 0.3s ease-in-out,
-        transform 0.3s ease-in-out;
-
-    &.active {
-        opacity: 1;
-    }
-
-    &.unsynchronized {
-        opacity: 1;
-    }
-
-    &.synchronized {
-        cursor: pointer;
-    }
-`;
-
-export const LyricLine = ({ alignment, fontSize, text, ...props }: LyricLineProps) => {
     return (
-        <StyledText
-            $alignment={alignment}
-            $fontSize={fontSize}
+        <Box
+            className={clsx(styles.lyricLine, className)}
+            style={{
+                fontSize,
+                textAlign: alignment,
+            }}
             {...props}
         >
-            {text}
-        </StyledText>
+            <Stack gap={0}>
+                {lines.map((line, index) => (
+                    <span key={index}>{line}</span>
+                ))}
+            </Stack>
+        </Box>
     );
 };

@@ -1,58 +1,15 @@
-import { Center, Flex } from '@mantine/core';
-import { MouseEvent, useCallback } from 'react';
+import { CSSProperties, MouseEvent, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-    RiAddBoxFill,
-    RiAddCircleFill,
-    RiAlbumFill,
-    RiPlayFill,
-    RiPlayListFill,
-    RiShuffleFill,
-    RiUserVoiceFill,
-} from 'react-icons/ri';
-import styled from 'styled-components';
 
-import { Button, Text } from '/@/renderer/components';
+import styles from './library-command-item.module.css';
+
+import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
+import { Flex } from '/@/shared/components/flex/flex';
+import { Group } from '/@/shared/components/group/group';
+import { Image } from '/@/shared/components/image/image';
+import { Text } from '/@/shared/components/text/text';
 import { LibraryItem } from '/@/shared/types/domain-types';
 import { Play, PlayQueueAddOptions } from '/@/shared/types/types';
-
-const Item = styled(Flex)``;
-
-const ItemGrid = styled.div<{ height: number }>`
-    display: grid;
-    grid-template-areas: 'image info';
-    grid-template-rows: 1fr;
-    grid-template-columns: ${(props) => props.height}px minmax(0, 1fr);
-    grid-auto-columns: 1fr;
-    gap: 0.5rem;
-    width: 100%;
-    max-width: 100%;
-    height: 100%;
-    letter-spacing: 0.5px;
-`;
-
-const ImageWrapper = styled.div`
-    display: flex;
-    grid-area: image;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-`;
-
-const MetadataWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    grid-area: info;
-    justify-content: center;
-    width: 100%;
-`;
-
-const StyledImage = styled.img<{ placeholder?: string }>`
-    object-fit: var(--image-fit);
-    border-radius: 4px;
-`;
-
-const ActionsContainer = styled(Flex)``;
 
 interface LibraryCommandItemProps {
     disabled?: boolean;
@@ -74,25 +31,6 @@ export const LibraryCommandItem = ({
     title,
 }: LibraryCommandItemProps) => {
     const { t } = useTranslation();
-    let Placeholder = RiAlbumFill;
-
-    switch (itemType) {
-        case LibraryItem.ALBUM:
-            Placeholder = RiAlbumFill;
-            break;
-        case LibraryItem.ALBUM_ARTIST:
-            Placeholder = RiUserVoiceFill;
-            break;
-        case LibraryItem.ARTIST:
-            Placeholder = RiUserVoiceFill;
-            break;
-        case LibraryItem.PLAYLIST:
-            Placeholder = RiPlayListFill;
-            break;
-        default:
-            Placeholder = RiAlbumFill;
-            break;
-    }
 
     const handlePlay = useCallback(
         (e: MouseEvent, id: string, playType: Play) => {
@@ -108,110 +46,95 @@ export const LibraryCommandItem = ({
         [handlePlayQueueAdd, itemType],
     );
 
+    const [isHovered, setIsHovered] = useState(false);
+
     return (
-        <Item
+        <Flex
             gap="xl"
             justify="space-between"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
             style={{ height: '40px', width: '100%' }}
         >
-            <ItemGrid height={40}>
-                <ImageWrapper>
-                    {imageUrl ? (
-                        <StyledImage
-                            alt="cover"
-                            height={40}
-                            placeholder="var(--placeholder-bg)"
-                            src={imageUrl}
-                            style={{}}
-                            width={40}
-                        />
-                    ) : (
-                        <Center
-                            style={{
-                                background: 'var(--placeholder-bg)',
-                                borderRadius: 'var(--card-default-radius)',
-                                height: `${40}px`,
-                                width: `${40}px`,
-                            }}
-                        >
-                            <Placeholder
-                                color="var(--placeholder-fg)"
-                                size={35}
-                            />
-                        </Center>
-                    )}
-                </ImageWrapper>
-                <MetadataWrapper>
+            <div
+                className={styles.itemGrid}
+                style={{ '--item-height': '40px' } as CSSProperties}
+            >
+                <div className={styles.imageWrapper}>
+                    <Image
+                        alt="cover"
+                        className={styles.image}
+                        height={40}
+                        src={imageUrl || ''}
+                        width={40}
+                    />
+                </div>
+                <div className={styles.metadataWrapper}>
                     <Text overflow="hidden">{title}</Text>
                     <Text
-                        $secondary
+                        isMuted
                         overflow="hidden"
                     >
                         {subtitle}
                     </Text>
-                </MetadataWrapper>
-            </ItemGrid>
-            <ActionsContainer
-                align="center"
-                gap="sm"
-                justify="flex-end"
-            >
-                <Button
-                    compact
-                    disabled={disabled}
-                    onClick={(e) => handlePlay(e, id, Play.NOW)}
-                    size="md"
-                    tooltip={{
-                        label: t('player.play', { postProcess: 'sentenceCase' }),
-                        openDelay: 500,
-                    }}
-                    variant="default"
+                </div>
+            </div>
+            {isHovered && (
+                <Group
+                    align="center"
+                    gap="sm"
+                    justify="flex-end"
+                    wrap="nowrap"
                 >
-                    <RiPlayFill />
-                </Button>
-                {itemType !== LibraryItem.SONG && (
-                    <Button
-                        compact
+                    <ActionIcon
                         disabled={disabled}
-                        onClick={(e) => handlePlay(e, id, Play.SHUFFLE)}
-                        size="md"
+                        icon="mediaPlay"
+                        onClick={(e) => handlePlay(e, id, Play.NOW)}
+                        size="xs"
                         tooltip={{
-                            label: t('player.shuffle', { postProcess: 'sentenceCase' }),
+                            label: t('player.play', { postProcess: 'sentenceCase' }),
                             openDelay: 500,
                         }}
-                        variant="default"
-                    >
-                        <RiShuffleFill />
-                    </Button>
-                )}
-                <Button
-                    compact
-                    disabled={disabled}
-                    onClick={(e) => handlePlay(e, id, Play.LAST)}
-                    size="md"
-                    tooltip={{
-                        label: t('player.addLast', { postProcess: 'sentenceCase' }),
+                        variant="subtle"
+                    />
+                    {itemType !== LibraryItem.SONG && (
+                        <ActionIcon
+                            disabled={disabled}
+                            icon="mediaShuffle"
+                            onClick={(e) => handlePlay(e, id, Play.SHUFFLE)}
+                            size="xs"
+                            tooltip={{
+                                label: t('player.shuffle', { postProcess: 'sentenceCase' }),
+                                openDelay: 500,
+                            }}
+                            variant="subtle"
+                        />
+                    )}
+                    <ActionIcon
+                        disabled={disabled}
+                        icon="mediaPlayLast"
+                        onClick={(e) => handlePlay(e, id, Play.LAST)}
+                        size="xs"
+                        tooltip={{
+                            label: t('player.addLast', { postProcess: 'sentenceCase' }),
 
-                        openDelay: 500,
-                    }}
-                    variant="default"
-                >
-                    <RiAddBoxFill />
-                </Button>
-                <Button
-                    compact
-                    disabled={disabled}
-                    onClick={(e) => handlePlay(e, id, Play.NEXT)}
-                    size="md"
-                    tooltip={{
-                        label: t('player.addNext', { postProcess: 'sentenceCase' }),
-                        openDelay: 500,
-                    }}
-                    variant="default"
-                >
-                    <RiAddCircleFill />
-                </Button>
-            </ActionsContainer>
-        </Item>
+                            openDelay: 500,
+                        }}
+                        variant="subtle"
+                    />
+                    <ActionIcon
+                        disabled={disabled}
+                        icon="mediaPlayNext"
+                        onClick={(e) => handlePlay(e, id, Play.NEXT)}
+                        size="xs"
+                        tooltip={{
+                            label: t('player.addNext', { postProcess: 'sentenceCase' }),
+                            openDelay: 500,
+                        }}
+                        variant="subtle"
+                    />
+                </Group>
+            )}
+        </Flex>
     );
 };

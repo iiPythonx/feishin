@@ -1,12 +1,8 @@
-import { Group, Table } from '@mantine/core';
 import { ReactNode } from 'react';
 import { TFunction, useTranslation } from 'react-i18next';
-import { RiCheckFill, RiCloseFill } from 'react-icons/ri';
 import { generatePath } from 'react-router';
 import { Link } from 'react-router-dom';
 
-import { Spoiler, Text } from '/@/renderer/components';
-import { Separator } from '/@/renderer/components/separator';
 import { SongPath } from '/@/renderer/features/item-details/components/song-path';
 import { useGenreRoute } from '/@/renderer/hooks/use-genre-route';
 import { AppRoute } from '/@/renderer/router/routes';
@@ -15,6 +11,11 @@ import { formatDateRelative, formatRating } from '/@/renderer/utils/format';
 import { replaceURLWithHTMLLinks } from '/@/renderer/utils/linkify';
 import { sanitize } from '/@/renderer/utils/sanitize';
 import { SEPARATOR_STRING } from '/@/shared/api/utils';
+import { Icon } from '/@/shared/components/icon/icon';
+import { Separator } from '/@/shared/components/separator/separator';
+import { Spoiler } from '/@/shared/components/spoiler/spoiler';
+import { Table } from '/@/shared/components/table/table';
+import { Text } from '/@/shared/components/text/text';
 import {
     Album,
     AlbumArtist,
@@ -49,10 +50,12 @@ const handleRow = <T extends AnyLibraryItem>(t: TFunction, item: T, rule: ItemDe
     if (!value) return null;
 
     return (
-        <tr key={rule.label}>
-            <td>{t(rule.label, { postProcess: rule.postprocess || 'sentenceCase' })}</td>
-            <td>{value}</td>
-        </tr>
+        <Table.Tr key={rule.label}>
+            <Table.Th>
+                {t(rule.label, { postProcess: rule.postprocess || 'sentenceCase' })}
+            </Table.Th>
+            <Table.Td>{value}</Table.Td>
+        </Table.Tr>
     );
 };
 
@@ -62,9 +65,10 @@ const formatArtists = (artists: null | RelatedArtist[] | undefined) =>
             {index > 0 && <Separator />}
             {artist.id ? (
                 <Text
-                    $link
                     color={'#C1C2C5 !important'} // idk why this is hardcoded, but it is for the normal attributes too, so nohting i can do unless i want these to stick out
                     component={Link}
+                    fw={700}
+                    isLink
                     overflow="visible"
                     size="md"
                     to={
@@ -102,9 +106,10 @@ const FormatGenre = (item: Album | AlbumArtist | Playlist | Song) => {
         <span key={genre.id}>
             {index > 0 && <Separator />}
             <Text
-                $link
                 color={'#C1C2C5 !important'}
                 component={Link}
+                fw={700}
+                isLink
                 overflow="visible"
                 size="md"
                 to={genre.id ? generatePath(genreRoute, { genreId: genre.id }) : ''}
@@ -116,7 +121,17 @@ const FormatGenre = (item: Album | AlbumArtist | Playlist | Song) => {
 };
 
 const BoolField = (key: boolean) =>
-    key ? <RiCheckFill size="1.1rem" /> : <RiCloseFill size="1.1rem" />;
+    key ? (
+        <Icon
+            color="success"
+            icon="check"
+        />
+    ) : (
+        <Icon
+            color="error"
+            icon="x"
+        />
+    );
 
 const AlbumPropertyMapping: ItemDetailRow<Album>[] = [
     { key: 'name', label: 'common.title' },
@@ -154,13 +169,13 @@ const AlbumPropertyMapping: ItemDetailRow<Album>[] = [
         postprocess: [],
         render: (album) =>
             album.mbzId ? (
-                <a
-                    href={`https://musicbrainz.org/release/${album.mbzId}`}
+                <Link
                     rel="noopener noreferrer"
                     target="_blank"
+                    to={`https://musicbrainz.org/release/${album.mbzId}`}
                 >
                     {album.mbzId}
-                </a>
+                </Link>
             ) : null,
     },
     { key: 'id', label: 'filter.id' },
@@ -189,13 +204,13 @@ const AlbumArtistPropertyMapping: ItemDetailRow<AlbumArtist>[] = [
         postprocess: [],
         render: (artist) =>
             artist.mbz ? (
-                <a
-                    href={`https://musicbrainz.org/artist/${artist.mbz}`}
+                <Link
                     rel="noopener noreferrer"
                     target="_blank"
+                    to={`https://musicbrainz.org/artist/${artist.mbz}`}
                 >
                     {artist.mbz}
-                </a>
+                </Link>
             ) : null,
     },
     {
@@ -245,9 +260,10 @@ const SongPropertyMapping: ItemDetailRow<Song>[] = [
             song.albumId &&
             song.album && (
                 <Text
-                    $link
                     color={'#C1C2C5 !important'}
                     component={Link}
+                    fw={700}
+                    isLink
                     overflow="visible"
                     size="md"
                     to={
@@ -318,26 +334,24 @@ const handleTags = (item: Album | Song, t: TFunction) => {
     if (item.tags) {
         const tags = Object.entries(item.tags).map(([tag, fields]) => {
             return (
-                <tr key={tag}>
-                    <td>
+                <Table.Tr key={tag}>
+                    <Table.Th>
                         {tag.slice(0, 1).toLocaleUpperCase()}
                         {tag.slice(1)}
-                    </td>
-                    <td>{fields.length === 0 ? BoolField(true) : fields.join(SEPARATOR_STRING)}</td>
-                </tr>
+                    </Table.Th>
+                    <Table.Td>
+                        {fields.length === 0 ? BoolField(true) : fields.join(SEPARATOR_STRING)}
+                    </Table.Td>
+                </Table.Tr>
             );
         });
 
         if (tags.length) {
             return [
-                <tr key="tags">
-                    <td>
-                        <h3>{t('common.tags', { postProcess: 'sentenceCase' })}</h3>
-                    </td>
-                    <td>
-                        <h3>{tags.length}</h3>
-                    </td>
-                </tr>,
+                <Table.Tr key="tags">
+                    <Table.Th>{t('common.tags', { postProcess: 'sentenceCase' })}</Table.Th>
+                    <Table.Td>{tags.length}</Table.Td>
+                </Table.Tr>,
             ].concat(tags);
         }
     }
@@ -349,30 +363,26 @@ const handleParticipants = (item: Album | Song, t: TFunction) => {
     if (item.participants) {
         const participants = Object.entries(item.participants).map(([role, participants]) => {
             return (
-                <tr key={role}>
-                    <td>
+                <Table.Tr key={role}>
+                    <Table.Th>
                         {role.slice(0, 1).toLocaleUpperCase()}
                         {role.slice(1)}
-                    </td>
-                    <td>{formatArtists(participants)}</td>
-                </tr>
+                    </Table.Th>
+                    <Table.Td>{formatArtists(participants)}</Table.Td>
+                </Table.Tr>
             );
         });
 
         if (participants.length) {
             return [
-                <tr key="participants">
-                    <td>
-                        <h3>
-                            {t('common.additionalParticipants', {
-                                postProcess: 'sentenceCase',
-                            })}
-                        </h3>
-                    </td>
-                    <td>
-                        <h3>{participants.length}</h3>
-                    </td>
-                </tr>,
+                <Table.Tr key="participants">
+                    <Table.Th>
+                        {t('common.additionalParticipants', {
+                            postProcess: 'sentenceCase',
+                        })}
+                    </Table.Th>
+                    <Table.Td>{participants.length}</Table.Td>
+                </Table.Tr>,
             ].concat(participants);
         }
     }
@@ -406,15 +416,13 @@ export const ItemDetailsModal = ({ item }: ItemDetailsModalProps) => {
     }
 
     return (
-        <Group>
-            <Table
-                highlightOnHover
-                horizontalSpacing="sm"
-                sx={{ userSelect: 'text', whiteSpace: 'pre-line' }}
-                verticalSpacing="sm"
-            >
-                <tbody>{body}</tbody>
-            </Table>
-        </Group>
+        <Table
+            highlightOnHover
+            variant="vertical"
+            withRowBorders={false}
+            withTableBorder
+        >
+            <Table.Tbody>{body}</Table.Tbody>
+        </Table>
     );
 };

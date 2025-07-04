@@ -1,6 +1,8 @@
+import clsx from 'clsx';
 import isElectron from 'is-electron';
-import { useCallback, useEffect, useRef } from 'react';
-import styled from 'styled-components';
+import { Fragment, useCallback, useEffect, useRef } from 'react';
+
+import styles from './synchronized-lyrics.module.css';
 
 import { LyricLine } from '/@/renderer/features/lyrics/lyric-line';
 import { useScrobble } from '/@/renderer/features/player/hooks/use-scrobble';
@@ -21,38 +23,6 @@ import { PlaybackType, PlayerStatus } from '/@/shared/types/types';
 const mpvPlayer = isElectron() ? window.api.mpvPlayer : null;
 const utils = isElectron() ? window.api.utils : null;
 const mpris = isElectron() && utils?.isLinux() ? window.api.mpris : null;
-
-const SynchronizedLyricsContainer = styled.div<{ $gap: number }>`
-    display: flex;
-    flex-direction: column;
-    gap: ${(props) => props.$gap || 5}px;
-    width: 100%;
-    height: 100%;
-    padding: 10vh 0 50vh;
-    overflow: scroll;
-    word-break: break-word;
-
-    -webkit-mask-image: linear-gradient(
-        180deg,
-        transparent 5%,
-        rgb(0 0 0 / 100%) 20%,
-        rgb(0 0 0 / 100%) 85%,
-        transparent 95%
-    );
-
-    mask-image: linear-gradient(
-        180deg,
-        transparent 5%,
-        rgb(0 0 0 / 100%) 20%,
-        rgb(0 0 0 / 100%) 85%,
-        transparent 95%
-    );
-    transform: translateY(-2rem);
-
-    @media screen and (orientation: portrait) {
-        padding: 5vh 0;
-    }
-`;
 
 export interface SynchronizedLyricsProps extends Omit<FullLyricsMetadata, 'lyrics'> {
     lyrics: SynchronizedLyricsArray;
@@ -83,6 +53,7 @@ export const SynchronizedLyrics = ({
         (time: number) => {
             if (playbackType === PlaybackType.LOCAL && mpvPlayer) {
                 mpvPlayer.seekTo(time);
+                setCurrentTime(time, true);
             } else {
                 setCurrentTime(time, true);
                 handleScrobbleFromSeek(time);
@@ -343,12 +314,12 @@ export const SynchronizedLyrics = ({
     };
 
     return (
-        <SynchronizedLyricsContainer
-            $gap={settings.gap}
-            className="synchronized-lyrics overlay-scrollbar"
+        <div
+            className={clsx(styles.container, 'synchronized-lyrics overlay-scrollbar')}
             id="sychronized-lyrics-scroll-container"
             onMouseEnter={showScrollbar}
             onMouseLeave={hideScrollbar}
+            style={{ gap: `${settings.gap}px` }}
         >
             {settings.showProvider && source && (
                 <LyricLine
@@ -367,7 +338,7 @@ export const SynchronizedLyrics = ({
                 />
             )}
             {lyrics.map(([time, text], idx) => (
-                <div key={idx}>
+                <Fragment key={idx}>
                     <LyricLine
                         alignment={settings.alignment}
                         className="lyric-line synchronized"
@@ -385,8 +356,8 @@ export const SynchronizedLyrics = ({
                             text={translatedLyrics.split('\n')[idx]}
                         />
                     )}
-                </div>
+                </Fragment>
             ))}
-        </SynchronizedLyricsContainer>
+        </div>
     );
 };

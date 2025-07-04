@@ -1,8 +1,10 @@
-import { Group, Stack } from '@mantine/core';
 import React from 'react';
-import { RiInformationLine } from 'react-icons/ri';
 
-import { Text, Tooltip } from '/@/renderer/components';
+import { Group } from '/@/shared/components/group/group';
+import { Icon } from '/@/shared/components/icon/icon';
+import { Stack } from '/@/shared/components/stack/stack';
+import { Text } from '/@/shared/components/text/text';
+import { Tooltip } from '/@/shared/components/tooltip/tooltip';
 
 interface SettingsOptionProps {
     control: React.ReactNode;
@@ -15,13 +17,13 @@ export const SettingsOptions = ({ control, description, note, title }: SettingsO
     return (
         <>
             <Group
-                noWrap
-                position="apart"
-                sx={{ alignItems: 'center' }}
+                justify="space-between"
+                style={{ alignItems: 'center' }}
+                wrap="nowrap"
             >
                 <Stack
-                    spacing="xs"
-                    sx={{
+                    gap="xs"
+                    style={{
                         alignSelf: 'flex-start',
                         display: 'flex',
                         maxWidth: '50%',
@@ -29,7 +31,7 @@ export const SettingsOptions = ({ control, description, note, title }: SettingsO
                 >
                     <Group>
                         <Text
-                            $noSelect
+                            isNoSelect
                             size="md"
                         >
                             {title}
@@ -39,9 +41,7 @@ export const SettingsOptions = ({ control, description, note, title }: SettingsO
                                 label={note}
                                 openDelay={0}
                             >
-                                <Group>
-                                    <RiInformationLine size={15} />
-                                </Group>
+                                <Icon icon="info" />
                             </Tooltip>
                         )}
                     </Group>
@@ -49,15 +49,15 @@ export const SettingsOptions = ({ control, description, note, title }: SettingsO
                         description
                     ) : (
                         <Text
-                            $noSelect
-                            $secondary
+                            isMuted
+                            isNoSelect
                             size="sm"
                         >
                             {description}
                         </Text>
                     )}
                 </Stack>
-                <Group position="right">{control}</Group>
+                <Group justify="flex-end">{control}</Group>
             </Group>
         </>
     );

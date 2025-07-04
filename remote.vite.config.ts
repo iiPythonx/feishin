@@ -25,6 +25,12 @@ export default defineConfig({
         },
         sourcemap: true,
     },
+    css: {
+        modules: {
+            generateScopedName: 'fs-[name]-[local]',
+            localsConvention: 'camelCase',
+        },
+    },
     plugins: [
         react(),
         ViteEjsPlugin({

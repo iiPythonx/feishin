@@ -1,4 +1,3 @@
-import { Stack } from '@mantine/core';
 import isElectron from 'is-electron';
 
 import { PasswordSettings } from '/@/renderer/features/settings/components/window/password-settings';
@@ -10,7 +9,7 @@ const utils = isElectron() ? window.api.utils : null;
 
 export const WindowTab = () => {
     return (
-        <Stack spacing="md">
+        <Stack gap="md">
             <WindowSettings />
             <UpdateSettings />
             <CacheSettings />

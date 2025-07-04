@@ -1,0 +1,81 @@
+.image-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--theme-spacing-md) var(--theme-spacing-md) var(--theme-spacing-md) 0;
+}
+
+.metadata-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--theme-spacing-xs);
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.image {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    animation: fadein 0.2s ease-in-out;
+
+    button {
+        display: none;
+    }
+
+    &:hover button {
+        display: block;
+    }
+}
+
+.playerbar-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    object-fit: var(--theme-image-fit);
+}
+
+.line-item {
+    display: inline-block;
+    width: fit-content;
+    max-width: 20vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.line-item.secondary {
+    color: var(--theme-colors-foreground-muted);
+
+    a {
+        color: var(--theme-colors-foreground-muted);
+    }
+}
+
+.left-controls-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    padding-left: 1rem;
+
+    @media (width < 640px) {
+        .image-wrapper {
+            display: none;
+        }
+    }
+}

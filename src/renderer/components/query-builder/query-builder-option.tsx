@@ -1,10 +1,10 @@
-import { Group } from '@mantine/core';
 import { useState } from 'react';
-import { RiSubtractLine } from 'react-icons/ri';
 
-import { Button } from '/@/renderer/components/button';
-import { NumberInput, TextInput } from '/@/renderer/components/input';
-import { Select } from '/@/renderer/components/select';
+import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
+import { Group } from '/@/shared/components/group/group';
+import { NumberInput } from '/@/shared/components/number-input/number-input';
+import { Select } from '/@/shared/components/select/select';
+import { TextInput } from '/@/shared/components/text-input/text-input';
 import { QueryBuilderRule } from '/@/shared/types/types';
 
 type DeleteArgs = {
@@ -33,7 +33,7 @@ interface QueryOptionProps {
 }
 
 const QueryValueInput = ({ data, onChange, type, ...props }: any) => {
-    const [numberRange, setNumberRange] = useState([0, 0]);
+    const [numberRange, setNumberRange] = useState<number[]>([0, 0]);
 
     switch (type) {
         case 'boolean':
@@ -63,7 +63,7 @@ const QueryValueInput = ({ data, onChange, type, ...props }: any) => {
                         defaultValue={props.defaultValue && Number(props.defaultValue?.[0])}
                         maxWidth={81}
                         onChange={(e) => {
-                            const newRange = [e || 0, numberRange[1]];
+                            const newRange = [Number(e) || 0, numberRange[1]];
                             setNumberRange(newRange);
                             onChange(newRange);
                         }}
@@ -74,7 +74,7 @@ const QueryValueInput = ({ data, onChange, type, ...props }: any) => {
                         defaultValue={props.defaultValue && Number(props.defaultValue?.[1])}
                         maxWidth={81}
                         onChange={(e) => {
-                            const newRange = [numberRange[0], e || 0];
+                            const newRange = [numberRange[0], Number(e) || 0];
                             setNumberRange(newRange);
                             onChange(newRange);
                         }}
@@ -189,8 +189,8 @@ export const QueryBuilderOption = ({
 
     return (
         <Group
+            gap="sm"
             ml={ml}
-            spacing="sm"
         >
             <Select
                 data={filters}
@@ -231,16 +231,14 @@ export const QueryBuilderOption = ({
                     width="25%"
                 />
             )}
-            <Button
+            <ActionIcon
                 disabled={noRemove}
+                icon="remove"
                 onClick={handleDeleteRule}
                 px={5}
                 size="sm"
-                tooltip={{ label: 'Remove rule' }}
-                variant="default"
-            >
-                <RiSubtractLine size={20} />
-            </Button>
+                variant="subtle"
+            />
         </Group>
     );
 };

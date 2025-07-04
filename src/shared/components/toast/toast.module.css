@@ -1,0 +1,40 @@
+.root {
+    bottom: 90px;
+    background-color: var(--theme-colors-surface);
+}
+
+.root.error {
+    --notification-color: var(--theme-colors-state-error);
+}
+
+.root.info {
+    --notification-color: var(--theme-colors-state-info);
+}
+
+.root.success {
+    --notification-color: var(--theme-colors-state-success);
+}
+
+.root.warning {
+    --notification-color: var(--theme-colors-state-warning);
+}
+
+.title {
+    font-size: var(--theme-font-size-md);
+}
+
+.body {
+    padding: var(--theme-spacing-md);
+}
+
+.loader {
+    margin: var(--theme-spacing-md);
+}
+
+.description {
+    font-size: var(--theme-font-size-md);
+}
+
+.close-button {
+    background-color: var(--theme-colors-surface);
+}

@@ -19,10 +19,10 @@ import {
     crossfadeHandler,
     gaplessHandler,
 } from '/@/renderer/components/audio-player/utils/list-handlers';
-import { toast } from '/@/renderer/components/toast';
 import { useWebAudio } from '/@/renderer/features/player/hooks/use-webaudio';
 import { getServerById, TranscodingConfig, usePlaybackSettings, useSpeed } from '/@/renderer/store';
 import { useSettingsStore, useSettingsStoreActions } from '/@/renderer/store/settings.store';
+import { toast } from '/@/shared/components/toast/toast';
 import { PlaybackStyle, PlayerStatus } from '/@/shared/types/types';
 
 export type AudioPlayerProgress = {
@@ -120,6 +120,7 @@ export const AudioPlayer = forwardRef<AudioPlayerRef, AudioPlayerProps>((props, 
     const audioDeviceId = useSettingsStore((state) => state.playback.audioDeviceId);
     const playback = useSettingsStore((state) => state.playback.mpvProperties);
     const shouldUseWebAudio = useSettingsStore((state) => state.playback.webAudio);
+    const preservesPitch = useSettingsStore((state) => state.playback.preservePitch);
     const { resetSampleRate } = useSettingsStoreActions();
     const playbackSpeed = useSpeed();
     const { transcode } = usePlaybackSettings();
@@ -230,21 +231,23 @@ export const AudioPlayer = forwardRef<AudioPlayerRef, AudioPlayerProps>((props, 
                 // calling play() is not necessarily a safe option (https://developer.chrome.com/blog/play-request-was-interrupted)
                 // In practice, this failure is only likely to happen when using the 0-second wav:
                 // play() + play() in rapid succession will cause problems as the frist one ends the track.
-                player1Ref.current
-                    ?.getInternalPlayer()
-                    ?.play()
-                    .catch(() => {});
+                const internalPlayer = player1Ref.current?.getInternalPlayer();
+                if (internalPlayer) {
+                    internalPlayer.preservesPitch = preservesPitch;
+                    internalPlayer.play().catch(() => {});
+                }
             } else {
-                player2Ref.current
-                    ?.getInternalPlayer()
-                    ?.play()
-                    .catch(() => {});
+                const internalPlayer = player2Ref.current?.getInternalPlayer();
+                if (internalPlayer) {
+                    internalPlayer.preservesPitch = preservesPitch;
+                    internalPlayer.play().catch(() => {});
+                }
             }
         } else {
             player1Ref.current?.getInternalPlayer()?.pause();
             player2Ref.current?.getInternalPlayer()?.pause();
         }
-    }, [currentPlayer, status]);
+    }, [currentPlayer, status, preservesPitch]);
 
     const handleCrossfade1 = useCallback(
         (e: AudioPlayerProgress) => {
@@ -319,10 +322,8 @@ export const AudioPlayer = forwardRef<AudioPlayerRef, AudioPlayerProps>((props, 
         if (isElectron() && webAudio && 'setSinkId' in webAudio.context && audioDeviceId) {
             const setSink = async () => {
                 try {
-                    if (audioDeviceId !== 'default') {
+                    if (webAudio.context.state !== 'closed') {
                         await (webAudio.context as any).setSinkId(audioDeviceId);
-                    } else {
-                        await (webAudio.context as any).setSinkId('');
                     }
                 } catch (error) {
                     toast.error({ message: `Error setting sink: ${(error as Error).message}` });

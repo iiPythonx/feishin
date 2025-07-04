@@ -1,27 +1,11 @@
-import { Group } from '@mantine/core';
 import { closeAllModals, openModal } from '@mantine/modals';
 import isElectron from 'is-electron';
 import { useTranslation } from 'react-i18next';
-import {
-    RiArrowLeftSLine,
-    RiArrowRightSLine,
-    RiCloseCircleLine,
-    RiEdit2Line,
-    RiExternalLinkLine,
-    RiGithubLine,
-    RiLayoutLeftLine,
-    RiLayoutRightLine,
-    RiLockLine,
-    RiServerLine,
-    RiSettings3Line,
-    RiWindowFill,
-} from 'react-icons/ri';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import packageJson from '../../../../../package.json';
 
-import { DropdownMenu } from '/@/renderer/components';
 import { ServerList } from '/@/renderer/features/servers';
 import { EditServerForm } from '/@/renderer/features/servers/components/edit-server-form';
 import { AppRoute } from '/@/renderer/router/routes';
@@ -32,6 +16,8 @@ import {
     useServerList,
     useSidebarStore,
 } from '/@/renderer/store';
+import { DropdownMenu } from '/@/shared/components/dropdown-menu/dropdown-menu';
+import { Icon } from '/@/shared/components/icon/icon';
 import { ServerListItem, ServerType } from '/@/shared/types/domain-types';
 
 const browser = isElectron() ? window.api.browser : null;
@@ -101,27 +87,27 @@ export const AppMenu = () => {
     return (
         <>
             <DropdownMenu.Item
-                icon={<RiArrowLeftSLine />}
+                leftSection={<Icon icon="arrowLeftS" />}
                 onClick={() => navigate(-1)}
             >
                 {t('page.appMenu.goBack', { postProcess: 'sentenceCase' })}
             </DropdownMenu.Item>
             <DropdownMenu.Item
-                icon={<RiArrowRightSLine />}
+                leftSection={<Icon icon="arrowRightS" />}
                 onClick={() => navigate(1)}
             >
                 {t('page.appMenu.goForward', { postProcess: 'sentenceCase' })}
             </DropdownMenu.Item>
             {collapsed ? (
                 <DropdownMenu.Item
-                    icon={<RiLayoutRightLine />}
+                    leftSection={<Icon icon="panelRightOpen" />}
                     onClick={handleExpandSidebar}
                 >
                     {t('page.appMenu.expandSidebar', { postProcess: 'sentenceCase' })}
                 </DropdownMenu.Item>
             ) : (
                 <DropdownMenu.Item
-                    icon={<RiLayoutLeftLine />}
+                    leftSection={<Icon icon="panelRightClose" />}
                     onClick={handleCollapseSidebar}
                 >
                     {t('page.appMenu.collapseSidebar', { postProcess: 'sentenceCase' })}
@@ -130,13 +116,13 @@ export const AppMenu = () => {
             <DropdownMenu.Divider />
             <DropdownMenu.Item
                 component={Link}
-                icon={<RiSettings3Line />}
+                leftSection={<Icon icon="settings" />}
                 to={AppRoute.SETTINGS}
             >
                 {t('page.appMenu.settings', { postProcess: 'sentenceCase' })}
             </DropdownMenu.Item>
             <DropdownMenu.Item
-                icon={<RiEdit2Line />}
+                leftSection={<Icon icon="edit" />}
                 onClick={handleManageServersModal}
             >
                 {t('page.appMenu.manageServers', { postProcess: 'sentenceCase' })}
@@ -155,21 +141,26 @@ export const AppMenu = () => {
 
                 return (
                     <DropdownMenu.Item
-                        $isActive={server.id === currentServer?.id}
-                        icon={
+                        key={`server-${server.id}`}
+                        leftSection={
                             isSessionExpired ? (
-                                <RiLockLine color="var(--danger-color)" />
+                                <Icon
+                                    fill="error"
+                                    icon="lock"
+                                />
                             ) : (
-                                <RiServerLine />
+                                <Icon
+                                    color={server.id === currentServer?.id ? 'primary' : undefined}
+                                    icon="server"
+                                />
                             )
                         }
-                        key={`server-${server.id}`}
                         onClick={() => {
                             if (!isSessionExpired) return handleSetCurrentServer(server);
                             return handleCredentialsModal(server);
                         }}
                     >
-                        <Group>{server.name}</Group>
+                        {server.name}
                     </DropdownMenu.Item>
                 );
             })}
@@ -177,8 +168,8 @@ export const AppMenu = () => {
             <DropdownMenu.Item
                 component="a"
                 href="https://github.com/iiPythonx/feishin/tree/restart"
-                icon={<RiGithubLine />}
-                rightSection={<RiExternalLinkLine />}
+                leftSection={<Icon icon="brandGitHub" />}
+                rightSection={<Icon icon="externalLink" />}
                 target="_blank"
             >
                 Version {packageJson.version} (iiPython)
@@ -187,13 +178,13 @@ export const AppMenu = () => {
                 <>
                     <DropdownMenu.Divider />
                     <DropdownMenu.Item
-                        icon={<RiWindowFill />}
+                        leftSection={<Icon icon="appWindow" />}
                         onClick={handleBrowserDevTools}
                     >
                         {t('page.appMenu.openBrowserDevtools', { postProcess: 'sentenceCase' })}
                     </DropdownMenu.Item>
                     <DropdownMenu.Item
-                        icon={<RiCloseCircleLine />}
+                        leftSection={<Icon icon="x" />}
                         onClick={handleQuit}
                     >
                         {t('page.appMenu.quit', { postProcess: 'sentenceCase' })}

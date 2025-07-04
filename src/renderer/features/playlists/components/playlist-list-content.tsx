@@ -2,10 +2,10 @@ import type { AgGridReact as AgGridReactType } from '@ag-grid-community/react/li
 
 import { lazy, MutableRefObject, Suspense } from 'react';
 
-import { Spinner } from '/@/renderer/components';
 import { VirtualInfiniteGridRef } from '/@/renderer/components/virtual-grid';
 import { useListContext } from '/@/renderer/context/list-context';
 import { useListStoreByKey } from '/@/renderer/store/list.store';
+import { Spinner } from '/@/shared/components/spinner/spinner';
 import { ListDisplayType } from '/@/shared/types/types';
 
 const PlaylistListTableView = lazy(() =>
@@ -32,7 +32,7 @@ export const PlaylistListContent = ({ gridRef, itemCount, tableRef }: PlaylistLi
 
     return (
         <Suspense fallback={<Spinner container />}>
-            {display === ListDisplayType.CARD || display === ListDisplayType.POSTER ? (
+            {display === ListDisplayType.CARD || display === ListDisplayType.GRID ? (
                 <PlaylistListGridView
                     gridRef={gridRef}
                     itemCount={itemCount}

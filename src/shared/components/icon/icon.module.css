@@ -1,0 +1,127 @@
+.size-xs {
+    font-size: var(--theme-font-size-xs);
+}
+
+.size-sm {
+    font-size: var(--theme-font-size-sm);
+}
+
+.size-md {
+    font-size: var(--theme-font-size-md);
+}
+
+.size-lg {
+    font-size: var(--theme-font-size-lg);
+}
+
+.size-xl {
+    font-size: var(--theme-font-size-xl);
+}
+
+.size-2xl {
+    font-size: var(--theme-font-size-2xl);
+}
+
+.size-3xl {
+    font-size: var(--theme-font-size-3xl);
+}
+
+.size-4xl {
+    font-size: var(--theme-font-size-4xl);
+}
+
+.size-5xl {
+    font-size: var(--theme-font-size-5xl);
+}
+
+.color-default {
+    color: var(--theme-colors-foreground);
+}
+
+.color-primary {
+    color: var(--theme-colors-primary-filled);
+}
+
+.color-muted {
+    color: var(--theme-colors-foreground-muted);
+}
+
+.color-success {
+    color: var(--theme-colors-state-success);
+}
+
+.color-error {
+    color: var(--theme-colors-state-error);
+}
+
+.color-info {
+    color: var(--theme-colors-state-info);
+}
+
+.color-warn {
+    color: var(--theme-colors-state-warn);
+}
+
+.fill {
+    fill: transparent;
+}
+
+.fill-default {
+    fill: var(--theme-colors-foreground);
+}
+
+.fill-contrast {
+    fill: var(--theme-colors-primary-contrast);
+}
+
+.fill-inherit {
+    fill: inherit;
+}
+
+.fill-primary {
+    fill: var(--theme-colors-primary-filled);
+}
+
+.fill-muted {
+    fill: var(--theme-colors-foreground-muted);
+}
+
+.fill-success {
+    fill: var(--theme-colors-state-success);
+}
+
+.fill-error {
+    fill: var(--theme-colors-state-error);
+}
+
+.fill-info {
+    fill: var(--theme-colors-state-info);
+}
+
+.fill-warn {
+    fill: var(--theme-colors-state-warn);
+}
+
+.spin {
+    animation: spin 1s linear infinite;
+}
+
+.pulse {
+    animation: pulse 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.5;
+    }
+}

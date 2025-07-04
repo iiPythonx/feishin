@@ -1,7 +1,7 @@
-import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import { shallow } from 'zustand/shallow';
+import { createWithEqualityFn } from 'zustand/traditional';
 
 import { DataTableProps, PersistedTableColumn } from '/@/renderer/store/settings.store';
 import { mergeOverridingColumns } from '/@/renderer/store/utils';
@@ -107,7 +107,7 @@ type FilterType =
     | PlaylistListFilter
     | SongListFilter;
 
-export const useListStore = create<ListSlice>()(
+export const useListStore = createWithEqualityFn<ListSlice>()(
     persist(
         devtools(
             immer((set, get) => ({
@@ -346,7 +346,7 @@ export const useListStore = create<ListSlice>()(
                 detail: {},
                 item: {
                     album: {
-                        display: ListDisplayType.POSTER,
+                        display: ListDisplayType.GRID,
                         filter: {
                             sortBy: AlbumListSort.RECENTLY_ADDED,
                             sortOrder: SortOrder.DESC,
@@ -387,7 +387,7 @@ export const useListStore = create<ListSlice>()(
                         },
                     },
                     albumArtist: {
-                        display: ListDisplayType.POSTER,
+                        display: ListDisplayType.GRID,
                         filter: {
                             sortBy: AlbumArtistListSort.NAME,
                             sortOrder: SortOrder.DESC,
@@ -416,7 +416,7 @@ export const useListStore = create<ListSlice>()(
                         },
                     },
                     albumArtistAlbum: {
-                        display: ListDisplayType.POSTER,
+                        display: ListDisplayType.GRID,
                         filter: {
                             sortBy: AlbumListSort.RECENTLY_ADDED,
                             sortOrder: SortOrder.DESC,
@@ -514,7 +514,7 @@ export const useListStore = create<ListSlice>()(
                         },
                     },
                     artist: {
-                        display: ListDisplayType.POSTER,
+                        display: ListDisplayType.GRID,
                         filter: {
                             role: '',
                             sortBy: AlbumArtistListSort.NAME,
@@ -573,7 +573,7 @@ export const useListStore = create<ListSlice>()(
                         },
                     },
                     playlist: {
-                        display: ListDisplayType.POSTER,
+                        display: ListDisplayType.GRID,
                         filter: {
                             sortBy: PlaylistListSort.NAME,
                             sortOrder: SortOrder.DESC,

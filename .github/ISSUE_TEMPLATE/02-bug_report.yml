@@ -1,0 +1,74 @@
+name: Bug report
+description: You're having technical issues.
+title: '[Bug]: '
+labels: ['bug']
+body:
+    - type: checkboxes
+      id: check-duplicate
+      attributes:
+          label: I have already checked through the existing bug reports and found no duplicates
+          options:
+              - label: 'Yes'
+                required: true
+
+    - type: input
+      id: version
+      attributes:
+          label: App Version
+          description: What version of the app are you running?
+          placeholder: ex. 1.0.0
+      validations:
+          required: true
+
+    - type: input
+      id: server-version
+      attributes:
+          label: Music Server and Version
+          description: What music server are you using?
+          placeholder: ex. Navidrome v0.55.0, LMS v3.67.0, Jellyfin v10.10.7, etc.
+      validations:
+          required: true
+
+    - type: dropdown
+      id: environments
+      attributes:
+          label: What local environments are you seeing the problem on?
+          multiple: true
+          options:
+              - Desktop Windows
+              - Desktop macOS
+              - Desktop Linux
+              - Web Firefox
+              - Web Chrome
+              - Web Safari
+              - Web Microsoft Edge
+              - Other (please specify in the next field)
+
+    - type: textarea
+      id: what-happened
+      attributes:
+          label: What happened?
+          description: Also tell us, what did you expect to happen?
+          placeholder: Include screenshots and error logs if possible. The browser devtools can be opened using CTRL + SHIFT + I (Windows/Linux) or CMD + SHIFT + I (macOS).
+      validations:
+          required: true
+
+    - type: textarea
+      id: reproduction
+      attributes:
+          label: Steps to reproduce
+          description: How can we reproduce this issue? Are there any specific settings that are enabled that could be the cause?
+          placeholder: |
+              1. Go to '...'
+              2. Click on '....'
+              3. Scroll down to '....'
+              4. See error
+      validations:
+          required: true
+
+    - type: textarea
+      id: logs
+      attributes:
+          label: Relevant log output
+          description: Please copy and paste any relevant log output. This will be automatically formatted into code.
+          render: shell

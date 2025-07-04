@@ -1,39 +1,42 @@
 import type { FallbackProps } from 'react-error-boundary';
 
-import { Box, Center, Group, Stack } from '@mantine/core';
-import { RiErrorWarningLine } from 'react-icons/ri';
+import { useTranslation } from 'react-i18next';
 import { useRouteError } from 'react-router';
-import styled from 'styled-components';
 
-import { Button, Text } from '/@/renderer/components';
+import styles from './error-fallback.module.css';
 
-const Container = styled(Box)`
-    background: var(--main-bg);
-`;
+import { Button } from '/@/shared/components/button/button';
+import { Center } from '/@/shared/components/center/center';
+import { Group } from '/@/shared/components/group/group';
+import { Icon } from '/@/shared/components/icon/icon';
+import { Stack } from '/@/shared/components/stack/stack';
+import { Text } from '/@/shared/components/text/text';
 
 export const ErrorFallback = ({ resetErrorBoundary }: FallbackProps) => {
     const error = useRouteError() as any;
+    const { t } = useTranslation();
 
     return (
-        <Container>
-            <Center sx={{ height: '100vh' }}>
-                <Stack sx={{ maxWidth: '50%' }}>
-                    <Group spacing="xs">
-                        <RiErrorWarningLine
-                            color="var(--danger-color)"
-                            size={30}
+        <div className={styles.container}>
+            <Center style={{ height: '100vh' }}>
+                <Stack style={{ maxWidth: '50%' }}>
+                    <Group gap="xs">
+                        <Icon
+                            fill="error"
+                            icon="error"
+                            size="lg"
                         />
-                        <Text size="lg">Something went wrong</Text>
+                        <Text size="lg">{t('error.genericError')}</Text>
                     </Group>
                     <Text>{error?.message}</Text>
                     <Button
                         onClick={resetErrorBoundary}
                         variant="filled"
                     >
-                        Reload
+                        {t('common.reload')}
                     </Button>
                 </Stack>
             </Center>
-        </Container>
+        </div>
     );
 };

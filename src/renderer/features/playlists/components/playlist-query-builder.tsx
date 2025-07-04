@@ -1,4 +1,3 @@
-import { Group } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { openModal } from '@mantine/modals';
 import clone from 'lodash/clone';
@@ -7,17 +6,8 @@ import setWith from 'lodash/setWith';
 import { nanoid } from 'nanoid';
 import { forwardRef, Ref, useImperativeHandle, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RiMore2Fill, RiSaveLine } from 'react-icons/ri';
 
-import {
-    Button,
-    DropdownMenu,
-    MotionFlex,
-    NumberInput,
-    QueryBuilder,
-    ScrollArea,
-    Select,
-} from '/@/renderer/components';
+import { QueryBuilder } from '/@/renderer/components/query-builder';
 import { usePlaylistList } from '/@/renderer/features/playlists/queries/playlist-list-query';
 import {
     convertNDQueryToQueryGroup,
@@ -33,6 +23,15 @@ import {
     NDSongQueryPlaylistOperators,
     NDSongQueryStringOperators,
 } from '/@/shared/api/navidrome.types';
+import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
+import { Button } from '/@/shared/components/button/button';
+import { DropdownMenu } from '/@/shared/components/dropdown-menu/dropdown-menu';
+import { Flex } from '/@/shared/components/flex/flex';
+import { Group } from '/@/shared/components/group/group';
+import { Icon } from '/@/shared/components/icon/icon';
+import { NumberInput } from '/@/shared/components/number-input/number-input';
+import { ScrollArea } from '/@/shared/components/scroll-area/scroll-area';
+import { Select } from '/@/shared/components/select/select';
 import { PlaylistListSort, SongListSort, SortOrder } from '/@/shared/types/domain-types';
 import { QueryBuilderGroup, QueryBuilderRule } from '/@/shared/types/types';
 
@@ -411,15 +410,12 @@ export const PlaylistQueryBuilder = forwardRef(
         ];
 
         return (
-            <MotionFlex
+            <Flex
                 direction="column"
-                h="calc(100% - 3.5rem)"
+                h="calc(100% - 2rem)"
                 justify="space-between"
             >
-                <ScrollArea
-                    h="100%"
-                    p="1rem"
-                >
+                <ScrollArea>
                     <QueryBuilder
                         data={filters}
                         filters={NDSongQueryFields}
@@ -448,14 +444,14 @@ export const PlaylistQueryBuilder = forwardRef(
                 </ScrollArea>
                 <Group
                     align="flex-end"
+                    justify="space-between"
                     m="1rem"
-                    noWrap
-                    position="apart"
+                    wrap="nowrap"
                 >
                     <Group
-                        noWrap
-                        spacing="sm"
+                        gap="sm"
                         w="100%"
+                        wrap="nowrap"
                     >
                         <Select
                             data={sortOptions}
@@ -490,37 +486,38 @@ export const PlaylistQueryBuilder = forwardRef(
                     </Group>
                     {onSave && onSaveAs && (
                         <Group
-                            noWrap
-                            spacing="sm"
+                            gap="sm"
+                            wrap="nowrap"
                         >
                             <Button
                                 loading={isSaving}
                                 onClick={handleSaveAs}
-                                variant="filled"
                             >
                                 {t('common.saveAs', { postProcess: 'titleCase' })}
                             </Button>
                             <Button
                                 onClick={openPreviewModal}
-                                p="0.5em"
-                                variant="default"
+                                variant="subtle"
                             >
                                 {t('common.preview', { postProcess: 'titleCase' })}
                             </Button>
                             <DropdownMenu position="bottom-end">
                                 <DropdownMenu.Target>
-                                    <Button
+                                    <ActionIcon
                                         disabled={isSaving}
-                                        p="0.5em"
-                                        variant="default"
-                                    >
-                                        <RiMore2Fill size={15} />
-                                    </Button>
+                                        icon="ellipsisHorizontal"
+                                        variant="subtle"
+                                    />
                                 </DropdownMenu.Target>
                                 <DropdownMenu.Dropdown>
                                     <DropdownMenu.Item
-                                        $danger
-                                        icon={<RiSaveLine color="var(--danger-color)" />}
+                                        isDanger
+                                        leftSection={
+                                            <Icon
+                                                color="error"
+                                                icon="save"
+                                            />
+                                        }
                                         onClick={handleSave}
                                     >
                                         {t('common.saveAndReplace', { postProcess: 'titleCase' })}
@@ -530,7 +527,7 @@ export const PlaylistQueryBuilder = forwardRef(
                         </Group>
                     )}
                 </Group>
-            </MotionFlex>
+            </Flex>
         );
     },
 );

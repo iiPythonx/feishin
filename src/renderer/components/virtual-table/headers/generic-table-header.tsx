@@ -1,12 +1,11 @@
 import type { IHeaderParams } from '@ag-grid-community/core';
 import type { ReactNode } from 'react';
 
-import { AiOutlineNumber } from 'react-icons/ai';
-import { FiClock } from 'react-icons/fi';
-import { RiHeartLine, RiMoreFill, RiStarLine } from 'react-icons/ri';
-import styled from 'styled-components';
+import clsx from 'clsx';
 
-import { _Text } from '/@/renderer/components/text';
+import styles from './generic-table-header.module.css';
+
+import { Icon } from '/@/shared/components/icon/icon';
 
 type Options = {
     children?: ReactNode;
@@ -16,63 +15,35 @@ type Options = {
 
 type Presets = 'actions' | 'duration' | 'rowIndex' | 'userFavorite' | 'userRating';
 
-export const HeaderWrapper = styled.div<{ $position: Options['position'] }>`
-    display: flex;
-    justify-content: ${(props) =>
-        props.$position === 'right'
-            ? 'flex-end'
-            : props.$position === 'center'
-              ? 'center'
-              : 'flex-start'};
-    width: 100%;
-    font-family: var(--content-font-family);
-    text-transform: uppercase;
-`;
-
-const HeaderText = styled(_Text)<{ $position: Options['position'] }>`
-    width: 100%;
-    height: 100%;
-    font-weight: 500;
-    line-height: inherit;
-    color: var(--ag-header-foreground-color);
-    text-align: ${(props) =>
-        props.$position === 'right'
-            ? 'flex-end'
-            : props.$position === 'center'
-              ? 'center'
-              : 'flex-start'};
-    text-transform: uppercase;
-`;
-
 const headerPresets = {
     actions: (
-        <RiMoreFill
-            color="var(--ag-header-foreground-color)"
-            size="1em"
+        <Icon
+            icon="ellipsisHorizontal"
+            size="sm"
         />
     ),
     duration: (
-        <FiClock
-            color="var(--ag-header-foreground-color)"
-            size="1em"
+        <Icon
+            icon="duration"
+            size="sm"
         />
     ),
     rowIndex: (
-        <AiOutlineNumber
-            color="var(--ag-header-foreground-color)"
-            size="1em"
+        <Icon
+            icon="hash"
+            size="sm"
         />
     ),
     userFavorite: (
-        <RiHeartLine
-            color="var(--ag-header-foreground-color)"
-            size="1em"
+        <Icon
+            icon="favorite"
+            size="sm"
         />
     ),
     userRating: (
-        <RiStarLine
-            color="var(--ag-header-foreground-color)"
-            size="1em"
+        <Icon
+            icon="star"
+            size="sm"
         />
     ),
 };
@@ -82,18 +53,18 @@ export const GenericTableHeader = (
     { children, position, preset }: Options,
 ) => {
     if (preset) {
-        return <HeaderWrapper $position={position}>{headerPresets[preset]}</HeaderWrapper>;
+        return (
+            <div className={clsx(styles.headerWrapper, styles[position ?? 'left'])}>
+                {headerPresets[preset]}
+            </div>
+        );
     }
 
     return (
-        <HeaderWrapper $position={position}>
-            <HeaderText
-                $position={position}
-                overflow="hidden"
-                weight={500}
-            >
+        <div className={clsx(styles.headerWrapper, styles[position ?? 'left'])}>
+            <div className={clsx(styles.headerText, styles[position ?? 'left'])}>
                 {children || displayName}
-            </HeaderText>
-        </HeaderWrapper>
+            </div>
+        </div>
     );
 };

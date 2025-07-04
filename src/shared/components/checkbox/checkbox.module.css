@@ -1,0 +1,13 @@
+.input {
+    background: var(--theme-colors-surface);
+    border: 1px solid var(--theme-colors-border);
+
+    &[data-variant='filled'] {
+        background: var(--theme-colors-background);
+    }
+}
+
+.input:disabled {
+    border: 1px solid var(--theme-colors-border);
+    opacity: 0.6;
+}

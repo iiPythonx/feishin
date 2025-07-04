@@ -33,16 +33,17 @@ export const useTableChange = (
             const api = tableRef.current?.api;
             if (!api) return;
 
-            const rowNodes: RowNode[] = [];
             const idSet = new Set(ids);
 
             api.forEachNode((node: RowNode<Song>) => {
                 if (!node.data || !idSet.has(node.data.id)) return;
 
+                // Make sure to use setData instead of setDataValue. setDataValue
+                // will error if the column does not exist, whereas setData won't care
                 switch (event.event) {
                     case 'favorite': {
                         if (node.data.userFavorite !== event.favorite) {
-                            node.setDataValue('userFavorite', event.favorite);
+                            node.setData({ ...node.data, userFavorite: event.favorite });
                         }
                         break;
                     }
@@ -58,18 +59,12 @@ export const useTableChange = (
                         break;
                     case 'rating': {
                         if (node.data.userRating !== event.rating) {
-                            node.setDataValue('userRating', event.rating);
-                            rowNodes.push(node);
+                            node.setData({ ...node.data, userRating: event.rating });
                         }
                         break;
                     }
                 }
             });
-
-            // This is required to redraw star rows
-            if (rowNodes.length > 0) {
-                api.redrawRows({ rowNodes });
-            }
         },
         [tableRef],
     );

@@ -2,10 +2,10 @@ import map from 'lodash/map';
 import merge from 'lodash/merge';
 import shuffle from 'lodash/shuffle';
 import { nanoid } from 'nanoid/non-secure';
-import { create } from 'zustand';
 import { devtools, persist, subscribeWithSelector } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import { shallow } from 'zustand/shallow';
+import { createWithEqualityFn } from 'zustand/traditional';
 
 import { PlayerData, QueueData, QueueSong } from '/@/shared/types/domain-types';
 import { Play, PlayerRepeat, PlayerShuffle, PlayerStatus } from '/@/shared/types/types';
@@ -13,7 +13,7 @@ import { Play, PlayerRepeat, PlayerShuffle, PlayerStatus } from '/@/shared/types
 export interface PlayerSlice extends PlayerState {
     actions: {
         addToQueue: (args: {
-            initialIndex: number;
+            initialIndex?: number;
             playType: Play;
             songs: QueueSong[];
         }) => PlayerData;
@@ -79,7 +79,7 @@ export interface PlayerState {
     volume: number;
 }
 
-export const usePlayerStore = create<PlayerSlice>()(
+export const usePlayerStore = createWithEqualityFn<PlayerSlice>()(
     subscribeWithSelector(
         persist(
             devtools(
@@ -92,19 +92,30 @@ export const usePlayerStore = create<PlayerSlice>()(
                                 uniqueId: nanoid(),
                             }));
 
-                            // If the queue is empty, next/last should behave the same as now
                             if (playType === Play.SHUFFLE) {
-                                const songs = shuffle(songsToAddToQueue);
-                                const initialSong = songs[0];
+                                let shuffled: QueueSong[];
+
+                                if (
+                                    initialIndex !== undefined &&
+                                    initialIndex < songsToAddToQueue.length
+                                ) {
+                                    const removed = songsToAddToQueue.splice(initialIndex, 1);
+                                    const restShuffled = shuffle(songsToAddToQueue);
+                                    shuffled = removed.concat(restShuffled);
+                                } else {
+                                    shuffled = shuffle(songsToAddToQueue);
+                                }
+
+                                const initialSong = shuffled[0];
 
                                 if (get().shuffle === PlayerShuffle.TRACK) {
                                     const shuffledIds = [
                                         initialSong.uniqueId,
-                                        ...shuffle(songs.slice(1).map((song) => song.uniqueId)),
+                                        ...shuffle(shuffled.slice(1).map((song) => song.uniqueId)),
                                     ];
 
                                     set((state) => {
-                                        state.queue.default = songs;
+                                        state.queue.default = shuffled;
                                         state.queue.shuffled = shuffledIds;
                                         state.current.time = 0;
                                         state.current.player = 1;
@@ -114,7 +125,7 @@ export const usePlayerStore = create<PlayerSlice>()(
                                     });
                                 } else {
                                     set((state) => {
-                                        state.queue.default = songs;
+                                        state.queue.default = shuffled;
                                         state.queue.shuffled = [];
                                         state.current.time = 0;
                                         state.current.player = 1;
@@ -131,6 +142,7 @@ export const usePlayerStore = create<PlayerSlice>()(
                             const queue = get().queue.default;
                             const { shuffledIndex } = get().current;
 
+                            // If the queue is empty, next/last should behave the same as now
                             if (playType === Play.NOW || queue.length === 0) {
                                 const index = initialIndex || 0;
                                 if (get().shuffle === PlayerShuffle.TRACK) {

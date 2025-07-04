@@ -1,4 +1,3 @@
-import { Center, Group } from '@mantine/core';
 import { closeAllModals, openModal } from '@mantine/modals';
 import { AutoTextSize } from 'auto-text-size';
 import clsx from 'clsx';
@@ -8,18 +7,20 @@ import { Link } from 'react-router-dom';
 
 import styles from './library-header.module.css';
 
-import { Text } from '/@/renderer/components';
-import { ItemImagePlaceholder } from '/@/renderer/features/shared/components/item-image-placeholder';
 import { useTweaksSettings } from '/@/renderer/store';
+import { Center } from '/@/shared/components/center/center';
+import { Image } from '/@/shared/components/image/image';
+import { Text } from '/@/shared/components/text/text';
 import { LibraryItem } from '/@/shared/types/domain-types';
 
 interface LibraryHeaderProps {
-    background: string;
+    background?: string;
     blur?: number;
     children?: ReactNode;
     imagePlaceholderUrl?: null | string;
     imageUrl?: null | string;
     item: { route: string; type: LibraryItem };
+    loading?: boolean;
     title: string;
 }
 
@@ -106,38 +107,39 @@ export const LibraryHeader = forwardRef(
                     style={{ cursor: 'pointer' }}
                     tabIndex={0}
                 >
-                    {imageUrl && !isImageError ? (
-                        <img
+                    {!isImageError && (
+                        <Image
                             alt="cover"
                             className={styles.image}
+                            loading="eager"
                             onError={onImageError}
-                            // placeholder={imagePlaceholderUrl || 'var(--placeholder-bg)'}
-                            src={imageUrl}
-                            style={{ height: '' }}
+                            src={imageUrl || ''}
                         />
-                    ) : (
-                        <ItemImagePlaceholder itemType={item.type} />
                     )}
                 </div>
-                <div className={styles.metadataSection}>
-                    <Group>
-                        <h2>
-                            <Text
-                                $link
-                                component={Link}
-                                to={item.route}
-                                tt="uppercase"
-                                weight={600}
+                {title && (
+                    <div className={styles.metadataSection}>
+                        <Text
+                            component={Link}
+                            fw={600}
+                            isLink
+                            size="md"
+                            to={item.route}
+                            tt="uppercase"
+                        >
+                            {itemTypeString()}
+                        </Text>
+                        <h1 className={styles.title}>
+                            <AutoTextSize
+                                maxFontSizePx={80}
+                                mode="box"
                             >
-                                {itemTypeString()}
-                            </Text>
-                        </h2>
-                    </Group>
-                    <h1 className={styles.title}>
-                        <AutoTextSize mode="box">{title}</AutoTextSize>
-                    </h1>
-                    {children}
-                </div>
+                                {title}
+                            </AutoTextSize>
+                        </h1>
+                        {children}
+                    </div>
+                )}
             </div>
         );
     },

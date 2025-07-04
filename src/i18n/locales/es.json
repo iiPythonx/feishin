@@ -120,7 +120,7 @@
         "hotkey_toggleShuffle": "alterna aleatorio",
         "theme": "tema",
         "playbackStyle_description": "selecciona el estilo de reproducción a usar por el reproductor de audio",
-        "discordRichPresence_description": "activa el estado de reproducción en el estado de actividad de {{discord}}. Las teclas de imagen son: {{icon}}, {{playing}}, y {{paused}} ",
+        "discordRichPresence_description": "activa el estado de reproducción en el estado de actividad de {{discord}}. Las teclas de imagen son: {{icon}}, {{playing}}, y {{paused}}",
         "mpvExecutablePath": "ruta del ejecutable mpv",
         "audioDevice": "dispositivo de audio",
         "hotkey_rate2": "calificar con 2 estrellas",
@@ -259,7 +259,19 @@
         "lastfmApiKey_description": "la clave API para {{lastfm}}. Requerida para la portada",
         "lastfmApiKey": "Clave API para {{lastfm}}",
         "discordServeImage": "Servir imágenes de {{discord}} desde el servidor",
-        "discordServeImage_description": "Comparte el arte de la portada para el estado de actividad de {{discord}} desde el propio servidor, solo disponible para Jellyfin y Navidrome"
+        "discordServeImage_description": "Comparte el arte de la portada para el estado de actividad de {{discord}} desde el propio servidor, solo disponible para Jellyfin y Navidrome",
+        "lastfm": "Mostrar enlaces de last.fm",
+        "lastfm_description": "Muestra enlaces a last.fm en las páginas de artistas/álbumes",
+        "musicbrainz": "Mostrar enlaces de MusicBrainz",
+        "musicbrainz_description": "Muestra enlaces a MusicBrainz en las páginas de artistas/álbumes, donde exista mbid",
+        "neteaseTranslation": "Activar traducciones de NetEase",
+        "neteaseTranslation_description": "Cuando se habilita, busca y muestra letras traducidas desde NetEase si está disponible.",
+        "preferLocalLyrics_description": "Prefiere letras locales sobre letras remotas cuando esté disponible",
+        "preferLocalLyrics": "Preferir letras locales",
+        "discordPausedStatus": "Mostrar estado de actividad cuando esté en pausa",
+        "discordPausedStatus_description": "Cuando está activado, el estado mostrará cuando el reproductor esté en pausa",
+        "preservePitch": "Mantener el tono",
+        "preservePitch_description": "Mantiene el tono cuando se modifica la velocidad de reproducción"
     },
     "action": {
         "editPlaylist": "editar $t(entity.playlist_one)",
@@ -379,7 +391,9 @@
         "preview": "Vista previa",
         "translation": "traducción",
         "additionalParticipants": "Participantes adicionales",
-        "tags": "Etiquetas"
+        "tags": "Etiquetas",
+        "newVersion": "Una nueva versión ha sido instalada ({{version}})",
+        "viewReleaseNotes": "Ver notas de lanzamiento"
     },
     "error": {
         "remotePortWarning": "reiniciar el servidor para aplicar el nuevo puerto",
@@ -463,7 +477,8 @@
             "home": "$t(common.home)",
             "artists": "$t(entity.artist_other)",
             "albumArtists": "$t(entity.albumArtist_other)",
-            "shared": "compartido $t(entity.playlist_other)"
+            "shared": "compartido $t(entity.playlist_other)",
+            "myLibrary": "Mi biblioteca"
         },
         "appMenu": {
             "selectServer": "seleccionar servidor",
@@ -649,7 +664,8 @@
         },
         "queryEditor": {
             "input_optionMatchAll": "coincidir todos",
-            "input_optionMatchAny": "coincidir cualquiera"
+            "input_optionMatchAny": "coincidir cualquiera",
+            "title": "Editor de consultas"
         },
         "shareItem": {
             "createFailed": "No se pudo crear el recurso compartido (¿está habilitado el uso compartido?)",
@@ -731,7 +747,9 @@
             "view": {
                 "card": "tarjeta",
                 "table": "tabla",
-                "poster": "cartel"
+                "poster": "cartel",
+                "list": "Lista",
+                "grid": "Cuadrícula"
             }
         }
     },

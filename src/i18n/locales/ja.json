@@ -122,7 +122,7 @@
         "hotkey_toggleShuffle": "シャッフルの切り替え",
         "theme": "テーマ",
         "playbackStyle_description": "オーディオプレーヤーに使用する再生スタイルを選択します",
-        "discordRichPresence_description": "{{discord}} のRich Presenceに再生ステータスを表示するようにします。画像キー: {{icon}}, {{playing}}, {{paused}} ",
+        "discordRichPresence_description": "{{discord}} のRich Presenceに再生ステータスを表示するようにします。画像キー: {{icon}}, {{playing}}, {{paused}}",
         "mpvExecutablePath": "mpv 実行ファイルパス",
         "audioDevice": "オーディオデバイス",
         "hotkey_rate2": "2つ星で評価",

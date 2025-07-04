@@ -1,24 +1,21 @@
-import { Box, Center, Divider, Group, Stack } from '@mantine/core';
-import { closeAllModals, openModal } from '@mantine/modals';
-import { AnimatePresence, motion } from 'framer-motion';
-import { MouseEvent, useMemo } from 'react';
+import clsx from 'clsx';
+import { AnimatePresence, motion } from 'motion/react';
+import { CSSProperties, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RiAddFill, RiArrowDownSLine, RiDiscLine, RiListUnordered } from 'react-icons/ri';
-import { Link, useLocation } from 'react-router-dom';
-import styled from 'styled-components';
+import { useLocation } from 'react-router-dom';
 
-import { Button, MotionStack, Tooltip } from '/@/renderer/components';
-import { CreatePlaylistForm } from '/@/renderer/features/playlists';
+import styles from './sidebar.module.css';
+
 import { ActionBar } from '/@/renderer/features/sidebar/components/action-bar';
 import { RescanProvider, RescanSidebar } from '/@/renderer/features/sidebar/components/rescan';
 import { SidebarIcon } from '/@/renderer/features/sidebar/components/sidebar-icon';
 import { SidebarItem } from '/@/renderer/features/sidebar/components/sidebar-item';
-import { SidebarPlaylistList } from '/@/renderer/features/sidebar/components/sidebar-playlist-list';
-import { useContainerQuery } from '/@/renderer/hooks';
-import { AppRoute } from '/@/renderer/router/routes';
+import {
+    SidebarPlaylistList,
+    SidebarSharedPlaylistList,
+} from '/@/renderer/features/sidebar/components/sidebar-playlist-list';
 import {
     useAppStoreActions,
-    useCurrentServer,
     useCurrentSong,
     useFullScreenPlayerStore,
     useSetFullScreenPlayerStore,
@@ -30,57 +27,22 @@ import {
     useTweaksSettings,
     useWindowSettings,
 } from '/@/renderer/store/settings.store';
-import { fadeIn } from '/@/renderer/styles';
-import { ServerType } from '/@/shared/types/domain-types';
+import { Accordion } from '/@/shared/components/accordion/accordion';
+import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
+import { Group } from '/@/shared/components/group/group';
+import { ScrollArea } from '/@/shared/components/scroll-area/scroll-area';
+import { Text } from '/@/shared/components/text/text';
+import { Tooltip } from '/@/shared/components/tooltip/tooltip';
 import { Platform } from '/@/shared/types/types';
-
-const SidebarContainer = styled.div<{ $windowBarStyle: Platform }>`
-    height: 100%;
-    max-height: ${
-        (props) =>
-            props.$windowBarStyle === Platform.WEB || props.$windowBarStyle === Platform.LINUX
-                ? 'calc(100vh - 160px)' // Playerbar (90px) & ActionBar (70px)
-                : 'calc(100vh - 190px)' // plus windowbar (30px) if the windowBarStyle is Windows/Mac
-        // We use the height of the SidebarContainer to keep the Stack below the ActionBar at the correct height
-        // ActionBar uses height: 100%; so it has the full height of its parent
-    };
-    user-select: none;
-`;
-
-const ImageContainer = styled(motion.div)<{ height: string }>`
-    position: relative;
-    height: ${(props) => props.height};
-    cursor: pointer;
-
-    ${fadeIn};
-    animation: fadein 0.2s ease-in-out;
-
-    button {
-        display: none;
-    }
-
-    &:hover button {
-        display: block;
-    }
-`;
-
-const SidebarImage = styled.img`
-    width: 100%;
-    height: 100%;
-    object-fit: var(--image-fit);
-    background: var(--placeholder-bg);
-`;
 
 export const Sidebar = () => {
     const { t } = useTranslation();
     const location = useLocation();
     const sidebar = useSidebarStore();
     const { setSideBar } = useAppStoreActions();
-    const { windowBarStyle } = useWindowSettings();
     const { sidebarPlaylistList } = useGeneralSettings();
     const { serverRescan } = useTweaksSettings();
     const imageUrl = useCurrentSong()?.imageUrl;
-    const server = useCurrentServer();
 
     const translatedSidebarItemMap = useMemo(
         () => ({
@@ -104,25 +66,14 @@ export const Sidebar = () => {
 
     const showImage = sidebar.image;
 
-    const handleCreatePlaylistModal = (e: MouseEvent<HTMLButtonElement>) => {
-        e.stopPropagation();
-
-        openModal({
-            children: <CreatePlaylistForm onCancel={() => closeAllModals()} />,
-            size: server?.type === ServerType?.NAVIDROME ? 'xl' : 'sm',
-            title: t('form.createPlaylist.title', { postProcess: 'titleCase' }),
-        });
-    };
-
     const setFullScreenPlayerStore = useSetFullScreenPlayerStore();
     const { expanded: isFullScreenPlayerExpanded } = useFullScreenPlayerStore();
     const expandFullScreenPlayer = () => {
         setFullScreenPlayerStore({ expanded: !isFullScreenPlayerExpanded });
     };
 
-    const cq = useContainerQuery({ sm: 300 });
-
     const { sidebarItems } = useGeneralSettings();
+    const { windowBarStyle } = useWindowSettings();
 
     const sidebarItemsWithRoute: SidebarItemType[] = useMemo(() => {
         if (!sidebarItems) return [];
@@ -139,171 +90,148 @@ export const Sidebar = () => {
         return items;
     }, [sidebarItems, translatedSidebarItemMap]);
 
+    const scrollAreaHeight = useMemo(() => {
+        if (showImage) {
+            if (windowBarStyle === Platform.WINDOWS || windowBarStyle === Platform.MACOS) {
+                return `calc(100% - 105px - ${sidebar.leftWidth})`;
+            }
+
+            return `calc(100% - ${sidebar.leftWidth})`;
+        }
+
+        return '100%';
+    }, [showImage, sidebar.leftWidth, windowBarStyle]);
+
+    const isCustomWindowBar =
+        windowBarStyle === Platform.WINDOWS || windowBarStyle === Platform.MACOS;
+
     return (
-        <SidebarContainer
-            $windowBarStyle={windowBarStyle}
-            ref={cq.ref}
+        <div
+            className={clsx(styles.container, {
+                [styles.customBar]: isCustomWindowBar,
+            })}
+            id="left-sidebar"
         >
-            <ActionBar />
-            <Stack
-                h="100%"
-                justify="space-between"
-                spacing={0}
+            <Group
+                grow
+                id="global-search-container"
             >
-                <MotionStack
-                    h="100%"
-                    layout="position"
-                    spacing={0}
-                    sx={{ maxHeight: showImage ? `calc(100% - ${sidebar.leftWidth})` : '100%' }}
+                <ActionBar />
+            </Group>
+            <ScrollArea
+                allowDragScroll
+                className={styles.scrollArea}
+                style={{
+                    height: scrollAreaHeight,
+                }}
+            >
+                <Accordion
+                    classNames={{
+                        content: styles.accordionContent,
+                        control: styles.accordionControl,
+                        item: styles.accordionItem,
+                        root: styles.accordionRoot,
+                    }}
+                    defaultValue={['library', 'playlists']}
+                    multiple
                 >
-                    <Stack spacing={0}>
-                        {sidebarItemsWithRoute.map((item) => {
-                            return (
-                                <SidebarItem
-                                    key={`sidebar-${item.route}`}
-                                    to={item.route}
-                                >
-                                    <Group spacing="sm">
-                                        <SidebarIcon
-                                            active={location.pathname === item.route}
-                                            route={item.route}
-                                            size="1.1em"
-                                        />
-                                        {item.label}
-                                    </Group>
-                                </SidebarItem>
-                            );
-                        })}
-                    </Stack>
-                    <Divider
-                        mx="1rem"
-                        my="0.5rem"
-                    />
-                    {serverRescan && (
-                        <>
-                            <RescanProvider>
-                                <RescanSidebar />
-                            </RescanProvider>
-                            <Divider
-                                mx="1rem"
-                                my="0.5rem"
-                            />
-                        </>
-                    )}
+                    <Accordion.Item value="library">
+                        <Accordion.Control>
+                            <Text
+                                fw={600}
+                                variant="secondary"
+                            >
+                                {t('page.sidebar.myLibrary', {
+                                    postProcess: 'titleCase',
+                                })}
+                            </Text>
+                        </Accordion.Control>
+                        <Accordion.Panel>
+                            {sidebarItemsWithRoute.map((item) => {
+                                return (
+                                    <SidebarItem
+                                        key={`sidebar-${item.route}`}
+                                        to={item.route}
+                                    >
+                                        <Group gap="sm">
+                                            <SidebarIcon
+                                                active={location.pathname === item.route}
+                                                route={item.route}
+                                            />
+                                            {item.label}
+                                        </Group>
+                                    </SidebarItem>
+                                );
+                            })}
+                        </Accordion.Panel>
+                    </Accordion.Item>
                     {sidebarPlaylistList && (
                         <>
-                            <Group
-                                position="apart"
-                                pt="1rem"
-                                px="1.5rem"
-                            >
-                                <Group>
-                                    <Box
-                                        fw="600"
-                                        sx={{ fontSize: '1.2rem' }}
-                                    >
-                                        {t('page.sidebar.playlists', { postProcess: 'titleCase' })}
-                                    </Box>
-                                </Group>
-                                <Group spacing="sm">
-                                    <Button
-                                        compact
-                                        onClick={handleCreatePlaylistModal}
-                                        size="md"
-                                        tooltip={{
-                                            label: t('action.createPlaylist', {
-                                                postProcess: 'sentenceCase',
-                                            }),
-                                            openDelay: 500,
-                                        }}
-                                        variant="default"
-                                    >
-                                        <RiAddFill size="1em" />
-                                    </Button>
-                                    <Button
-                                        compact
-                                        component={Link}
-                                        onClick={(e) => e.stopPropagation()}
-                                        size="md"
-                                        to={AppRoute.PLAYLISTS}
-                                        tooltip={{
-                                            label: t('action.viewPlaylists', {
-                                                postProcess: 'sentenceCase',
-                                            }),
-                                            openDelay: 500,
-                                        }}
-                                        variant="default"
-                                    >
-                                        <RiListUnordered size="1em" />
-                                    </Button>
-                                </Group>
-                            </Group>
                             <SidebarPlaylistList />
+                            <SidebarSharedPlaylistList />
                         </>
                     )}
-                </MotionStack>
-                <AnimatePresence
-                    initial={false}
-                    mode="popLayout"
-                >
-                    {showImage && (
-                        <ImageContainer
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 200 }}
-                            height={sidebar.leftWidth}
-                            initial={{ opacity: 0, y: 200 }}
-                            key="sidebar-image"
-                            onClick={expandFullScreenPlayer}
-                            role="button"
-                            transition={{ duration: 0.3, ease: 'easeInOut' }}
+                </Accordion>
+            </ScrollArea>
+            <AnimatePresence
+                initial={false}
+                mode="popLayout"
+            >
+                {showImage && (
+                    <motion.div
+                        animate={{ opacity: 1, y: 0 }}
+                        className={styles.imageContainer}
+                        exit={{ opacity: 0, y: 200 }}
+                        initial={{ opacity: 0, y: 200 }}
+                        key="sidebar-image"
+                        onClick={expandFullScreenPlayer}
+                        role="button"
+                        style={
+                            {
+                                '--sidebar-image-height': sidebar.leftWidth,
+                            } as CSSProperties
+                        }
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    >
+                        <Tooltip
+                            label={t('player.toggleFullscreenPlayer', {
+                                postProcess: 'sentenceCase',
+                            })}
+                            openDelay={500}
                         >
-                            <Tooltip
-                                label={t('player.toggleFullscreenPlayer', {
-                                    postProcess: 'sentenceCase',
-                                })}
-                                openDelay={500}
-                            >
-                                {upsizedImageUrl ? (
-                                    <SidebarImage
-                                        loading="eager"
-                                        src={upsizedImageUrl}
-                                    />
-                                ) : (
-                                    <Center
-                                        sx={{ background: 'var(--placeholder-bg)', height: '100%' }}
-                                    >
-                                        <RiDiscLine
-                                            color="var(--placeholder-fg)"
-                                            size={50}
-                                        />
-                                    </Center>
-                                )}
-                            </Tooltip>
-                            <Button
-                                compact
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    setSideBar({ image: false });
-                                }}
-                                opacity={0.8}
-                                radius={100}
-                                size="md"
-                                sx={{ cursor: 'default', position: 'absolute', right: 5, top: 5 }}
-                                tooltip={{
-                                    label: t('common.collapse', { postProcess: 'titleCase' }),
-                                    openDelay: 500,
-                                }}
-                                variant="default"
-                            >
-                                <RiArrowDownSLine
-                                    color="white"
-                                    size={20}
-                                />
-                            </Button>
-                        </ImageContainer>
-                    )}
-                </AnimatePresence>
-            </Stack>
-        </SidebarContainer>
+                            <img
+                                className={styles.sidebarImage}
+                                loading="eager"
+                                src={upsizedImageUrl || ''}
+                            />
+                        </Tooltip>
+                        <ActionIcon
+                            icon="arrowDownS"
+                            iconProps={{
+                                size: 'lg',
+                            }}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setSideBar({ image: false });
+                            }}
+                            opacity={0.8}
+                            radius="md"
+                            style={{
+                                cursor: 'default',
+                                position: 'absolute',
+                                right: 5,
+                                top: 5,
+                            }}
+                            tooltip={{
+                                label: t('common.collapse', {
+                                    postProcess: 'titleCase',
+                                }),
+                                openDelay: 500,
+                            }}
+                        />
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
     );
 };

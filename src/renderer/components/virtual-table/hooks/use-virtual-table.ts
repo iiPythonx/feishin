@@ -251,7 +251,7 @@ export const useVirtualTable = <TFilter extends BaseQuery<any>>({
                     properties.table.pagination.itemsPerPage;
                 event.api?.ensureIndexVisible(currentPageStartIndex, 'top');
             } catch (err) {
-                console.log(err);
+                console.error(err);
             }
 
             if (isSearchParams) {

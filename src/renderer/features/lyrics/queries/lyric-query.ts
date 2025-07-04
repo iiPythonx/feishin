@@ -86,7 +86,7 @@ export const useSongLyricsBySong = (
     song: QueueSong | undefined,
 ): UseQueryResult<FullLyricsMetadata | StructuredLyric[]> => {
     const { query } = args;
-    const { fetch } = useLyricsSettings();
+    const { fetch, preferLocalLyrics } = useLyricsSettings();
     const server = getServerById(song?.serverId);
 
     return useQuery({
@@ -97,6 +97,9 @@ export const useSongLyricsBySong = (
             if (!server) throw new Error('Server not found');
             if (!song) return null;
 
+            let localLyrics: FullLyricsMetadata | null | StructuredLyric[] = null;
+            let remoteLyrics: FullLyricsMetadata | null | StructuredLyric[] = null;
+
             if (hasFeature(server, ServerFeature.LYRICS_MULTIPLE_STRUCTURED)) {
                 const subsonicLyrics = await api.controller
                     .getStructuredLyrics({
@@ -106,7 +109,7 @@ export const useSongLyricsBySong = (
                     .catch(console.error);
 
                 if (subsonicLyrics?.length) {
-                    return subsonicLyrics;
+                    localLyrics = subsonicLyrics;
                 }
             } else if (hasFeature(server, ServerFeature.LYRICS_SINGLE_STRUCTURED)) {
                 const jfLyrics = await api.controller
@@ -114,10 +117,10 @@ export const useSongLyricsBySong = (
                         apiClientProps: { server, signal },
                         query: { songId: song.id },
                     })
-                    .catch((err) => console.log(err));
+                    .catch((err) => console.error(err));
 
                 if (jfLyrics) {
-                    return {
+                    localLyrics = {
                         artist: song.artists?.[0]?.name,
                         lyrics: jfLyrics,
                         name: song.name,
@@ -126,7 +129,7 @@ export const useSongLyricsBySong = (
                     };
                 }
             } else if (song.lyrics) {
-                return {
+                localLyrics = {
                     artist: song.artists?.[0]?.name,
                     lyrics: formatLyrics(song.lyrics),
                     name: song.name,
@@ -135,17 +138,29 @@ export const useSongLyricsBySong = (
                 };
             }
 
+            if (preferLocalLyrics && localLyrics) {
+                return localLyrics;
+            }
+
             if (fetch) {
                 const remoteLyricsResult: InternetProviderLyricResponse | null =
                     await lyricsIpc?.getRemoteLyricsBySong(song);
 
                 if (remoteLyricsResult) {
-                    return {
+                    remoteLyrics = {
                         ...remoteLyricsResult,
                         lyrics: formatLyrics(remoteLyricsResult.lyrics),
                         remote: true,
                     };
                 }
+            }
+
+            if (remoteLyrics) {
+                return remoteLyrics;
+            }
+
+            if (localLyrics) {
+                return localLyrics;
             }
 
             return null;
@@ -183,9 +198,7 @@ export const useSongLyricsByRemoteId = (
             );
         },
         queryFn: async () => {
-            const remoteLyricsResult = await lyricsIpc?.getRemoteLyricsByRemoteId(
-                query as LyricGetQuery,
-            );
+            const remoteLyricsResult = await lyricsIpc?.getRemoteLyricsByRemoteId(query as any);
 
             if (remoteLyricsResult) {
                 return formatLyrics(remoteLyricsResult);

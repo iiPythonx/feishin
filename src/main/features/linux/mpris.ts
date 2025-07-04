@@ -177,7 +177,7 @@ ipcMain.on('update-song', (_event, song: QueueSong | undefined) => {
             'xesam:userRating': song.userRating ? song.userRating / 5 : null,
         };
     } catch (err) {
-        console.log(err);
+        console.error(err);
     }
 });
 

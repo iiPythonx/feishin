@@ -1,11 +1,15 @@
-import { Code, Divider } from '@mantine/core';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Switch, Text, Textarea } from '/@/renderer/components';
 import { SettingsOptions } from '/@/renderer/features/settings/components/settings-option';
 import { useCssSettings, useSettingsStoreActions } from '/@/renderer/store';
 import { sanitizeCss } from '/@/renderer/utils/sanitize';
+import { Button } from '/@/shared/components/button/button';
+import { Code } from '/@/shared/components/code/code';
+import { Switch } from '/@/shared/components/switch/switch';
+import { Text } from '/@/shared/components/text/text';
+import { Textarea } from '/@/shared/components/textarea/textarea';
+import { Divider } from '/@/shared/components/divider/divider';
 
 export const StylesSettings = () => {
     const [open, setOpen] = useState(false);
@@ -54,8 +58,8 @@ export const StylesSettings = () => {
                             <>
                                 {open && (
                                     <Button
-                                        compact
                                         onClick={handleSave}
+                                        size="compact-md"
                                         // disabled={isSaveButtonDisabled}
                                         variant="filled"
                                     >
@@ -63,8 +67,8 @@ export const StylesSettings = () => {
                                     </Button>
                                 )}
                                 <Button
-                                    compact
                                     onClick={() => setOpen(!open)}
+                                    size="compact-md"
                                     variant="filled"
                                 >
                                     {t(open ? 'common.close' : 'common.edit', {
@@ -81,6 +85,7 @@ export const StylesSettings = () => {
                             <Textarea
                                 autosize
                                 defaultValue={css}
+                                minRows={8}
                                 onBlur={(e) =>
                                     setCss(sanitizeCss(`<style>${e.currentTarget.value}`))
                                 }

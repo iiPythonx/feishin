@@ -49,7 +49,7 @@ export default class AppUpdater {
 protocol.registerSchemesAsPrivileged([{ privileges: { bypassCSP: true }, scheme: 'feishin' }]);
 
 process.on('uncaughtException', (error: any) => {
-    console.log('Error in main process', error);
+    console.error('Error in main process', error);
 });
 
 if (store.get('ignore_ssl')) {

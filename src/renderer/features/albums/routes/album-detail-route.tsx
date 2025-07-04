@@ -3,7 +3,7 @@ import type { AgGridReact as AgGridReactType } from '@ag-grid-community/react/li
 import { useRef } from 'react';
 import { useParams } from 'react-router';
 
-import { NativeScrollArea, Spinner } from '/@/renderer/components';
+import { NativeScrollArea } from '/@/renderer/components/native-scroll-area/native-scroll-area';
 import { AlbumDetailContent } from '/@/renderer/features/albums/components/album-detail-content';
 import { AlbumDetailHeader } from '/@/renderer/features/albums/components/album-detail-header';
 import { useAlbumDetail } from '/@/renderer/features/albums/queries/album-detail-query';
@@ -23,7 +23,7 @@ const AlbumDetailRoute = () => {
     const { albumId } = useParams() as { albumId: string };
     const server = useCurrentServer();
     const detailQuery = useAlbumDetail({ query: { id: albumId }, serverId: server?.id });
-    const { color: backgroundColor, colorId } = useFastAverageColor({
+    const { background: backgroundColor, colorId } = useFastAverageColor({
         id: albumId,
         src: detailQuery.data?.imageUrl,
         srcLoaded: !detailQuery.isLoading,
@@ -40,10 +40,6 @@ const AlbumDetailRoute = () => {
             playType: playButtonBehavior,
         });
     };
-
-    if (!backgroundColor || colorId !== albumId) {
-        return <Spinner container />;
-    }
 
     const backgroundUrl = detailQuery.data?.imageUrl || '';
     const background = (albumBackground && `url(${backgroundUrl})`) || backgroundColor;
@@ -70,6 +66,7 @@ const AlbumDetailRoute = () => {
                     background={{
                         background,
                         blur: (albumBackground && headerBackgroundBlur) || 0,
+                        loading: !backgroundColor || colorId !== albumId,
                     }}
                     ref={headerRef}
                 />

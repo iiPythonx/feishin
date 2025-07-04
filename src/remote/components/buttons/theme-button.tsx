@@ -1,28 +1,34 @@
-import { useEffect } from 'react';
-import { RiMoonLine, RiSunLine } from 'react-icons/ri';
-
-import { RemoteButton } from '/@/remote/components/buttons/remote-button';
 import { useIsDark, useToggleDark } from '/@/remote/store';
-import { AppTheme } from '/@/shared/types/domain-types';
+import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
+import { Icon } from '/@/shared/components/icon/icon';
 
 export const ThemeButton = () => {
     const isDark = useIsDark();
     const toggleDark = useToggleDark();
 
-    useEffect(() => {
-        const targetTheme: AppTheme = isDark ? AppTheme.DEFAULT_DARK : AppTheme.DEFAULT_LIGHT;
-        document.body.setAttribute('data-theme', targetTheme);
-    }, [isDark]);
+    const handleToggleTheme = () => {
+        toggleDark();
+    };
 
     return (
-        <RemoteButton
-            mr={5}
-            onClick={() => toggleDark()}
-            size="xl"
-            tooltip="Toggle Theme"
+        <ActionIcon
+            onClick={handleToggleTheme}
+            tooltip={{
+                label: 'Toggle Theme',
+            }}
             variant="default"
         >
-            {isDark ? <RiSunLine size={30} /> : <RiMoonLine size={30} />}
-        </RemoteButton>
+            {isDark ? (
+                <Icon
+                    icon="themeLight"
+                    size={30}
+                />
+            ) : (
+                <Icon
+                    icon="themeDark"
+                    size={30}
+                />
+            )}
+        </ActionIcon>
     );
 };

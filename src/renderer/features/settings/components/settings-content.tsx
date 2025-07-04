@@ -1,7 +1,6 @@
 import isElectron from 'is-electron';
 import { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 
 import { Tabs } from '/@/renderer/components';
 import {
@@ -60,10 +59,10 @@ export const SettingsContent = () => {
     const { floatingPlayer } = useTweaksSettings();
 
     return (
-        <TabContainer>
+        <div style={{ height: '100%', overflow: 'scroll', padding: '1rem', width: '100%' }}>
             <Tabs
                 keepMounted={false}
-                onTabChange={(e) => e && setSettings({ tab: e })}
+                onChange={(e) => e && setSettings({ tab: e })}
                 orientation="horizontal"
                 value={currentTab}
                 variant="default"
@@ -134,6 +133,6 @@ export const SettingsContent = () => {
                     <TweaksTab />
                 </Tabs.Panel>
             </Tabs>
-        </TabContainer>
+        </div>
     );
 };
