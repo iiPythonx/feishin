@@ -1,8 +1,6 @@
-<img src="assets/icons/icon.png" alt="logo" title="feishin" align="right" height="85px" />
+<img src="assets/icons/512x512.png" alt="logo" title="feishin" align="right" height="60px" />
 
 # iiPython Feishin Fork
-
-
 
 Fork of [Feishin](https://github.com/jeffvli/feishin) with improved features and a new theme.
 
@@ -15,7 +13,7 @@ Fork of [Feishin](https://github.com/jeffvli/feishin) with improved features and
 - [x] Redesigned dark theme
 - [x] Album Ambient Mode, Floating Playerbar, hiding "DISC 1", more UX tweaks
 - [x] New icon
-- [ ] ~~Request a feature~~ We add new fork features at our discresion.
+- [ ] ~~Request a feature~~ We add new fork features at our discretion.
 
 ## Gallery
 
