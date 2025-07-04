@@ -450,7 +450,7 @@
         "playbackFetchInProgress": "loading songs…",
         "playbackFetchNoResults": "no songs found",
         "playbackSpeed": "playback speed",
-        "playRandom": "play random",
+        "playRandom": "Build queue",
         "playSimilarSongs": "play similar songs",
         "previous": "previous",
         "queue_clear": "clear queue",

@@ -29,17 +29,13 @@ export function IsUpdatedDialog() {
                 root: {
                     marginBottom: '50px',
                     right: '1rem',
-                    backgroundColor: "rgba(var(--modal-bg-rgb), .85) !important",
-                    backdropFilter: "blur(2rem)"
+                    backdropFilter: 'blur(2rem)',
+                    borderRadius: '18px',
                 },
             }}
         >
-            <Stack
-                style={{
-                    borderRadius: '18px',
-                }}
-            >
-                <Text>{t('common.newVersion', { postProcess: 'sentenceCase', version })}</Text>
+            <Stack>
+                <Text>{`Feishin has been updated to upstream ${version.replace('0.', '')}`}</Text>{' '}
                 <Group
                     justify="flex-end"
                     wrap="nowrap"

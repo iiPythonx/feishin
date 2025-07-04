@@ -2,10 +2,12 @@
     position: absolute;
     z-index: 1000;
     padding: var(--theme-spacing-xs);
-    background: var(--theme-colors-surface);
     border: 1px solid var(--theme-colors-border);
-    border-radius: var(--theme-radius-md);
     box-shadow: 2px 2px 10px 2px rgb(0 0 0 / 40%);
+    color: var(--theme-colors-surface-foreground);
+    background: rgba(var(--surface-rgb), .4);
+    backdrop-filter: blur(2rem);
+    border-radius: 18px;
 }
 
 .context-menu-button {
@@ -17,7 +19,7 @@
     color: var(--theme-colors-surface-foreground);
     text-align: left;
     cursor: default;
-    background: var(--theme-colors-surface);
+    background: transparent;
     border: none;
 
     &:hover {

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 
 import { useAlbumArtistDetail } from '/@/renderer/features/artists/queries/album-artist-detail-query';
-import { LibraryHeader, useSetRating } from '/@/renderer/features/shared';
+import { LibraryHeader, useCreateFavorite, useDeleteFavorite, useSetRating } from '/@/renderer/features/shared';
 import { AppRoute } from '/@/renderer/router/routes';
 import { useCurrentServer } from '/@/renderer/store';
 import { formatDurationString } from '/@/renderer/utils';
@@ -12,6 +12,7 @@ import { Rating } from '/@/shared/components/rating/rating';
 import { Stack } from '/@/shared/components/stack/stack';
 import { Text } from '/@/shared/components/text/text';
 import { LibraryItem, ServerType } from '/@/shared/types/domain-types';
+import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
 
 interface AlbumArtistDetailHeaderProps {
     background: {
@@ -77,6 +78,31 @@ export const AlbumArtistDetailHeader = forwardRef(
 
         const showRating = detailQuery?.data?.serverType === ServerType.NAVIDROME;
 
+            const createFavoriteMutation = useCreateFavorite({});
+            const deleteFavoriteMutation = useDeleteFavorite({});
+        
+            const handleFavorite = () => {
+                if (!detailQuery?.data) return;
+        
+                if (detailQuery.data.userFavorite) {
+                    deleteFavoriteMutation.mutate({
+                        query: {
+                            id: [detailQuery.data.id],
+                            type: LibraryItem.ALBUM_ARTIST,
+                        },
+                        serverId: detailQuery.data.serverId,
+                    });
+                } else {
+                    createFavoriteMutation.mutate({
+                        query: {
+                            id: [detailQuery.data.id],
+                            type: LibraryItem.ALBUM_ARTIST,
+                        },
+                        serverId: detailQuery.data.serverId,
+                    });
+                }
+            };
+
         return (
             <LibraryHeader
                 imageUrl={detailQuery?.data?.imageUrl}
@@ -108,6 +134,20 @@ export const AlbumArtistDetailHeader = forwardRef(
                                 />
                             </>
                         )}
+                        •
+                        <ActionIcon
+                            icon="favorite"
+                            iconProps={{
+                                fill: detailQuery?.data?.userFavorite ? 'primary' : undefined,
+                            }}
+                            loading={
+                                createFavoriteMutation.isLoading || deleteFavoriteMutation.isLoading
+                            }
+                            onClick={handleFavorite}
+                            size="lg"
+                            variant="transparent"
+                            className="favorite_icon"
+                        />
                     </Group>
                 </Stack>
             </LibraryHeader>

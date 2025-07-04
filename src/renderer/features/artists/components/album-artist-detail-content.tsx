@@ -20,7 +20,7 @@ import {
     SONG_CONTEXT_MENU_ITEMS,
 } from '/@/renderer/features/context-menu/context-menu-items';
 import { usePlayQueueAdd } from '/@/renderer/features/player';
-import { PlayButton, useCreateFavorite, useDeleteFavorite } from '/@/renderer/features/shared';
+import { PlayButton } from '/@/renderer/features/shared';
 import { LibraryBackgroundOverlay } from '/@/renderer/features/shared/components/library-background-overlay';
 import { useContainerQuery } from '/@/renderer/hooks';
 import { useGenreRoute } from '/@/renderer/hooks/use-genre-route';
@@ -45,6 +45,7 @@ import {
     SortOrder,
 } from '/@/shared/types/domain-types';
 import { CardRow, Play, TableColumn } from '/@/shared/types/types';
+import { FaArrowRight } from 'react-icons/fa';
 
 interface AlbumArtistDetailContentProps {
     background?: string;
@@ -302,31 +303,6 @@ export const AlbumArtistDetailContent = ({ background }: AlbumArtistDetailConten
         });
     };
 
-    const createFavoriteMutation = useCreateFavorite({});
-    const deleteFavoriteMutation = useDeleteFavorite({});
-
-    const handleFavorite = () => {
-        if (!detailQuery?.data) return;
-
-        if (detailQuery.data.userFavorite) {
-            deleteFavoriteMutation.mutate({
-                query: {
-                    id: [detailQuery.data.id],
-                    type: LibraryItem.ALBUM_ARTIST,
-                },
-                serverId: detailQuery.data.serverId,
-            });
-        } else {
-            createFavoriteMutation.mutate({
-                query: {
-                    id: [detailQuery.data.id],
-                    type: LibraryItem.ALBUM_ARTIST,
-                },
-                serverId: detailQuery.data.serverId,
-            });
-        }
-    };
-
     const albumCount = detailQuery?.data?.albumCount;
     const artistContextItems =
         (albumCount ?? 1) > 0
@@ -370,73 +346,53 @@ export const AlbumArtistDetailContent = ({ background }: AlbumArtistDetailConten
         >
             <LibraryBackgroundOverlay backgroundColor={background} />
             <div className={styles.detailContainer}>
-                <Group gap="md">
-                    <PlayButton
-                        disabled={albumCount === 0}
-                        onClick={() => handlePlay(playButtonBehavior)}
-                    />
-                    <Group gap="xs">
-                        <ActionIcon
-                            icon="favorite"
-                            iconProps={{
-                                fill: detailQuery?.data?.userFavorite ? 'primary' : undefined,
-                            }}
-                            loading={
-                                createFavoriteMutation.isLoading || deleteFavoriteMutation.isLoading
-                            }
-                            onClick={handleFavorite}
-                            size="lg"
-                            variant="transparent"
+                <Group
+                    gap="md"
+                    justify="space-between"
+                >
+                    <Group gap="md">
+                        <PlayButton
+                            disabled={albumCount === 0}
+                            onClick={() => handlePlay(playButtonBehavior)}
                         />
-                        <ActionIcon
-                            icon="ellipsisHorizontal"
-                            onClick={(e) => {
-                                if (!detailQuery?.data) return;
-                                handleGeneralContextMenu(e, [detailQuery.data!]);
-                            }}
-                            size="lg"
-                            variant="transparent"
-                        />
+                        <Button
+                            component={Link}
+                            size="compact-md"
+                            to={artistSongsLink}
+                            variant="subtle"
+                        >
+                            {'View Tracks'}
+                        </Button>
+                        •
+                        {showGenres ? (
+                            <Group gap="sm">
+                                {detailQuery?.data?.genres?.map((genre) => (
+                                    <Button
+                                        component={Link}
+                                        key={`genre-${genre.id}`}
+                                        radius="md"
+                                        size="compact-md"
+                                        to={generatePath(genrePath, {
+                                            genreId: genre.id,
+                                        })}
+                                        variant="outline"
+                                    >
+                                        {genre.name}
+                                    </Button>
+                                ))}
+                            </Group>
+                        ) : null}
                     </Group>
+                    <ActionIcon
+                        icon="ellipsisHorizontal"
+                        onClick={(e) => {
+                            if (!detailQuery?.data) return;
+                            handleGeneralContextMenu(e, [detailQuery.data!]);
+                        }}
+                        size="lg"
+                        variant="transparent"
+                    />
                 </Group>
-                <Group gap="md">
-                    <Button
-                        component={Link}
-                        size="compact-md"
-                        to={artistDiscographyLink}
-                        variant="subtle"
-                    >
-                        {String(t('page.albumArtistDetail.viewDiscography')).toUpperCase()}
-                    </Button>
-                    <Button
-                        component={Link}
-                        size="compact-md"
-                        to={artistSongsLink}
-                        variant="subtle"
-                    >
-                        {String(t('page.albumArtistDetail.viewAllTracks')).toUpperCase()}
-                    </Button>
-                </Group>
-                {showGenres ? (
-                    <section>
-                        <Group gap="sm">
-                            {detailQuery?.data?.genres?.map((genre) => (
-                                <Button
-                                    component={Link}
-                                    key={`genre-${genre.id}`}
-                                    radius="md"
-                                    size="compact-md"
-                                    to={generatePath(genrePath, {
-                                        genreId: genre.id,
-                                    })}
-                                    variant="outline"
-                                >
-                                    {genre.name}
-                                </Button>
-                            ))}
-                        </Group>
-                    </section>
-                ) : null}
                 {externalLinks && (lastFM || musicBrainz) ? (
                     <section>
                         <Group gap="sm">
@@ -531,10 +487,9 @@ export const AlbumArtistDetailContent = ({ background }: AlbumArtistDetailConten
                                             )}
                                             uppercase
                                             variant="subtle"
+                                            className="fork-header"
                                         >
-                                            {t('page.albumArtistDetail.viewAll', {
-                                                postProcess: 'sentenceCase',
-                                            })}
+                                            {'See top songs'} <FaArrowRight />
                                         </Button>
                                     </Group>
                                 </Group>

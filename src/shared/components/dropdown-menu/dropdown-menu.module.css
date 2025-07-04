@@ -42,8 +42,10 @@
 .menu-dropdown {
     padding: var(--theme-spacing-xs);
     color: var(--theme-colors-surface-foreground);
-    background: var(--theme-colors-surface);
+    background: rgba(var(--surface-rgb), .4);
+    backdrop-filter: blur(2rem);
     border: 1px solid var(--theme-colors-border);
+    border-radius: 18px;
     filter: drop-shadow(0 0 5px rgb(0 0 0 / 50%));
 }
 

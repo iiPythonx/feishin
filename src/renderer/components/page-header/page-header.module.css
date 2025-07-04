@@ -60,7 +60,7 @@
 }
 
 .background-image-overlay.dark {
-    background: linear-gradient(rgb(0 0 0 / 50%), rgb(0 0 0 / 50%));
+    background: transparent;
 }
 
 .title-wrapper {

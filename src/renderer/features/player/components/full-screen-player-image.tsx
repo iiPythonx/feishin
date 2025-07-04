@@ -166,6 +166,7 @@ export const FullScreenPlayerImage = () => {
             direction="column"
             justify="flex-start"
             p="1rem"
+            w="100%"
         >
             <div
                 className={styles.imageContainer}
@@ -211,62 +212,76 @@ export const FullScreenPlayerImage = () => {
                 gap="md"
                 maw="100%"
             >
-                <Text
-                    fw={900}
-                    lh="1.2"
-                    overflow="hidden"
-                    size="4xl"
-                    w="100%"
-                >
-                    {currentSong?.name}
-                </Text>
-                <Text
-                    component={Link}
-                    isLink
-                    overflow="hidden"
-                    size="xl"
-                    to={generatePath(AppRoute.LIBRARY_ALBUMS_DETAIL, {
-                        albumId: currentSong?.albumId || '',
-                    })}
-                    w="100%"
-                >
-                    {currentSong?.album}
-                </Text>
-                <Text key="fs-artists">
-                    {currentSong?.artists?.map((artist, index) => (
-                        <Fragment key={`fs-artist-${artist.id}`}>
-                            {index > 0 && (
-                                <Text
-                                    style={{
-                                        display: 'inline-block',
-                                        padding: '0 0.5rem',
-                                    }}
-                                >
-                                    •
-                                </Text>
-                            )}
-                            <Text
-                                component={Link}
-                                isLink
-                                to={generatePath(AppRoute.LIBRARY_ALBUM_ARTISTS_DETAIL, {
-                                    albumArtistId: artist.id,
-                                })}
-                            >
-                                {artist.name}
-                            </Text>
-                        </Fragment>
-                    ))}
-                </Text>
                 <Group
                     justify="center"
                     mt="sm"
+                    w="fit-content"
+                    align="center"
                 >
+                    <Text
+                        fw={900}
+                        lh="1.2"
+                        overflow="hidden"
+                        size="4xl"
+                        w="fit-content"
+                        className="fsplayer-text"
+                    >
+                        {currentSong?.name}
+                    </Text>
+
                     {currentSong?.container && (
-                        <Badge variant="transparent">{currentSong?.container}</Badge>
+                        <Badge variant="playerbar">
+                            {currentSong?.container.replace('audio/', '')} {Math.round(currentSong?.bitRate / 1000) * 1000}
+                        </Badge>
                     )}
+                </Group>
+                <Group
+                    justify="center"
+                    mt="sm"
+                    w="fit-content"
+                    align="center"
+                >
+                    <Text
+                        component={Link}
+                        isLink
+                        overflow="hidden"
+                        size="xl"
+                        to={generatePath(AppRoute.LIBRARY_ALBUMS_DETAIL, {
+                            albumId: currentSong?.albumId || '',
+                        })}
+                        w="fit-content"
+                    >
+                        {currentSong?.album}
+                    </Text>
                     {currentSong?.releaseYear && (
-                        <Badge variant="transparent">{currentSong?.releaseYear}</Badge>
+                        <Badge variant="playerbar">{currentSong?.releaseYear}</Badge>
                     )}
+                    •
+                    <Text size="xl">
+                        {currentSong?.artists?.map((artist, index) => (
+                            <Fragment key={`fs-artist-${artist.id}`}>
+                                {index > 0 && (
+                                    <Text
+                                        style={{
+                                            display: 'inline-block',
+                                            padding: '0 0.5rem',
+                                        }}
+                                    >
+                                        •
+                                    </Text>
+                                )}
+                                <Text
+                                    component={Link}
+                                    isLink
+                                    to={generatePath(AppRoute.LIBRARY_ALBUM_ARTISTS_DETAIL, {
+                                        albumArtistId: artist.id,
+                                    })}
+                                >
+                                    {artist.name}
+                                </Text>
+                            </Fragment>
+                        ))}
+                    </Text>
                 </Group>
             </Stack>
         </Flex>

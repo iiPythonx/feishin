@@ -10,8 +10,16 @@
     background: transparent;
 }
 
+.root[data-variant='playerbar'] {
+    padding: var(--theme-spacing-sm) var(--theme-spacing-sm);
+    border-radius: 1rem
+}
+
 .root {
-    padding: var(--theme-spacing-xs) var(--theme-spacing-sm);
+    padding: var(--theme-spacing-lg) var(--theme-spacing-lg);
     font-weight: 500;
-    background: var(--theme-colors-surface);
+    background: rgba(var(--theme-colors-surface-rgb), .4);
+    border: none !important;
+    font-size: 12px;
+    border-radius: 1rem !important;
 }

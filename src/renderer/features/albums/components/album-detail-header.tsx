@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import { queryKeys } from '/@/renderer/api/query-keys';
 import { useAlbumDetail } from '/@/renderer/features/albums/queries/album-detail-query';
 import { LibraryHeader, useSetRating } from '/@/renderer/features/shared';
+import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
+import { useCreateFavorite, useDeleteFavorite } from '/@/renderer/features/shared';
 import { useContainerQuery } from '/@/renderer/hooks';
 import { useSongChange } from '/@/renderer/hooks/use-song-change';
 import { queryClient } from '/@/renderer/lib/react-query';
@@ -122,6 +124,33 @@ export const AlbumDetailHeader = forwardRef(
             });
         };
 
+        const createFavoriteMutation = useCreateFavorite({});
+        const deleteFavoriteMutation = useDeleteFavorite({});
+
+        const handleFavorite = () => {
+            if (!detailQuery?.data) return;
+
+            if (detailQuery.data.userFavorite) {
+                deleteFavoriteMutation.mutate({
+                    query: {
+                        id: [detailQuery.data.id],
+                        type: LibraryItem.ALBUM,
+                    },
+                    serverId: detailQuery.data.serverId,
+                });
+            } else {
+                createFavoriteMutation.mutate({
+                    query: {
+                        id: [detailQuery.data.id],
+                        type: LibraryItem.ALBUM,
+                    },
+                    serverId: detailQuery.data.serverId,
+                });
+            }
+        };
+
+        console.log(detailQuery?.data?.albumArtists)
+
         return (
             <Stack ref={cq.ref}>
                 <LibraryHeader
@@ -152,6 +181,21 @@ export const AlbumDetailHeader = forwardRef(
                                     />
                                 </>
                             )}
+                            •
+                            <ActionIcon
+                                icon="favorite"
+                                iconProps={{
+                                    fill: detailQuery?.data?.userFavorite ? 'primary' : undefined,
+                                }}
+                                loading={
+                                    createFavoriteMutation.isLoading ||
+                                    deleteFavoriteMutation.isLoading
+                                }
+                                onClick={handleFavorite}
+                                size="lg"
+                                variant="transparent"
+                                className="favorite_icon"
+                            />
                         </Group>
                         <Group
                             gap="md"
@@ -172,7 +216,22 @@ export const AlbumDetailHeader = forwardRef(
                                         albumArtistId: artist.id,
                                     })}
                                     variant="subtle"
+                                    style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
                                 >
+                                    {/* THIS DOES NOT WORK RIGHT NOW so it's safe to remove in the event of a (highly likely) conflict, but if navidrom ever starts providing it it will work*/}
+                                    {artist.imageUrl && (
+                                        <img
+                                            src={artist.imageUrl}
+                                            alt={artist.name}
+                                            style={{
+                                                width: '1.5rem',
+                                                height: '1.5rem',
+                                                borderRadius: '50%',
+                                                objectFit: 'cover',
+                                                marginRight: '0.5rem',
+                                            }}
+                                        />
+                                    )}
                                     {artist.name}
                                 </Text>
                             ))}
