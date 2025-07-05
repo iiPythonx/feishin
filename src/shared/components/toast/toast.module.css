@@ -1,6 +1,12 @@
 .root {
     bottom: 90px;
-    background-color: var(--theme-colors-surface);
+    background-color: rgba(var(--theme-colors-surface-rgb), .4);
+    backdrop-filter: blur(2rem);
+    border-radius: 18px;
+
+    border: 0px !important;
+
+    z-index: 999999;
 }
 
 .root.error {

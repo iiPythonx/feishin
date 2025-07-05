@@ -289,6 +289,7 @@ button {
     --theme-colors-foreground: var(--mantine-color-text);
     --theme-colors-primary-filled: var(--mantine-primary-color-filled);
     --theme-colors-primary-contrast: var(--mantine-primary-color-contrast);
+    --notifications-z-index: 99999999999 !important;
 
     @mixin light-root {
         --theme-colors-border: rgb(0 0 0 / 5%);
@@ -512,4 +513,10 @@ table {
 
 .fork_carousel_title {
     width: fit-content
+}
+
+.m_a513464::before {
+      border-radius: 1rem !important;
+      inset: 0px !important;
+      left: 0%
 }

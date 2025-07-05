@@ -15,6 +15,7 @@ interface NotificationProps extends MantineNotificationProps {
     message?: string;
     onClose?: () => void;
     type?: 'error' | 'info' | 'success' | 'warning';
+    zIndex: 99999999
 }
 
 const getTitle = (type: NotificationProps['type']) => {
