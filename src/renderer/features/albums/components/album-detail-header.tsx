@@ -42,9 +42,7 @@ export const AlbumDetailHeader = forwardRef(
             detailQuery.data?.originalDate &&
             detailQuery.data.originalDate !== detailQuery.data.releaseDate;
 
-        const releasePrefix = originalDifferentFromRelease
-            ? t('page.albumDetail.released', { postProcess: 'sentenceCase' })
-            : '♫';
+        const releasePrefix = 'Released'
 
         const songIds = useMemo(() => {
             return new Set(detailQuery.data?.songs?.map((song) => song.id));
@@ -103,7 +101,7 @@ export const AlbumDetailHeader = forwardRef(
         ];
 
         if (originalDifferentFromRelease) {
-            const formatted = `♫ ${formatDateAbsoluteUTC(detailQuery!.data!.originalDate)}`;
+            const formatted = `Released ${formatDateAbsoluteUTC(detailQuery!.data!.originalDate)}`;
             metadataItems.splice(0, 0, {
                 id: 'originalDate',
                 value: formatted,
