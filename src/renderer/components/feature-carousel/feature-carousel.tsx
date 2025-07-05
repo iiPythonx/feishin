@@ -91,6 +91,9 @@ export const FeatureCarousel = ({ data }: FeatureCarouselProps) => {
                         initial="initial"
                         key={`image-${itemIndex}`}
                         variants={variants}
+                        style={{
+                            borderRadius: '14px',
+                        }}
                     >
                         <div className={styles.grid}>
                             <div className={styles.imageColumn}>
@@ -105,15 +108,21 @@ export const FeatureCarousel = ({ data }: FeatureCarouselProps) => {
                                     gap="md"
                                     style={{ width: '100%' }}
                                 >
-                                    <div className={styles.titleWrapper}>
+                                    <div
+                                        className={styles.titleWrapper}
+                                        style={{ display: 'flex', alignItems: 'center' }}
+                                    >
                                         <TextTitle
                                             fw={900}
-                                            lineClamp={2}
-                                            order={1}
                                             overflow="hidden"
+                                            className="fork_carousel_title"
                                         >
                                             {currentItem?.name}
-                                        </TextTitle>
+                                        </TextTitle>{' '}
+                                        &nbsp;
+                                        <Badge variant="playerbar">
+                                            {currentItem?.releaseYear}
+                                        </Badge>
                                     </div>
                                     <div className={styles.titleWrapper}>
                                         {currentItem?.albumArtists.slice(0, 1).map((artist) => (
@@ -134,7 +143,6 @@ export const FeatureCarousel = ({ data }: FeatureCarouselProps) => {
                                                 {genre.name}
                                             </Badge>
                                         ))}
-                                        <Badge variant="default">{currentItem?.releaseYear}</Badge>
                                     </Group>
                                     <Group justify="space-between">
                                         <PlayButton

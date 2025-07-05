@@ -505,3 +505,11 @@ table {
 .mantine-Slider-track::before {
     background-color: var(--theme-colors-surface);
 }
+
+.fs-image-module-image:not(.ag-cell .fs-image-module-image) {
+    border-radius: 18px !important;
+}
+
+.fork_carousel_title {
+    width: fit-content
+}
