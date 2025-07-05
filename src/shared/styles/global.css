@@ -394,7 +394,8 @@ button {
 /* Custom theme fixes */
 
 .fs-player-bar-module-container {
-    background: black !important;
+    background: rgba(0, 0, 0, 0.4) !important;
+    backdrop-filter: blur(2rem);
 }
 
 .fs-poster-card-module-image {
@@ -470,7 +471,8 @@ button {
     border-radius: 1rem;
 }
 
-.fs-poster-card-module-image-container { /* clipping in the event of a favorite album */
+.fs-poster-card-module-image-container {
+    /* clipping in the event of a favorite album */
     border-radius: 8px !important
 }
 
@@ -480,4 +482,26 @@ button {
 
 table {
     border: 0px !important
+}
+
+.fs-sidebar-module-accordion-content a {
+    border-radius: 8px;
+}
+
+.fs-main-content-module-main-content-container {
+    height: 100vh
+}
+
+.mantine-Tabs-root {
+    input {
+        border-radius: 18px;
+    }
+
+    button:not(.mantine-focus-never) {
+        border-radius: 8px;
+    }
+}
+
+.mantine-Slider-track::before {
+    background-color: var(--theme-colors-surface);
 }

@@ -65,6 +65,7 @@ export const FullScreenPlayerQueue = () => {
             style={
                 {
                     '--opacity': opacity / 100,
+                    'height': '80vh'
                 } as CSSProperties
             }
         >

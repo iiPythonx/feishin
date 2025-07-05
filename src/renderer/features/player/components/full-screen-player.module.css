@@ -12,7 +12,7 @@
     }
 
     button:hover {
-        background: rgba(4, 4, 6, .4) !important;
+        background: rgba(4, 4, 6, .4);
         border-radius: 8px 8px 0px 0px;
     }
 }

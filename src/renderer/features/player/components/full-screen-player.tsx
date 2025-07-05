@@ -1,6 +1,6 @@
 import { useHotkeys } from '@mantine/hooks';
 import { motion, Variants } from 'motion/react';
-import { CSSProperties, useLayoutEffect, useRef, useState } from 'react';
+import { CSSProperties, useLayoutEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 
@@ -32,11 +32,7 @@ import { Platform } from '/@/shared/types/types';
 
 const mainBackground = 'var(--theme-colors-background)';
 
-interface ControlsProps {
-    isPageHovered: boolean;
-}
-
-const Controls = ({ isPageHovered }: ControlsProps) => {
+const Controls = () => {
     const { t } = useTranslation();
     const {
         dynamicBackground,
@@ -71,10 +67,11 @@ const Controls = ({ isPageHovered }: ControlsProps) => {
             p="1rem"
             pos="absolute"
             style={{
-                background: `rgb(var(--theme-colors-background-transparent), ${opacity}%)`,
+                background: `rgba(4, 4, 9, .5)`,
                 borderRadius: '0px 0px 18px 0px',
                 left: 0,
                 top: 0,
+                height: "5%"
             }}
         >
             <ActionIcon
@@ -82,7 +79,7 @@ const Controls = ({ isPageHovered }: ControlsProps) => {
                 iconProps={{ size: 'lg' }}
                 onClick={handleToggleFullScreenPlayer}
                 tooltip={{ label: t('common.minimize', { postProcess: 'titleCase' }) }}
-                variant={isPageHovered ? 'default' : 'subtle'}
+                variant={'subtle'}
             />
             <Popover position="bottom-start">
                 <Popover.Target>
@@ -90,7 +87,7 @@ const Controls = ({ isPageHovered }: ControlsProps) => {
                         icon="settings"
                         iconProps={{ size: 'lg' }}
                         tooltip={{ label: t('common.configure', { postProcess: 'titleCase' }) }}
-                        variant={isPageHovered ? 'default' : 'subtle'}
+                        variant={'subtle'}
                     />
                 </Popover.Target>
                 <Popover.Dropdown>
@@ -363,13 +360,9 @@ const Controls = ({ isPageHovered }: ControlsProps) => {
 };
 
 const containerVariants: Variants = {
-    closed: (custom) => {
-        const { windowBarStyle } = custom;
+    closed: () => {
         return {
-            height:
-                windowBarStyle === Platform.WINDOWS || windowBarStyle === Platform.MACOS
-                    ? 'calc(100vh - 120px)'
-                    : 'calc(100vh - 90px)',
+            height: '100vh',
             position: 'absolute',
             top: '100vh',
             transition: {
@@ -381,17 +374,14 @@ const containerVariants: Variants = {
         };
     },
     open: (custom) => {
-        const { background, backgroundImage, dynamicBackground, windowBarStyle } = custom;
+        const { background, backgroundImage, dynamicBackground } = custom;
         return {
             background: dynamicBackground ? backgroundImage : mainBackground,
             backgroundColor: dynamicBackground ? background : mainBackground,
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
-            height:
-                windowBarStyle === Platform.WINDOWS || windowBarStyle === Platform.MACOS
-                    ? 'calc(100vh - 120px)'
-                    : 'calc(100vh - 90px)',
+            height: '100vh',
             left: 0,
             position: 'absolute',
             top: 0,
@@ -414,8 +404,6 @@ export const FullScreenPlayer = () => {
     const { dynamicBackground, dynamicImageBlur, dynamicIsImage } = useFullScreenPlayerStore();
     const { setStore } = useFullScreenPlayerStoreActions();
     const { windowBarStyle } = useWindowSettings();
-
-    const [isPageHovered, setIsPageHovered] = useState(false);
 
     const location = useLocation();
     const isOpenedRef = useRef<boolean | null>(null);
@@ -448,12 +436,10 @@ export const FullScreenPlayer = () => {
             custom={{ background, backgroundImage, dynamicBackground, windowBarStyle }}
             exit="closed"
             initial="closed"
-            onMouseEnter={() => setIsPageHovered(true)}
-            onMouseLeave={() => setIsPageHovered(false)}
             transition={{ duration: 2 }}
             variants={containerVariants}
         >
-            <Controls isPageHovered={isPageHovered} />
+            <Controls />
             {dynamicBackground && (
                 <div
                     className={styles.backgroundImageOverlay}
