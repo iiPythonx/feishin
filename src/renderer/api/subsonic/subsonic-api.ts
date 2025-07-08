@@ -266,6 +266,9 @@ axiosClient.interceptors.response.use(
                     message: data['subsonic-response'].error.message,
                     title: i18n.t('error.genericError', { postProcess: 'sentenceCase' }) as string,
                 });
+
+                // Since we do status === 200, override this value with the error code
+                response.status = data['subsonic-response'].error.code;
             }
         }
 
