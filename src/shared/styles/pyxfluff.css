@@ -172,3 +172,14 @@ table {
 .mantine-Grid-col button {
     border-radius: 8px;
 }
+
+
+/* Fix cover art being pushed up */
+.fs-sidebar-module-scroll-area {
+    height: 100% !important;
+}
+
+/* Fix aspect ratio of sidebar image */
+.fs-sidebar-module-sidebar-image {
+    aspect-ratio: 1;
+}

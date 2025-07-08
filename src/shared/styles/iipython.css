@@ -11,7 +11,75 @@
     border-radius: 8px !important;
 }
 
-/** Fixes **/
+        /* Retheme the context menus */
+        .fs-context-menu-module-container {
+            background: var(--mantine-color-dark-9) !important;
+            border: 1px solid var(--mantine-color-dark-4) !important;
+        }
+
+        /* Add border radius to hovering context menu */
+        .fs-context-menu-module-context-menu-button:hover {
+            cursor: pointer;
+            border-radius: 10px;
+            background-color: var(--mantine-color-dark-6);
+        }
+
+        /* Background theming for modals */
+        .fs-modal-module-content {
+            border: 1px solid var(--mantine-color-dark-4);
+            background-color: var(--mantine-color-dark-9);
+
+            header {
+                background-color: var(--mantine-color-dark-9);
+                border-bottom: 1px solid var(--mantine-color-dark-4);
+                margin-bottom: 12px;
+
+                /* Correct padding and height */
+                padding-right: 12px;
+                max-height: 45px !important;
+                min-height: 45px !important;
+
+                /* Correct title alignment */
+                .fs-modal-module-title {
+                    margin-top: 3px;
+                }
+            }
+
+            /* Force a max size onto modals */
+            max-height: 700px;
+
+            /* Ensure any overflowing bodies are handled as well */
+            .fs-modal-module-body {
+                overflow-y: auto;
+                max-height: 600px;
+                scrollbar-width: thin;
+            }
+        }
+
+        /* Borders, everywhere for the love of god */
+        .fs-left-sidebar-module-container {
+            border-right: 1px solid var(--theme-colors-border);
+        }
+        .fs-player-bar-module-container {
+            border-top: 1px solid var(--theme-colors-border);
+        }
+
+        /* Correct the appearance of the full screen corner */
+        .fs-full-screen-player-module-container > .mantine-Group-root {
+            padding: .5rem !important;
+        }
+
+        /* Fix cover art being pushed up */
+        .fs-sidebar-module-scroll-area {
+            height: 100% !important;
+        }
+
+        /* Fix aspect ratio of sidebar image */
+        .fs-sidebar-module-sidebar-image {
+            aspect-ratio: 1;
+        }
+
+    /** Fixes **/
 
 /* Fix background contrast on date picker/text area objects */
 .mantine-DateTimePicker-input,
@@ -25,12 +93,11 @@
     margin-bottom: var(--theme-spacing-sm);
 }
 
-/* Fix switch tracking having no contrast */
-.fs-switch-module-track {
-    border: none !important;
-    /* Looks better this way imo */
-    background-color: var(--mantine-color-dark-8) !important;
-}
+        /* Fix switch tracking having no contrast */
+        .fs-switch-module-track {
+            border: none !important;  /* Looks better this way imo */
+            background-color: var(--mantine-color-dark-6);
+        }
 
 /* Fix password input in server form not having any radius */
 .fs-password-input-module-input {
