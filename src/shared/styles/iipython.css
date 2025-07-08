@@ -12,10 +12,16 @@
         }
 
         /* Retheme the context menus */
-        .fs-context-menu-module-container {
+        .fs-context-menu-module-container,
+        .fs-dropdown-menu-module-menu-dropdown,
+        .mantine-Popover-dropdown {
             background: var(--mantine-color-dark-9) !important;
             border: 1px solid var(--mantine-color-dark-4) !important;
             border-radius: 8px !important;
+
+            .mantine-Menu-item {
+                cursor: pointer;
+            }
         }
         .fs-hover-card-module-dropdown {
             margin-left: 8px;
@@ -25,7 +31,8 @@
         }
 
         /* Add border radius to hovering context menu */
-        .fs-context-menu-module-context-menu-button:hover {
+        .fs-context-menu-module-context-menu-button:hover,
+        .fs-select-module-option:hover {
             cursor: pointer;
             border-radius: 8px;
             background-color: var(--mantine-color-dark-6);
@@ -107,6 +114,81 @@
         /* Correct the appearance of the full screen corner */
         .fs-full-screen-player-module-container > .mantine-Group-root {
             padding: .5rem !important;
+        }
+
+        /* Improve contrast and look of settings */
+        .mantine-Input-input {
+            background: var(--mantine-color-dark-9) !important;
+        }
+        .fs-select-module-option[data-checked = "true"]::before {
+            width: 1px;
+        }
+
+        /* Realign the carousel grid */
+        .fs-feature-carousel-module-grid {
+            display: flex;
+        }
+        .fs-feature-carousel-module-info-column {
+            display: flex;
+            align-items: center;
+
+            h1 {
+                max-width: 50%;
+            }
+
+            /* Margin for the year badge */
+            .fs-badge-module-root {
+                margin-left: 10px !important;
+            }
+
+            /* Bump up the size of the artist */
+            div.mantine-Text-root {
+                font-size: medium;
+            }
+
+            /* Hide genres from carousel */
+            .mantine-Stack-root > .mantine-Group-root:nth-child(3) {
+                display: none;
+            }
+
+            /* Attack carousel buttons */
+            .mantine-Stack-root > .mantine-Group-root:last-child {
+                bottom: 12px;
+                position: absolute;
+
+                /* Match the gap of the left/right buttons */
+                gap: 8px;
+
+                .mantine-UnstyledButton-root {
+
+                    /* Standardize the general look */
+                    border: 1px solid var(--theme-colors-border);
+                    transition: background .2s ease-in-out;
+                    opacity: 1;
+                    padding: 0px 20px;
+                    border-radius: 8px;
+
+                    /* Standardize the button sizes */
+                    width: fit-content;
+                    min-height: 30px;
+                    max-height: 30px;
+
+                    /* Standardize the button coloring */
+                    background: var(--mantine-color-dark-6);
+                    &:hover {
+                        background: var(--mantine-color-dark-9);
+                    }
+
+                    /* And finally, match the svg sizes */
+                    svg {
+                        width: 13px;
+                        height: 13px;
+                    }
+                }
+            }
+        }
+        .fs-feature-carousel-module-image-column {
+            align-items: normal !important;
         }
 
     /** Fixes **/
