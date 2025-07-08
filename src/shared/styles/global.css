@@ -530,3 +530,16 @@ table {
         border-radius: 12px;
     }
 }
+
+/*** iiPython (me) Theming Changes ***/
+
+    /* Fix background contrast on date picker/text area objects */
+    .mantine-DateTimePicker-input, .mantine-Textarea-input {
+        background: var(--mantine-color-dark-6) !important;
+        border-radius: 4px !important;
+    }
+
+    /* Fix broken labeling margins due to incorrectly structured components */
+    .mantine-InputWrapper-label {
+        margin-bottom: var(--theme-spacing-sm);
+    }

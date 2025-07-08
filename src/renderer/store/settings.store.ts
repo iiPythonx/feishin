@@ -317,7 +317,6 @@ export interface SettingsState {
         serverRescan: boolean;
     };
     window: {
-        disableAutoUpdate: boolean;
         exitToTray: boolean;
         minimizeToTray: boolean;
         startMinimized: boolean;
@@ -459,6 +458,7 @@ const initialState: SettingsState = {
         fontSizeUnsync: 33,
         gap: 5,
         gapUnsync: 0,
+        preferLocalLyrics: true,
         showMatch: true,
         showProvider: false,
         sources: [],
@@ -666,7 +666,6 @@ const initialState: SettingsState = {
         serverRescan: false,
     },
     window: {
-        disableAutoUpdate: false,
         exitToTray: false,
         minimizeToTray: false,
         startMinimized: false,

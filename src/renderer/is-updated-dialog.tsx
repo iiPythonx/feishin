@@ -27,15 +27,15 @@ export function IsUpdatedDialog() {
             position={{ bottom: '5rem', right: '1rem' }}
             styles={{
                 root: {
-                    marginBottom: '50px',
-                    right: '1rem',
                     backdropFilter: 'blur(2rem)',
                     borderRadius: '18px',
+                    marginBottom: '50px',
+                    right: '1rem',
                 },
             }}
         >
             <Stack>
-                <Text>{`Feishin has been updated to upstream ${version.replace('0.', '')}`}</Text>{' '}
+                <Text>{`Fork has been updated to upstream v${version.replace('0.', '')}`}</Text>{' '}
                 <Group
                     justify="flex-end"
                     wrap="nowrap"
