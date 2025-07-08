@@ -1,5 +1,4 @@
 import { Group } from '@mantine/core';
-import clsx from 'clsx';
 import {
     createContext,
     MutableRefObject,
@@ -17,9 +16,8 @@ import styles from './sidebar.module.css';
 
 import { api } from '/@/renderer/api';
 import { useCurrentServer } from '/@/renderer/store';
+import { Accordion } from '/@/shared/components/accordion/accordion';
 import { Button } from '/@/shared/components/button/button';
-import { DropdownMenu } from '/@/shared/components/dropdown-menu/dropdown-menu';
-import { toast } from '/@/shared/components/toast/toast';
 import { ServerType } from '/@/shared/types/domain-types';
 import { ScanStatus } from '/@/shared/types/domain-types';
 
@@ -62,15 +60,7 @@ const RescanMenu = ({
         ) {
             timerRef.current = setInterval(async () => {
                 const status = await api.controller.getScanStatus({ apiClientProps: { server } });
-                if (status) {
-                    setScanStatus!(status);
-
-                    if (scanning && !status.scanning) {
-                        toast.success({
-                            message: 'Scan completed',
-                        });
-                    }
-                }
+                if (status) setScanStatus!(status);
             }, 1000);
         } else if (!scanning && timerRef.current) {
             clearInterval(timerRef.current);
@@ -87,16 +77,7 @@ const RescanMenu = ({
                     apiClientProps: { server },
                     full,
                 });
-                if (server.type === ServerType.JELLYFIN) {
-                    toast.success({
-                        message: 'Scan started, note that Jellyfin does not report progress.',
-                        title: 'Started sync',
-                    });
-                } else if (results) {
-                    toast.success({
-                        message: 'Scan started.',
-                        title: 'Started sync',
-                    });
+                if (results) {
                     setScanStatus!({ ...results, scanning: true });
                 }
             } catch (error) {
@@ -109,35 +90,40 @@ const RescanMenu = ({
     return (
         <>
             {scanning && (
-                <DropdownMenu.Item
-                    closeMenuOnClick={false}
-                    disabled
+                <Button
+                    style={{ borderRadius: '8px', display: 'flex', width: '100%' }}
+                    variant="subtle"
                 >
-                    Currently scanning...
-                </DropdownMenu.Item>
+                    <Group gap="sm">Scan in progress...</Group>
+                </Button>
             )}
             {!scanning && (
-                <DropdownMenu.Item
-                    closeMenuOnClick={server?.type === ServerType.JELLYFIN}
+                <Button
                     onClick={() => handleRefresh(isNavidrome ? false : undefined)}
+                    style={{ borderRadius: '8px', display: 'flex', width: '100%' }}
+                    variant="subtle"
                 >
-                    Start scan
-                </DropdownMenu.Item>
+                    <Group gap="sm">Normal Scan</Group>
+                </Button>
             )}
             {isNavidrome && !scanning && (
-                <DropdownMenu.Item
-                    closeMenuOnClick={false}
-                    onClick={() => {
-                        handleRefresh(true);
-                    }}
+                <Button
+                    onClick={() => handleRefresh(true)}
+                    style={{ borderRadius: '8px', display: 'flex', width: '100%' }}
+                    variant="subtle"
                 >
-                    Start full scan
-                </DropdownMenu.Item>
+                    <Group gap="sm">Full Scan</Group>
+                </Button>
             )}
             {(isNavidrome || server?.type === ServerType.SUBSONIC) && (
                 <>
-                    <DropdownMenu.Item disabled>Folders: {folders ?? '-'}</DropdownMenu.Item>
-                    <DropdownMenu.Item disabled>Tracks: {tracks ?? '-'}</DropdownMenu.Item>
+                    <Button
+                        disabled
+                        style={{ borderRadius: '8px', display: 'flex', width: '100%' }}
+                        variant="subtle"
+                    >
+                        Folders: {folders ?? 'N/A'} | Tracks: {tracks ?? 'N/A'}
+                    </Button>
                 </>
             )}
         </>
@@ -145,7 +131,7 @@ const RescanMenu = ({
 };
 
 export const RescanSidebar = () => {
-    const { scanStatus, setScanStatus } = useContext(RescanContext);
+    const { setScanStatus } = useContext(RescanContext);
     const server = useCurrentServer();
     const timerRef = useRef<ReturnType<typeof setInterval>>();
 
@@ -161,38 +147,23 @@ export const RescanSidebar = () => {
 
     return (
         <RescanProvider>
-            <DropdownMenu>
-                <DropdownMenu.Target>
-                    <Button
-                        className={clsx({
-                            [styles.disabled]: false,
-                            [styles.link]: true,
-                        })}
-                        classNames={{
-                            inner: styles.inner,
-                            label: styles.label,
-                        }}
-                        style={{ borderRadius: '8px', display: 'flex', width: '100%' }}
-                        variant="subtle"
-                    >
+            <Accordion
+                classNames={{
+                    item: styles.accordionItem,
+                }}
+            >
+                <Accordion.Item value="rescan">
+                    <Accordion.Control style={{ borderRadius: '8px', paddingLeft: '18px' }}>
                         <Group gap="sm">
-                            {scanStatus.scanning ? (
-                                <RiRefreshLine
-                                    style={{
-                                        animation: 'rotating 2s ease-in-out infinite',
-                                    }}
-                                />
-                            ) : (
-                                <RiRefreshLine />
-                            )}
-                            Rescan {scanStatus.scanning ? 'in progress' : ''}
+                            <RiRefreshLine />
+                            Rescan
                         </Group>
-                    </Button>
-                </DropdownMenu.Target>
-                <DropdownMenu.Dropdown>
-                    <RescanMenu timerRef={timerRef} />
-                </DropdownMenu.Dropdown>
-            </DropdownMenu>
+                    </Accordion.Control>
+                    <Accordion.Panel>
+                        <RescanMenu timerRef={timerRef} />
+                    </Accordion.Panel>
+                </Accordion.Item>
+            </Accordion>
         </RescanProvider>
     );
 };
