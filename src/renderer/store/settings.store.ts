@@ -313,6 +313,7 @@ export interface SettingsState {
         albumBackground: boolean;
         artistBackground: boolean;
         floatingPlayer: boolean;
+        forkTheme: string;
         headerBackgroundBlur: number;
         serverRescan: boolean;
     };
@@ -662,6 +663,7 @@ const initialState: SettingsState = {
         albumBackground: true,
         artistBackground: true,
         floatingPlayer: false,
+        forkTheme: 'pyxfluff',
         headerBackgroundBlur: 6,
         serverRescan: false,
     },

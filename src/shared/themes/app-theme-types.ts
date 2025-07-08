@@ -36,8 +36,8 @@ export interface BaseAppThemeConfiguration {
         'state-success'?: CSSProperties['color'];
         'state-warning'?: CSSProperties['color'];
         surface?: CSSProperties['background'];
-        "surface-rgb": CSSProperties["background"]
         'surface-foreground'?: CSSProperties['color'];
+        'surface-rgb': CSSProperties['background'];
         white?: CSSProperties['color'];
     };
     mantineOverride?: MantineThemeOverride;

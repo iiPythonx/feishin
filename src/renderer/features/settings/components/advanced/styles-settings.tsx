@@ -6,10 +6,10 @@ import { useCssSettings, useSettingsStoreActions } from '/@/renderer/store';
 import { sanitizeCss } from '/@/renderer/utils/sanitize';
 import { Button } from '/@/shared/components/button/button';
 import { Code } from '/@/shared/components/code/code';
+import { Divider } from '/@/shared/components/divider/divider';
 import { Switch } from '/@/shared/components/switch/switch';
 import { Text } from '/@/shared/components/text/text';
 import { Textarea } from '/@/shared/components/textarea/textarea';
-import { Divider } from '/@/shared/components/divider/divider';
 
 export const StylesSettings = () => {
     const [open, setOpen] = useState(false);
@@ -77,7 +77,9 @@ export const StylesSettings = () => {
                                 </Button>
                             </>
                         }
-                        description={'Insert the content of your custom CSS here. Sanitization is disabled, so anything can be placed in the input and will render.'}
+                        description={
+                            'Insert the content of your custom CSS here. Sanitization is disabled, so anything can be placed in the input and will render.'
+                        }
                         title={'Custom CSS'}
                     />
                     {open && (

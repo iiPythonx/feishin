@@ -68,7 +68,7 @@ export const ThemeSettings = () => {
                             },
                         });
 
-                        const colorScheme = theme === AppTheme.DEFAULT_DARK ? 'dark' : 'light';
+                        const colorScheme = theme === AppTheme.DEFAULT_LIGHT ? 'light' : 'dark';
 
                         setColorScheme(colorScheme);
 
