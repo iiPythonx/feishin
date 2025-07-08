@@ -437,7 +437,7 @@ button {
     input,
     .fs-multi-select-module-input,
     a {
-        border-radius: 18px;
+        border-radius: 12px;
     }
 }
 
@@ -516,7 +516,17 @@ table {
 }
 
 .m_a513464::before {
-      border-radius: 1rem !important;
-      inset: 0px !important;
-      left: 0%
+    border-radius: 1rem !important;
+    inset: 0px !important;
+    left: 0%
+}
+
+.fork-server-selector {
+
+    .mantine-SegmentedControl-indicator,
+    .fs-segmented-control-module-root,
+    input,
+    button {
+        border-radius: 12px;
+    }
 }

@@ -173,7 +173,10 @@ export const AddServerForm = ({ onCancel }: AddServerFormProps) => {
     });
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form
+            onSubmit={handleSubmit}
+            className="fork-server-selector"
+        >
             <Stack
                 m={5}
                 ref={focusTrapRef}
