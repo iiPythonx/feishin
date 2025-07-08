@@ -10,7 +10,7 @@ import styles from './full-screen-player-image.module.css';
 import { useFastAverageColor } from '/@/renderer/hooks';
 import { AppRoute } from '/@/renderer/router/routes';
 import { usePlayerData, usePlayerStore } from '/@/renderer/store';
-import { useSettingsStore } from '/@/renderer/store/settings.store';
+import { useSettingsStore, useTweaksSettings } from '/@/renderer/store/settings.store';
 import { Badge } from '/@/shared/components/badge/badge';
 import { Center } from '/@/shared/components/center/center';
 import { Flex } from '/@/shared/components/flex/flex';
@@ -94,6 +94,7 @@ export const FullScreenPlayerImage = () => {
     const [mainImageDimensions, setMainImageDimensions] = useState({ idealSize: 1 });
 
     const albumArtRes = useSettingsStore((store) => store.general.albumArtRes);
+    const { forkTheme } = useTweaksSettings();
 
     const { queue } = usePlayerData();
     const currentSong = queue.current;
@@ -159,6 +160,71 @@ export const FullScreenPlayerImage = () => {
         };
     }, [imageState, mainImageDimensions.idealSize, queue, setImageState]);
 
+    // Setup elements ahead of time
+    const SongTitle = (
+        <Text
+            className="fsplayer-text"
+            fw={900}
+            lh="1.2"
+            overflow="hidden"
+            size="4xl"
+            w="fit-content"
+        >
+            {currentSong?.name}
+        </Text>
+    );
+    const Bitrate = currentSong?.container && (
+        <Badge variant="playerbar">
+            {currentSong?.container.replace('audio/', '')}{' '}
+            {Math.round(currentSong?.bitRate / 100) * 100}
+        </Badge>
+    );
+    const Artists = (
+        <Text size="xl">
+            {currentSong?.artists?.map((artist, index) => (
+                <Fragment key={`fs-artist-${artist.id}`}>
+                    {index > 0 && (
+                        <Text
+                            style={{
+                                display: 'inline-block',
+                                padding: '0 0.5rem',
+                            }}
+                        >
+                            •
+                        </Text>
+                    )}
+                    <Text
+                        component={Link}
+                        isLink
+                        to={generatePath(AppRoute.LIBRARY_ALBUM_ARTISTS_DETAIL, {
+                            albumArtistId: artist.id,
+                        })}
+                    >
+                        {artist.name}
+                    </Text>
+                </Fragment>
+            ))}
+        </Text>
+    );
+    const Year = currentSong?.releaseYear && (
+        <Badge variant="playerbar">YEAR {currentSong?.releaseYear}</Badge>
+    );
+    const Album = (
+        <Text
+            component={Link}
+            isLink
+            overflow="hidden"
+            size="xl"
+            to={generatePath(AppRoute.LIBRARY_ALBUMS_DETAIL, {
+                albumId: currentSong?.albumId || '',
+            })}
+            w="fit-content"
+        >
+            {currentSong?.album}
+        </Text>
+    );
+
+    // Build the full stack
     return (
         <Flex
             align="center"
@@ -212,77 +278,48 @@ export const FullScreenPlayerImage = () => {
                 gap="md"
                 maw="100%"
             >
-                <Group
-                    justify="center"
-                    mt="sm"
-                    w="fit-content"
-                    align="center"
-                >
-                    <Text
-                        fw={900}
-                        lh="1.2"
-                        overflow="hidden"
-                        size="4xl"
-                        w="fit-content"
-                        className="fsplayer-text"
-                    >
-                        {currentSong?.name}
-                    </Text>
-
-                    {currentSong?.container && (
-                        <Badge variant="playerbar">
-                            {currentSong?.container.replace('audio/', '')} {Math.round(currentSong?.bitRate / 100) * 100}
-                        </Badge>
-                    )}
-                </Group>
-                <Group
-                    justify="center"
-                    mt="sm"
-                    w="fit-content"
-                    align="center"
-                >
-                    <Text
-                        component={Link}
-                        isLink
-                        overflow="hidden"
-                        size="xl"
-                        to={generatePath(AppRoute.LIBRARY_ALBUMS_DETAIL, {
-                            albumId: currentSong?.albumId || '',
-                        })}
-                        w="fit-content"
-                    >
-                        {currentSong?.album}
-                    </Text>
-                    {currentSong?.releaseYear && (
-                        <Badge variant="playerbar">{currentSong?.releaseYear}</Badge>
-                    )}
-                    •
-                    <Text size="xl">
-                        {currentSong?.artists?.map((artist, index) => (
-                            <Fragment key={`fs-artist-${artist.id}`}>
-                                {index > 0 && (
-                                    <Text
-                                        style={{
-                                            display: 'inline-block',
-                                            padding: '0 0.5rem',
-                                        }}
-                                    >
-                                        •
-                                    </Text>
-                                )}
-                                <Text
-                                    component={Link}
-                                    isLink
-                                    to={generatePath(AppRoute.LIBRARY_ALBUM_ARTISTS_DETAIL, {
-                                        albumArtistId: artist.id,
-                                    })}
-                                >
-                                    {artist.name}
-                                </Text>
-                            </Fragment>
-                        ))}
-                    </Text>
-                </Group>
+                {forkTheme === 'pyxfluff' ? (
+                    <>
+                        <Group
+                            align="center"
+                            justify="center"
+                            mt="sm"
+                            w="fit-content"
+                        >
+                            {SongTitle}
+                            {Bitrate}
+                        </Group>
+                        <Group
+                            align="center"
+                            justify="center"
+                            mt="sm"
+                            w="fit-content"
+                        >
+                            {Album}
+                            {Year} • {Artists}
+                        </Group>
+                    </>
+                ) : (
+                    <>
+                        {SongTitle}
+                        <Group
+                            align="center"
+                            justify="center"
+                            mt="sm"
+                        >
+                            {Bitrate}
+                            {Year}
+                        </Group>
+                        <Group
+                            align="center"
+                            justify="center"
+                            mt="sm"
+                        >
+                            {Album}
+                        </Group>
+                        {Artists}
+                    </>
+                )}
             </Stack>
         </Flex>
     );

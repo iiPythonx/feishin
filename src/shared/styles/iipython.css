@@ -191,6 +191,14 @@
             align-items: normal !important;
         }
 
+        /* Fix full screen */
+        .fs-full-screen-player-module-container .mantine-ActionIcon-root:hover {
+            border-radius: 6px !important;
+        }
+        .fs-popover-module-dropdown .mantine-Input-input {
+            background: var(--mantine-color-dark-6) !important;
+        }
+
     /** Fixes **/
 
         /* Fix background contrast on date picker/text area objects */
