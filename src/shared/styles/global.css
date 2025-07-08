@@ -507,8 +507,12 @@ table {
     background-color: var(--theme-colors-surface);
 }
 
-.fs-image-module-image:not(.ag-cell .fs-image-module-image) {
+.fs-image-module-image:not(.ag-cell .fs-image-module-image):not(.fs-left-controls-module-image .fs-image-module-image) {
     border-radius: 18px !important;
+}
+
+.fs-left-controls-module-image {
+    border-radius: 12px;
 }
 
 .fork_carousel_title {
@@ -531,15 +535,30 @@ table {
     }
 }
 
+.fs-text-input-module-input,
+.fs-text-input-module-input,
+[cmdk-item][data-selected] {
+    background: rgba(4, 4, 9, .5) !important;
+    border-radius: 18px;
+    border: 0px;
+}
+
+
+
+.fs-modal-module-content [cmdk-separator] {
+    display: none
+}
+
 /*** iiPython (me) Theming Changes ***/
 
-    /* Fix background contrast on date picker/text area objects */
-    .mantine-DateTimePicker-input, .mantine-Textarea-input {
-        background: var(--mantine-color-dark-6) !important;
-        border-radius: 4px !important;
-    }
+/* Fix background contrast on date picker/text area objects */
+.mantine-DateTimePicker-input,
+.mantine-Textarea-input {
+    background: var(--mantine-color-dark-6) !important;
+    border-radius: 4px !important;
+}
 
-    /* Fix broken labeling margins due to incorrectly structured components */
-    .mantine-InputWrapper-label {
-        margin-bottom: var(--theme-spacing-sm);
-    }
+/* Fix broken labeling margins due to incorrectly structured components */
+.mantine-InputWrapper-label {
+    margin-bottom: var(--theme-spacing-sm);
+}

@@ -119,17 +119,6 @@ export const ServerList = () => {
 
                 <Divider />
 
-                <Button
-                    autoFocus
-                    compact
-                    leftIcon={<RiAddFill size={15} />}
-                    onClick={handleAddServerModal}
-                    size="sm"
-                    variant="filled"
-                >
-                    {t('form.addServer.title', { postProcess: 'titleCase' })}
-                </Button>
-
                 {isElectron() && (
                     <>
                         <Group>
