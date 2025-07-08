@@ -97,8 +97,8 @@ export const useScrobble = () => {
                         ? currentSong.artists.map((artist) => artist.name).join(', ')
                         : currentSong.artistName;
 
-                new Notification(`Now playing ${currentSong.name}`, {
-                    body: `by ${artists} on ${currentSong.album}`,
+                new Notification(currentSong.name, {
+                    body: `${artists} • ${currentSong.album}`,
                     icon: currentSong.imageUrl || undefined,
                 });
             }
