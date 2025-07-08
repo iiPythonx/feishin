@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import {
     SettingOption,
     SettingsSection,
@@ -7,8 +5,6 @@ import {
 import { useSettingsStoreActions, useTweaksSettings } from '/@/renderer/store';
 import { Select } from '/@/shared/components/select/select';
 import { Switch } from '/@/shared/components/switch/switch';
-import iipythonTheme from '/@/shared/styles/iipython.css?inline';
-import pyxfluffTheme from '/@/shared/styles/pyxfluff.css?inline';
 
 const FORK_THEME_OPTIONS = [
     { label: 'Pyxfluff', value: 'pyxfluff' },
@@ -18,15 +14,6 @@ const FORK_THEME_OPTIONS = [
 export const RandomSettings = () => {
     const settings = useTweaksSettings();
     const { setSettings } = useSettingsStoreActions();
-
-    useEffect(() => {
-        setSettings({
-            css: {
-                content: settings.forkTheme === 'pyxfluff' ? pyxfluffTheme : iipythonTheme,
-                enabled: true,
-            },
-        });
-    }, [settings.forkTheme, setSettings]);
 
     const randomOptions: SettingOption[] = [
         {
@@ -59,8 +46,6 @@ export const RandomSettings = () => {
                                 forkTheme: e,
                             },
                         });
-
-                        // Match custom CSS
                     }}
                     value={settings.forkTheme}
                 />

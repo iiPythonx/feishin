@@ -14,9 +14,9 @@ import '/@/shared/styles/global.css';
 import '@ag-grid-community/styles/ag-grid.css';
 import 'overlayscrollbars/overlayscrollbars.css';
 
-import '/styles/overlayscrollbars.css';
 import i18n from '/@/i18n/i18n';
 import { ContextMenuProvider } from '/@/renderer/features/context-menu';
+import '/styles/overlayscrollbars.css';
 import { useDiscordRpc } from '/@/renderer/features/discord-rpc/use-discord-rpc';
 import { PlayQueueHandlerContext } from '/@/renderer/features/player';
 import { WebAudioContext } from '/@/renderer/features/player/context/webaudio-context';
@@ -35,11 +35,15 @@ import {
     useQueueControls,
     useRemoteSettings,
     useSettingsStore,
+    useSettingsStoreActions,
+    useTweaksSettings,
 } from '/@/renderer/store';
 import { useAppTheme } from '/@/renderer/themes/use-app-theme';
 import { sanitizeCss } from '/@/renderer/utils/sanitize';
 import { setQueue } from '/@/renderer/utils/set-transcoded-queue-data';
 import { toast } from '/@/shared/components/toast/toast';
+import iipythonTheme from '/@/shared/styles/iipython.css?inline';
+import pyxfluffTheme from '/@/shared/styles/pyxfluff.css?inline';
 import { PlaybackType, PlayerStatus, WebAudio } from '/@/shared/types/types';
 
 ModuleRegistry.registerModules([ClientSideRowModelModule, InfiniteRowModelModule]);
@@ -59,6 +63,8 @@ export const App = () => {
     const handlePlayQueueAdd = useHandlePlayQueueAdd();
     const { clearQueue, restoreQueue } = useQueueControls();
     const remoteSettings = useRemoteSettings();
+    const tweakSettings = useTweaksSettings();
+    const { setSettings } = useSettingsStoreActions();
     const cssRef = useRef<HTMLStyleElement | null>(null);
     useDiscordRpc();
     useServerVersion();
@@ -188,6 +194,16 @@ export const App = () => {
             i18n.changeLanguage(language);
         }
     }, [language]);
+
+    useEffect(() => {
+        setSettings({
+            css: {
+                content: tweakSettings.forkTheme === 'pyxfluff' ? pyxfluffTheme : iipythonTheme,
+                enabled: true,
+            },
+        });
+        console.log('[Fork] Custom theme is being reloaded!');
+    }, [tweakSettings.forkTheme, setSettings]);
 
     return (
         <MantineProvider

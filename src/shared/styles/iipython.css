@@ -1,32 +1,44 @@
 /*** iiPython (me) Theming Changes ***/
 
-/* Fix background contrast on date picker/text area objects */
-.mantine-DateTimePicker-input,
-.mantine-Textarea-input {
-    background: var(--mantine-color-dark-6) !important;
-    border-radius: 4px !important;
-}
+    /** Styling **/
 
-/* Fix broken labeling margins due to incorrectly structured components */
-.mantine-InputWrapper-label {
-    margin-bottom: var(--theme-spacing-sm);
-}
+        /* Add hover blur and border radius to albums */
+        .fs-poster-card-module-image {
+            border-radius: 16px !important;
+        }
+        .fs-poster-card-module-image-container {
+            border-radius: 8px !important;
+        }
 
-/* Fix switch tracking having no contrast */
-.fs-switch-module-track {
-    border: none !important;  /* Looks better this way imo */
-    background-color: var(--mantine-color-dark-8) !important;
-}
+    /** Fixes **/
 
-/* Fix password input in server form not having any radius */
-.fs-password-input-module-input {
-    border-radius: 12px;
-    background: rgba(4, 4, 9, .5) !important;
-    border: none;
-}
-.mantine-PasswordInput-innerInput {
-    border: 1px solid transparent;
-}
-.mantine-PasswordInput-innerInput:focus {
-    border-color: color-mix(in srgb, var(--theme-colors-border), white 10%);
-}
+        /* Fix background contrast on date picker/text area objects */
+        .mantine-DateTimePicker-input,
+        .mantine-Textarea-input {
+            background: var(--mantine-color-dark-6) !important;
+            border-radius: 4px !important;
+        }
+
+        /* Fix broken labeling margins due to incorrectly structured components */
+        .mantine-InputWrapper-label {
+            margin-bottom: var(--theme-spacing-sm);
+        }
+
+        /* Fix switch tracking having no contrast */
+        .fs-switch-module-track {
+            border: none !important;  /* Looks better this way imo */
+            background-color: var(--mantine-color-dark-8) !important;
+        }
+
+        /* Fix password input in server form not having any radius */
+        .fs-password-input-module-input {
+            border-radius: 12px;
+            background: rgba(4, 4, 9, .5) !important;
+            border: none;
+        }
+        .mantine-PasswordInput-innerInput {
+            border: 1px solid transparent;
+        }
+        .mantine-PasswordInput-innerInput:focus {
+            border-color: color-mix(in srgb, var(--theme-colors-border), white 10%);
+        }
