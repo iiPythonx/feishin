@@ -562,3 +562,21 @@ table {
 .mantine-InputWrapper-label {
     margin-bottom: var(--theme-spacing-sm);
 }
+
+/* Button fixes */
+
+.fs-button-module-root[data-variant='filled'] {
+    border-radius: 12px;
+}
+
+.mantine-Accordion-label {
+
+    button,
+    a {
+        border-radius: 8px
+    }
+}
+
+.mantine-Grid-col button {
+    border-radius: 8px;
+}
