@@ -2,11 +2,7 @@ import isElectron from 'is-electron';
 import { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import {
-    useSettingsStore,
-    useSettingsStoreActions,
-    useTweaksSettings,
-} from '/@/renderer/store/settings.store';
+import { useSettingsStore, useSettingsStoreActions } from '/@/renderer/store/settings.store';
 import { Tabs } from '/@/shared/components/tabs/tabs';
 
 const GeneralTab = lazy(() =>
@@ -79,15 +75,15 @@ export const SettingsContent = () => {
                     </Tabs.Tab>
                     <Tabs.Tab value="tweaks">Tweaks</Tabs.Tab>
                 </Tabs.List>
-                    <Tabs.Panel value="general">
-                        <GeneralTab />
-                    </Tabs.Panel>
+                <Tabs.Panel value="general">
+                    <GeneralTab />
+                </Tabs.Panel>
                 <Tabs.Panel value="playback">
                     <PlaybackTab />
                 </Tabs.Panel>
-                    <Tabs.Panel value="hotkeys">
-                        <HotkeysTab />
-                    </Tabs.Panel>
+                <Tabs.Panel value="hotkeys">
+                    <HotkeysTab />
+                </Tabs.Panel>
 
                 {isElectron() && (
                     <Tabs.Panel value="window">

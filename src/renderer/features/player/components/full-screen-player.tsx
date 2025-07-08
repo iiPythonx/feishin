@@ -28,7 +28,6 @@ import { Popover } from '/@/shared/components/popover/popover';
 import { Select } from '/@/shared/components/select/select';
 import { Slider } from '/@/shared/components/slider/slider';
 import { Switch } from '/@/shared/components/switch/switch';
-import { Platform } from '/@/shared/types/types';
 
 const mainBackground = 'var(--theme-colors-background)';
 
@@ -69,9 +68,9 @@ const Controls = () => {
             style={{
                 background: `rgba(4, 4, 9, .5)`,
                 borderRadius: '0px 0px 18px 0px',
+                height: '5%',
                 left: 0,
                 top: 0,
-                height: "5%"
             }}
         >
             <ActionIcon

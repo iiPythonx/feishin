@@ -6,7 +6,7 @@ import { RandomSettings } from '/@/renderer/features/settings/components/tweaks/
 
 export const TweaksTab = () => {
     return (
-        <Stack spacing="md">
+        <Stack gap="md">
             <DiscordSettings />
             <BackgroundSettings />
             <RandomSettings />

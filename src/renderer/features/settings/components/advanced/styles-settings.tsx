@@ -5,10 +5,8 @@ import { SettingsOptions } from '/@/renderer/features/settings/components/settin
 import { useCssSettings, useSettingsStoreActions } from '/@/renderer/store';
 import { sanitizeCss } from '/@/renderer/utils/sanitize';
 import { Button } from '/@/shared/components/button/button';
-import { Code } from '/@/shared/components/code/code';
 import { Divider } from '/@/shared/components/divider/divider';
 import { Switch } from '/@/shared/components/switch/switch';
-import { Text } from '/@/shared/components/text/text';
 import { Textarea } from '/@/shared/components/textarea/textarea';
 
 export const StylesSettings = () => {

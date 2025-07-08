@@ -16,7 +16,6 @@ import {
     useSettingsStore,
     useSidebarStore,
     useSpeed,
-    useTweaksSettings,
     useVolume,
 } from '/@/renderer/store';
 import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
