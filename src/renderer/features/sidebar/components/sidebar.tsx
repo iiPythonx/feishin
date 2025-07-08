@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 import styles from './sidebar.module.css';
 
 import { ActionBar } from '/@/renderer/features/sidebar/components/action-bar';
-import { RescanProvider, RescanSidebar } from '/@/renderer/features/sidebar/components/rescan';
+import { RescanSidebar } from '/@/renderer/features/sidebar/components/rescan';
 import { SidebarIcon } from '/@/renderer/features/sidebar/components/sidebar-icon';
 import { SidebarItem } from '/@/renderer/features/sidebar/components/sidebar-item';
 import {
@@ -170,6 +170,21 @@ export const Sidebar = () => {
                             <SidebarPlaylistList />
                             <SidebarSharedPlaylistList />
                         </>
+                    )}
+                    {serverRescan && (
+                        <Accordion.Item value="tweaks">
+                            <Accordion.Control>
+                                <Text
+                                    fw={600}
+                                    variant="secondary"
+                                >
+                                    Tweaks
+                                </Text>
+                            </Accordion.Control>
+                            <Accordion.Panel>
+                                <RescanSidebar />
+                            </Accordion.Panel>
+                        </Accordion.Item>
                     )}
                 </Accordion>
             </ScrollArea>

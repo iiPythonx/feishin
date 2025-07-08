@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { queryKeys } from '/@/renderer/api/query-keys';
 import { useAlbumDetail } from '/@/renderer/features/albums/queries/album-detail-query';
 import { LibraryHeader, useSetRating } from '/@/renderer/features/shared';
-import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
 import { useCreateFavorite, useDeleteFavorite } from '/@/renderer/features/shared';
 import { useContainerQuery } from '/@/renderer/hooks';
 import { useSongChange } from '/@/renderer/hooks/use-song-change';
@@ -14,6 +13,7 @@ import { queryClient } from '/@/renderer/lib/react-query';
 import { AppRoute } from '/@/renderer/router/routes';
 import { useCurrentServer } from '/@/renderer/store';
 import { formatDateAbsoluteUTC, formatDurationString } from '/@/renderer/utils';
+import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
 import { Group } from '/@/shared/components/group/group';
 import { Rating } from '/@/shared/components/rating/rating';
 import { Stack } from '/@/shared/components/stack/stack';
@@ -42,7 +42,7 @@ export const AlbumDetailHeader = forwardRef(
             detailQuery.data?.originalDate &&
             detailQuery.data.originalDate !== detailQuery.data.releaseDate;
 
-        const releasePrefix = 'Released'
+        const releasePrefix = 'Released';
 
         const songIds = useMemo(() => {
             return new Set(detailQuery.data?.songs?.map((song) => song.id));
@@ -147,8 +147,6 @@ export const AlbumDetailHeader = forwardRef(
             }
         };
 
-        console.log(detailQuery?.data?.albumArtists)
-
         return (
             <Stack ref={cq.ref}>
                 <LibraryHeader
@@ -181,6 +179,7 @@ export const AlbumDetailHeader = forwardRef(
                             )}
                             •
                             <ActionIcon
+                                className="favorite_icon"
                                 icon="favorite"
                                 iconProps={{
                                     fill: detailQuery?.data?.userFavorite ? 'primary' : undefined,
@@ -192,7 +191,6 @@ export const AlbumDetailHeader = forwardRef(
                                 onClick={handleFavorite}
                                 size="lg"
                                 variant="transparent"
-                                className="favorite_icon"
                             />
                         </Group>
                         <Group
@@ -210,23 +208,23 @@ export const AlbumDetailHeader = forwardRef(
                                     fw={600}
                                     isLink
                                     key={`artist-${artist.id}`}
+                                    style={{ alignItems: 'center', display: 'flex', gap: '0.5rem' }}
                                     to={generatePath(AppRoute.LIBRARY_ALBUM_ARTISTS_DETAIL, {
                                         albumArtistId: artist.id,
                                     })}
                                     variant="subtle"
-                                    style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
                                 >
                                     {/* THIS DOES NOT WORK RIGHT NOW so it's safe to remove in the event of a (highly likely) conflict, but if navidrom ever starts providing it it will work*/}
                                     {artist.imageUrl && (
                                         <img
-                                            src={artist.imageUrl}
                                             alt={artist.name}
+                                            src={artist.imageUrl}
                                             style={{
-                                                width: '1.5rem',
-                                                height: '1.5rem',
                                                 borderRadius: '50%',
-                                                objectFit: 'cover',
+                                                height: '1.5rem',
                                                 marginRight: '0.5rem',
+                                                objectFit: 'cover',
+                                                width: '1.5rem',
                                             }}
                                         />
                                     )}

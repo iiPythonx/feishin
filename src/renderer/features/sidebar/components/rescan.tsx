@@ -1,4 +1,5 @@
-import { Group, UnstyledButton } from '@mantine/core';
+import { Group } from '@mantine/core';
+import clsx from 'clsx';
 import {
     createContext,
     MutableRefObject,
@@ -10,22 +11,17 @@ import {
     useRef,
     useState,
 } from 'react';
-import { RiRefreshFill, RiScan2Line, RiScanLine } from 'react-icons/ri';
-import styled from 'styled-components';
+import { RiRefreshLine } from 'react-icons/ri';
+
+import styles from './sidebar.module.css';
 
 import { api } from '/@/renderer/api';
-import { DropdownMenu, toast } from '/@/renderer/components';
-import { CollapsedSidebarButton } from '/@/renderer/features/sidebar/components/collapsed-sidebar-button';
-import { SidebarItem } from '/@/renderer/features/sidebar/components/sidebar-item';
 import { useCurrentServer } from '/@/renderer/store';
-import { rotating } from '/@/renderer/styles';
+import { Button } from '/@/shared/components/button/button';
+import { DropdownMenu } from '/@/shared/components/dropdown-menu/dropdown-menu';
+import { toast } from '/@/shared/components/toast/toast';
 import { ServerType } from '/@/shared/types/domain-types';
 import { ScanStatus } from '/@/shared/types/domain-types';
-
-const SpinningRefresh = styled(RiRefreshFill)`
-    ${rotating}
-    animation: rotating 2s ease-in-out infinite;
-`;
 
 const RescanContext = createContext<{
     scanStatus: ScanStatus;
@@ -75,7 +71,7 @@ const RescanMenu = ({
                         });
                     }
                 }
-            }, 5000);
+            }, 1000);
         } else if (!scanning && timerRef.current) {
             clearInterval(timerRef.current);
             timerRef.current = undefined;
@@ -93,7 +89,7 @@ const RescanMenu = ({
                 });
                 if (server.type === ServerType.JELLYFIN) {
                     toast.success({
-                        message: 'Scan started. Note that Jellyfin does not report progress',
+                        message: 'Scan started, note that Jellyfin does not report progress.',
                         title: 'Started sync',
                     });
                 } else if (results) {
@@ -123,7 +119,6 @@ const RescanMenu = ({
             {!scanning && (
                 <DropdownMenu.Item
                     closeMenuOnClick={server?.type === ServerType.JELLYFIN}
-                    icon={<RiScanLine />}
                     onClick={() => handleRefresh(isNavidrome ? false : undefined)}
                 >
                     Start scan
@@ -132,7 +127,6 @@ const RescanMenu = ({
             {isNavidrome && !scanning && (
                 <DropdownMenu.Item
                     closeMenuOnClick={false}
-                    icon={<RiScan2Line />}
                     onClick={() => {
                         handleRefresh(true);
                     }}
@@ -147,40 +141,6 @@ const RescanMenu = ({
                 </>
             )}
         </>
-    );
-};
-
-export const RescanButton = () => {
-    const { scanStatus, setScanStatus } = useContext(RescanContext);
-    const timerRef = useRef<ReturnType<typeof setInterval>>();
-    const server = useCurrentServer();
-
-    useEffect(() => {
-        if (setScanStatus) setScanStatus({ scanning: false });
-        return () => {
-            if (timerRef.current) {
-                clearInterval(timerRef.current);
-                timerRef.current = undefined;
-            }
-        };
-    }, [server, setScanStatus]);
-
-    return (
-        <DropdownMenu position="right-start">
-            <DropdownMenu.Target>
-                <CollapsedSidebarButton component={UnstyledButton}>
-                    {scanStatus.scanning ? (
-                        <SpinningRefresh size="25" />
-                    ) : (
-                        <RiRefreshFill size="25" />
-                    )}
-                    Rescan {scanStatus.scanning ? 'in progress' : ''}
-                </CollapsedSidebarButton>
-            </DropdownMenu.Target>
-            <DropdownMenu.Dropdown>
-                <RescanMenu timerRef={timerRef} />
-            </DropdownMenu.Dropdown>
-        </DropdownMenu>
     );
 };
 
@@ -200,30 +160,39 @@ export const RescanSidebar = () => {
     }, [server, setScanStatus]);
 
     return (
-        // Note, tabIndex -1 is intentional here to make the Button the tabable component
-        <SidebarItem tabIndex={-1}>
-            <DropdownMenu position="bottom">
+        <RescanProvider>
+            <DropdownMenu>
                 <DropdownMenu.Target>
-                    <UnstyledButton
-                        p="sm"
-                        pl="1rem"
-                        sx={{ color: 'var(--sidebar-fg)' }}
-                        w="100%"
+                    <Button
+                        className={clsx({
+                            [styles.disabled]: false,
+                            [styles.link]: true,
+                        })}
+                        classNames={{
+                            inner: styles.inner,
+                            label: styles.label,
+                        }}
+                        style={{ borderRadius: '8px', display: 'flex', width: '100%' }}
+                        variant="subtle"
                     >
-                        <Group spacing="sm">
+                        <Group gap="sm">
                             {scanStatus.scanning ? (
-                                <SpinningRefresh size="1.1em" />
+                                <RiRefreshLine
+                                    style={{
+                                        animation: 'rotating 2s ease-in-out infinite',
+                                    }}
+                                />
                             ) : (
-                                <RiRefreshFill size="1.1em" />
+                                <RiRefreshLine />
                             )}
                             Rescan {scanStatus.scanning ? 'in progress' : ''}
                         </Group>
-                    </UnstyledButton>
+                    </Button>
                 </DropdownMenu.Target>
                 <DropdownMenu.Dropdown>
                     <RescanMenu timerRef={timerRef} />
                 </DropdownMenu.Dropdown>
             </DropdownMenu>
-        </SidebarItem>
+        </RescanProvider>
     );
 };
