@@ -19,6 +19,7 @@ import nl from './locales/nl.json';
 import pl from './locales/pl.json';
 import ptBr from './locales/pt-BR.json';
 import ru from './locales/ru.json';
+import sl from './locales/sl.json';
 import sr from './locales/sr.json';
 import sv from './locales/sv.json';
 import ta from './locales/ta.json';
@@ -43,6 +44,7 @@ const resources = {
     pl: { translation: pl },
     'pt-BR': { translation: ptBr },
     ru: { translation: ru },
+    sl: { translation: sl },
     sr: { translation: sr },
     sv: { translation: sv },
     ta: { translation: ta },
@@ -118,6 +120,10 @@ export const languages = [
     {
         label: 'Русский',
         value: 'ru',
+    },
+    {
+        label: 'Slovenščina',
+        value: 'sl',
     },
     {
         label: 'Srpski',

@@ -165,7 +165,10 @@ export const ApplicationSettings = () => {
         {
             control: (
                 <Select
-                    data={languages}
+                    data={languages.map((language) => ({
+                        label: `${language.label} (${language.value})`,
+                        value: language.value,
+                    }))}
                     onChange={handleChangeLanguage}
                     value={settings.language}
                 />

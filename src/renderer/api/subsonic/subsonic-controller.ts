@@ -49,6 +49,8 @@ const ALBUM_LIST_SORT_MAPPING: Record<AlbumListSort, AlbumListSortType | undefin
     [AlbumListSort.YEAR]: AlbumListSortType.BY_YEAR,
 };
 
+const BATCH_SIZE = 500;
+
 export const SubsonicController: ControllerEndpoint = {
     addToPlaylist: async ({ apiClientProps, body, query }) => {
         const res = await ssApiClient(apiClientProps).updatePlaylist({
@@ -1151,17 +1153,17 @@ export const SubsonicController: ControllerEndpoint = {
 
                 if (numberOfResults !== 1) {
                     fetchNextSection = false;
-                    startIndex = sectionIndex === 0 ? 0 : sectionIndex - 5000;
+                    startIndex = sectionIndex === 0 ? 0 : sectionIndex - BATCH_SIZE;
                     break;
                 } else {
-                    sectionIndex += 5000;
+                    sectionIndex += BATCH_SIZE;
                 }
             }
 
             while (fetchNextPage) {
                 const res = await ssApiClient(apiClientProps).getSongsByGenre({
                     query: {
-                        count: 500,
+                        count: BATCH_SIZE,
                         genre: query.genreIds[0],
                         musicFolderId: query.musicFolderId,
                         offset: startIndex,
@@ -1218,13 +1220,13 @@ export const SubsonicController: ControllerEndpoint = {
 
             const numberOfResults = (res.body.searchResult3?.song || []).length || 0;
 
-            // Check each batch of 5000 songs to check for data
-            sectionIndex += 5000;
+            // Check each batch of 500 songs to check for data
+            sectionIndex += BATCH_SIZE;
             fetchNextSection = numberOfResults === 1;
 
             if (!fetchNextSection) {
-                // fetchNextBlock will be false on the next loop so we need to subtract 5000 * 2
-                startIndex = sectionIndex - 10000;
+                // fetchNextBlock will be false on the next loop so we need to subtract 2 * BATCH_SIZE
+                startIndex = sectionIndex - 2 * BATCH_SIZE;
             }
         }
 

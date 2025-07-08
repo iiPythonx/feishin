@@ -34,6 +34,8 @@ Progress Events (Jellyfin only):
     - Sends the 'progress' scrobble event on an interval
 */
 
+type SongEvent = [QueueSong | undefined, number, 1 | 2];
+
 const checkScrobbleConditions = (args: {
     scrobbleAtDurationMs: number;
     scrobbleAtPercentage: number;
@@ -86,10 +88,21 @@ export const useScrobble = () => {
     const progressIntervalId = useRef<null | ReturnType<typeof setInterval>>(null);
     const songChangeTimeoutId = useRef<null | ReturnType<typeof setTimeout>>(null);
     const handleScrobbleFromSongChange = useCallback(
-        (
-            current: (number | QueueSong | undefined)[],
-            previous: (number | QueueSong | undefined)[],
-        ) => {
+        (current: SongEvent, previous: SongEvent) => {
+            if (scrobbleSettings?.notify && current[0]) {
+                const currentSong = current[0];
+
+                const artists =
+                    currentSong.artists?.length > 0
+                        ? currentSong.artists.map((artist) => artist.name).join(', ')
+                        : currentSong.artistName;
+
+                new Notification(`Now playing ${currentSong.name}`, {
+                    body: `by ${artists} on ${currentSong.album}`,
+                    icon: currentSong.imageUrl || undefined,
+                });
+            }
+
             if (!isScrobbleEnabled) return;
 
             if (progressIntervalId.current) {
@@ -98,8 +111,8 @@ export const useScrobble = () => {
             }
 
             // const currentSong = current[0] as QueueSong | undefined;
-            const previousSong = previous[0] as QueueSong;
-            const previousSongTimeSec = previous[1] as number;
+            const previousSong = previous[0];
+            const previousSongTimeSec = previous[1];
 
             // Send completion scrobble when song changes and a previous song exists
             if (previousSong?.id) {
@@ -135,7 +148,7 @@ export const useScrobble = () => {
             // Use a timeout to prevent spamming the server with scrobble events when switching through songs quickly
             clearTimeout(songChangeTimeoutId.current as ReturnType<typeof setTimeout>);
             songChangeTimeoutId.current = setTimeout(() => {
-                const currentSong = current[0] as QueueSong | undefined;
+                const currentSong = current[0];
                 // Get the current status from the state, not variable. This is because
                 // of a timing issue where, when playing the first track, the first
                 // event is song, and then the event is play
@@ -169,9 +182,10 @@ export const useScrobble = () => {
             }, 2000);
         },
         [
-            isScrobbleEnabled,
+            scrobbleSettings?.notify,
             scrobbleSettings?.scrobbleAtDuration,
             scrobbleSettings?.scrobbleAtPercentage,
+            isScrobbleEnabled,
             isCurrentSongScrobbled,
             sendScrobble,
             handleScrobbleFromSeek,
@@ -332,7 +346,7 @@ export const useScrobble = () => {
 
     useEffect(() => {
         const unsubSongChange = usePlayerStore.subscribe(
-            (state) => [state.current.song, state.current.time, state.current.player],
+            (state): SongEvent => [state.current.song, state.current.time, state.current.player],
             handleScrobbleFromSongChange,
             {
                 // We need the current time to check the scrobble condition, but we only want to
@@ -345,10 +359,8 @@ export const useScrobble = () => {
                 equalityFn: (a, b) =>
                     // compute whether the song changed
                     (a[0] as QueueSong)?.uniqueId === (b[0] as QueueSong)?.uniqueId &&
-                    // compute whether the position changed. This should imply 1
-                    a[2] === b[2] &&
                     // compute whether the same player: relevant for repeat one and repeat all (one track)
-                    a[3] === b[3],
+                    a[2] === b[2],
             },
         );
 

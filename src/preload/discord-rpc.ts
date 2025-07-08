@@ -6,6 +6,11 @@ const initialize = (clientId: string) => {
     return client;
 };
 
+const isConnected = () => {
+    const isConnected = ipcRenderer.invoke('discord-rpc-is-connected');
+    return isConnected;
+};
+
 const clearActivity = () => {
     ipcRenderer.invoke('discord-rpc-clear-activity');
 };
@@ -21,6 +26,7 @@ const quit = () => {
 export const discordRpc = {
     clearActivity,
     initialize,
+    isConnected,
     quit,
     setActivity,
 };

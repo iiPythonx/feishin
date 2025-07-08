@@ -93,7 +93,9 @@
         "albumPeak": "pico do álbum",
         "trackGain": "ganho da faixa",
         "additionalParticipants": "participantes adicionais",
-        "tags": "tags"
+        "tags": "tags",
+        "newVersion": "uma nova versão foi instalada ({{version}})",
+        "viewReleaseNotes": "ver notas de lançamento"
     },
     "action": {
         "goToPage": "vá para página",
@@ -216,7 +218,9 @@
         "crossfadeDuration_description": "define a duração do efeito crossfade",
         "customCssNotice": "Aviso: apesar de existir alguma higienização (url() e content: não são permitidas), o uso de CSS personalizado ainda pode representar riscos ao alterar a interface.",
         "crossfadeStyle": "estilo do crossfade",
-        "crossfadeStyle_description": "seleciona qual estilo de crossfade usado no player de áudio"
+        "crossfadeStyle_description": "seleciona qual estilo de crossfade usado no player de áudio",
+        "disableAutomaticUpdates": "desabilitar atualizações automáticas",
+        "disableLibraryUpdateOnStartup": "desabilitar a verificação de novas versões na inicialização"
     },
     "table": {
         "config": {
@@ -273,7 +277,8 @@
             "nowPlaying": "tocando agora",
             "playlists": "$t(entity.playlist_other)",
             "search": "$t(common.search)",
-            "settings": "$t(common.setting_other)"
+            "settings": "$t(common.setting_other)",
+            "myLibrary": "minha biblioteca"
         },
         "playlistList": {
             "title": "$t(entity.playlist_other)"

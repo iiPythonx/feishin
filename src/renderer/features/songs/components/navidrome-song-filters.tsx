@@ -6,6 +6,7 @@ import { SelectWithInvalidData } from '/@/renderer/components/select-with-invali
 import { useGenreList } from '/@/renderer/features/genres';
 import { useTagList } from '/@/renderer/features/tag/queries/use-tag-list';
 import { SongListFilter, useListFilterByKey, useListStoreActions } from '/@/renderer/store';
+import { NDSongQueryFields } from '/@/shared/api/navidrome.types';
 import { Divider } from '/@/shared/components/divider/divider';
 import { Group } from '/@/shared/components/group/group';
 import { NumberInput } from '/@/shared/components/number-input/number-input';
@@ -179,7 +180,10 @@ export const NavidromeSongFilters = ({
                             defaultValue={
                                 filter._custom?.navidrome?.[tag.name] as string | undefined
                             }
-                            label={tag.name}
+                            label={
+                                NDSongQueryFields.find((i) => i.value === tag.name)?.label ||
+                                tag.name
+                            }
                             onChange={(value) => handleTagFilter(tag.name, value)}
                             searchable
                             width={150}

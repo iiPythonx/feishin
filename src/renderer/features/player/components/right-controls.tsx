@@ -235,6 +235,9 @@ export const RightControls = () => {
                             iconProps={{
                                 size: 'lg',
                             }}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                            }}
                             size="sm"
                             tooltip={{
                                 label: t('player.playbackSpeed', { postProcess: 'sentenceCase' }),
@@ -276,7 +279,10 @@ export const RightControls = () => {
                         fill: currentSong?.userFavorite ? 'primary' : undefined,
                         size: 'lg',
                     }}
-                    onClick={() => handleToggleFavorite(currentSong)}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        handleToggleFavorite(currentSong);
+                    }}
                     size="sm"
                     tooltip={{
                         label: currentSong?.userFavorite
@@ -291,7 +297,10 @@ export const RightControls = () => {
                     iconProps={{
                         size: 'lg',
                     }}
-                    onClick={handleToggleQueue}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        handleToggleQueue();
+                    }}
                     size="sm"
                     tooltip={{
                         label: t('player.viewQueue', { postProcess: 'titleCase' }),
@@ -305,7 +314,10 @@ export const RightControls = () => {
                         color: muted ? 'muted' : undefined,
                         size: 'xl',
                     }}
-                    onClick={handleMute}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        handleMute();
+                    }}
                     onWheel={handleVolumeWheel}
                     size="sm"
                     tooltip={{

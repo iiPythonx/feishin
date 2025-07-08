@@ -61,13 +61,17 @@ interface PlayButtonProps extends Omit<ActionIconProps, 'icon' | 'variant'> {
 }
 
 export const PlayButton = forwardRef<HTMLButtonElement, PlayButtonProps>(
-    ({ isPaused, ...props }: PlayButtonProps, ref) => {
+    ({ isPaused, onClick, ...props }: PlayButtonProps, ref) => {
         return (
             <ActionIcon
                 className={styles.main}
                 icon={isPaused ? 'mediaPlay' : 'mediaPause'}
                 iconProps={{
                     size: 'lg',
+                }}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onClick?.(e);
                 }}
                 ref={ref}
                 tooltip={{

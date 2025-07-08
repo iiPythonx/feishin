@@ -1,5 +1,6 @@
 import map from 'lodash/map';
 import merge from 'lodash/merge';
+import random from 'lodash/random';
 import shuffle from 'lodash/shuffle';
 import { nanoid } from 'nanoid/non-secure';
 import { devtools, persist, subscribeWithSelector } from 'zustand/middleware';
@@ -144,8 +145,14 @@ export const usePlayerStore = createWithEqualityFn<PlayerSlice>()(
 
                             // If the queue is empty, next/last should behave the same as now
                             if (playType === Play.NOW || queue.length === 0) {
-                                const index = initialIndex || 0;
                                 if (get().shuffle === PlayerShuffle.TRACK) {
+                                    // If the initial index is specified (double click), use that for
+                                    // shuffle start. Otherwise (e.g., big play button), use random start.
+                                    const index =
+                                        initialIndex !== undefined
+                                            ? initialIndex
+                                            : random(0, songsToAddToQueue.length - 1, false);
+
                                     const initialSong = songsToAddToQueue[index];
                                     const queueCopy = [...songsToAddToQueue];
 
@@ -172,6 +179,7 @@ export const usePlayerStore = createWithEqualityFn<PlayerSlice>()(
                                         state.current.song = initialSong;
                                     });
                                 } else {
+                                    const index = initialIndex || 0;
                                     set((state) => {
                                         state.queue.default = songsToAddToQueue;
                                         state.current.time = 0;

@@ -60,13 +60,14 @@ export const useDisplayRefresh = <TFilter>({
         (e: ChangeEvent<HTMLInputElement>) => {
             const searchTerm = e.target.value === '' ? undefined : e.target.value;
             const updatedFilters = setFilter({
+                customFilters,
                 data: { searchTerm },
                 itemType,
                 key: pageKey,
             });
             return updatedFilters;
         },
-        [itemType, pageKey, setFilter],
+        [customFilters, itemType, pageKey, setFilter],
     );
 
     return { customFilters, filter, handlePlay, refresh, search };
