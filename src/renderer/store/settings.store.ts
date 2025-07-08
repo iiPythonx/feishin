@@ -355,15 +355,15 @@ const platformDefaultWindowBarStyle: Platform = getPlatformDefaultWindowBarStyle
 const initialState: SettingsState = {
     css: {
         content: '',
-        enabled: false,
+        enabled: true,
     },
     discord: {
         clientId: '1117545345690374277',
-        enabled: false,
+        enabled: true,
         proxyType: 'pizza',
         proxyUrl: '',
         showArtistName: false,
-        showAsListening: false,
+        showAsListening: true,
     },
     font: {
         builtIn: 'Poppins',
@@ -373,9 +373,9 @@ const initialState: SettingsState = {
     },
     general: {
         accent: 'rgb(53, 116, 252)',
-        albumArtRes: undefined,
+        albumArtRes: 2500,
         artistItems,
-        buttonSize: 15,
+        buttonSize: 10,
         disabledContextMenu: {},
         doubleClickQueueAll: true,
         externalLinks: true,
@@ -407,7 +407,7 @@ const initialState: SettingsState = {
         themeDark: AppTheme.DEFAULT_DARK,
         themeLight: AppTheme.DEFAULT_LIGHT,
         volumeWheelStep: 5,
-        volumeWidth: 70,
+        volumeWidth: 100,
         zoomFactor: 100,
     },
     hotkeys: {
@@ -420,7 +420,7 @@ const initialState: SettingsState = {
             favoritePreviousAdd: { allowGlobal: true, hotkey: '', isGlobal: false },
             favoritePreviousRemove: { allowGlobal: true, hotkey: '', isGlobal: false },
             favoritePreviousToggle: { allowGlobal: true, hotkey: '', isGlobal: false },
-            globalSearch: { allowGlobal: false, hotkey: 'mod+k', isGlobal: false },
+            globalSearch: { allowGlobal: false, hotkey: 'mod+t', isGlobal: false },
             localSearch: { allowGlobal: false, hotkey: 'mod+f', isGlobal: false },
             next: { allowGlobal: true, hotkey: '', isGlobal: false },
             pause: { allowGlobal: true, hotkey: '', isGlobal: false },
@@ -497,7 +497,7 @@ const initialState: SettingsState = {
         webAudio: true,
     },
     remote: {
-        enabled: false,
+        enabled: true,
         password: randomString(8),
         port: 4333,
         username: 'feishin',
