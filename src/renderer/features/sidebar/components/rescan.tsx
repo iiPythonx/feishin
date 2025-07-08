@@ -17,7 +17,7 @@ import styles from './sidebar.module.css';
 import { api } from '/@/renderer/api';
 import { useCurrentServer } from '/@/renderer/store';
 import { Accordion } from '/@/shared/components/accordion/accordion';
-import { Button } from '/@/shared/components/button/button';
+import { Button, ButtonProps } from '/@/shared/components/button/button';
 import { ServerType } from '/@/shared/types/domain-types';
 import { ScanStatus } from '/@/shared/types/domain-types';
 
@@ -36,6 +36,18 @@ export const RescanProvider = ({ children }: { children: ReactNode }) => {
     }, [scanStatus]);
 
     return <RescanContext.Provider value={providerValue}>{children}</RescanContext.Provider>;
+};
+
+const RoutelessButton = ({ children, ...props }: ButtonProps) => {
+    return (
+        <Button
+            style={{ borderRadius: '8px', display: 'flex', width: '100%' }}
+            variant="subtle"
+            {...props}
+        >
+            {children}
+        </Button>
+    );
 };
 
 const RescanMenu = ({
@@ -89,41 +101,20 @@ const RescanMenu = ({
 
     return (
         <>
-            {scanning && (
-                <Button
-                    style={{ borderRadius: '8px', display: 'flex', width: '100%' }}
-                    variant="subtle"
-                >
-                    <Group gap="sm">Scan in progress...</Group>
-                </Button>
-            )}
+            {scanning && <RoutelessButton>Scan in progress...</RoutelessButton>}
             {!scanning && (
-                <Button
-                    onClick={() => handleRefresh(isNavidrome ? false : undefined)}
-                    style={{ borderRadius: '8px', display: 'flex', width: '100%' }}
-                    variant="subtle"
-                >
-                    <Group gap="sm">Normal Scan</Group>
-                </Button>
+                <RoutelessButton onClick={() => handleRefresh(isNavidrome ? false : undefined)}>
+                    Normal Scan
+                </RoutelessButton>
             )}
             {isNavidrome && !scanning && (
-                <Button
-                    onClick={() => handleRefresh(true)}
-                    style={{ borderRadius: '8px', display: 'flex', width: '100%' }}
-                    variant="subtle"
-                >
-                    <Group gap="sm">Full Scan</Group>
-                </Button>
+                <RoutelessButton onClick={() => handleRefresh(true)}>Full Scan</RoutelessButton>
             )}
             {(isNavidrome || server?.type === ServerType.SUBSONIC) && (
                 <>
-                    <Button
-                        disabled
-                        style={{ borderRadius: '8px', display: 'flex', width: '100%' }}
-                        variant="subtle"
-                    >
+                    <RoutelessButton disabled>
                         Folders: {folders ?? 'N/A'} | Tracks: {tracks ?? 'N/A'}
-                    </Button>
+                    </RoutelessButton>
                 </>
             )}
         </>
