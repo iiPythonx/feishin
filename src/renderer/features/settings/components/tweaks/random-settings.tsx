@@ -48,24 +48,6 @@ export const RandomSettings = () => {
         },
         {
             control: (
-                <Switch
-                    checked={settings.floatingPlayer}
-                    onChange={(e) => {
-                        setSettings({
-                            tweaks: {
-                                ...settings,
-                                floatingPlayer: e.currentTarget.checked,
-                            },
-                        });
-                    }}
-                />
-            ),
-            description:
-                'Makes the playerbar float and the body a bit longer. Your window style should be Windows or macOS. ',
-            title: 'Floating Playerbar',
-        },
-        {
-            control: (
                 <Select
                     data={FORK_THEME_OPTIONS}
                     defaultValue={settings.forkTheme ?? 'pyxfluff'}

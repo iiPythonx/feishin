@@ -92,8 +92,6 @@ export const StylesSettings = () => {
                                     setCss(sanitizeCss(`<style>${e.currentTarget.value}`))
                                 }
                             />
-                            <Text>{t('common.preview', { postProcess: 'sentenceCase' })}: </Text>
-                            <Code block>{css}</Code>
                         </>
                     )}
                 </>

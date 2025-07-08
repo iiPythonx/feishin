@@ -312,7 +312,6 @@ export interface SettingsState {
     tweaks: {
         albumBackground: boolean;
         artistBackground: boolean;
-        floatingPlayer: boolean;
         forkTheme: string;
         headerBackgroundBlur: number;
         serverRescan: boolean;
@@ -662,7 +661,6 @@ const initialState: SettingsState = {
     tweaks: {
         albumBackground: true,
         artistBackground: true,
-        floatingPlayer: false,
         forkTheme: 'pyxfluff',
         headerBackgroundBlur: 6,
         serverRescan: false,

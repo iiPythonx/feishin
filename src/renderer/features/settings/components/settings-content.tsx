@@ -49,7 +49,6 @@ export const SettingsContent = () => {
     const { t } = useTranslation();
     const currentTab = useSettingsStore((state) => state.tab);
     const { setSettings } = useSettingsStoreActions();
-    const { floatingPlayer } = useTweaksSettings();
 
     return (
         <div style={{ height: '100%', overflow: 'scroll', padding: '1rem', width: '100%' }}>
@@ -80,39 +79,15 @@ export const SettingsContent = () => {
                     </Tabs.Tab>
                     <Tabs.Tab value="tweaks">Tweaks</Tabs.Tab>
                 </Tabs.List>
-                {(floatingPlayer && (
-                    <Tabs.Panel
-                        value="general"
-                        style={{
-                            maxHeight: '75%',
-                            overflow: 'scroll',
-                        }}
-                    >
-                        <GeneralTab />
-                    </Tabs.Panel>
-                )) || (
                     <Tabs.Panel value="general">
                         <GeneralTab />
                     </Tabs.Panel>
-                )}
                 <Tabs.Panel value="playback">
                     <PlaybackTab />
                 </Tabs.Panel>
-                {(floatingPlayer && (
-                    <Tabs.Panel
-                        value="hotkeys"
-                        style={{
-                            maxHeight: '80%',
-                            overflow: 'scroll',
-                        }}
-                    >
-                        <HotkeysTab />
-                    </Tabs.Panel>
-                )) || (
                     <Tabs.Panel value="hotkeys">
                         <HotkeysTab />
                     </Tabs.Panel>
-                )}
 
                 {isElectron() && (
                     <Tabs.Panel value="window">
