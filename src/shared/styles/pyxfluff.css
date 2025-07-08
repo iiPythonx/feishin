@@ -183,3 +183,14 @@ table {
 .fs-sidebar-module-sidebar-image {
     aspect-ratio: 1;
 }
+
+/* share dialog */
+.fs-modal-module-body {
+    .fs-textarea-module-input {
+        border-radius: 12px;
+    }
+
+    .fs-accordion-module-panel {
+        background-color: transparent;
+    }
+}
