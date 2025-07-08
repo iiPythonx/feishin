@@ -73,15 +73,11 @@ export const ServerListItem = ({ server }: ServerListItemProps) => {
                         >
                             <Table.Tbody>
                                 <Table.Tr>
-                                    <Table.Th>
-                                        {t('page.manageServers.url', {
-                                            postProcess: 'sentenceCase',
-                                        })}
-                                    </Table.Th>
+                                    <Table.Th style={{ width: '100px' }}>URL</Table.Th>
                                     <Table.Td>{server.url}</Table.Td>
                                 </Table.Tr>
                                 <Table.Tr>
-                                    <Table.Th>
+                                    <Table.Th style={{ width: '100px' }}>
                                         {t('page.manageServers.username', {
                                             postProcess: 'sentenceCase',
                                         })}

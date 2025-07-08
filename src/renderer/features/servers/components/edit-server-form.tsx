@@ -144,10 +144,7 @@ export const EditServerForm = ({ isUpdate, onCancel, password, server }: EditSer
                     {...form.getInputProps('name')}
                 />
                 <TextInput
-                    label={t('form.addServer.input', {
-                        context: 'url',
-                        postProcess: 'titleCase',
-                    })}
+                    label={'URL'}
                     required
                     rightSection={form.isDirty('url') && <ModifiedFieldIndicator />}
                     {...form.getInputProps('url')}

@@ -75,9 +75,12 @@ export const ServerList = () => {
                         return (
                             <Accordion.Item
                                 key={server.id}
+                                style={{ background: 'none', border: 'none' }}
                                 value={server.name}
                             >
-                                <Accordion.Control>
+                                <Accordion.Control
+                                    style={{ background: 'var(--mantine-color-dark-8)' }}
+                                >
                                     <Group>
                                         <img
                                             src={
@@ -97,7 +100,13 @@ export const ServerList = () => {
                                         </Text>
                                     </Group>
                                 </Accordion.Control>
-                                <Accordion.Panel>
+                                <Accordion.Panel
+                                    style={{
+                                        background: 'var(--mantine-color-dark-8)',
+                                        borderRadius: '12px',
+                                        marginTop: '.5rem',
+                                    }}
+                                >
                                     <ServerListItem server={server} />
                                 </Accordion.Panel>
                             </Accordion.Item>
@@ -111,6 +120,7 @@ export const ServerList = () => {
                             autoFocus
                             leftSection={<Icon icon="add" />}
                             onClick={handleAddServerModal}
+                            style={{ background: 'var(--mantine-color-dark-8)' }}
                         >
                             {t('form.addServer.title', { postProcess: 'titleCase' })}
                         </Button>
@@ -124,18 +134,14 @@ export const ServerList = () => {
                         <Group>
                             <Switch
                                 checked={ignoreCORS === 'true'}
-                                label={t('form.addServer.ignoreCors', {
-                                    postProcess: 'sentenceCase',
-                                })}
+                                label={'Ignore CORS (restart needed)'}
                                 onChange={handleUpdateIgnoreCORS}
                             />
                         </Group>
                         <Group>
                             <Switch
                                 checked={ignoreSSL === 'true'}
-                                label={t('form.addServer.ignoreSsl', {
-                                    postProcess: 'sentenceCase',
-                                })}
+                                label={'Ignore SSL (restart needed)'}
                                 onChange={handleUpdateIgnoreSSL}
                             />
                         </Group>
