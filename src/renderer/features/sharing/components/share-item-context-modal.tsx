@@ -1,14 +1,19 @@
 import { useForm } from '@mantine/form';
 import { closeModal, ContextModalProps } from '@mantine/modals';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { RiSaveLine } from 'react-icons/ri';
 
 import { useShareItem } from '/@/renderer/features/sharing/mutations/share-item-mutation';
-import { useCurrentServer } from '/@/renderer/store';
+import { useCurrentServer, useSettingsStoreActions, useTweaksSettings } from '/@/renderer/store';
+import { Accordion } from '/@/shared/components/accordion/accordion';
 import { Button } from '/@/shared/components/button/button';
 import { DateTimePicker } from '/@/shared/components/date-time-picker/date-time-picker';
+import { Divider } from '/@/shared/components/divider/divider';
 import { Group } from '/@/shared/components/group/group';
 import { Stack } from '/@/shared/components/stack/stack';
 import { Switch } from '/@/shared/components/switch/switch';
+import { TextInput } from '/@/shared/components/text-input/text-input';
 import { Textarea } from '/@/shared/components/textarea/textarea';
 import { toast } from '/@/shared/components/toast/toast';
 
@@ -22,6 +27,10 @@ export const ShareItemContextModal = ({
     const { t } = useTranslation();
     const { itemIds, resourceType } = innerProps;
     const server = useCurrentServer();
+    const tweakSettings = useTweaksSettings();
+    const { setSettings } = useSettingsStoreActions();
+
+    const [activeUrlChange, setActiveUrlChange] = useState('');
 
     const shareItemMutation = useShareItem({});
 
@@ -69,7 +78,7 @@ export const ShareItemContextModal = ({
                     if (!server) throw new Error('Server not found');
                     if (!_data?.id) throw new Error('Failed to share item');
 
-                    const shareUrl = `${server.url}/share/${_data.id}`;
+                    const shareUrl = `${tweakSettings.shareItemCustomUrl ?? server.url}/share/${_data.id}`;
 
                     navigator.clipboard.writeText(shareUrl);
                     toast.success({
@@ -125,6 +134,41 @@ export const ShareItemContextModal = ({
                     })}
                     {...form.getInputProps('allowDownloading')}
                 />
+
+                <Divider />
+
+                <Accordion>
+                    <Accordion.Item value="custom-url">
+                        <Accordion.Control>Custom URL</Accordion.Control>
+                        <Accordion.Panel>
+                            <Group gap="xs">
+                                <TextInput
+                                    defaultValue={tweakSettings.shareItemCustomUrl ?? server?.url}
+                                    flex={1}
+                                    onChange={(e) => {
+                                        setActiveUrlChange(e.target.value);
+                                    }}
+                                />
+                                <Button
+                                    disabled={activeUrlChange === ''}
+                                    onClick={() => {
+                                        setSettings({
+                                            tweaks: {
+                                                ...tweakSettings,
+                                                shareItemCustomUrl: activeUrlChange,
+                                            },
+                                        });
+                                        setActiveUrlChange('');
+                                    }}
+                                >
+                                    <RiSaveLine />
+                                </Button>
+                            </Group>
+                        </Accordion.Panel>
+                    </Accordion.Item>
+                </Accordion>
+
+                <Divider />
 
                 <Group justify="flex-end">
                     <Group>

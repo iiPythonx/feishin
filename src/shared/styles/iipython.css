@@ -15,12 +15,19 @@
         .fs-context-menu-module-container {
             background: var(--mantine-color-dark-9) !important;
             border: 1px solid var(--mantine-color-dark-4) !important;
+            border-radius: 8px !important;
+        }
+        .fs-hover-card-module-dropdown {
+            margin-left: 8px;
+            background: var(--mantine-color-dark-9) !important;
+            border: 1px solid var(--mantine-color-dark-4) !important;
+            border-radius: 8px !important;
         }
 
         /* Add border radius to hovering context menu */
         .fs-context-menu-module-context-menu-button:hover {
             cursor: pointer;
-            border-radius: 10px;
+            border-radius: 8px;
             background-color: var(--mantine-color-dark-6);
         }
 
@@ -53,6 +60,39 @@
                 overflow-y: auto;
                 max-height: 600px;
                 scrollbar-width: thin;
+
+                /* Handle sizing of buttons in modals */
+                .mantine-Stack-root > div.mantine-Group-root:last-child .mantine-Button-root {
+                    padding: 10px 20px;
+                    height: fit-content;
+                }
+            }
+
+            /* Fix background of accordions in modals */
+            .fs-accordion-module-control, .fs-accordion-module-panel {
+                background: var(--mantine-color-dark-6);
+                border-radius: 4px;
+
+                .mantine-Accordion-content {
+                    padding: 8px;
+                }
+            }
+            .fs-accordion-module-panel {
+                margin-top: 8px;
+
+                /* Handle input coloring */
+                .fs-text-input-module-input, .mantine-Button-root {
+                    background: var(--mantine-color-dark-9) !important;
+                    transition: opacity .2s ease;
+                }
+                .mantine-Button-root:hover {
+                    opacity: .6;
+                }
+            }
+
+            /* Hide accordion border */
+            .mantine-Accordion-item {
+                border-bottom: 0px;
             }
         }
 
@@ -67,16 +107,6 @@
         /* Correct the appearance of the full screen corner */
         .fs-full-screen-player-module-container > .mantine-Group-root {
             padding: .5rem !important;
-        }
-
-        /* Fix cover art being pushed up */
-        .fs-sidebar-module-scroll-area {
-            height: 100% !important;
-        }
-
-        /* Fix aspect ratio of sidebar image */
-        .fs-sidebar-module-sidebar-image {
-            aspect-ratio: 1;
         }
 
     /** Fixes **/
@@ -112,4 +142,14 @@
 
         .mantine-PasswordInput-innerInput:focus {
             border-color: color-mix(in srgb, var(--theme-colors-border), white 10%);
+        }
+
+        /* Fix cover art being pushed up */
+        .fs-sidebar-module-scroll-area {
+            height: 100% !important;
+        }
+
+        /* Fix aspect ratio of sidebar image */
+        .fs-sidebar-module-sidebar-image {
+            aspect-ratio: 1;
         }

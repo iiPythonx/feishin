@@ -315,6 +315,7 @@ export interface SettingsState {
         forkTheme: string;
         headerBackgroundBlur: number;
         serverRescan: boolean;
+        shareItemCustomUrl: string;
     };
     window: {
         exitToTray: boolean;
@@ -664,6 +665,7 @@ const initialState: SettingsState = {
         forkTheme: 'pyxfluff',
         headerBackgroundBlur: 6,
         serverRescan: false,
+        shareItemCustomUrl: '',
     },
     window: {
         exitToTray: false,
