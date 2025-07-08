@@ -231,7 +231,7 @@ export const FullScreenPlayerImage = () => {
 
                     {currentSong?.container && (
                         <Badge variant="playerbar">
-                            {currentSong?.container.replace('audio/', '')} {Math.round(currentSong?.bitRate / 1000) * 1000}
+                            {currentSong?.container.replace('audio/', '')} {Math.round(currentSong?.bitRate / 100) * 100}
                         </Badge>
                     )}
                 </Group>
