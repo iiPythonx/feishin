@@ -66,7 +66,7 @@ export const sidebarItems: SidebarItemType[] = [
         route: AppRoute.LIBRARY_ALBUM_ARTISTS,
     },
     {
-        disabled: false,
+        disabled: true,
         id: 'Artists-all',
         label: i18n.t('page.sidebar.artists'),
         route: AppRoute.LIBRARY_ARTISTS,
@@ -84,7 +84,7 @@ export const sidebarItems: SidebarItemType[] = [
         route: AppRoute.PLAYLISTS,
     },
     {
-        disabled: true,
+        disabled: false,
         id: 'Settings',
         label: i18n.t('page.sidebar.settings'),
         route: AppRoute.SETTINGS,
