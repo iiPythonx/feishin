@@ -194,3 +194,67 @@ table {
         background-color: transparent;
     }
 }
+
+/* ripped carousel fix */
+.fs-feature-carousel-module-grid {
+    display: flex;
+}
+
+.fs-feature-carousel-module-info-column {
+    display: flex;
+    align-items: center;
+
+    h1 {
+        max-width: 50%;
+    }
+
+    /* Margin for the year badge */
+    .fs-badge-module-root {
+        margin-left: 10px !important;
+    }
+
+    /* Bump up the size of the artist */
+    div.mantine-Text-root {
+        font-size: medium;
+    }
+
+    /* Hide genres from carousel */
+    .mantine-Stack-root>.mantine-Group-root:nth-child(3) {
+        display: none;
+    }
+
+    /* Attack carousel buttons */
+    .mantine-Stack-root>.mantine-Group-root:last-child {
+        bottom: 12px;
+        position: absolute;
+
+        gap: 8px;
+
+        .mantine-UnstyledButton-root {
+            border: 0px;
+            transition: background .2s ease-in-out;
+            opacity: 1;
+            padding: 0px 20px;
+            border-radius: 12px;
+
+            width: fit-content;
+            min-height: 30px;
+            max-height: 30px;
+
+            background: rgba(4, 4, 9, .5);
+
+            &:hover {
+                background: var(--mantine-color-dark-9);
+            }
+
+            svg {
+                width: 13px;
+                height: 13px;
+            }
+        }
+    }
+}
+
+.fs-feature-carousel-module-image-column {
+    align-items: normal !important;
+}
