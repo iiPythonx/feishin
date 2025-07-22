@@ -46,11 +46,7 @@ export const SearchInput = ({ onChange, ...props }: SearchInputProps) => {
             {...props}
             rightSection={
                 ref.current?.value ? (
-                    <ActionIcon
-                        icon="x"
-                        onClick={handleClear}
-                        variant="transparent"
-                    />
+                    <ActionIcon icon="x" onClick={handleClear} variant="transparent" />
                 ) : null
             }
         />

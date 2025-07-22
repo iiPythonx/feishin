@@ -132,10 +132,7 @@ function ServerSelector() {
                         }}
                         variant={server.id === currentServer?.id ? 'filled' : 'default'}
                     >
-                        <Group
-                            justify="space-between"
-                            w="100%"
-                        >
+                        <Group justify="space-between" w="100%">
                             <Group>
                                 <img
                                     src={logo}
@@ -144,10 +141,7 @@ function ServerSelector() {
                                         width: 'var(--theme-font-size-2xl)',
                                     }}
                                 />
-                                <Text
-                                    fw={600}
-                                    size="lg"
-                                >
+                                <Text fw={600} size="lg">
                                     {server.name}
                                 </Text>
                             </Group>

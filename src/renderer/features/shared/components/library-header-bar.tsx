@@ -22,21 +22,14 @@ interface TitleProps {
 const HeaderPlayButton = ({ className, ...props }: PlayButtonProps) => {
     return (
         <div className={styles.playButtonContainer}>
-            <PlayButton
-                className={className}
-                {...props}
-            />
+            <PlayButton className={className} {...props} />
         </div>
     );
 };
 
 const Title = ({ children }: TitleProps) => {
     return (
-        <TextTitle
-            fw={700}
-            order={1}
-            overflow="hidden"
-        >
+        <TextTitle fw={700} order={1} overflow="hidden">
             {children}
         </TextTitle>
     );

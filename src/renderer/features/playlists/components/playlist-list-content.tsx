@@ -33,15 +33,9 @@ export const PlaylistListContent = ({ gridRef, itemCount, tableRef }: PlaylistLi
     return (
         <Suspense fallback={<Spinner container />}>
             {display === ListDisplayType.CARD || display === ListDisplayType.GRID ? (
-                <PlaylistListGridView
-                    gridRef={gridRef}
-                    itemCount={itemCount}
-                />
+                <PlaylistListGridView gridRef={gridRef} itemCount={itemCount} />
             ) : (
-                <PlaylistListTableView
-                    itemCount={itemCount}
-                    tableRef={tableRef}
-                />
+                <PlaylistListTableView itemCount={itemCount} tableRef={tableRef} />
             )}
             <div />
         </Suspense>

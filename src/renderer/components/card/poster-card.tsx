@@ -55,14 +55,8 @@ export const PosterCard = ({
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
             >
-                <Link
-                    className={styles.imageContainer}
-                    to={path}
-                >
-                    <Image
-                        className={styles.image}
-                        src={data?.imageUrl}
-                    />
+                <Link className={styles.imageContainer} to={path}>
+                    <Image className={styles.image} src={data?.imageUrl} />
                     <GridCardControls
                         handleFavorite={controls.handleFavorite}
                         handlePlayQueueAdd={controls.handlePlayQueueAdd}
@@ -72,30 +66,21 @@ export const PosterCard = ({
                     />
                 </Link>
                 <div className={styles.detailContainer}>
-                    <CardRows
-                        data={data}
-                        rows={controls.cardRows}
-                    />
+                    <CardRows data={data} rows={controls.cardRows} />
                 </div>
             </div>
         );
     }
 
     return (
-        <div
-            className={styles.container}
-            key={`placeholder-${uniqueId}-${data.id}`}
-        >
+        <div className={styles.container} key={`placeholder-${uniqueId}-${data.id}`}>
             <div className={styles.imageContainer}>
                 <Skeleton className={styles.image} />
             </div>
             <div className={styles.detailContainer}>
                 <Stack gap="xs">
                     {(controls?.cardRows || []).map((row, index) => (
-                        <Skeleton
-                            height={14}
-                            key={`${index}-${row.arrayProperty}`}
-                        />
+                        <Skeleton height={14} key={`${index}-${row.arrayProperty}`} />
                     ))}
                 </Stack>
             </div>

@@ -22,6 +22,8 @@ import { FontType } from '/@/shared/types/types';
 
 const localSettings = isElectron() ? window.api.localSettings : null;
 const ipc = isElectron() ? window.api.ipc : null;
+// Electron 32+ removed file.path, use this which is exposed in preload to get real path
+const webUtils = isElectron() ? window.electron.webUtils : null;
 
 type Font = {
     label: string;
@@ -254,7 +256,7 @@ export const ApplicationSettings = () => {
                         setSettings({
                             font: {
                                 ...fontSettings,
-                                custom: e?.path ?? null,
+                                custom: e ? webUtils?.getPathForFile(e) || null : null,
                             },
                         })
                     }

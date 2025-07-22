@@ -86,10 +86,7 @@ export const GridCardControls = ({
                         onClick={handlePlay}
                         variant="filled"
                     >
-                        <Icon
-                            icon="mediaPlay"
-                            size="xl"
-                        />
+                        <Icon icon="mediaPlay" size="xl" />
                     </Button>
                     <div className={styles.bottomControls}>
                         {itemType !== LibraryItem.PLAYLIST && (

@@ -410,11 +410,7 @@ export const PlaylistQueryBuilder = forwardRef(
         ];
 
         return (
-            <Flex
-                direction="column"
-                h="calc(100% - 2rem)"
-                justify="space-between"
-            >
+            <Flex direction="column" h="calc(100% - 2rem)" justify="space-between">
                 <ScrollArea>
                     <QueryBuilder
                         data={filters}
@@ -442,17 +438,8 @@ export const PlaylistQueryBuilder = forwardRef(
                         uniqueId={filters.uniqueId}
                     />
                 </ScrollArea>
-                <Group
-                    align="flex-end"
-                    justify="space-between"
-                    m="1rem"
-                    wrap="nowrap"
-                >
-                    <Group
-                        gap="sm"
-                        w="100%"
-                        wrap="nowrap"
-                    >
+                <Group align="flex-end" justify="space-between" m="1rem" wrap="nowrap">
+                    <Group gap="sm" w="100%" wrap="nowrap">
                         <Select
                             data={sortOptions}
                             label="Sort"
@@ -485,20 +472,11 @@ export const PlaylistQueryBuilder = forwardRef(
                         />
                     </Group>
                     {onSave && onSaveAs && (
-                        <Group
-                            gap="sm"
-                            wrap="nowrap"
-                        >
-                            <Button
-                                loading={isSaving}
-                                onClick={handleSaveAs}
-                            >
+                        <Group gap="sm" wrap="nowrap">
+                            <Button loading={isSaving} onClick={handleSaveAs}>
                                 {t('common.saveAs', { postProcess: 'titleCase' })}
                             </Button>
-                            <Button
-                                onClick={openPreviewModal}
-                                variant="subtle"
-                            >
+                            <Button onClick={openPreviewModal} variant="subtle">
                                 {t('common.preview', { postProcess: 'titleCase' })}
                             </Button>
                             <DropdownMenu position="bottom-end">
@@ -512,12 +490,7 @@ export const PlaylistQueryBuilder = forwardRef(
                                 <DropdownMenu.Dropdown>
                                     <DropdownMenu.Item
                                         isDanger
-                                        leftSection={
-                                            <Icon
-                                                color="error"
-                                                icon="save"
-                                            />
-                                        }
+                                        leftSection={<Icon color="error" icon="save" />}
                                         onClick={handleSave}
                                     >
                                         {t('common.saveAndReplace', { postProcess: 'titleCase' })}

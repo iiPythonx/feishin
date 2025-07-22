@@ -33,15 +33,9 @@ export const GenreListContent = ({ gridRef, itemCount, tableRef }: AlbumListCont
     return (
         <Suspense fallback={<Spinner container />}>
             {display === ListDisplayType.CARD || display === ListDisplayType.GRID ? (
-                <GenreListGridView
-                    gridRef={gridRef}
-                    itemCount={itemCount}
-                />
+                <GenreListGridView gridRef={gridRef} itemCount={itemCount} />
             ) : (
-                <GenreListTableView
-                    itemCount={itemCount}
-                    tableRef={tableRef}
-                />
+                <GenreListTableView itemCount={itemCount} tableRef={tableRef} />
             )}
         </Suspense>
     );

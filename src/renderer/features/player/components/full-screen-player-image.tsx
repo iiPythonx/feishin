@@ -68,11 +68,7 @@ const ImageWithPlaceholder = ({
                     width: '100%',
                 }}
             >
-                <Icon
-                    color="muted"
-                    icon="itemAlbum"
-                    size="25%"
-                />
+                <Icon color="muted" icon="itemAlbum" size="25%" />
             </Center>
         );
     }
@@ -234,14 +230,8 @@ export const FullScreenPlayerImage = () => {
             p="1rem"
             w="100%"
         >
-            <div
-                className={styles.imageContainer}
-                ref={mainImageRef}
-            >
-                <AnimatePresence
-                    initial={false}
-                    mode="sync"
-                >
+            <div className={styles.imageContainer} ref={mainImageRef}>
+                <AnimatePresence initial={false} mode="sync">
                     {imageState.current === 0 && (
                         <ImageWithPlaceholder
                             animate="open"

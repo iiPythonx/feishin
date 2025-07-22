@@ -16,14 +16,8 @@ import { ListDisplayType } from '/@/shared/types/types';
 const DISPLAY_TYPES = [
     {
         label: (
-            <Stack
-                align="center"
-                p="sm"
-            >
-                <Icon
-                    icon="layoutTable"
-                    size="lg"
-                />
+            <Stack align="center" p="sm">
+                <Icon icon="layoutTable" size="lg" />
                 {i18n.t('table.config.view.table', { postProcess: 'sentenceCase' }) as string}
             </Stack>
         ),
@@ -31,14 +25,8 @@ const DISPLAY_TYPES = [
     },
     {
         label: (
-            <Stack
-                align="center"
-                p="sm"
-            >
-                <Icon
-                    icon="layoutGrid"
-                    size="lg"
-                />
+            <Stack align="center" p="sm">
+                <Icon icon="layoutGrid" size="lg" />
                 {i18n.t('table.config.view.card', { postProcess: 'sentenceCase' }) as string}
             </Stack>
         ),
@@ -47,14 +35,8 @@ const DISPLAY_TYPES = [
     {
         disabled: true,
         label: (
-            <Stack
-                align="center"
-                p="sm"
-            >
-                <Icon
-                    icon="layoutList"
-                    size="lg"
-                />
+            <Stack align="center" p="sm">
+                <Icon icon="layoutList" size="lg" />
                 {i18n.t('table.config.view.list', { postProcess: 'sentenceCase' }) as string}
             </Stack>
         ),
@@ -79,10 +61,7 @@ interface ListConfigMenuProps {
 
 export const ListConfigMenu = (props: ListConfigMenuProps) => {
     return (
-        <Popover
-            position="bottom-end"
-            width={300}
-        >
+        <Popover position="bottom-end" width={300}>
             <Popover.Target>
                 <SettingsButton />
             </Popover.Target>
@@ -161,12 +140,7 @@ const TableConfig = ({
 
     return (
         <>
-            <Table
-                variant="vertical"
-                withColumnBorders
-                withRowBorders
-                withTableBorder
-            >
+            <Table variant="vertical" withColumnBorders withRowBorders withTableBorder>
                 <Table.Tbody>
                     <Table.Tr>
                         <Table.Th>
@@ -199,10 +173,7 @@ const TableConfig = ({
                     </Table.Tr>
                 </Table.Tbody>
             </Table>
-            <ScrollArea
-                allowDragScroll
-                style={{ maxHeight: '200px' }}
-            >
+            <ScrollArea allowDragScroll style={{ maxHeight: '200px' }}>
                 <CheckboxSelect
                     data={tableColumnsData}
                     onChange={onChangeTableColumns}
@@ -227,12 +198,7 @@ const GridConfig = ({ itemSize, onChangeItemGap, onChangeItemSize }: GridConfigP
 
     return (
         <>
-            <Table
-                variant="vertical"
-                withColumnBorders
-                withRowBorders
-                withTableBorder
-            >
+            <Table variant="vertical" withColumnBorders withRowBorders withTableBorder>
                 <Table.Tbody>
                     <Table.Tr>
                         <Table.Th w="50%">

@@ -372,11 +372,7 @@ export const AlbumArtistListHeaderFilters = ({
 
     return (
         <Flex justify="space-between">
-            <Group
-                gap="sm"
-                ref={cq.ref}
-                w="100%"
-            >
+            <Group gap="sm" ref={cq.ref} w="100%">
                 <DropdownMenu position="bottom-start">
                     <DropdownMenu.Target>
                         <Button variant="subtle">{sortByLabel}</Button>
@@ -395,10 +391,7 @@ export const AlbumArtistListHeaderFilters = ({
                     </DropdownMenu.Dropdown>
                 </DropdownMenu>
                 <Divider orientation="vertical" />
-                <OrderToggleButton
-                    onToggle={handleToggleSortOrder}
-                    sortOrder={filter.sortOrder}
-                />
+                <OrderToggleButton onToggle={handleToggleSortOrder} sortOrder={filter.sortOrder} />
                 {server?.type === ServerType.JELLYFIN && (
                     <>
                         <DropdownMenu position="bottom-start">
@@ -437,10 +430,7 @@ export const AlbumArtistListHeaderFilters = ({
                     </DropdownMenu.Dropdown>
                 </DropdownMenu>
             </Group>
-            <Group
-                gap="sm"
-                wrap="nowrap"
-            >
+            <Group gap="sm" wrap="nowrap">
                 <ListConfigMenu
                     autoFitColumns={table.autoFit}
                     disabledViewTypes={[ListDisplayType.LIST]}

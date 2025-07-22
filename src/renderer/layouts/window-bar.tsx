@@ -40,27 +40,14 @@ const WindowsControls = ({ controls, title }: WindowBarControlsProps) => {
     return (
         <div className={styles.windowsContainer}>
             <div className={styles.playerStatusContainer}>
-                <img
-                    alt=""
-                    height={18}
-                    src={appIcon}
-                    width={18}
-                />
+                <img alt="" height={18} src={appIcon} width={18} />
                 <Text>{title}</Text>
             </div>
             <div className={styles.windowsButtonGroup}>
-                <div
-                    className={styles.windowsButton}
-                    onClick={handleMinimize}
-                    role="button"
-                >
+                <div className={styles.windowsButton} onClick={handleMinimize} role="button">
                     <RiSubtractLine size={19} />
                 </div>
-                <div
-                    className={styles.windowsButton}
-                    onClick={handleMaximize}
-                    role="button"
-                >
+                <div className={styles.windowsButton} onClick={handleMaximize} role="button">
                     <RiCheckboxBlankLine size={13} />
                 </div>
                 <div

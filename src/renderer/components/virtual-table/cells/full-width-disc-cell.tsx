@@ -25,10 +25,7 @@ export const FullWidthDiscCell = ({ api, data, node }: ICellRendererParams) => {
 
     return (
         <div className={styles.container}>
-            <Group
-                justify="space-between"
-                w="100%"
-            >
+            <Group justify="space-between" w="100%">
                 <Button
                     leftSection={isSelected ? <Icon icon="squareCheck" /> : <Icon icon="square" />}
                     onClick={handleToggleDiscNodes}

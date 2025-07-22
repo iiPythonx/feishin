@@ -254,11 +254,7 @@ export const GenreListHeaderFilters = ({
 
     return (
         <Flex justify="space-between">
-            <Group
-                gap="sm"
-                ref={cq.ref}
-                w="100%"
-            >
+            <Group gap="sm" ref={cq.ref} w="100%">
                 <DropdownMenu position="bottom-start">
                     <DropdownMenu.Target>
                         <Button variant="subtle">{sortByLabel}</Button>
@@ -277,10 +273,7 @@ export const GenreListHeaderFilters = ({
                     </DropdownMenu.Dropdown>
                 </DropdownMenu>
                 <Divider orientation="vertical" />
-                <OrderToggleButton
-                    onToggle={handleToggleSortOrder}
-                    sortOrder={filter.sortOrder}
-                />
+                <OrderToggleButton onToggle={handleToggleSortOrder} sortOrder={filter.sortOrder} />
                 {server?.type === ServerType.JELLYFIN && (
                     <>
                         <Divider orientation="vertical" />
@@ -340,10 +333,7 @@ export const GenreListHeaderFilters = ({
                     </Button>
                 </DropdownMenu>
             </Group>
-            <Group
-                gap="sm"
-                wrap="nowrap"
-            >
+            <Group gap="sm" wrap="nowrap">
                 <ListConfigMenu
                     autoFitColumns={table.autoFit}
                     disabledViewTypes={[ListDisplayType.LIST]}

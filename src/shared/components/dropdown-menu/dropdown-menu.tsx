@@ -44,10 +44,7 @@ export const DropdownMenu = ({ children, ...props }: MenuProps) => {
 
 const MenuLabel = ({ children, ...props }: MenuLabelProps) => {
     return (
-        <MantineMenu.Label
-            className={styles['menu-label']}
-            {...props}
-        >
+        <MantineMenu.Label className={styles['menu-label']} {...props}>
             {children}
         </MantineMenu.Label>
     );
@@ -75,10 +72,7 @@ const pMenuItem = ({ children, isDanger, isSelected, ...props }: MenuItemProps) 
 
 const MenuDropdown = ({ children, ...props }: MenuDropdownProps) => {
     return (
-        <MantineMenu.Dropdown
-            className={styles['menu-dropdown']}
-            {...props}
-        >
+        <MantineMenu.Dropdown className={styles['menu-dropdown']} {...props}>
             {children}
         </MantineMenu.Dropdown>
     );
@@ -87,12 +81,7 @@ const MenuDropdown = ({ children, ...props }: MenuDropdownProps) => {
 const MenuItem = createPolymorphicComponent<'button', MenuItemProps>(pMenuItem);
 
 const MenuDivider = ({ ...props }: MenuDividerProps) => {
-    return (
-        <MantineMenu.Divider
-            className={styles['menu-divider']}
-            {...props}
-        />
-    );
+    return <MantineMenu.Divider className={styles['menu-divider']} {...props} />;
 };
 
 DropdownMenu.Label = MenuLabel;

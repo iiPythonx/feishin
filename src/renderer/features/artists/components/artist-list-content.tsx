@@ -34,15 +34,9 @@ export const ArtistListContent = ({ gridRef, itemCount, tableRef }: ArtistListCo
     return (
         <Suspense fallback={<Spinner container />}>
             {isGrid ? (
-                <ArtistListGridView
-                    gridRef={gridRef}
-                    itemCount={itemCount}
-                />
+                <ArtistListGridView gridRef={gridRef} itemCount={itemCount} />
             ) : (
-                <ArtistListTableView
-                    itemCount={itemCount}
-                    tableRef={tableRef}
-                />
+                <ArtistListTableView itemCount={itemCount} tableRef={tableRef} />
             )}
         </Suspense>
     );

@@ -77,10 +77,7 @@ export const FullScreenPlayerQueue = () => {
                 justify="center"
             >
                 {headerItems.map((item) => (
-                    <div
-                        className={styles.headerItemWrapper}
-                        key={`tab-${item.label}`}
-                    >
+                    <div className={styles.headerItemWrapper} key={`tab-${item.label}`}>
                         <Button
                             flex={1}
                             fw="600"

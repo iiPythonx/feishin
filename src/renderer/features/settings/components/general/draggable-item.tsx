@@ -35,17 +35,8 @@ export const DraggableItem = ({ handleChangeDisabled, item, value }: DraggableIt
     const dragControls = useDragControls();
 
     return (
-        <Reorder.Item
-            as="div"
-            dragControls={dragControls}
-            dragListener={false}
-            value={item}
-        >
-            <Group
-                py="md"
-                style={{ boxShadow: '0 1px 3px rgba(0,0,0,.1)' }}
-                wrap="nowrap"
-            >
+        <Reorder.Item as="div" dragControls={dragControls} dragListener={false} value={item}>
+            <Group py="md" style={{ boxShadow: '0 1px 3px rgba(0,0,0,.1)' }} wrap="nowrap">
                 <Checkbox
                     checked={!item.disabled}
                     onChange={(e) => handleChangeDisabled(item.id, e.target.checked)}

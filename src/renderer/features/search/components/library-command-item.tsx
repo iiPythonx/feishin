@@ -56,10 +56,7 @@ export const LibraryCommandItem = ({
             onMouseLeave={() => setIsHovered(false)}
             style={{ height: '40px', width: '100%' }}
         >
-            <div
-                className={styles.itemGrid}
-                style={{ '--item-height': '40px' } as CSSProperties}
-            >
+            <div className={styles.itemGrid} style={{ '--item-height': '40px' } as CSSProperties}>
                 <div className={styles.imageWrapper}>
                     <Image
                         alt="cover"
@@ -71,21 +68,13 @@ export const LibraryCommandItem = ({
                 </div>
                 <div className={styles.metadataWrapper}>
                     <Text overflow="hidden">{title}</Text>
-                    <Text
-                        isMuted
-                        overflow="hidden"
-                    >
+                    <Text isMuted overflow="hidden">
                         {subtitle}
                     </Text>
                 </div>
             </div>
             {isHovered && (
-                <Group
-                    align="center"
-                    gap="sm"
-                    justify="flex-end"
-                    wrap="nowrap"
-                >
+                <Group align="center" gap="sm" justify="flex-end" wrap="nowrap">
                     <ActionIcon
                         disabled={disabled}
                         icon="mediaPlay"

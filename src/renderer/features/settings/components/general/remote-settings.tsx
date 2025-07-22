@@ -73,20 +73,12 @@ export const RemoteSettings = () => {
                 />
             ),
             description: (
-                <Text
-                    isMuted
-                    isNoSelect
-                    size="sm"
-                >
+                <Text isMuted isNoSelect size="sm">
                     {t('setting.enableRemote', {
                         context: 'description',
                         postProcess: 'sentenceCase',
                     })}{' '}
-                    <a
-                        href={url}
-                        rel="noreferrer noopener"
-                        target="_blank"
-                    >
+                    <a href={url} rel="noreferrer noopener" target="_blank">
                         {url}
                     </a>
                 </Text>

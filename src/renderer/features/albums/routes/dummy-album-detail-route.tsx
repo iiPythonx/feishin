@@ -174,10 +174,7 @@ const DummyAlbumDetailRoute = () => {
             </Stack>
             <div className={styles.detailContainer}>
                 <section>
-                    <Group
-                        gap="sm"
-                        justify="space-between"
-                    >
+                    <Group gap="sm" justify="space-between">
                         <Group>
                             <PlayButton onClick={() => handlePlay()} />
                             <ActionIcon
@@ -231,11 +228,7 @@ const DummyAlbumDetailRoute = () => {
                 <section>
                     <Center>
                         <Group mr={5}>
-                            <Icon
-                                fill="error"
-                                icon="error"
-                                size={30}
-                            />
+                            <Icon fill="error" icon="error" size={30} />
                         </Group>
                         <h2>{t('error.badAlbum', { postProcess: 'sentenceCase' })}</h2>
                     </Center>

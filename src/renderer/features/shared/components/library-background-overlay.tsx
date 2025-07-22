@@ -5,10 +5,5 @@ interface LibraryBackgroundOverlayProps {
 }
 
 export const LibraryBackgroundOverlay = ({ backgroundColor }: LibraryBackgroundOverlayProps) => {
-    return (
-        <div
-            className={styles.root}
-            style={{ backgroundColor }}
-        />
-    );
+    return <div className={styles.root} style={{ backgroundColor }} />;
 };

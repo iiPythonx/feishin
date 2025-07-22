@@ -26,11 +26,7 @@ export const RatingCell = ({ node, value }: ICellRendererParams) => {
 
     return (
         <CellContainer position="center">
-            <Rating
-                onChange={handleUpdateRating}
-                size="xs"
-                value={value?.userRating}
-            />
+            <Rating onChange={handleUpdateRating} size="xs" value={value?.userRating} />
         </CellContainer>
     );
 };

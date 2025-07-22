@@ -244,10 +244,5 @@ export const AudioSettings = ({ hasFancyAudio }: { hasFancyAudio: boolean }) => 
         },
     ];
 
-    return (
-        <SettingsSection
-            divider={!hasFancyAudio}
-            options={audioOptions}
-        />
-    );
+    return <SettingsSection divider={!hasFancyAudio} options={audioOptions} />;
 };

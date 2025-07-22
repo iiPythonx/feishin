@@ -9,12 +9,7 @@ interface CollapsedSidebarButtonProps extends ActionIconProps {}
 export const CollapsedSidebarButton = forwardRef<HTMLButtonElement, CollapsedSidebarButtonProps>(
     ({ children, ...props }: CollapsedSidebarButtonProps, ref) => {
         return (
-            <ActionIcon
-                className={styles.button}
-                ref={ref}
-                variant="subtle"
-                {...props}
-            >
+            <ActionIcon className={styles.button} ref={ref} variant="subtle" {...props}>
                 {children}
             </ActionIcon>
         );

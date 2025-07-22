@@ -35,14 +35,8 @@ export const ContextMenuButton = forwardRef(
                 onClick={props.onClick}
                 ref={ref}
             >
-                <Group
-                    justify="space-between"
-                    w="100%"
-                >
-                    <Group
-                        className={styles.left}
-                        gap="md"
-                    >
+                <Group justify="space-between" w="100%">
+                    <Group className={styles.left} gap="md">
                         {leftIcon}
                         {children}
                     </Group>

@@ -331,11 +331,7 @@ export const PlaylistDetailSongListContent = ({ songs, tableRef }: PlaylistDetai
                 />
             </VirtualGridAutoSizerContainer>
             {isPaginationEnabled && (
-                <AnimatePresence
-                    initial={false}
-                    mode="wait"
-                    presenceAffectsLayout
-                >
+                <AnimatePresence initial={false} mode="wait" presenceAffectsLayout>
                     {page.display === ListDisplayType.TABLE_PAGINATED && (
                         <TablePagination
                             pageKey={playlistId}

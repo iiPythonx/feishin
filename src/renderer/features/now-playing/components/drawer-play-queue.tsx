@@ -11,30 +11,17 @@ export const DrawerPlayQueue = () => {
     const queueRef = useRef<null | { grid: AgGridReactType<Song> }>(null);
 
     return (
-        <Flex
-            direction="column"
-            h="100%"
-        >
+        <Flex direction="column" h="100%">
             <div
                 style={{
                     backgroundColor: 'var(--theme-colors-background)',
                     borderRadius: '10px',
                 }}
             >
-                <PlayQueueListControls
-                    tableRef={queueRef}
-                    type="sideQueue"
-                />
+                <PlayQueueListControls tableRef={queueRef} type="sideQueue" />
             </div>
-            <Flex
-                bg="var(--theme-colors-background)"
-                h="100%"
-                mb="0.6rem"
-            >
-                <PlayQueue
-                    ref={queueRef}
-                    type="sideQueue"
-                />
+            <Flex bg="var(--theme-colors-background)" h="100%" mb="0.6rem">
+                <PlayQueue ref={queueRef} type="sideQueue" />
             </Flex>
         </Flex>
     );

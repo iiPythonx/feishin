@@ -22,10 +22,7 @@ export const App = () => {
     const { mode, theme } = useAppTheme(isDark ? AppTheme.DEFAULT_DARK : AppTheme.DEFAULT_LIGHT);
 
     return (
-        <MantineProvider
-            defaultColorScheme={mode}
-            theme={theme}
-        >
+        <MantineProvider defaultColorScheme={mode} theme={theme}>
             <Shell />
         </MantineProvider>
     );

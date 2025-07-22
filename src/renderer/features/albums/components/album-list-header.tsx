@@ -61,15 +61,9 @@ export const AlbumListHeader = ({
     }, [filter, genreId, refresh, tableRef]);
 
     return (
-        <Stack
-            gap={0}
-            ref={cq.ref}
-        >
+        <Stack gap={0} ref={cq.ref}>
             <PageHeader backgroundColor="var(--theme-colors-background)">
-                <Flex
-                    justify="space-between"
-                    w="100%"
-                >
+                <Flex justify="space-between" w="100%">
                     <LibraryHeaderBar>
                         <LibraryHeaderBar.PlayButton
                             onClick={() => handlePlay?.({ playType: playButtonBehavior })}
@@ -85,10 +79,7 @@ export const AlbumListHeader = ({
                         </LibraryHeaderBar.Badge>
                     </LibraryHeaderBar>
                     <Group>
-                        <SearchInput
-                            defaultValue={filter.searchTerm}
-                            onChange={handleSearch}
-                        />
+                        <SearchInput defaultValue={filter.searchTerm} onChange={handleSearch} />
                     </Group>
                 </Flex>
             </PageHeader>

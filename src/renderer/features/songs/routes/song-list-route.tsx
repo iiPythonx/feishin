@@ -132,11 +132,7 @@ const TrackListRoute = () => {
                     tableRef={tableRef}
                     title={title}
                 />
-                <SongListContent
-                    gridRef={gridRef}
-                    itemCount={itemCount}
-                    tableRef={tableRef}
-                />
+                <SongListContent gridRef={gridRef} itemCount={itemCount} tableRef={tableRef} />
             </ListContext.Provider>
         </AnimatedPage>
     );

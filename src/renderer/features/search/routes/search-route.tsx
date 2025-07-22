@@ -16,14 +16,8 @@ const SearchRoute = () => {
 
     return (
         <AnimatedPage key={`search-${navigationId}`}>
-            <SearchHeader
-                navigationId={navigationId}
-                tableRef={tableRef}
-            />
-            <SearchContent
-                key={`page-${itemType}`}
-                tableRef={tableRef}
-            />
+            <SearchHeader navigationId={navigationId} tableRef={tableRef} />
+            <SearchContent key={`page-${itemType}`} tableRef={tableRef} />
         </AnimatedPage>
     );
 };

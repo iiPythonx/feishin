@@ -18,19 +18,10 @@ export const SidebarPlayQueue = () => {
     const isWeb = windowBarStyle === Platform.WEB;
     return (
         <VirtualGridContainer>
-            <Box
-                display={!isWeb ? 'flex' : undefined}
-                h="65px"
-            >
-                <PlayQueueListControls
-                    tableRef={queueRef}
-                    type="sideQueue"
-                />
+            <Box display={!isWeb ? 'flex' : undefined} h="65px">
+                <PlayQueueListControls tableRef={queueRef} type="sideQueue" />
             </Box>
-            <PlayQueue
-                ref={queueRef}
-                type="sideQueue"
-            />
+            <PlayQueue ref={queueRef} type="sideQueue" />
         </VirtualGridContainer>
     );
 };

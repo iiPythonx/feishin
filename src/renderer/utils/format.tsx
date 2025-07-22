@@ -53,12 +53,7 @@ export const formatDurationString = (duration: number) => {
 };
 
 export const formatRating = (item: Album | AlbumArtist | Song) =>
-    item.userRating !== null ? (
-        <Rating
-            readOnly
-            value={item.userRating}
-        />
-    ) : null;
+    item.userRating !== null ? <Rating readOnly value={item.userRating} /> : null;
 
 const SIZES = ['B', 'KiB', 'MiB', 'GiB', 'TiB'];
 

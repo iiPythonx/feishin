@@ -46,15 +46,9 @@ export const AlbumArtistListHeader = ({
     }, 500);
 
     return (
-        <Stack
-            gap={0}
-            ref={cq.ref}
-        >
+        <Stack gap={0} ref={cq.ref}>
             <PageHeader>
-                <Flex
-                    justify="space-between"
-                    w="100%"
-                >
+                <Flex justify="space-between" w="100%">
                     <LibraryHeaderBar>
                         <LibraryHeaderBar.Title>
                             {t('page.albumArtistList.title', { postProcess: 'titleCase' })}
@@ -66,18 +60,12 @@ export const AlbumArtistListHeader = ({
                         </LibraryHeaderBar.Badge>
                     </LibraryHeaderBar>
                     <Group>
-                        <SearchInput
-                            defaultValue={filter.searchTerm}
-                            onChange={handleSearch}
-                        />
+                        <SearchInput defaultValue={filter.searchTerm} onChange={handleSearch} />
                     </Group>
                 </Flex>
             </PageHeader>
             <FilterBar>
-                <AlbumArtistListHeaderFilters
-                    gridRef={gridRef}
-                    tableRef={tableRef}
-                />
+                <AlbumArtistListHeaderFilters gridRef={gridRef} tableRef={tableRef} />
             </FilterBar>
         </Stack>
     );

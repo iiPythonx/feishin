@@ -41,16 +41,8 @@ const ArtistListRoute = () => {
     return (
         <AnimatedPage>
             <ListContext.Provider value={providerValue}>
-                <ArtistListHeader
-                    gridRef={gridRef}
-                    itemCount={itemCount}
-                    tableRef={tableRef}
-                />
-                <ArtistListContent
-                    gridRef={gridRef}
-                    itemCount={itemCount}
-                    tableRef={tableRef}
-                />
+                <ArtistListHeader gridRef={gridRef} itemCount={itemCount} tableRef={tableRef} />
+                <ArtistListContent gridRef={gridRef} itemCount={itemCount} tableRef={tableRef} />
             </ListContext.Provider>
         </AnimatedPage>
     );

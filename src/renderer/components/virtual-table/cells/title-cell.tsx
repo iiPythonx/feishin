@@ -8,21 +8,14 @@ export const TitleCell = ({ value }: ICellRendererParams) => {
     if (value === undefined) {
         return (
             <CellContainer position="left">
-                <Skeleton
-                    height="1rem"
-                    width="80%"
-                />
+                <Skeleton height="1rem" width="80%" />
             </CellContainer>
         );
     }
 
     return (
         <CellContainer position="left">
-            <Text
-                className="current-song-child"
-                overflow="hidden"
-                size="md"
-            >
+            <Text className="current-song-child" overflow="hidden" size="md">
                 {value}
             </Text>
         </CellContainer>

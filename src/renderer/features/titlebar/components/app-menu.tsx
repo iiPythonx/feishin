@@ -144,10 +144,7 @@ export const AppMenu = () => {
                         key={`server-${server.id}`}
                         leftSection={
                             isSessionExpired ? (
-                                <Icon
-                                    fill="error"
-                                    icon="lock"
-                                />
+                                <Icon fill="error" icon="lock" />
                             ) : (
                                 <Icon
                                     color={server.id === currentServer?.id ? 'primary' : undefined}
@@ -183,10 +180,7 @@ export const AppMenu = () => {
                     >
                         {t('page.appMenu.openBrowserDevtools', { postProcess: 'sentenceCase' })}
                     </DropdownMenu.Item>
-                    <DropdownMenu.Item
-                        leftSection={<Icon icon="x" />}
-                        onClick={handleQuit}
-                    >
+                    <DropdownMenu.Item leftSection={<Icon icon="x" />} onClick={handleQuit}>
                         {t('page.appMenu.quit', { postProcess: 'sentenceCase' })}
                     </DropdownMenu.Item>
                 </>

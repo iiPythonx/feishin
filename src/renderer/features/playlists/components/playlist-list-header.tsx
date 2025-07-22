@@ -44,16 +44,9 @@ export const PlaylistListHeader = ({ gridRef, itemCount, tableRef }: PlaylistLis
     }, 500);
 
     return (
-        <Stack
-            gap={0}
-            ref={cq.ref}
-        >
+        <Stack gap={0} ref={cq.ref}>
             <PageHeader>
-                <Flex
-                    align="center"
-                    justify="space-between"
-                    w="100%"
-                >
+                <Flex align="center" justify="space-between" w="100%">
                     <LibraryHeaderBar>
                         <LibraryHeaderBar.Title>
                             {t('page.playlistList.title', { postProcess: 'titleCase' })}
@@ -67,18 +60,12 @@ export const PlaylistListHeader = ({ gridRef, itemCount, tableRef }: PlaylistLis
                         </Badge>
                     </LibraryHeaderBar>
                     <Group>
-                        <SearchInput
-                            defaultValue={filter.searchTerm}
-                            onChange={handleSearch}
-                        />
+                        <SearchInput defaultValue={filter.searchTerm} onChange={handleSearch} />
                     </Group>
                 </Flex>
             </PageHeader>
             <FilterBar>
-                <PlaylistListHeaderFilters
-                    gridRef={gridRef}
-                    tableRef={tableRef}
-                />
+                <PlaylistListHeaderFilters gridRef={gridRef} tableRef={tableRef} />
             </FilterBar>
         </Stack>
     );

@@ -175,12 +175,7 @@ const PlaylistDetailSongListRoute = () => {
 
             {(isSmartPlaylist || showQueryBuilder) && (
                 <motion.div>
-                    <Box
-                        h="100%"
-                        mah="35vh"
-                        p="md"
-                        w="100%"
-                    >
+                    <Box h="100%" mah="35vh" p="md" w="100%">
                         <Group pb="md">
                             <ActionIcon
                                 icon={isQueryBuilderExpanded ? 'arrowUpS' : 'arrowDownS'}

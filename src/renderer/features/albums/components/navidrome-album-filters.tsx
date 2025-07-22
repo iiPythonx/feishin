@@ -248,28 +248,15 @@ export const NavidromeAlbumFilters = ({
     return (
         <Stack p="0.8rem">
             {yesNoUndefinedFilters.map((filter) => (
-                <Group
-                    justify="space-between"
-                    key={`nd-filter-${filter.label}`}
-                >
+                <Group justify="space-between" key={`nd-filter-${filter.label}`}>
                     <Text>{filter.label}</Text>
-                    <YesNoSelect
-                        onChange={filter.onChange}
-                        size="xs"
-                        value={filter.value}
-                    />
+                    <YesNoSelect onChange={filter.onChange} size="xs" value={filter.value} />
                 </Group>
             ))}
             {toggleFilters.map((filter) => (
-                <Group
-                    justify="space-between"
-                    key={`nd-filter-${filter.label}`}
-                >
+                <Group justify="space-between" key={`nd-filter-${filter.label}`}>
                     <Text>{filter.label}</Text>
-                    <Switch
-                        checked={filter?.value || false}
-                        onChange={filter.onChange}
-                    />
+                    <Switch checked={filter?.value || false} onChange={filter.onChange} />
                 </Group>
             ))}
             <Divider my="0.5rem" />
@@ -307,10 +294,7 @@ export const NavidromeAlbumFilters = ({
             {tagsQuery.data?.enumTags?.length &&
                 tagsQuery.data.enumTags.length > 0 &&
                 tagsQuery.data.enumTags.map((tag) => (
-                    <Group
-                        grow
-                        key={tag.name}
-                    >
+                    <Group grow key={tag.name}>
                         <SelectWithInvalidData
                             clearable
                             data={tag.options}

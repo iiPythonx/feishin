@@ -43,18 +43,11 @@ export const MpvRequired = () => {
             <Text>Set your MPV executable location below and restart the application.</Text>
             <Text>
                 MPV is available at the following:{' '}
-                <a
-                    href="https://mpv.io/installation/"
-                    rel="noreferrer"
-                    target="_blank"
-                >
+                <a href="https://mpv.io/installation/" rel="noreferrer" target="_blank">
                     https://mpv.io/
                 </a>
             </Text>
-            <FileInput
-                disabled={disabled}
-                onChange={handleSetMpvPath}
-            />
+            <FileInput disabled={disabled} onChange={handleSetMpvPath} />
             <Text>{t('setting.disable_mpv', { context: 'description' })}</Text>
             <Checkbox
                 label={t('setting.disableMpv')}

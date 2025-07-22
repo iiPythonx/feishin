@@ -144,15 +144,9 @@ export const RowIndexCell = ({ eGridCell, value }: ICellRendererParams) => {
     return (
         <CellContainer position="right">
             {isPlaying && isCurrentSong ? (
-                <Icon
-                    fill="primary"
-                    icon="mediaPlay"
-                />
+                <Icon fill="primary" icon="mediaPlay" />
             ) : isCurrentSong ? (
-                <Icon
-                    fill="primary"
-                    icon="mediaPause"
-                />
+                <Icon fill="primary" icon="mediaPause" />
             ) : (
                 <Text
                     className="current-song-child current-song-index"

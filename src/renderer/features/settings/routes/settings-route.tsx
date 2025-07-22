@@ -12,11 +12,7 @@ const SettingsRoute = () => {
     return (
         <AnimatedPage>
             <SettingSearchContext.Provider value={search}>
-                <Flex
-                    direction="column"
-                    h="100%"
-                    w="100%"
-                >
+                <Flex direction="column" h="100%" w="100%">
                     <SettingsHeader setSearch={setSearch} />
                     <SettingsContent />
                 </Flex>

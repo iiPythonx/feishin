@@ -112,10 +112,7 @@ export const ServerList = () => {
                             </Accordion.Item>
                         );
                     })}
-                    <Group
-                        grow
-                        pt="md"
-                    >
+                    <Group grow pt="md">
                         <Button
                             autoFocus
                             leftSection={<Icon icon="add" />}

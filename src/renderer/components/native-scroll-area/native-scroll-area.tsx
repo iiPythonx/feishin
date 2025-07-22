@@ -91,11 +91,7 @@ export const NativeScrollArea = forwardRef(
                         {...pageHeaderProps}
                     />
                 )}
-                <div
-                    className={styles.scrollArea}
-                    ref={mergedRef}
-                    {...props}
-                >
+                <div className={styles.scrollArea} ref={mergedRef} {...props}>
                     {children}
                 </div>
             </>

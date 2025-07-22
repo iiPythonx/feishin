@@ -33,15 +33,9 @@ export const AlbumListContent = ({ gridRef, itemCount, tableRef }: AlbumListCont
     return (
         <Suspense fallback={<Spinner container />}>
             {display === ListDisplayType.CARD || display === ListDisplayType.GRID ? (
-                <AlbumListGridView
-                    gridRef={gridRef}
-                    itemCount={itemCount}
-                />
+                <AlbumListGridView gridRef={gridRef} itemCount={itemCount} />
             ) : (
-                <AlbumListTableView
-                    itemCount={itemCount}
-                    tableRef={tableRef}
-                />
+                <AlbumListTableView itemCount={itemCount} tableRef={tableRef} />
             )}
         </Suspense>
     );

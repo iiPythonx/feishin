@@ -140,10 +140,7 @@ export const UpdatePlaylistForm = ({ body, onCancel, query, users }: UpdatePlayl
                     </>
                 )}
                 <Group justify="flex-end">
-                    <Button
-                        onClick={onCancel}
-                        variant="subtle"
-                    >
+                    <Button onClick={onCancel} variant="subtle">
                         {t('common.cancel', { postProcess: 'titleCase' })}
                     </Button>
                     <Button

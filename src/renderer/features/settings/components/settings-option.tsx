@@ -16,11 +16,7 @@ interface SettingsOptionProps {
 export const SettingsOptions = ({ control, description, note, title }: SettingsOptionProps) => {
     return (
         <>
-            <Group
-                justify="space-between"
-                style={{ alignItems: 'center' }}
-                wrap="nowrap"
-            >
+            <Group justify="space-between" style={{ alignItems: 'center' }} wrap="nowrap">
                 <Stack
                     gap="xs"
                     style={{
@@ -30,17 +26,11 @@ export const SettingsOptions = ({ control, description, note, title }: SettingsO
                     }}
                 >
                     <Group>
-                        <Text
-                            isNoSelect
-                            size="md"
-                        >
+                        <Text isNoSelect size="md">
                             {title}
                         </Text>
                         {note && (
-                            <Tooltip
-                                label={note}
-                                openDelay={0}
-                            >
+                            <Tooltip label={note} openDelay={0}>
                                 <Icon icon="info" />
                             </Tooltip>
                         )}
@@ -48,11 +38,7 @@ export const SettingsOptions = ({ control, description, note, title }: SettingsO
                     {React.isValidElement(description) ? (
                         description
                     ) : (
-                        <Text
-                            isMuted
-                            isNoSelect
-                            size="sm"
-                        >
+                        <Text isMuted isNoSelect size="sm">
                             {description}
                         </Text>
                     )}

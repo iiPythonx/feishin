@@ -49,10 +49,7 @@ const ActionRequiredRoute = () => {
         <AnimatedPage>
             <PageHeader />
             <Center style={{ height: '100%', width: '100vw' }}>
-                <Stack
-                    gap="xl"
-                    style={{ maxWidth: '50%' }}
-                >
+                <Stack gap="xl" style={{ maxWidth: '50%' }}>
                     <Group wrap="nowrap">
                         {displayedCheck && (
                             <ActionRequiredContainer title={displayedCheck.title}>
@@ -64,10 +61,7 @@ const ActionRequiredRoute = () => {
                         {canReturnHome && <Navigate to={AppRoute.HOME} />}
                         {/* This should be displayed if a credential is required */}
                         {isCredentialRequired && (
-                            <Group
-                                justify="center"
-                                wrap="nowrap"
-                            >
+                            <Group justify="center" wrap="nowrap">
                                 <Button
                                     fullWidth
                                     leftSection={<Icon icon="edit" />}

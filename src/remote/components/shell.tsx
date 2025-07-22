@@ -13,16 +13,9 @@ export const Shell = () => {
     const connected = useConnected();
 
     return (
-        <AppShell
-            h="100vh"
-            padding="md"
-            w="100vw"
-        >
+        <AppShell h="100vh" padding="md" w="100vw">
             <AppShell.Header style={{ background: 'var(--theme-colors-surface)' }}>
-                <Grid
-                    px="md"
-                    py="sm"
-                >
+                <Grid px="md" py="sm">
                     <Grid.Col span={4}>
                         <Flex
                             align="center"
@@ -33,20 +26,11 @@ export const Shell = () => {
                                 justifySelf: 'flex-start',
                             }}
                         >
-                            <Image
-                                fit="contain"
-                                height={32}
-                                src="/favicon.ico"
-                                width={32}
-                            />
+                            <Image fit="contain" height={32} src="/favicon.ico" width={32} />
                         </Flex>
                     </Grid.Col>
                     <Grid.Col span={8}>
-                        <Group
-                            gap="sm"
-                            justify="flex-end"
-                            wrap="nowrap"
-                        >
+                        <Group gap="sm" justify="flex-end" wrap="nowrap">
                             <ReconnectButton />
                             <ImageButton />
                             <ThemeButton />
@@ -58,10 +42,7 @@ export const Shell = () => {
                 {connected ? (
                     <RemoteContainer />
                 ) : (
-                    <Center
-                        h="100vh"
-                        w="100vw"
-                    >
+                    <Center h="100vh" w="100vw">
                         <Spinner />
                     </Center>
                 )}

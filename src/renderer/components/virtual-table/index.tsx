@@ -635,15 +635,8 @@ export const VirtualTable = forwardRef(
                     onNewColumnsLoaded={handleNewColumnsLoaded}
                 />
                 {paginationProps && (
-                    <AnimatePresence
-                        initial={false}
-                        mode="wait"
-                        presenceAffectsLayout
-                    >
-                        <TablePagination
-                            {...paginationProps}
-                            tableRef={tableRef}
-                        />
+                    <AnimatePresence initial={false} mode="wait" presenceAffectsLayout>
+                        <TablePagination {...paginationProps} tableRef={tableRef} />
                     </AnimatePresence>
                 )}
             </div>

@@ -36,10 +36,7 @@ export function IsUpdatedDialog() {
         >
             <Stack>
                 <Text>{`Fork has been updated to upstream v${version.replace('0.', '')}`}</Text>{' '}
-                <Group
-                    justify="flex-end"
-                    wrap="nowrap"
-                >
+                <Group justify="flex-end" wrap="nowrap">
                     <Button
                         component="a"
                         href={`https://github.com/jeffvli/feishin/releases/tag/v${version}`}
@@ -50,10 +47,7 @@ export function IsUpdatedDialog() {
                     >
                         {t('common.viewReleaseNotes', { postProcess: 'sentenceCase' })}
                     </Button>
-                    <Button
-                        onClick={handleDismiss}
-                        variant="default"
-                    >
+                    <Button onClick={handleDismiss} variant="default">
                         {t('common.dismiss', { postProcess: 'titleCase' })}
                     </Button>
                 </Group>

@@ -20,16 +20,8 @@ export const ActionBar = () => {
     const { open } = useCommandPalette();
 
     return (
-        <div
-            className={styles.container}
-            ref={cq.ref}
-        >
-            <Grid
-                display="flex"
-                gutter="sm"
-                px="1rem"
-                w="100%"
-            >
+        <div className={styles.container} ref={cq.ref}>
+            <Grid display="flex" gutter="sm" px="1rem" w="100%">
                 <Grid.Col span={6}>
                     <TextInput
                         leftSection={<Icon icon="search" />}
@@ -44,11 +36,7 @@ export const ActionBar = () => {
                     />
                 </Grid.Col>
                 <Grid.Col span={6}>
-                    <Group
-                        gap="sm"
-                        grow
-                        wrap="nowrap"
-                    >
+                    <Group gap="sm" grow wrap="nowrap">
                         <DropdownMenu position="bottom-start">
                             <DropdownMenu.Target>
                                 <Button p="0.5rem">
@@ -59,16 +47,10 @@ export const ActionBar = () => {
                                 <AppMenu />
                             </DropdownMenu.Dropdown>
                         </DropdownMenu>
-                        <Button
-                            onClick={() => navigate(-1)}
-                            p="0.5rem"
-                        >
+                        <Button onClick={() => navigate(-1)} p="0.5rem">
                             <Icon icon="arrowLeftS" />
                         </Button>
-                        <Button
-                            onClick={() => navigate(1)}
-                            p="0.5rem"
-                        >
+                        <Button onClick={() => navigate(1)} p="0.5rem">
                             <Icon icon="arrowRightS" />
                         </Button>
                     </Group>

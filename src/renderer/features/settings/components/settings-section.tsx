@@ -28,10 +28,7 @@ export const SettingsSection = ({ divider, options }: SettingsSectionProps) => {
     return (
         <>
             {values.map((option) => (
-                <SettingsOptions
-                    key={`option-${option.title}`}
-                    {...option}
-                />
+                <SettingsOptions key={`option-${option.title}`} {...option} />
             ))}
             {divider !== false && values.length > 0 && <Divider />}
         </>

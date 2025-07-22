@@ -16,14 +16,8 @@ const NowPlayingRoute = () => {
         <AnimatedPage>
             <VirtualGridContainer>
                 <NowPlayingHeader />
-                <PlayQueueListControls
-                    tableRef={queueRef}
-                    type="nowPlaying"
-                />
-                <PlayQueue
-                    ref={queueRef}
-                    type="nowPlaying"
-                />
+                <PlayQueueListControls tableRef={queueRef} type="nowPlaying" />
+                <PlayQueue ref={queueRef} type="nowPlaying" />
             </VirtualGridContainer>
         </AnimatedPage>
     );

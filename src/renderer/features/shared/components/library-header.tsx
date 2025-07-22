@@ -84,10 +84,7 @@ export const LibraryHeader = forwardRef(
         }, [imageUrl, isImageError]);
 
         return (
-            <div
-                className={styles.libraryHeader}
-                ref={ref}
-            >
+            <div className={styles.libraryHeader} ref={ref}>
                 <div
                     className={styles.background}
                     style={{ background, filter: `blur(${blur ?? 0}rem)` }}
@@ -130,10 +127,7 @@ export const LibraryHeader = forwardRef(
                             {itemTypeString()}
                         </Text>
                         <h1 className={styles.title}>
-                            <AutoTextSize
-                                maxFontSizePx={80}
-                                mode="box"
-                            >
+                            <AutoTextSize maxFontSizePx={80} mode="box">
                                 {title}
                             </AutoTextSize>
                         </h1>

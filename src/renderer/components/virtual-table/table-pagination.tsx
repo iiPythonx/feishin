@@ -76,10 +76,7 @@ export const TablePagination = ({
             ref={containerQuery.ref}
             style={{ borderTop: '1px solid var(--theme-generic-border-color)' }}
         >
-            <Text
-                isMuted
-                size="md"
-            >
+            <Text isMuted size="md">
                 {containerQuery.isMd ? (
                     <>
                         Showing <b>{currentPageStartIndex}</b> - <b>{currentPageStopIndex}</b> of{' '}
@@ -97,11 +94,7 @@ export const TablePagination = ({
                     </>
                 )}
             </Text>
-            <Group
-                gap="sm"
-                ref={containerQuery.ref}
-                wrap="nowrap"
-            >
+            <Group gap="sm" ref={containerQuery.ref} wrap="nowrap">
                 <Popover
                     onClose={() => handlers.close()}
                     opened={isGoToPageOpen}
@@ -127,10 +120,7 @@ export const TablePagination = ({
                                     min={1}
                                     width={70}
                                 />
-                                <Button
-                                    type="submit"
-                                    variant="filled"
-                                >
+                                <Button type="submit" variant="filled">
                                     Go
                                 </Button>
                             </Group>

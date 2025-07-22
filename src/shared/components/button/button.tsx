@@ -44,10 +44,7 @@ export const _Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ) => {
         if (tooltip) {
             return (
-                <Tooltip
-                    withinPortal
-                    {...tooltip}
-                >
+                <Tooltip withinPortal {...tooltip}>
                     <MantineButton
                         autoContrast
                         classNames={{
@@ -145,10 +142,7 @@ export const TimeoutButton = ({ timeoutProps, ...props }: TimeoutButtonProps) =>
     }, [clear, isRunning, start]);
 
     return (
-        <Button
-            onClick={startTimeout}
-            {...props}
-        >
+        <Button onClick={startTimeout} {...props}>
             {isRunning ? 'Cancel' : props.children}
         </Button>
     );

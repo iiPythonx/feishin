@@ -23,10 +23,7 @@ export const GenericCell = ({ value, valueFormatted }: ICellRendererParams, opti
     if (value === undefined) {
         return (
             <CellContainer position={position || 'left'}>
-                <Skeleton
-                    height="1rem"
-                    width="80%"
-                />
+                <Skeleton height="1rem" width="80%" />
             </CellContainer>
         );
     }
@@ -45,12 +42,7 @@ export const GenericCell = ({ value, valueFormatted }: ICellRendererParams, opti
                     {isLink ? displayedValue.value : displayedValue}
                 </Text>
             ) : (
-                <Text
-                    isMuted={!primary}
-                    isNoSelect={false}
-                    overflow="hidden"
-                    size="md"
-                >
+                <Text isMuted={!primary} isNoSelect={false} overflow="hidden" size="md">
                     {displayedValue}
                 </Text>
             )}

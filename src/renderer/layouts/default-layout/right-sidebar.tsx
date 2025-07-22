@@ -83,12 +83,7 @@ export const RightSidebar = forwardRef(
         const showSideQueue = rightExpanded && location.pathname !== AppRoute.NOW_PLAYING;
 
         return (
-            <AnimatePresence
-                initial={false}
-                key="queue-sidebar"
-                mode="sync"
-                presenceAffectsLayout
-            >
+            <AnimatePresence initial={false} key="queue-sidebar" mode="sync" presenceAffectsLayout>
                 {showSideQueue && (
                     <>
                         {sideQueueType === 'sideQueue' ? (

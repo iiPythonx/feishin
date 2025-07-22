@@ -533,10 +533,7 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
 
         openModal({
             children: (
-                <ConfirmModal
-                    loading={removeFromPlaylistMutation.isLoading}
-                    onConfirm={confirm}
-                >
+                <ConfirmModal loading={removeFromPlaylistMutation.isLoading} onConfirm={confirm}>
                     {t('common.areYouSure', { postProcess: 'sentenceCase' })}
                 </ConfirmModal>
             ),
@@ -922,26 +919,15 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
             <Portal>
                 <AnimatePresence>
                     {opened && (
-                        <ContextMenu
-                            minWidth={125}
-                            ref={mergedRef}
-                            xPos={ctx.xPos}
-                            yPos={ctx.yPos}
-                        >
+                        <ContextMenu minWidth={125} ref={mergedRef} xPos={ctx.xPos} yPos={ctx.yPos}>
                             <Stack gap={0}>
-                                <Stack
-                                    gap={0}
-                                    onClick={closeContextMenu}
-                                >
+                                <Stack gap={0} onClick={closeContextMenu}>
                                     {ctx.menuItems?.map((item) => {
                                         return (
                                             !contextMenuItems[item.id].disabled && (
                                                 <Fragment key={`context-menu-${item.id}`}>
                                                     {item.children ? (
-                                                        <HoverCard
-                                                            offset={0}
-                                                            position="right"
-                                                        >
+                                                        <HoverCard offset={0} position="right">
                                                             <HoverCard.Target>
                                                                 <ContextMenuButton
                                                                     leftIcon={

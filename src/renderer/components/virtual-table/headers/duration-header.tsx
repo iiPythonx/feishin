@@ -7,10 +7,5 @@ export interface ICustomHeaderParams extends IHeaderParams {
 }
 
 export const DurationHeader = () => {
-    return (
-        <Icon
-            icon="duration"
-            size="sm"
-        />
-    );
+    return <Icon icon="duration" size="sm" />;
 };

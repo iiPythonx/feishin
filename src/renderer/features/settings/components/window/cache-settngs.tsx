@@ -94,10 +94,5 @@ export const CacheSettings = () => {
         },
     ];
 
-    return (
-        <SettingsSection
-            divider={false}
-            options={options}
-        />
-    );
+    return <SettingsSection divider={false} options={options} />;
 };

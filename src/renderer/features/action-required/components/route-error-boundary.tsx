@@ -42,19 +42,12 @@ const RouteErrorBoundary = () => {
                             px={10}
                             variant="subtle"
                         />
-                        <Icon
-                            fill="error"
-                            icon="error"
-                            size="lg"
-                        />
+                        <Icon fill="error" icon="error" size="lg" />
                         <Text size="lg">{t('error.genericError')}</Text>
                     </Group>
                     <Divider my={5} />
                     <Text size="sm">{error?.message}</Text>
-                    <Group
-                        gap="sm"
-                        grow
-                    >
+                    <Group gap="sm" grow>
                         <Button
                             leftSection={<Icon icon="home" />}
                             onClick={handleHome}
@@ -81,11 +74,7 @@ const RouteErrorBoundary = () => {
                         </DropdownMenu>
                     </Group>
                     <Group grow>
-                        <Button
-                            onClick={handleReload}
-                            size="md"
-                            variant="filled"
-                        >
+                        <Button onClick={handleReload} size="md" variant="filled">
                             {t('common.reload')}
                         </Button>
                     </Group>

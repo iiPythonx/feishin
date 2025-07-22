@@ -44,16 +44,9 @@ export const SettingsHeader = ({ setSearch }: SettingsHeaderProps) => {
         <Flex ref={cq.ref}>
             <PageHeader>
                 <LibraryHeaderBar>
-                    <Flex
-                        align="center"
-                        justify="space-between"
-                        w="100%"
-                    >
+                    <Flex align="center" justify="space-between" w="100%">
                         <Group wrap="nowrap">
-                            <Icon
-                                icon="settings"
-                                size="5xl"
-                            />
+                            <Icon icon="settings" size="5xl" />
                             <LibraryHeaderBar.Title>
                                 {t('common.setting', { count: 2, postProcess: 'titleCase' })}
                             </LibraryHeaderBar.Title>
@@ -65,10 +58,7 @@ export const SettingsHeader = ({ setSearch }: SettingsHeaderProps) => {
                                     setSearch(event.target.value.toLocaleLowerCase())
                                 }
                             />
-                            <Button
-                                onClick={openResetConfirmModal}
-                                variant="default"
-                            >
+                            <Button onClick={openResetConfirmModal} variant="default">
                                 {t('common.resetToDefault', { postProcess: 'sentenceCase' })}
                             </Button>
                         </Group>

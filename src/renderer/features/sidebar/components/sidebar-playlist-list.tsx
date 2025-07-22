@@ -53,12 +53,7 @@ const PlaylistRowButton = ({ name, onPlay, to, ...props }: PlaylistRowButtonProp
             >
                 {name}
             </SidebarItem>
-            {isHovered && (
-                <RowControls
-                    id={to}
-                    onPlay={onPlay}
-                />
-            )}
+            {isHovered && <RowControls id={to} onPlay={onPlay} />}
         </div>
     );
 };
@@ -73,11 +68,7 @@ const RowControls = ({
     const { t } = useTranslation();
 
     return (
-        <Group
-            className={styles.controls}
-            gap="xs"
-            wrap="nowrap"
-        >
+        <Group className={styles.controls} gap="xs" wrap="nowrap">
             <ActionIcon
                 icon="mediaPlay"
                 iconProps={{
@@ -205,15 +196,8 @@ export const SidebarPlaylistList = () => {
 
     return (
         <Accordion.Item value="playlists">
-            <Accordion.Control
-                component="div"
-                role="button"
-                style={{ userSelect: 'none' }}
-            >
-                <Group
-                    justify="space-between"
-                    pr="var(--theme-spacing-md)"
-                >
+            <Accordion.Control component="div" role="button" style={{ userSelect: 'none' }}>
+                <Group justify="space-between" pr="var(--theme-spacing-md)">
                     <Text fw={600}>
                         {t('page.sidebar.playlists', {
                             postProcess: 'titleCase',
@@ -323,10 +307,7 @@ export const SidebarSharedPlaylistList = () => {
     return (
         <Accordion.Item value="shared-playlists">
             <Accordion.Control>
-                <Text
-                    fw={600}
-                    variant="secondary"
-                >
+                <Text fw={600} variant="secondary">
                     {t('page.sidebar.shared', {
                         postProcess: 'titleCase',
                     })}

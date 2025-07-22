@@ -18,24 +18,14 @@ const InvalidRoute = () => {
         <AnimatedPage>
             <Center style={{ height: '100%', width: '100%' }}>
                 <Stack>
-                    <Group
-                        justify="center"
-                        wrap="nowrap"
-                    >
-                        <Icon
-                            color="warn"
-                            icon="error"
-                        />
+                    <Group justify="center" wrap="nowrap">
+                        <Icon color="warn" icon="error" />
                         <Text size="xl">
                             {t('error.apiRouteError', { postProcess: 'sentenceCase' })}
                         </Text>
                     </Group>
                     <Text>{location.pathname}</Text>
-                    <ActionIcon
-                        icon="arrowLeftS"
-                        onClick={() => navigate(-1)}
-                        variant="filled"
-                    />
+                    <ActionIcon icon="arrowLeftS" onClick={() => navigate(-1)} variant="filled" />
                 </Stack>
             </Center>
         </AnimatedPage>

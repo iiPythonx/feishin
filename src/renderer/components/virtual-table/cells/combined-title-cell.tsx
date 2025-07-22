@@ -41,11 +41,7 @@ export const CombinedTitleCell = ({
                 >
                     <Skeleton className={styles.image} />
                 </div>
-                <Skeleton
-                    className={styles.skeletonMetadata}
-                    height="1rem"
-                    width="80%"
-                />
+                <Skeleton className={styles.skeletonMetadata} height="1rem" width="80%" />
             </div>
         );
     }
@@ -62,11 +58,7 @@ export const CombinedTitleCell = ({
                     width: `${(node.rowHeight || 40) - 10}px`,
                 }}
             >
-                <Image
-                    alt="cover"
-                    className={styles.image}
-                    src={value.imageUrl}
-                />
+                <Image alt="cover" className={styles.image} src={value.imageUrl} />
 
                 <ListCoverControls
                     className={styles.playButton}
@@ -77,18 +69,10 @@ export const CombinedTitleCell = ({
                 />
             </div>
             <div className={styles.metadataWrapper}>
-                <Text
-                    className="current-song-child"
-                    overflow="hidden"
-                    size="md"
-                >
+                <Text className="current-song-child" overflow="hidden" size="md">
                     {value.name}
                 </Text>
-                <Text
-                    isMuted
-                    overflow="hidden"
-                    size="md"
-                >
+                <Text isMuted overflow="hidden" size="md">
                     {artists?.length ? (
                         artists.map((artist: AlbumArtist | Artist, index: number) => (
                             <React.Fragment key={`queue-${rowIndex}-artist-${artist.id}`}>

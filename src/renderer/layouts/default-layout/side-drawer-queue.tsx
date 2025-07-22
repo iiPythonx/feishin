@@ -81,10 +81,7 @@ export const SideDrawerQueue = () => {
         !rightExpanded && !drawer && location.pathname !== AppRoute.NOW_PLAYING;
 
     return (
-        <AnimatePresence
-            initial={false}
-            mode="wait"
-        >
+        <AnimatePresence initial={false} mode="wait">
             {isQueueDrawerButtonVisible && (
                 <motion.div
                     animate="visible"
@@ -97,10 +94,7 @@ export const SideDrawerQueue = () => {
                     variants={queueDrawerButtonVariants}
                     whileHover={{ opacity: 1, scale: 2, transition: { duration: 0.5 } }}
                 >
-                    <Icon
-                        icon="arrowLeftToLine"
-                        size="lg"
-                    />
+                    <Icon icon="arrowLeftToLine" size="lg" />
                 </motion.div>
             )}
 

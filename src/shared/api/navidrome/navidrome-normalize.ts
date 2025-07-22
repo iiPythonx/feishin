@@ -148,6 +148,7 @@ const normalizeSong = (
         albumId: item.albumId,
         ...getArtists(item),
         artistName: item.artist,
+        bitDepth: item.bitDepth || null,
         bitRate: item.bitRate,
         bpm: item.bpm ? item.bpm : null,
         channels: item.channels ? item.channels : null,
@@ -189,6 +190,7 @@ const normalizeSong = (
             : new Date(Date.UTC(item.year, 0, 1))
         ).toISOString(),
         releaseYear: String(item.year),
+        sampleRate: item.sampleRate || null,
         serverId: server?.id || 'unknown',
         serverType: ServerType.NAVIDROME,
         size: item.size,

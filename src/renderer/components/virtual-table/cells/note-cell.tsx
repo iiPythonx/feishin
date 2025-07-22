@@ -19,20 +19,14 @@ export const NoteCell = ({ value }: ICellRendererParams) => {
     if (value === undefined) {
         return (
             <CellContainer position="left">
-                <Skeleton
-                    height="1rem"
-                    width="80%"
-                />
+                <Skeleton height="1rem" width="80%" />
             </CellContainer>
         );
     }
 
     return (
         <CellContainer position="left">
-            <Text
-                isMuted
-                overflow="hidden"
-            >
+            <Text isMuted overflow="hidden">
                 {formattedValue}
             </Text>
         </CellContainer>

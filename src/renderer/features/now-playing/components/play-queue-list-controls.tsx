@@ -174,10 +174,7 @@ export const PlayQueueListControls = ({ tableRef, type }: PlayQueueListOptionsPr
                 />
             </Group>
             <Group>
-                <Popover
-                    position="top-end"
-                    transitionProps={{ transition: 'fade' }}
-                >
+                <Popover position="top-end" transitionProps={{ transition: 'fade' }}>
                     <Popover.Target>
                         <ActionIcon
                             icon="settings"

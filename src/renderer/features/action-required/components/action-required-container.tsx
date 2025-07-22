@@ -13,15 +13,8 @@ interface ActionRequiredContainerProps {
 export const ActionRequiredContainer = ({ children, title }: ActionRequiredContainerProps) => (
     <Stack style={{ cursor: 'default', maxWidth: '700px' }}>
         <Group>
-            <Icon
-                fill="warn"
-                icon="warn"
-                size="lg"
-            />
-            <Text
-                size="xl"
-                style={{ textTransform: 'uppercase' }}
-            >
+            <Icon fill="warn" icon="warn" size="lg" />
+            <Text size="xl" style={{ textTransform: 'uppercase' }}>
                 {title}
             </Text>
         </Group>

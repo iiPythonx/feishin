@@ -8,7 +8,7 @@ arrowParens: always
 proseWrap: never
 htmlWhitespaceSensitivity: strict
 endOfLine: lf
-singleAttributePerLine: true
+singleAttributePerLine: false
 bracketSpacing: true
 plugins:
     - prettier-plugin-packagejson

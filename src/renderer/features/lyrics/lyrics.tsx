@@ -151,10 +151,7 @@ export const Lyrics = () => {
         <ErrorBoundary FallbackComponent={ErrorFallback}>
             <div className={styles.lyricsContainer}>
                 {isLoadingLyrics ? (
-                    <Spinner
-                        container
-                        size={25}
-                    />
+                    <Spinner container size={25} />
                 ) : (
                     <AnimatePresence mode="sync">
                         {hasNoLyrics ? (

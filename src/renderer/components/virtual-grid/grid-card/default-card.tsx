@@ -81,10 +81,7 @@ export const DefaultCard = ({
                             data?.userFavorite && styles.isFavorite,
                         )}
                     >
-                        <Image
-                            className={styles.image}
-                            src={data?.imageUrl}
-                        />
+                        <Image className={styles.image} src={data?.imageUrl} />
                         <GridCardControls
                             handleFavorite={controls.handleFavorite}
                             handlePlayQueueAdd={controls.handlePlayQueueAdd}
@@ -95,10 +92,7 @@ export const DefaultCard = ({
                         />
                     </div>
                     <div className={styles.detailContainer}>
-                        <CardRows
-                            data={data}
-                            rows={controls.cardRows}
-                        />
+                        <CardRows data={data} rows={controls.cardRows} />
                     </div>
                 </div>
             </div>

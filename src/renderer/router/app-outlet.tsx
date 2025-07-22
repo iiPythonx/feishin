@@ -45,22 +45,14 @@ export const AppOutlet = () => {
 
     if (authState === AuthState.LOADING) {
         return (
-            <Center
-                h="100vh"
-                w="100%"
-            >
+            <Center h="100vh" w="100%">
                 <Spinner container />
             </Center>
         );
     }
 
     if (isActionsRequired || authState === AuthState.INVALID) {
-        return (
-            <Navigate
-                replace
-                to={AppRoute.ACTION_REQUIRED}
-            />
-        );
+        return <Navigate replace to={AppRoute.ACTION_REQUIRED} />;
     }
 
     return <Outlet />;

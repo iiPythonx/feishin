@@ -22,11 +22,7 @@ export const ContextMenuSettings = () => {
         <>
             <SettingsOptions
                 control={
-                    <Button
-                        onClick={() => setOpen(!open)}
-                        size="compact-md"
-                        variant="filled"
-                    >
+                    <Button onClick={() => setOpen(!open)} size="compact-md" variant="filled">
                         {t(open ? 'common.close' : 'common.edit', { postProcess: 'titleCase' })}
                     </Button>
                 }

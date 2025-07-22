@@ -144,11 +144,7 @@ const AlbumListRoute = () => {
                     tableRef={tableRef}
                     title={title}
                 />
-                <AlbumListContent
-                    gridRef={gridRef}
-                    itemCount={itemCount}
-                    tableRef={tableRef}
-                />
+                <AlbumListContent gridRef={gridRef} itemCount={itemCount} tableRef={tableRef} />
             </ListContext.Provider>
         </AnimatedPage>
     );

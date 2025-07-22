@@ -484,11 +484,7 @@ export const SongListHeaderFilters = ({
 
     return (
         <Flex justify="space-between">
-            <Group
-                gap="sm"
-                ref={cq.ref}
-                w="100%"
-            >
+            <Group gap="sm" ref={cq.ref} w="100%">
                 <DropdownMenu position="bottom-start">
                     <DropdownMenu.Target>
                         <Button variant="subtle">{sortByLabel}</Button>
@@ -534,10 +530,7 @@ export const SongListHeaderFilters = ({
                         </DropdownMenu>
                     </>
                 )}
-                <FilterButton
-                    isActive={!!isFilterApplied}
-                    onClick={handleOpenFiltersModal}
-                />
+                <FilterButton isActive={!!isFilterApplied} onClick={handleOpenFiltersModal} />
                 <RefreshButton onClick={handleRefresh} />
                 <DropdownMenu position="bottom-start">
                     <DropdownMenu.Target>
@@ -578,10 +571,7 @@ export const SongListHeaderFilters = ({
                     </DropdownMenu.Dropdown>
                 </DropdownMenu>
             </Group>
-            <Group
-                gap="sm"
-                wrap="nowrap"
-            >
+            <Group gap="sm" wrap="nowrap">
                 <ListConfigMenu
                     autoFitColumns={table.autoFit}
                     displayType={display}

@@ -21,18 +21,11 @@ export const ErrorFallback = ({ resetErrorBoundary }: FallbackProps) => {
             <Center style={{ height: '100vh' }}>
                 <Stack style={{ maxWidth: '50%' }}>
                     <Group gap="xs">
-                        <Icon
-                            fill="error"
-                            icon="error"
-                            size="lg"
-                        />
+                        <Icon fill="error" icon="error" size="lg" />
                         <Text size="lg">{t('error.genericError')}</Text>
                     </Group>
                     <Text>{error?.message}</Text>
-                    <Button
-                        onClick={resetErrorBoundary}
-                        variant="filled"
-                    >
+                    <Button onClick={resetErrorBoundary} variant="filled">
                         {t('common.reload')}
                     </Button>
                 </Stack>

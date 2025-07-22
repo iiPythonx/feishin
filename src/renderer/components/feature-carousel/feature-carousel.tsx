@@ -77,11 +77,7 @@ export const FeatureCarousel = ({ data }: FeatureCarouselProps) => {
             className={styles.wrapper}
             to={generatePath(AppRoute.LIBRARY_ALBUMS_DETAIL, { albumId: currentItem?.id || '' })}
         >
-            <AnimatePresence
-                custom={direction}
-                initial={false}
-                mode="popLayout"
-            >
+            <AnimatePresence custom={direction} initial={false} mode="popLayout">
                 {data && (
                     <motion.div
                         animate="animate"
@@ -104,10 +100,7 @@ export const FeatureCarousel = ({ data }: FeatureCarouselProps) => {
                                 />
                             </div>
                             <div className={styles.infoColumn}>
-                                <Stack
-                                    gap="md"
-                                    style={{ width: '100%' }}
-                                >
+                                <Stack gap="md" style={{ width: '100%' }}>
                                     <div
                                         className={styles.titleWrapper}
                                         style={{ display: 'flex', alignItems: 'center' }}
@@ -126,10 +119,7 @@ export const FeatureCarousel = ({ data }: FeatureCarouselProps) => {
                                     </div>
                                     <div className={styles.titleWrapper}>
                                         {currentItem?.albumArtists.slice(0, 1).map((artist) => (
-                                            <Text
-                                                fw={600}
-                                                key={`carousel-artist-${artist.id}`}
-                                            >
+                                            <Text fw={600} key={`carousel-artist-${artist.id}`}>
                                                 {artist.name}
                                             </Text>
                                         ))}

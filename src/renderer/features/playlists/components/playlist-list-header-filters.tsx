@@ -355,11 +355,7 @@ export const PlaylistListHeaderFilters = ({
 
     return (
         <Flex justify="space-between">
-            <Group
-                gap="sm"
-                ref={cq.ref}
-                w="100%"
-            >
+            <Group gap="sm" ref={cq.ref} w="100%">
                 <DropdownMenu position="bottom-start">
                     <DropdownMenu.Target>
                         <Button variant="subtle">{sortByLabel}</Button>
@@ -378,10 +374,7 @@ export const PlaylistListHeaderFilters = ({
                     </DropdownMenu.Dropdown>
                 </DropdownMenu>
                 <Divider orientation="vertical" />
-                <OrderToggleButton
-                    onToggle={handleToggleSortOrder}
-                    sortOrder={filter.sortOrder}
-                />
+                <OrderToggleButton onToggle={handleToggleSortOrder} sortOrder={filter.sortOrder} />
                 <RefreshButton onClick={handleRefresh} />
                 <DropdownMenu position="bottom-start">
                     <DropdownMenu.Target>
@@ -397,14 +390,8 @@ export const PlaylistListHeaderFilters = ({
                     </DropdownMenu.Dropdown>
                 </DropdownMenu>
             </Group>
-            <Group
-                gap="xs"
-                wrap="nowrap"
-            >
-                <Button
-                    onClick={handleCreatePlaylistModal}
-                    variant="subtle"
-                >
+            <Group gap="xs" wrap="nowrap">
+                <Button onClick={handleCreatePlaylistModal} variant="subtle">
                     {t('action.createPlaylist', { postProcess: 'sentenceCase' })}
                 </Button>
                 <ListConfigMenu

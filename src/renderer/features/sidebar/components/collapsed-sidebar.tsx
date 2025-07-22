@@ -69,21 +69,12 @@ export const CollapsedSidebar = () => {
         >
             <ScrollArea>
                 {sidebarCollapsedNavigation && (
-                    <Group
-                        gap={0}
-                        grow
-                    >
+                    <Group gap={0} grow>
                         <CollapsedSidebarButton onClick={() => navigate(-1)}>
-                            <Icon
-                                icon="arrowLeftS"
-                                size="xl"
-                            />
+                            <Icon icon="arrowLeftS" size="xl" />
                         </CollapsedSidebarButton>
                         <CollapsedSidebarButton onClick={() => navigate(1)}>
-                            <Icon
-                                icon="arrowRightS"
-                                size="xl"
-                            />
+                            <Icon icon="arrowRightS" size="xl" />
                         </CollapsedSidebarButton>
                     </Group>
                 )}
@@ -92,13 +83,7 @@ export const CollapsedSidebar = () => {
                         <CollapsedSidebarItem
                             activeIcon={null}
                             component={Flex}
-                            icon={
-                                <Icon
-                                    fill="muted"
-                                    icon="menu"
-                                    size="3xl"
-                                />
-                            }
+                            icon={<Icon fill="muted" icon="menu" size="3xl" />}
                             label={t('common.menu', { postProcess: 'titleCase' })}
                             style={{
                                 cursor: 'pointer',
@@ -112,20 +97,9 @@ export const CollapsedSidebar = () => {
                 </DropdownMenu>
                 {sidebarItemsWithRoute.map((item) => (
                     <CollapsedSidebarItem
-                        activeIcon={
-                            <SidebarIcon
-                                active
-                                route={item.route}
-                                size="25"
-                            />
-                        }
+                        activeIcon={<SidebarIcon active route={item.route} size="25" />}
                         component={NavLink}
-                        icon={
-                            <SidebarIcon
-                                route={item.route}
-                                size="25"
-                            />
-                        }
+                        icon={<SidebarIcon route={item.route} size="25" />}
                         key={item.id}
                         label={item.label}
                         route={item.route}

@@ -48,13 +48,7 @@ const QueryValueInput = ({ data, onChange, type, ...props }: any) => {
                 />
             );
         case 'date':
-            return (
-                <TextInput
-                    onChange={onChange}
-                    size="sm"
-                    {...props}
-                />
-            );
+            return <TextInput onChange={onChange} size="sm" {...props} />;
         case 'dateRange':
             return (
                 <>
@@ -92,21 +86,9 @@ const QueryValueInput = ({ data, onChange, type, ...props }: any) => {
                 />
             );
         case 'playlist':
-            return (
-                <Select
-                    data={data}
-                    onChange={onChange}
-                    {...props}
-                />
-            );
+            return <Select data={data} onChange={onChange} {...props} />;
         case 'string':
-            return (
-                <TextInput
-                    onChange={onChange}
-                    size="sm"
-                    {...props}
-                />
-            );
+            return <TextInput onChange={onChange} size="sm" {...props} />;
 
         default:
             return <></>;
@@ -188,10 +170,7 @@ export const QueryBuilderOption = ({
     const ml = (level + 1) * 10;
 
     return (
-        <Group
-            gap="sm"
-            ml={ml}
-        >
+        <Group gap="sm" ml={ml}>
             <Select
                 data={filters}
                 maxWidth={170}

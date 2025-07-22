@@ -47,10 +47,7 @@ export const CardControls = ({
     return (
         <div className={styles.gridCardControlsContainer}>
             <div className={styles.bottomControls}>
-                <button
-                    className={styles.playButton}
-                    onClick={handlePlay}
-                >
+                <button className={styles.playButton} onClick={handlePlay}>
                     <Icon icon="mediaPlay" />
                 </button>
                 <Group gap="xs">

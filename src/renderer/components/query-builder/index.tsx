@@ -99,10 +99,7 @@ export const QueryBuilder = ({
     };
 
     return (
-        <Stack
-            gap="sm"
-            ml={`${level * 10}px`}
-        >
+        <Stack gap="sm" ml={`${level * 10}px`}>
             <Group gap="sm">
                 <Select
                     data={FILTER_GROUP_OPTIONS_DATA}
@@ -112,12 +109,7 @@ export const QueryBuilder = ({
                     value={data.type}
                     width="20%"
                 />
-                <ActionIcon
-                    icon="add"
-                    onClick={handleAddRule}
-                    size="sm"
-                    variant="subtle"
-                />
+                <ActionIcon icon="add" onClick={handleAddRule} size="sm" variant="subtle" />
                 <DropdownMenu position="bottom-start">
                     <DropdownMenu.Target>
                         <ActionIcon
@@ -150,24 +142,14 @@ export const QueryBuilder = ({
                                 <DropdownMenu.Divider />
                                 <DropdownMenu.Item
                                     isDanger
-                                    leftSection={
-                                        <Icon
-                                            color="error"
-                                            icon="refresh"
-                                        />
-                                    }
+                                    leftSection={<Icon color="error" icon="refresh" />}
                                     onClick={onResetFilters}
                                 >
                                     Reset to default
                                 </DropdownMenu.Item>
                                 <DropdownMenu.Item
                                     isDanger
-                                    leftSection={
-                                        <Icon
-                                            color="error"
-                                            icon="delete"
-                                        />
-                                    }
+                                    leftSection={<Icon color="error" icon="delete" />}
                                     onClick={onClearFilters}
                                 >
                                     Clear filters

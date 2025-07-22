@@ -17,12 +17,7 @@ export interface AccordionProps
 export const Accordion = ({ children, classNames, ...props }: AccordionProps) => {
     return (
         <MantineAccordion
-            chevron={
-                <Icon
-                    icon="arrowUpS"
-                    size="lg"
-                />
-            }
+            chevron={<Icon icon="arrowUpS" size="lg" />}
             classNames={{
                 chevron: styles.chevron,
                 control: styles.control,

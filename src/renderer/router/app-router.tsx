@@ -79,10 +79,7 @@ export const AppRouter = () => {
             >
                 <Routes>
                     <Route element={<TitlebarOutlet />}>
-                        <Route
-                            element={<AppOutlet />}
-                            errorElement={<RouteErrorBoundary />}
-                        >
+                        <Route element={<AppOutlet />} errorElement={<RouteErrorBoundary />}>
                             <Route element={<DefaultLayout />}>
                                 <Route
                                     element={<HomeRoute />}
@@ -140,10 +137,7 @@ export const AppRouter = () => {
                                     path={AppRoute.LIBRARY_ARTISTS}
                                 />
                                 <Route path={AppRoute.LIBRARY_ARTISTS_DETAIL}>
-                                    <Route
-                                        element={<AlbumArtistDetailRoute />}
-                                        index
-                                    />
+                                    <Route element={<AlbumArtistDetailRoute />} index />
                                     <Route
                                         element={<AlbumListRoute />}
                                         path={AppRoute.LIBRARY_ARTISTS_DETAIL_DISCOGRAPHY}
@@ -181,15 +175,9 @@ export const AppRouter = () => {
                                     errorElement={<RouteErrorBoundary />}
                                     path={AppRoute.LIBRARY_ALBUM_ARTISTS}
                                 >
-                                    <Route
-                                        element={<AlbumArtistListRoute />}
-                                        index
-                                    />
+                                    <Route element={<AlbumArtistListRoute />} index />
                                     <Route path={AppRoute.LIBRARY_ALBUM_ARTISTS_DETAIL}>
-                                        <Route
-                                            element={<AlbumArtistDetailRoute />}
-                                            index
-                                        />
+                                        <Route element={<AlbumArtistDetailRoute />} index />
                                         <Route
                                             element={<AlbumListRoute />}
                                             path={AppRoute.LIBRARY_ALBUM_ARTISTS_DETAIL_DISCOGRAPHY}
@@ -204,10 +192,7 @@ export const AppRouter = () => {
                                         />
                                     </Route>
                                 </Route>
-                                <Route
-                                    element={<InvalidRoute />}
-                                    path="*"
-                                />
+                                <Route element={<InvalidRoute />} path="*" />
                             </Route>
                         </Route>
                     </Route>

@@ -170,6 +170,47 @@ const normalizeSong = (
     deviceId: string,
     imageSize?: number,
 ): Song => {
+    let bitRate = 0;
+    let channels: null | number = null;
+    let container: null | string = null;
+    let path: null | string = null;
+    let sampleRate: null | number = null;
+    let size = 0;
+    let streamUrl = '';
+
+    if (item.MediaSources?.length) {
+        const source = item.MediaSources[0];
+
+        container = source.Container;
+        path = source.Path;
+        size = source.Size;
+
+        streamUrl = getStreamUrl({
+            container: container,
+            deviceId,
+            eTag: source.ETag,
+            id: item.Id,
+            mediaSourceId: source.Id,
+            server,
+        });
+
+        if ((source.MediaStreams?.length || 0) > 0) {
+            for (const stream of source.MediaStreams) {
+                if (stream.Type === 'Audio') {
+                    bitRate =
+                        stream.BitRate !== undefined
+                            ? Number(Math.trunc(stream.BitRate / 1000))
+                            : 0;
+                    channels = stream.Channels || null;
+                    sampleRate = stream.SampleRate || null;
+                    break;
+                }
+            }
+        }
+    } else {
+        console.warn('Jellyfin song retrieved with no media sources', item);
+    }
+
     return {
         album: item.Album,
         albumArtists: item.AlbumArtists?.map((entry) => ({
@@ -184,14 +225,13 @@ const normalizeSong = (
             imageUrl: null,
             name: entry.Name,
         })),
-        bitRate:
-            item.MediaSources?.[0].Bitrate &&
-            Number(Math.trunc(item.MediaSources[0].Bitrate / 1000)),
+        bitDepth: null,
+        bitRate,
         bpm: null,
-        channels: null,
+        channels,
         comment: null,
         compilation: null,
-        container: (item.MediaSources && item.MediaSources[0]?.Container) || null,
+        container,
         createdAt: item.DateCreated,
         discNumber: (item.ParentIndexNumber && item.ParentIndexNumber) || 1,
         discSubtitle: null,
@@ -220,7 +260,7 @@ const normalizeSong = (
         lyrics: null,
         name: item.Name,
         participants: getPeople(item),
-        path: (item.MediaSources && item.MediaSources[0]?.Path) || null,
+        path,
         peak: null,
         playCount: (item.UserData && item.UserData.PlayCount) || 0,
         playlistItemId: item.PlaylistItemId,
@@ -230,17 +270,11 @@ const normalizeSong = (
               ? new Date(item.ProductionYear, 0, 1).toISOString()
               : null,
         releaseYear: item.ProductionYear ? String(item.ProductionYear) : null,
+        sampleRate,
         serverId: server?.id || '',
         serverType: ServerType.JELLYFIN,
-        size: item.MediaSources && item.MediaSources[0]?.Size,
-        streamUrl: getStreamUrl({
-            container: item.MediaSources?.[0]?.Container,
-            deviceId,
-            eTag: item.MediaSources?.[0]?.ETag,
-            id: item.Id,
-            mediaSourceId: item.MediaSources?.[0]?.Id,
-            server,
-        }),
+        size,
+        streamUrl,
         tags: getTags(item),
         trackNumber: item.IndexNumber,
         uniqueId: nanoid(),

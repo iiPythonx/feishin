@@ -40,15 +40,9 @@ export const GenreListHeader = ({ gridRef, itemCount, tableRef }: GenreListHeade
     }, 500);
 
     return (
-        <Stack
-            gap={0}
-            ref={cq.ref}
-        >
+        <Stack gap={0} ref={cq.ref}>
             <PageHeader>
-                <Flex
-                    justify="space-between"
-                    w="100%"
-                >
+                <Flex justify="space-between" w="100%">
                     <LibraryHeaderBar>
                         <LibraryHeaderBar.Title>
                             {t('page.genreList.title', { postProcess: 'titleCase' })}
@@ -60,10 +54,7 @@ export const GenreListHeader = ({ gridRef, itemCount, tableRef }: GenreListHeade
                         </LibraryHeaderBar.Badge>
                     </LibraryHeaderBar>
                     <Group>
-                        <SearchInput
-                            defaultValue={filter.searchTerm}
-                            onChange={handleSearch}
-                        />
+                        <SearchInput defaultValue={filter.searchTerm} onChange={handleSearch} />
                     </Group>
                 </Flex>
             </PageHeader>

@@ -12,11 +12,7 @@ interface OptionProps extends GroupProps {
 
 export const Option = ({ children, ...props }: OptionProps) => {
     return (
-        <Group
-            classNames={{ root: styles.root }}
-            grow
-            {...props}
-        >
+        <Group classNames={{ root: styles.root }} grow {...props}>
             {children}
         </Group>
     );

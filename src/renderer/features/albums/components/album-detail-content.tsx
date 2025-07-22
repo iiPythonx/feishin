@@ -297,17 +297,11 @@ export const AlbumDetailContent = ({ background, tableRef }: AlbumDetailContentP
     const mbzId = detailQuery?.data?.mbzId;
 
     return (
-        <div
-            className={styles.contentContainer}
-            ref={cq.ref}
-        >
+        <div className={styles.contentContainer} ref={cq.ref}>
             <LibraryBackgroundOverlay backgroundColor={background} />
             <div className={styles.detailContainer}>
                 <section>
-                    <Group
-                        gap="sm"
-                        justify="space-between"
-                    >
+                    <Group gap="sm" justify="space-between">
                         <Group>
                             <PlayButton onClick={() => handlePlay(playButtonBehavior)} />
                             <Group gap="xs">
@@ -445,11 +439,7 @@ export const AlbumDetailContent = ({ background, tableRef }: AlbumDetailContentP
                         suppressRowDrag
                     />
                 </div>
-                <Stack
-                    gap="lg"
-                    mt="3rem"
-                    ref={cq.ref}
-                >
+                <Stack gap="lg" mt="3rem" ref={cq.ref}>
                     {cq.height || cq.width ? (
                         <>
                             {carousels

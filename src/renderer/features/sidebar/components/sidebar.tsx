@@ -112,10 +112,7 @@ export const Sidebar = () => {
             })}
             id="left-sidebar"
         >
-            <Group
-                grow
-                id="global-search-container"
-            >
+            <Group grow id="global-search-container">
                 <ActionBar />
             </Group>
             <ScrollArea
@@ -137,10 +134,7 @@ export const Sidebar = () => {
                 >
                     <Accordion.Item value="library">
                         <Accordion.Control>
-                            <Text
-                                fw={600}
-                                variant="secondary"
-                            >
+                            <Text fw={600} variant="secondary">
                                 {t('page.sidebar.myLibrary', {
                                     postProcess: 'titleCase',
                                 })}
@@ -149,10 +143,7 @@ export const Sidebar = () => {
                         <Accordion.Panel>
                             {sidebarItemsWithRoute.map((item) => {
                                 return (
-                                    <SidebarItem
-                                        key={`sidebar-${item.route}`}
-                                        to={item.route}
-                                    >
+                                    <SidebarItem key={`sidebar-${item.route}`} to={item.route}>
                                         <Group gap="sm">
                                             <SidebarIcon
                                                 active={location.pathname === item.route}
@@ -188,10 +179,7 @@ export const Sidebar = () => {
                     )}
                 </Accordion>
             </ScrollArea>
-            <AnimatePresence
-                initial={false}
-                mode="popLayout"
-            >
+            <AnimatePresence initial={false} mode="popLayout">
                 {showImage && (
                     <motion.div
                         animate={{ opacity: 1, y: 0 }}

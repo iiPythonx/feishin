@@ -16,36 +16,11 @@ type Options = {
 type Presets = 'actions' | 'duration' | 'rowIndex' | 'userFavorite' | 'userRating';
 
 const headerPresets = {
-    actions: (
-        <Icon
-            icon="ellipsisHorizontal"
-            size="sm"
-        />
-    ),
-    duration: (
-        <Icon
-            icon="duration"
-            size="sm"
-        />
-    ),
-    rowIndex: (
-        <Icon
-            icon="hash"
-            size="sm"
-        />
-    ),
-    userFavorite: (
-        <Icon
-            icon="favorite"
-            size="sm"
-        />
-    ),
-    userRating: (
-        <Icon
-            icon="star"
-            size="sm"
-        />
-    ),
+    actions: <Icon icon="ellipsisHorizontal" size="sm" />,
+    duration: <Icon icon="duration" size="sm" />,
+    rowIndex: <Icon icon="hash" size="sm" />,
+    userFavorite: <Icon icon="favorite" size="sm" />,
+    userRating: <Icon icon="star" size="sm" />,
 };
 
 export const GenericTableHeader = (

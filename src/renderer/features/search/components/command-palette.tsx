@@ -95,18 +95,11 @@ export const CommandPalette = ({ modalProps }: CommandPaletteProps) => {
                 header: { display: 'none' },
             }}
         >
-            <Group
-                gap="sm"
-                mb="1rem"
-            >
+            <Group gap="sm" mb="1rem">
                 {pages.map((page, index) => (
                     <Fragment key={page}>
                         {index > 0 && ' > '}
-                        <Button
-                            disabled
-                            size="compact-md"
-                            variant="default"
-                        >
+                        <Button disabled size="compact-md" variant="default">
                             {page?.toLocaleUpperCase()}
                         </Button>
                     </Fragment>
@@ -267,10 +260,7 @@ export const CommandPalette = ({ modalProps }: CommandPaletteProps) => {
                     )}
                 </Command.List>
             </Command>
-            <Box
-                mt="0.5rem"
-                p="0.5rem"
-            >
+            <Box mt="0.5rem" p="0.5rem">
                 <Group justify="space-between">
                     <Command.Loading>
                         {isHome && isLoading && query !== '' && <Spinner />}

@@ -86,10 +86,5 @@ export const TranscodeSettings = () => {
         },
     ];
 
-    return (
-        <SettingsSection
-            divider
-            options={transcodeOptions}
-        />
-    );
+    return <SettingsSection divider options={transcodeOptions} />;
 };

@@ -18,17 +18,7 @@ export const ThemeButton = () => {
             }}
             variant="default"
         >
-            {isDark ? (
-                <Icon
-                    icon="themeLight"
-                    size={30}
-                />
-            ) : (
-                <Icon
-                    icon="themeDark"
-                    size={30}
-                />
-            )}
+            {isDark ? <Icon icon="themeLight" size={30} /> : <Icon icon="themeDark" size={30} />}
         </ActionIcon>
     );
 };

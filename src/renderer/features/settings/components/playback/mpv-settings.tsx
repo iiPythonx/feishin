@@ -218,11 +218,7 @@ export const MpvSettings = () => {
             ),
             description: (
                 <Stack gap={0}>
-                    <Text
-                        isMuted
-                        isNoSelect
-                        size="sm"
-                    >
+                    <Text isMuted isNoSelect size="sm">
                         {t('setting.mpvExtraParameters', {
                             context: 'description',
                             postProcess: 'sentenceCase',

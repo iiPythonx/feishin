@@ -66,11 +66,7 @@ export const ServerListItem = ({ server }: ServerListItemProps) => {
                     />
                 ) : (
                     <Stack>
-                        <Table
-                            layout="fixed"
-                            variant="vertical"
-                            withTableBorder
-                        >
+                        <Table layout="fixed" variant="vertical" withTableBorder>
                             <Table.Tbody>
                                 <Table.Tr>
                                     <Table.Th style={{ width: '100px' }}>URL</Table.Th>

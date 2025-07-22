@@ -60,10 +60,7 @@ const Title = ({ handleNext, handlePrev, label, pagination }: TitleProps) => {
             {isValidElement(label) ? (
                 label
             ) : (
-                <TextTitle
-                    order={3}
-                    weight={700}
-                >
+                <TextTitle order={3} weight={700}>
                     {label}
                 </TextTitle>
             )}
@@ -280,11 +277,7 @@ export const SwiperGridCarousel = ({
     }, []);
 
     return (
-        <Stack
-            className="grid-carousel"
-            gap="md"
-            ref={containerRef as any}
-        >
+        <Stack className="grid-carousel" gap="md" ref={containerRef as any}>
             {title ? (
                 <Title
                     {...title}

@@ -17,10 +17,7 @@ export const LeftSidebar = ({ isResizing, startResizing }: LeftSidebarProps) => 
     const { collapsed } = useSidebarStore();
 
     return (
-        <aside
-            className={styles.container}
-            id="sidebar"
-        >
+        <aside className={styles.container} id="sidebar">
             <ResizeHandle
                 isResizing={isResizing}
                 onMouseDown={(e) => {

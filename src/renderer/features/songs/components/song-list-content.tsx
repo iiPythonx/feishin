@@ -35,15 +35,9 @@ export const SongListContent = ({ gridRef, itemCount, tableRef }: SongListConten
     return (
         <Suspense fallback={<Spinner container />}>
             {isGrid ? (
-                <SongListGridView
-                    gridRef={gridRef}
-                    itemCount={itemCount}
-                />
+                <SongListGridView gridRef={gridRef} itemCount={itemCount} />
             ) : (
-                <SongListTableView
-                    itemCount={itemCount}
-                    tableRef={tableRef}
-                />
+                <SongListTableView itemCount={itemCount} tableRef={tableRef} />
             )}
         </Suspense>
     );

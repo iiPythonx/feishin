@@ -155,10 +155,7 @@ export const CreatePlaylistForm = ({ onCancel }: CreatePlaylistFormProps) => {
                 )}
 
                 <Group justify="flex-end">
-                    <Button
-                        onClick={onCancel}
-                        variant="subtle"
-                    >
+                    <Button onClick={onCancel} variant="subtle">
                         {t('common.cancel', { postProcess: 'titleCase' })}
                     </Button>
                     <Button

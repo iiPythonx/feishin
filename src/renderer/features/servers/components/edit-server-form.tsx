@@ -33,10 +33,7 @@ interface EditServerFormProps {
 const ModifiedFieldIndicator = () => {
     return (
         <Tooltip label={i18n.t('common.modified', { postProcess: 'titleCase' }) as string}>
-            <Icon
-                color="warn"
-                icon="info"
-            />
+            <Icon color="warn" icon="info" />
         </Tooltip>
     );
 };
@@ -190,17 +187,10 @@ export const EditServerForm = ({ isUpdate, onCancel, password, server }: EditSer
                     />
                 )}
                 <Group justify="flex-end">
-                    <Button
-                        onClick={onCancel}
-                        variant="subtle"
-                    >
+                    <Button onClick={onCancel} variant="subtle">
                         {t('common.cancel', { postProcess: 'titleCase' })}
                     </Button>
-                    <Button
-                        loading={isLoading}
-                        type="submit"
-                        variant="filled"
-                    >
+                    <Button loading={isLoading} type="submit" variant="filled">
                         {t('common.save', { postProcess: 'titleCase' })}
                     </Button>
                 </Group>

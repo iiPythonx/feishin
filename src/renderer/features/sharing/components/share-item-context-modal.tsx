@@ -172,18 +172,10 @@ export const ShareItemContextModal = ({
 
                 <Group justify="flex-end">
                     <Group>
-                        <Button
-                            onClick={() => closeModal(id)}
-                            size="md"
-                            variant="subtle"
-                        >
+                        <Button onClick={() => closeModal(id)} size="md" variant="subtle">
                             {t('common.cancel', { postProcess: 'titleCase' })}
                         </Button>
-                        <Button
-                            size="md"
-                            type="submit"
-                            variant="filled"
-                        >
+                        <Button size="md" type="submit" variant="filled">
                             {t('common.share', { postProcess: 'titleCase' })}
                         </Button>
                     </Group>

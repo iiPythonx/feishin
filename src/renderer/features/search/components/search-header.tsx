@@ -49,15 +49,9 @@ export const SearchHeader = ({ navigationId, tableRef }: SearchHeaderProps) => {
     }, 200);
 
     return (
-        <Stack
-            gap={0}
-            ref={cq.ref}
-        >
+        <Stack gap={0} ref={cq.ref}>
             <PageHeader>
-                <Flex
-                    justify="space-between"
-                    w="100%"
-                >
+                <Flex justify="space-between" w="100%">
                     <LibraryHeaderBar>
                         <LibraryHeaderBar.Title>Search</LibraryHeaderBar.Title>
                     </LibraryHeaderBar>

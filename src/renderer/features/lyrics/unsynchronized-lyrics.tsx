@@ -29,10 +29,7 @@ export const UnsynchronizedLyrics = ({
     }, [translatedLyrics]);
 
     return (
-        <div
-            className={styles.container}
-            style={{ gap: `${settings.gapUnsync}px` }}
-        >
+        <div className={styles.container} style={{ gap: `${settings.gapUnsync}px` }}>
             {settings.showProvider && source && (
                 <LyricLine
                     alignment={settings.alignment}

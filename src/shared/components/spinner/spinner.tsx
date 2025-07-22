@@ -16,20 +16,10 @@ export const Spinner = ({ ...props }: SpinnerProps) => {
     if (props.container) {
         return (
             <Center className={styles.container}>
-                <SpinnerIcon
-                    className={styles.icon}
-                    color={props.color}
-                    size={props.size}
-                />
+                <SpinnerIcon className={styles.icon} color={props.color} size={props.size} />
             </Center>
         );
     }
 
-    return (
-        <SpinnerIcon
-            className={styles.icon}
-            color={props.color}
-            size={props.size}
-        />
-    );
+    return <SpinnerIcon className={styles.icon} color={props.color} size={props.size} />;
 };

@@ -42,16 +42,8 @@ const GenreListRoute = () => {
     return (
         <AnimatedPage>
             <ListContext.Provider value={providerValue}>
-                <GenreListHeader
-                    gridRef={gridRef}
-                    itemCount={itemCount}
-                    tableRef={tableRef}
-                />
-                <GenreListContent
-                    gridRef={gridRef}
-                    itemCount={itemCount}
-                    tableRef={tableRef}
-                />
+                <GenreListHeader gridRef={gridRef} itemCount={itemCount} tableRef={tableRef} />
+                <GenreListContent gridRef={gridRef} itemCount={itemCount} tableRef={tableRef} />
             </ListContext.Provider>
         </AnimatedPage>
     );

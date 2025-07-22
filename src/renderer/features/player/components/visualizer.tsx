@@ -33,10 +33,5 @@ export const Visualizer = () => {
         return () => {};
     }, [accent, canvasRef, motion, webAudio]);
 
-    return (
-        <div
-            className={styles.container}
-            ref={canvasRef}
-        />
-    );
+    return <div className={styles.container} ref={canvasRef} />;
 };

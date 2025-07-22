@@ -22,10 +22,7 @@ export const SongPath = ({ path }: SongPathProps) => {
 
     return (
         <Group>
-            <CopyButton
-                timeout={2000}
-                value={path}
-            >
+            <CopyButton timeout={2000} value={path}>
                 {({ copied, copy }) => (
                     <Tooltip
                         label={t(
@@ -36,10 +33,7 @@ export const SongPath = ({ path }: SongPathProps) => {
                         )}
                         withinPortal
                     >
-                        <ActionIcon
-                            onClick={copy}
-                            variant="transparent"
-                        >
+                        <ActionIcon onClick={copy} variant="transparent">
                             {copied ? <Icon icon="check" /> : <Icon icon="clipboardCopy" />}
                         </ActionIcon>
                     </Tooltip>

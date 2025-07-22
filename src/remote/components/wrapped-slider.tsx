@@ -61,10 +61,7 @@ export const WrappedSlider = ({ leftLabel, rightLabel, value, ...props }: Wrappe
     const [seek, setSeek] = useState(0);
 
     return (
-        <Group
-            align="center"
-            wrap="nowrap"
-        >
+        <Group align="center" wrap="nowrap">
             {leftLabel && <Text size="sm">{leftLabel}</Text>}
             <PlayerbarSlider
                 {...props}

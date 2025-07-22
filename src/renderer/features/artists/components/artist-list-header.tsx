@@ -42,15 +42,9 @@ export const ArtistListHeader = ({ gridRef, itemCount, tableRef }: ArtistListHea
     }, 500);
 
     return (
-        <Stack
-            gap={0}
-            ref={cq.ref}
-        >
+        <Stack gap={0} ref={cq.ref}>
             <PageHeader>
-                <Flex
-                    justify="space-between"
-                    w="100%"
-                >
+                <Flex justify="space-between" w="100%">
                     <LibraryHeaderBar>
                         <LibraryHeaderBar.Title>
                             {t('entity.artist_other', { postProcess: 'titleCase' })}
@@ -62,18 +56,12 @@ export const ArtistListHeader = ({ gridRef, itemCount, tableRef }: ArtistListHea
                         </LibraryHeaderBar.Badge>
                     </LibraryHeaderBar>
                     <Group>
-                        <SearchInput
-                            defaultValue={filter.searchTerm}
-                            onChange={handleSearch}
-                        />
+                        <SearchInput defaultValue={filter.searchTerm} onChange={handleSearch} />
                     </Group>
                 </Flex>
             </PageHeader>
             <FilterBar>
-                <ArtistListHeaderFilters
-                    gridRef={gridRef}
-                    tableRef={tableRef}
-                />
+                <ArtistListHeaderFilters gridRef={gridRef} tableRef={tableRef} />
             </FilterBar>
         </Stack>
     );

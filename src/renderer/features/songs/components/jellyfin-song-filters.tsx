@@ -175,16 +175,9 @@ export const JellyfinSongFilters = ({
     return (
         <Stack p="0.8rem">
             {yesNoFilters.map((filter) => (
-                <Group
-                    justify="space-between"
-                    key={`nd-filter-${filter.label}`}
-                >
+                <Group justify="space-between" key={`nd-filter-${filter.label}`}>
                     <Text>{filter.label}</Text>
-                    <YesNoSelect
-                        onChange={filter.onChange}
-                        size="xs"
-                        value={filter.value}
-                    />
+                    <YesNoSelect onChange={filter.onChange} size="xs" value={filter.value} />
                 </Group>
             ))}
             <Divider my="0.5rem" />

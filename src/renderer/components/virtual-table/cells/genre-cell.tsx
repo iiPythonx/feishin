@@ -13,11 +13,7 @@ export const GenreCell = ({ data, value }: ICellRendererParams) => {
     const genrePath = useGenreRoute();
     return (
         <CellContainer position="left">
-            <Text
-                isMuted
-                overflow="hidden"
-                size="md"
-            >
+            <Text isMuted overflow="hidden" size="md">
                 {value?.map((item: AlbumArtist | Artist, index: number) => (
                     <React.Fragment key={`row-${item.id}-${data.uniqueId}`}>
                         {index > 0 && <Separator />}

@@ -50,16 +50,8 @@ const PlaylistListRoute = () => {
     return (
         <AnimatedPage>
             <ListContext.Provider value={providerValue}>
-                <PlaylistListHeader
-                    gridRef={gridRef}
-                    itemCount={itemCount}
-                    tableRef={tableRef}
-                />
-                <PlaylistListContent
-                    gridRef={gridRef}
-                    itemCount={itemCount}
-                    tableRef={tableRef}
-                />
+                <PlaylistListHeader gridRef={gridRef} itemCount={itemCount} tableRef={tableRef} />
+                <PlaylistListContent gridRef={gridRef} itemCount={itemCount} tableRef={tableRef} />
             </ListContext.Provider>
         </AnimatedPage>
     );

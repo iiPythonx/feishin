@@ -38,33 +38,15 @@ const SearchResult = ({ data, onClick }: SearchResultProps) => {
         source === LyricSource.GENIUS ? id.replace(/^((http[s]?|ftp):\/)?\/?([^:/\s]+)/g, '') : id;
 
     return (
-        <button
-            className={styles.searchItem}
-            onClick={onClick}
-        >
-            <Group
-                justify="space-between"
-                wrap="nowrap"
-            >
-                <Stack
-                    gap={0}
-                    maw="65%"
-                >
-                    <Text
-                        fw={600}
-                        size="md"
-                    >
+        <button className={styles.searchItem} onClick={onClick}>
+            <Group justify="space-between" wrap="nowrap">
+                <Stack gap={0} maw="65%">
+                    <Text fw={600} size="md">
                         {name}
                     </Text>
                     <Text isMuted>{artist}</Text>
-                    <Group
-                        gap="sm"
-                        wrap="nowrap"
-                    >
-                        <Text
-                            isMuted
-                            size="sm"
-                        >
+                    <Group gap="sm" wrap="nowrap">
+                        <Text isMuted size="sm">
                             {[source, cleanId].join(' — ')}
                         </Text>
                     </Group>
@@ -167,11 +149,7 @@ export const LyricsSearchForm = ({ artist, name, onSearchOverride }: LyricSearch
 export const openLyricSearchModal = ({ artist, name, onSearchOverride }: LyricSearchFormProps) => {
     openModal({
         children: (
-            <LyricsSearchForm
-                artist={artist}
-                name={name}
-                onSearchOverride={onSearchOverride}
-            />
+            <LyricsSearchForm artist={artist} name={name} onSearchOverride={onSearchOverride} />
         ),
         size: 'lg',
         title: i18n.t('form.lyricSearch.title', { postProcess: 'titleCase' }) as string,

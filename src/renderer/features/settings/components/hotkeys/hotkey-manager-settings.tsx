@@ -240,10 +240,7 @@ export const HotkeyManagerSettings = () => {
             />
             <div className={styles.container}>
                 {filteredBindings.map((binding) => (
-                    <Group
-                        key={`hotkey-${binding}`}
-                        wrap="nowrap"
-                    >
+                    <Group key={`hotkey-${binding}`} wrap="nowrap">
                         <TextInput
                             readOnly
                             style={{ userSelect: 'none' }}
