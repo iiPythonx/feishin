@@ -263,28 +263,14 @@ export const FullScreenPlayerImage = () => {
                     )}
                 </AnimatePresence>
             </div>
-            <Stack
-                className={styles.metadataContainer}
-                gap="md"
-                maw="100%"
-            >
+            <Stack className={styles.metadataContainer} gap="md" maw="100%">
                 {forkTheme === 'pyxfluff' ? (
                     <>
-                        <Group
-                            align="center"
-                            justify="center"
-                            mt="sm"
-                            w="fit-content"
-                        >
+                        <Group align="center" justify="center" mt="sm" w="fit-content">
                             {SongTitle}
                             {Bitrate}
                         </Group>
-                        <Group
-                            align="center"
-                            justify="center"
-                            mt="sm"
-                            w="fit-content"
-                        >
+                        <Group align="center" justify="center" mt="sm" w="fit-content">
                             {Album}
                             {Year} • {Artists}
                         </Group>
@@ -292,19 +278,11 @@ export const FullScreenPlayerImage = () => {
                 ) : (
                     <>
                         {SongTitle}
-                        <Group
-                            align="center"
-                            justify="center"
-                            mt="sm"
-                        >
+                        <Group align="center" justify="center" mt="sm">
                             {Bitrate}
                             {Year}
                         </Group>
-                        <Group
-                            align="center"
-                            justify="center"
-                            mt="sm"
-                        >
+                        <Group align="center" justify="center" mt="sm">
                             {Album}
                         </Group>
                         {Artists}

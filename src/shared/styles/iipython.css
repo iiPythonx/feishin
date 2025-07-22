@@ -61,6 +61,7 @@
 
             /* Force a max size onto modals */
             max-height: 700px;
+            max-width: 700px;
 
             /* Ensure any overflowing bodies are handled as well */
             .fs-modal-module-body {

@@ -8,8 +8,8 @@ import { Link } from 'react-router-dom';
 import styles from './library-header.module.css';
 
 import { useTweaksSettings } from '/@/renderer/store';
-import { Center } from '/@/shared/components/center/center';
 import { Image } from '/@/shared/components/image/image';
+import { Stack } from '/@/shared/components/stack/stack';
 import { Text } from '/@/shared/components/text/text';
 import { LibraryItem } from '/@/shared/types/domain-types';
 
@@ -60,11 +60,9 @@ export const LibraryHeader = forwardRef(
 
                 openModal({
                     children: (
-                        <Center
+                        <Stack
                             onClick={() => closeAllModals()}
                             style={{
-                                cursor: 'pointer',
-                                height: 'calc(100vh - 80px)',
                                 width: '100%',
                             }}
                         >
@@ -76,12 +74,13 @@ export const LibraryHeader = forwardRef(
                                     maxWidth: '100%',
                                 }}
                             />
-                        </Center>
+                        </Stack>
                     ),
                     fullScreen: true,
+                    title,
                 });
             }
-        }, [imageUrl, isImageError]);
+        }, [imageUrl, isImageError, title]);
 
         return (
             <div className={styles.libraryHeader} ref={ref}>
