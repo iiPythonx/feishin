@@ -164,7 +164,7 @@ export const FullScreenPlayerImage = () => {
             lh="1.2"
             overflow="hidden"
             size="4xl"
-            w="fit-content"
+            w={forkTheme === 'pyxfluff' ? 'fit-content' : '100%'}
         >
             {currentSong?.name}
         </Text>
