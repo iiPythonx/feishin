@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDiscordSetttings, usePlayerStore } from '/@/renderer/store';
 import { QueueSong } from '/@/shared/types/domain-types';
 import { PlayerStatus } from '/@/shared/types/types';
+import { toast } from '/@/shared/components/toast/toast';
 
 const discordRpc = isElectron() ? window.api.discordRpc : null;
 
@@ -92,6 +93,10 @@ export const useDiscordRpc = () => {
                         imageUrl = response.data.url;
                     } else {
                         imageUrl = 'icon';
+                        toast.error({
+                            title: "Pizza error",
+                            message: "Could not reach the pizza proxy. Discord RPC falling back to the default icon."
+                        })
                     }
                 }
                 setLastImageUrl(imageUrl);
