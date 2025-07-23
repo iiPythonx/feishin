@@ -82,21 +82,25 @@ export const useDiscordRpc = () => {
                         // Upload file to Pizza
                         const form = new FormData();
                         form.append('file', new File([image.data], 'file.jpg')); // Yes, uploading a PNG as a JPG is ok
-                        const response = await axios({
-                            data: form,
-                            headers: {
-                                'Content-Type': 'multipart/form-data',
-                            },
-                            method: 'POST',
-                            url: 'https://covers.iipython.dev/api/image',
-                        });
-                        imageUrl = response.data.url;
+                        try {
+                            const response = await axios({
+                                data: form,
+                                headers: {
+                                    'Content-Type': 'multipart/form-data',
+                                },
+                                method: 'POST',
+                                url: 'https://covers.iipython.dev/api/image',
+                            });
+                            imageUrl = response.data.url;
+                        } catch (e) {
+                            toast.error({
+                                title: 'Pizza error',
+                                message:
+                                    `Could not reach the pizza proxy. Discord RPC falling back to the default icon. ${e}`,
+                            });
+                        }
                     } else {
                         imageUrl = 'icon';
-                        toast.error({
-                            title: "Pizza error",
-                            message: "Could not reach the pizza proxy. Discord RPC falling back to the default icon."
-                        })
                     }
                 }
                 setLastImageUrl(imageUrl);
