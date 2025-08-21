@@ -214,7 +214,7 @@ export const AlbumDetailHeader = forwardRef(
                                     })}
                                     variant="subtle"
                                 >
-                                    {/* THIS DOES NOT WORK RIGHT NOW so it's safe to remove in the event of a (highly likely) conflict, but if navidrom ever starts providing it it will work*/}
+                                    {/* THIS DOES NOT WORK RIGHT NOW so it's safe to remove in the event of a (highly likely) conflict, but if navidrome ever starts providing it it will work*/}
                                     {artist.imageUrl && (
                                         <img
                                             alt={artist.name}

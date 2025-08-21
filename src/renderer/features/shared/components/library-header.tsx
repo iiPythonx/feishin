@@ -22,11 +22,12 @@ interface LibraryHeaderProps {
     item: { route: string; type: LibraryItem };
     loading?: boolean;
     title: string;
+    subtitle?: string;
 }
 
 export const LibraryHeader = forwardRef(
     (
-        { background, blur, children, imageUrl, item, title }: LibraryHeaderProps,
+        { background, blur, children, imageUrl, item, title, subtitle }: LibraryHeaderProps,
         ref: Ref<HTMLDivElement>,
     ) => {
         const { t } = useTranslation();
@@ -130,6 +131,13 @@ export const LibraryHeader = forwardRef(
                                 {title}
                             </AutoTextSize>
                         </h1>
+                        {subtitle && (
+                            <h2>
+                                <AutoTextSize maxFontSizePx={75} mode="box">
+                                    {subtitle}
+                                </AutoTextSize>
+                            </h2>
+                        )}
                         {children}
                     </div>
                 )}

@@ -16,11 +16,11 @@ import { usePlayQueueAdd } from '/@/renderer/features/player';
 import { openUpdatePlaylistModal } from '/@/renderer/features/playlists/components/update-playlist-form';
 import { useDeletePlaylist } from '/@/renderer/features/playlists/mutations/delete-playlist-mutation';
 import { usePlaylistDetail } from '/@/renderer/features/playlists/queries/playlist-detail-query';
-import { OrderToggleButton } from '/@/renderer/features/shared';
-import { ListConfigMenu } from '/@/renderer/features/shared/components/list-config-menu';
-import { MoreButton } from '/@/renderer/features/shared/components/more-button';
-import { useContainerQuery } from '/@/renderer/hooks';
 import { AppRoute } from '/@/renderer/router/routes';
+import { useContainerQuery } from '/@/renderer/hooks';
+import { OrderToggleButton } from '/@/renderer/features/shared';
+import { MoreButton } from '/@/renderer/features/shared/components/more-button';
+import { ListConfigMenu } from '/@/renderer/features/shared/components/list-config-menu';
 import {
     PersistedTableColumn,
     SongListFilter,
@@ -455,6 +455,8 @@ export const PlaylistDetailSongListHeaderFilters = ({
         );
         closeAllModals();
     }, [deletePlaylistMutation, detailQuery.data, navigate, t]);
+
+    console.log(detailQuery);
 
     const openDeletePlaylistModal = () => {
         openModal({
