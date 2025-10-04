@@ -1,4 +1,4 @@
-import { forwardRef, Fragment, Ref } from 'react';
+import { forwardRef, Fragment } from 'react';
 import { usePlaylistDetail } from '/@/renderer/features/playlists/queries/playlist-detail-query';
 import { AppRoute } from '/@/renderer/router/routes';
 import { useCurrentServer, useTweaksSettings } from '/@/renderer/store';
