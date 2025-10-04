@@ -399,8 +399,6 @@ export const PlaylistDetailSongListHeaderFilters = ({
         closeAllModals();
     }, [deletePlaylistMutation, detailQuery.data, navigate, t]);
 
-    console.log(detailQuery);
-
     const openDeletePlaylistModal = () => {
         openModal({
             children: (

@@ -8,7 +8,6 @@ import { generatePath, useNavigate, useParams } from 'react-router';
 
 import { PlaylistDetailSongListContent } from '/@/renderer/features/playlists/components/playlist-detail-song-list-content';
 import { PlaylistDetailSongListHeader } from '/@/renderer/features/playlists/components/playlist-detail-song-list-header';
-import { PlaylistLibraryHeader } from '/@/renderer/features/playlists/components/playlist-library-header';
 import { PlaylistQueryBuilder } from '/@/renderer/features/playlists/components/playlist-query-builder';
 import { SaveAsPlaylistForm } from '/@/renderer/features/playlists/components/save-as-playlist-form';
 import { useCreatePlaylist } from '/@/renderer/features/playlists/mutations/create-playlist-mutation';
@@ -29,8 +28,6 @@ const PlaylistDetailSongListRoute = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const tableRef = useRef<AgGridReactType | null>(null);
-    const scrollAreaRef = useRef<HTMLDivElement>(null);
-    const headerRef = useRef<HTMLDivElement>(null);
     const { playlistId } = useParams() as { playlistId: string };
     const server = useCurrentServer();
 
@@ -168,30 +165,11 @@ const PlaylistDetailSongListRoute = () => {
 
     return (
         <AnimatedPage key={`playlist-detail-songList-${playlistId}`}>
-            <NativeScrollArea
-                pageHeaderProps={{
-                    children: (
-                        <PlaylistDetailSongListHeader
-                            handleToggleShowQueryBuilder={handleToggleShowQueryBuilder}
-                            itemCount={itemCount}
-                            tableRef={tableRef}
-                        />
-                    ),
-                    offset: 200,
-                    target: headerRef,
-                }}
-                ref={scrollAreaRef}
-            >
-                <PlaylistLibraryHeader ref={headerRef} />
-                <PlaylistDetailSongListContent
-                    songs={
-                        server?.type === ServerType.SUBSONIC
-                            ? itemCountCheck.data?.items
-                            : undefined
-                    }
-                    tableRef={tableRef}
-                />
-            </NativeScrollArea>
+            <PlaylistDetailSongListHeader
+                handleToggleShowQueryBuilder={handleToggleShowQueryBuilder}
+                itemCount={itemCount}
+                tableRef={tableRef}
+            />
 
             {(isSmartPlaylist || showQueryBuilder) && (
                 <motion.div>
