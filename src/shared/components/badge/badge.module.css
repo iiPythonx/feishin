@@ -17,9 +17,9 @@
 
 .root {
     padding: var(--theme-spacing-lg) var(--theme-spacing-lg);
-    font-weight: 500;
-    background: rgba(var(--theme-colors-surface-rgb), .4);
-    border: none !important;
     font-size: 12px;
+    font-weight: 500;
+    background: rgb(var(--theme-colors-surface-rgb) .4);
+    border: none !important;
     border-radius: 1rem !important;
 }

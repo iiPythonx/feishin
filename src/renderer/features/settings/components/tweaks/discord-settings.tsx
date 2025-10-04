@@ -5,7 +5,11 @@ import {
     SettingOption,
     SettingsSection,
 } from '/@/renderer/features/settings/components/settings-section';
-import { useDiscordSetttings, useSettingsStoreActions } from '/@/renderer/store';
+import {
+    DiscordLinkType,
+    useDiscordSettings,
+    useSettingsStoreActions,
+} from '/@/renderer/store';
 import { Select } from '/@/shared/components/select/select';
 import { Switch } from '/@/shared/components/switch/switch';
 import { TextInput } from '/@/shared/components/text-input/text-input';
@@ -17,7 +21,7 @@ const PROXY_TYPE_OPTIONS = [
 
 export const DiscordSettings = () => {
     const { t } = useTranslation();
-    const settings = useDiscordSetttings();
+    const settings = useDiscordSettings();
     const { setSettings } = useSettingsStoreActions();
 
     const discordOptions: SettingOption[] = [
@@ -121,9 +125,57 @@ export const DiscordSettings = () => {
         },
         {
             control: (
+                <Select
+                    aria-label={t('setting.discordLinkType')}
+                    clearable={false}
+                    data={[
+                        {
+                            label: t('setting.discordLinkType_none', {
+                                postProcess: 'sentenceCase',
+                            }),
+                            value: DiscordLinkType.NONE,
+                        },
+                        { label: 'last.fm', value: DiscordLinkType.LAST_FM },
+                        { label: 'musicbrainz', value: DiscordLinkType.MBZ },
+                        {
+                            label: t('setting.discordLinkType_mbz_lastfm', {
+                                lastfm: 'last.fm',
+                                musicbrainz: 'musicbrainz',
+                            }),
+                            value: DiscordLinkType.MBZ_LAST_FM,
+                        },
+                    ]}
+                    defaultValue={settings.linkType}
+                    onChange={(e) => {
+                        if (!e) return;
+                        setSettings({
+                            discord: {
+                                ...settings,
+                                linkType: e as DiscordLinkType,
+                            },
+                        });
+                    }}
+                />
+            ),
+            description: t('setting.discordLinkType', {
+                context: 'description',
+                discord: 'Discord',
+                lastfm: 'last.fm',
+                musicbrainz: 'musicbrainz',
+                postProcess: 'sentenceCase',
+            }),
+            isHidden: !isElectron(),
+            title: t('setting.discordLinkType', {
+                discord: 'Discord',
+                postProcess: 'sentenceCase',
+            }),
+        },
+        {
+            control: (
                 <Switch
                     checked={settings.showArtistName}
                     onChange={(e) => {
+                        if (!e) return;
                         setSettings({
                             discord: {
                                 ...settings,

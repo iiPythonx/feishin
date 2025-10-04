@@ -1,4 +1,4 @@
-import { CSSProperties, MouseEvent, useCallback, useState } from 'react';
+import { CSSProperties, SyntheticEvent, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import styles from './library-command-item.module.css';
@@ -16,6 +16,7 @@ interface LibraryCommandItemProps {
     handlePlayQueueAdd?: (options: PlayQueueAddOptions) => void;
     id: string;
     imageUrl: null | string;
+    isHighlighted?: boolean;
     itemType: LibraryItem;
     subtitle?: string;
     title?: string;
@@ -26,6 +27,7 @@ export const LibraryCommandItem = ({
     handlePlayQueueAdd,
     id,
     imageUrl,
+    isHighlighted,
     itemType,
     subtitle,
     title,
@@ -33,8 +35,9 @@ export const LibraryCommandItem = ({
     const { t } = useTranslation();
 
     const handlePlay = useCallback(
-        (e: MouseEvent, id: string, playType: Play) => {
+        (e: SyntheticEvent, id: string, playType: Play) => {
             e.stopPropagation();
+            e.preventDefault();
             handlePlayQueueAdd?.({
                 byItemType: {
                     id: [id],
@@ -47,6 +50,8 @@ export const LibraryCommandItem = ({
     );
 
     const [isHovered, setIsHovered] = useState(false);
+
+    const showControls = isHighlighted || isHovered;
 
     return (
         <Flex
@@ -73,13 +78,19 @@ export const LibraryCommandItem = ({
                     </Text>
                 </div>
             </div>
-            {isHovered && (
+            {showControls && (
                 <Group align="center" gap="sm" justify="flex-end" wrap="nowrap">
                     <ActionIcon
                         disabled={disabled}
                         icon="mediaPlay"
                         onClick={(e) => handlePlay(e, id, Play.NOW)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                handlePlay(e, id, Play.NOW);
+                            }
+                        }}
                         size="xs"
+                        tabIndex={disabled ? -1 : 0}
                         tooltip={{
                             label: t('player.play', { postProcess: 'sentenceCase' }),
                             openDelay: 500,
@@ -91,7 +102,13 @@ export const LibraryCommandItem = ({
                             disabled={disabled}
                             icon="mediaShuffle"
                             onClick={(e) => handlePlay(e, id, Play.SHUFFLE)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    handlePlay(e, id, Play.SHUFFLE);
+                                }
+                            }}
                             size="xs"
+                            tabIndex={disabled ? -1 : 0}
                             tooltip={{
                                 label: t('player.shuffle', { postProcess: 'sentenceCase' }),
                                 openDelay: 500,
@@ -103,7 +120,13 @@ export const LibraryCommandItem = ({
                         disabled={disabled}
                         icon="mediaPlayLast"
                         onClick={(e) => handlePlay(e, id, Play.LAST)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                handlePlay(e, id, Play.LAST);
+                            }
+                        }}
                         size="xs"
+                        tabIndex={disabled ? -1 : 0}
                         tooltip={{
                             label: t('player.addLast', { postProcess: 'sentenceCase' }),
 
@@ -115,7 +138,13 @@ export const LibraryCommandItem = ({
                         disabled={disabled}
                         icon="mediaPlayNext"
                         onClick={(e) => handlePlay(e, id, Play.NEXT)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                handlePlay(e, id, Play.NEXT);
+                            }
+                        }}
                         size="xs"
+                        tabIndex={disabled ? -1 : 0}
                         tooltip={{
                             label: t('player.addNext', { postProcess: 'sentenceCase' }),
                             openDelay: 500,

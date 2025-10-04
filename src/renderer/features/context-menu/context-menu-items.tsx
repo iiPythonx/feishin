@@ -11,8 +11,10 @@ export const QUEUE_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
     { children: true, disabled: false, id: 'setRating' },
     { disabled: false, divider: false, id: 'deselectAll' },
     { id: 'download' },
-    { divider: false, id: 'shareItem' },
-    { divider: false, id: 'showDetails' },
+    { divider: true, id: 'shareItem' },
+    { id: 'goToAlbum' },
+    { id: 'goToAlbumArtist' },
+    { divider: true, id: 'showDetails' },
 ];
 
 export const SONG_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
@@ -26,8 +28,10 @@ export const SONG_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
     { divider: false, id: 'removeFromFavorites' },
     { children: true, disabled: false, divider: false, id: 'setRating' },
     { id: 'download' },
-    { divider: false, id: 'shareItem' },
-    { divider: false, id: 'showDetails' },
+    { divider: true, id: 'shareItem' },
+    { id: 'goToAlbum' },
+    { id: 'goToAlbumArtist' },
+    { divider: true, id: 'showDetails' },
 ];
 
 export const SONG_ALBUM_PAGE: SetContextMenuItems = [
@@ -50,8 +54,10 @@ export const PLAYLIST_SONG_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
     { divider: false, id: 'removeFromFavorites' },
     { children: true, disabled: false, id: 'setRating' },
     { id: 'download' },
-    { divider: false, id: 'shareItem' },
-    { divider: false, id: 'showDetails' },
+    { divider: true, id: 'shareItem' },
+    { id: 'goToAlbum' },
+    { id: 'goToAlbumArtist' },
+    { divider: true, id: 'showDetails' },
 ];
 
 export const SMART_PLAYLIST_SONG_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
@@ -65,8 +71,10 @@ export const SMART_PLAYLIST_SONG_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
     { divider: false, id: 'removeFromFavorites' },
     { children: true, disabled: false, id: 'setRating' },
     { id: 'download' },
-    { divider: false, id: 'shareItem' },
-    { divider: false, id: 'showDetails' },
+    { divider: true, id: 'shareItem' },
+    { id: 'goToAlbum' },
+    { id: 'goToAlbumArtist' },
+    { divider: true, id: 'showDetails' },
 ];
 
 export const ALBUM_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
@@ -77,9 +85,10 @@ export const ALBUM_CONTEXT_MENU_ITEMS: SetContextMenuItems = [
     { divider: false, id: 'addToPlaylist' },
     { id: 'addToFavorites' },
     { id: 'removeFromFavorites' },
-    { children: true, disabled: false, divider: false, id: 'setRating' },
-    { divider: false, id: 'shareItem' },
-    { divider: false, id: 'showDetails' },
+    { children: true, disabled: false, divider: true, id: 'setRating' },
+    { divider: true, id: 'shareItem' },
+    { id: 'goToAlbumArtist' },
+    { divider: true, id: 'showDetails' },
 ];
 
 export const GENRE_CONTEXT_MENU_ITEMS: SetContextMenuItems = [

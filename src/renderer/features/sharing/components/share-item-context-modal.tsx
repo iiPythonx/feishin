@@ -1,6 +1,7 @@
 import { useForm } from '@mantine/form';
 import { closeModal, ContextModalProps } from '@mantine/modals';
 import { useState } from 'react';
+import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { RiSaveLine } from 'react-icons/ri';
 
@@ -35,8 +36,7 @@ export const ShareItemContextModal = ({
     const shareItemMutation = useShareItem({});
 
     // Uses the same default as Navidrome: 1 year
-    const defaultDate = new Date();
-    defaultDate.setFullYear(defaultDate.getFullYear() + 1);
+    const defaultDate = dayjs().add(1, 'year').format('YYYY-MM-DD HH:mm:ss');
 
     const form = useForm({
         initialValues: {
@@ -46,7 +46,7 @@ export const ShareItemContextModal = ({
         },
         validate: {
             expires: (value) =>
-                value > new Date()
+                dayjs(value).isAfter(dayjs())
                     ? null
                     : t('form.shareItem.expireInvalid', {
                           postProcess: 'sentenceCase',
@@ -60,7 +60,7 @@ export const ShareItemContextModal = ({
                 body: {
                     description: values.description,
                     downloadable: values.allowDownloading,
-                    expires: values.expires.getTime(),
+                    expires: dayjs(values.expires).valueOf(),
                     resourceIds: itemIds.join(),
                     resourceType,
                 },
@@ -114,7 +114,7 @@ export const ShareItemContextModal = ({
                         postProcess: 'titleCase',
                     })}
                     minDate={new Date()}
-                    placeholder={defaultDate.toLocaleDateString()}
+                    placeholder={defaultDate}
                     popoverProps={{ withinPortal: true }}
                     valueFormat="MM/DD/YYYY HH:mm"
                     {...form.getInputProps('expires')}

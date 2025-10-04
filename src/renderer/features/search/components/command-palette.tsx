@@ -5,6 +5,7 @@ import { generatePath, useNavigate } from 'react-router';
 
 import { usePlayQueueAdd } from '/@/renderer/features/player';
 import { Command, CommandPalettePages } from '/@/renderer/features/search/components/command';
+import { CommandItemSelectable } from '/@/renderer/features/search/components/command-item-selectable';
 import { GoToCommands } from '/@/renderer/features/search/components/go-to-commands';
 import { HomeCommands } from '/@/renderer/features/search/components/home-commands';
 import { LibraryCommandItem } from '/@/renderer/features/search/components/library-command-item';
@@ -112,6 +113,13 @@ export const CommandPalette = ({ modalProps }: CommandPaletteProps) => {
                     return 0;
                 }}
                 label="Global Command Menu"
+                onKeyDown={(e) => {
+                    // Focus the search input when navigating with arrow keys
+                    // to prevent the focus from staying on the command-item ActionIcon
+                    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                        searchInputRef.current?.focus();
+                    }
+                }}
                 onValueChange={setValue}
                 value={value}
             >
@@ -142,7 +150,7 @@ export const CommandPalette = ({ modalProps }: CommandPaletteProps) => {
                     {showAlbumGroup && (
                         <Command.Group heading="Albums">
                             {data?.albums?.map((album) => (
-                                <Command.Item
+                                <CommandItemSelectable
                                     key={`search-album-${album.id}`}
                                     onSelect={() => {
                                         navigate(
@@ -155,24 +163,27 @@ export const CommandPalette = ({ modalProps }: CommandPaletteProps) => {
                                     }}
                                     value={`search-${album.id}`}
                                 >
-                                    <LibraryCommandItem
-                                        handlePlayQueueAdd={handlePlayQueueAdd}
-                                        id={album.id}
-                                        imageUrl={album.imageUrl}
-                                        itemType={LibraryItem.ALBUM}
-                                        subtitle={album.albumArtists
-                                            .map((artist) => artist.name)
-                                            .join(', ')}
-                                        title={album.name}
-                                    />
-                                </Command.Item>
+                                    {({ isHighlighted }) => (
+                                        <LibraryCommandItem
+                                            handlePlayQueueAdd={handlePlayQueueAdd}
+                                            id={album.id}
+                                            imageUrl={album.imageUrl}
+                                            isHighlighted={isHighlighted}
+                                            itemType={LibraryItem.ALBUM}
+                                            subtitle={album.albumArtists
+                                                .map((artist) => artist.name)
+                                                .join(', ')}
+                                            title={album.name}
+                                        />
+                                    )}
+                                </CommandItemSelectable>
                             ))}
                         </Command.Group>
                     )}
                     {showArtistGroup && (
                         <Command.Group heading="Artists">
                             {data?.albumArtists.map((artist) => (
-                                <Command.Item
+                                <CommandItemSelectable
                                     key={`artist-${artist.id}`}
                                     onSelect={() => {
                                         navigate(
@@ -185,30 +196,33 @@ export const CommandPalette = ({ modalProps }: CommandPaletteProps) => {
                                     }}
                                     value={`search-${artist.id}`}
                                 >
-                                    <LibraryCommandItem
-                                        disabled={artist?.albumCount === 0}
-                                        handlePlayQueueAdd={handlePlayQueueAdd}
-                                        id={artist.id}
-                                        imageUrl={artist.imageUrl}
-                                        itemType={LibraryItem.ALBUM_ARTIST}
-                                        subtitle={
-                                            artist?.albumCount !== undefined &&
-                                            artist?.albumCount !== null
-                                                ? t('entity.albumWithCount', {
-                                                      count: artist.albumCount,
-                                                  })
-                                                : undefined
-                                        }
-                                        title={artist.name}
-                                    />
-                                </Command.Item>
+                                    {({ isHighlighted }) => (
+                                        <LibraryCommandItem
+                                            disabled={artist?.albumCount === 0}
+                                            handlePlayQueueAdd={handlePlayQueueAdd}
+                                            id={artist.id}
+                                            imageUrl={artist.imageUrl}
+                                            isHighlighted={isHighlighted}
+                                            itemType={LibraryItem.ALBUM_ARTIST}
+                                            subtitle={
+                                                artist?.albumCount !== undefined &&
+                                                artist?.albumCount !== null
+                                                    ? t('entity.albumWithCount', {
+                                                          count: artist.albumCount,
+                                                      })
+                                                    : undefined
+                                            }
+                                            title={artist.name}
+                                        />
+                                    )}
+                                </CommandItemSelectable>
                             ))}
                         </Command.Group>
                     )}
                     {showTrackGroup && (
                         <Command.Group heading="Tracks">
                             {data?.songs.map((song) => (
-                                <Command.Item
+                                <CommandItemSelectable
                                     key={`artist-${song.id}`}
                                     onSelect={() => {
                                         navigate(
@@ -221,17 +235,20 @@ export const CommandPalette = ({ modalProps }: CommandPaletteProps) => {
                                     }}
                                     value={`search-${song.id}`}
                                 >
-                                    <LibraryCommandItem
-                                        handlePlayQueueAdd={handlePlayQueueAdd}
-                                        id={song.id}
-                                        imageUrl={song.imageUrl}
-                                        itemType={LibraryItem.SONG}
-                                        subtitle={song.artists
-                                            .map((artist) => artist.name)
-                                            .join(', ')}
-                                        title={song.name}
-                                    />
-                                </Command.Item>
+                                    {({ isHighlighted }) => (
+                                        <LibraryCommandItem
+                                            handlePlayQueueAdd={handlePlayQueueAdd}
+                                            id={song.id}
+                                            imageUrl={song.imageUrl}
+                                            isHighlighted={isHighlighted}
+                                            itemType={LibraryItem.SONG}
+                                            subtitle={song.artists
+                                                .map((artist) => artist.name)
+                                                .join(', ')}
+                                            title={song.name}
+                                        />
+                                    )}
+                                </CommandItemSelectable>
                             ))}
                         </Command.Group>
                     )}

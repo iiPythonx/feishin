@@ -237,6 +237,8 @@
             "input_legacyAuthentication": "enable legacy authentication",
             "input_name": "server name",
             "input_password": "password",
+            "input_preferInstantMix": "prefer instant mix",
+            "input_preferInstantMixDescription": "only use instant mix to get similar songs. useful if you have plugins that modify this behavior",
             "input_savePassword": "save password",
             "input_url": "url",
             "input_username": "username",
@@ -288,6 +290,11 @@
         "updateServer": {
             "success": "server updated successfully",
             "title": "update server"
+        },
+        "privateMode": {
+            "enabled": "private mode enabled, playback status is now hidden from external integrations",
+            "disabled": "private mode disabled, playback status is now visible to enabled external integrations",
+            "title": "private mode"
         }
     },
     "page": {
@@ -321,6 +328,8 @@
             "goBack": "go back",
             "goForward": "go forward",
             "manageServers": "manage servers",
+            "privateModeOff": "turn off private mode",
+            "privateModeOn": "turn on private mode",
             "openBrowserDevtools": "open browser devtools",
             "quit": "$t(common.quit)",
             "selectServer": "select server",
@@ -357,6 +366,8 @@
             "setRating": "$t(action.setRating)",
             "playShuffled": "$t(player.shuffle)",
             "shareItem": "share item",
+            "goToAlbum": "go to $t(entity.album_one)",
+            "goToAlbumArtist": "go to $t(entity.albumArtist_one)",
             "showDetails": "get info"
         },
         "fullscreenPlayer": {
@@ -531,6 +542,14 @@
         "discordServeImage_description": "share cover art for {{discord}} rich presence from server itself, only available for jellyfin and navidrome",
         "discordUpdateInterval": "{{discord}} rich presence update interval",
         "discordUpdateInterval_description": "the time in seconds between each update (minimum 15 seconds)",
+        "discordDisplayType": "{{discord}} presence display type",
+        "discordDisplayType_description": "changes what you are listening to in your status",
+        "discordDisplayType_songname": "song name",
+        "discordDisplayType_artistname": "artist name(s)",
+        "discordLinkType": "{{discord}} presence links",
+        "discordLinkType_description": "adds external links to {{lastfm}} or {{musicbrainz}} to the song and artist fields in {{discord}} rich presence. {{musicbrainz}} is the most accurate but requires tags and doesn't provide artist links while {{lastfm}} should always provide a link. makes no extra network requests",
+        "discordLinkType_none": "$t(common.none)",
+        "discordLinkType_mbz_lastfm": "{{musicbrainz}} with {{lastfm}} fallback",
         "doubleClickBehavior": "queue all searched tracks when double clicking",
         "doubleClickBehavior_description": "if true, all matching tracks in a track search will be queued. otherwise, only the clicked one will be queued",
         "enableRemote": "enable remote control server",
@@ -569,6 +588,7 @@
         "hotkey_favoritePreviousSong": "favorite $t(common.previousSong)",
         "hotkey_globalSearch": "global search",
         "hotkey_localSearch": "in-page search",
+        "hotkey_navigateHome": "navigate to home",
         "hotkey_playbackNext": "next track",
         "hotkey_playbackPause": "pause",
         "hotkey_playbackPlay": "play",
@@ -685,6 +705,8 @@
         "skipPlaylistPage_description": "when navigating to a playlist, go to the playlist song list page instead of the default page",
         "startMinimized": "start minimized",
         "startMinimized_description": "start the application in system tray",
+        "preventSleepOnPlayback": "prevent sleep on playback",
+        "preventSleepOnPlayback_description": "prevent the display from sleeping while music is playing",
         "theme": "theme",
         "theme_description": "sets the theme to use for the application",
         "themeDark": "theme (dark)",

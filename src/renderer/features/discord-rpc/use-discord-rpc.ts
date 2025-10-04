@@ -3,7 +3,7 @@ import axios from 'axios';
 import isElectron from 'is-electron';
 import { useCallback, useEffect, useState } from 'react';
 
-import { useDiscordSetttings, usePlayerStore } from '/@/renderer/store';
+import { DiscordLinkType, useAppStore, useDiscordSettings, usePlayerStore } from '/@/renderer/store';
 import { QueueSong } from '/@/shared/types/domain-types';
 import { PlayerStatus } from '/@/shared/types/types';
 import { toast } from '/@/shared/components/toast/toast';
@@ -11,7 +11,8 @@ import { toast } from '/@/shared/components/toast/toast';
 const discordRpc = isElectron() ? window.api.discordRpc : null;
 
 export const useDiscordRpc = () => {
-    const discordSettings = useDiscordSetttings();
+    const discordSettings = useDiscordSettings();
+    const { privateMode } = useAppStore();
     const [lastImageUrl, setLastImageUrl] = useState('icon');
     const [lastUniqueId, setlastUniqueId] = useState('');
     const [firstChangeHandled, setFirstChangeHandled] = useState(false);
@@ -34,6 +35,7 @@ export const useDiscordRpc = () => {
             const song = current[0] as QueueSong;
             const trackChanged = lastUniqueId !== song.uniqueId;
             if (
+                previous[1] === 0 ||
                 Math.abs((current[1] as number) - (previous[1] as number)) > 1.2 ||
                 trackChanged ||
                 current[2] !== previous[2]
@@ -55,6 +57,34 @@ export const useDiscordRpc = () => {
                     state: `by ${song.artistName}`,
                     type: discordSettings.showAsListening ? 2 : 0,
                 };
+
+                if (
+                    (discordSettings.linkType == DiscordLinkType.LAST_FM ||
+                        discordSettings.linkType == DiscordLinkType.MBZ_LAST_FM) &&
+                    song?.artistName
+                ) {
+                    activity.stateUrl =
+                        'https://www.last.fm/music/' + encodeURIComponent(song.artists[0].name);
+                    activity.detailsUrl =
+                        'https://www.last.fm/music/' +
+                        encodeURIComponent(song.albumArtists[0].name) +
+                        '/' +
+                        encodeURIComponent(song.album || '_') +
+                        '/' +
+                        encodeURIComponent(song.name);
+                }
+
+                if (
+                    discordSettings.linkType == DiscordLinkType.MBZ ||
+                    discordSettings.linkType == DiscordLinkType.MBZ_LAST_FM
+                ) {
+                    if (song?.mbzTrackId) {
+                        activity.detailsUrl = 'https://musicbrainz.org/track/' + song.mbzTrackId;
+                    } else if (song?.mbzRecordingId) {
+                        activity.detailsUrl =
+                            'https://musicbrainz.org/recording/' + song.mbzRecordingId;
+                    }
+                }
 
                 if ((current[2] as PlayerStatus) === PlayerStatus.PLAYING) {
                     activity.endTimestamp = end;
@@ -122,7 +152,7 @@ export const useDiscordRpc = () => {
         ],
     );
     useEffect(() => {
-        if (!discordSettings.enabled) return;
+        if (!discordSettings.enabled || privateMode) return;
         const unsubSongChange = usePlayerStore.subscribe(
             (state) => [state.current.song, state.current.time, state.current.status],
             updateActivity,
@@ -130,5 +160,5 @@ export const useDiscordRpc = () => {
         return () => {
             unsubSongChange();
         };
-    }, [updateActivity, discordSettings.enabled]);
+    }, [updateActivity, privateMode, discordSettings.enabled]);
 };

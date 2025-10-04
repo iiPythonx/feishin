@@ -4,7 +4,7 @@
         "stop": "zastavit",
         "repeat": "opakovat",
         "queue_remove": "odebrat vybrané",
-        "playRandom": "přehrát náhodné",
+        "playRandom": "přehrát náhodně",
         "skip": "přeskočit",
         "previous": "předchozí",
         "toggleFullscreenPlayer": "přepnout celoobrazovkový přehrávač",
@@ -271,7 +271,16 @@
         "discordPausedStatus": "zobrazit rich presence při pozastavení",
         "discordPausedStatus_description": "pokud je povoleno, bude při pozastavení přehrávače zobrazen stav",
         "preservePitch": "zachovat výšku",
-        "preservePitch_description": "zachová výšku při úpravě rychlosti přehrávání"
+        "preservePitch_description": "zachová výšku při úpravě rychlosti přehrávání",
+        "notify": "povolit oznámení o skladbách",
+        "notify_description": "zobrazit oznámení při změně aktuální skladby",
+        "discordDisplayType": "typ zobrazení stavu {{discord}}",
+        "discordDisplayType_description": "změní, co posloucháte, ve vašem stavu",
+        "discordDisplayType_songname": "název skladby",
+        "discordDisplayType_artistname": "jména umělců",
+        "hotkey_navigateHome": "přejít domů",
+        "preventSleepOnPlayback": "zabránit uspání při přehrávání",
+        "preventSleepOnPlayback_description": "zabránit uspání displeje během přehrávání hudby"
     },
     "action": {
         "editPlaylist": "upravit $t(entity.playlist_one)",
@@ -393,7 +402,9 @@
         "additionalParticipants": "další přispívající",
         "tags": "štítky",
         "viewReleaseNotes": "zobrazit seznam změn",
-        "newVersion": "byla nainstalována nová verze ({{version}})"
+        "newVersion": "byla nainstalována nová verze ({{version}})",
+        "bitDepth": "bitová hloubka",
+        "sampleRate": "vzorkovací frekvence"
     },
     "table": {
         "config": {
@@ -495,7 +506,8 @@
         "badAlbum": "tuto stránku vidíte, protože tato skladba není součástí alba. tento problém může nastat, pokud máte skladbu na nejvyšší úrovni vaší složky s hudbou. jellyfin seskupuje skladby pouze, pokud se nacházejí ve složce.",
         "networkError": "vyskytla se chyba sítě",
         "openError": "nepodařilo se otevřít soubor",
-        "badValue": "neplatná možnost „{{value}}“. tato možnost již neexistuje"
+        "badValue": "neplatná možnost „{{value}}“. tato možnost již neexistuje",
+        "notificationDenied": "oprávnění k posílání oznámení byla zamítnuta. toto nastavení nemá žádný vliv"
     },
     "filter": {
         "mostPlayed": "nejvíce přehráváno",
@@ -590,7 +602,9 @@
             "openBrowserDevtools": "otevřít vývojářské nástroje",
             "quit": "$t(common.quit)",
             "goBack": "přejít zpět",
-            "goForward": "přejít vpřed"
+            "goForward": "přejít vpřed",
+            "privateModeOff": "vypnout soukromý režim",
+            "privateModeOn": "zapnout soukromý režim"
         },
         "contextMenu": {
             "addToPlaylist": "$t(action.addToPlaylist)",
@@ -614,7 +628,9 @@
             "playSimilarSongs": "$t(player.playSimilarSongs)",
             "download": "stáhnout",
             "playShuffled": "$t(player.shuffle)",
-            "moveToNext": "$t(action.moveToNext)"
+            "moveToNext": "$t(action.moveToNext)",
+            "goToAlbum": "přejít na $t(entity.album_one)",
+            "goToAlbumArtist": "přejít na $t(entity.albumArtist_one)"
         },
         "home": {
             "mostPlayed": "nejpřehrávanější",
@@ -751,6 +767,11 @@
             "expireInvalid": "čas vypršení musí být v budoucnosti",
             "setExpiration": "nastavit vypršení",
             "createFailed": "nepodařilo se vytvořit sdílení (je sdílení povoleno?)"
+        },
+        "privateMode": {
+            "enabled": "soukromý režim povolen, stav přehrávání je nyní skryt před externími integracemi",
+            "disabled": "soukromý režim povolen, stav přehrávání je nyní viditelný pro externími integrace",
+            "title": "soukromý režim"
         }
     },
     "entity": {

@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { MouseEvent, useCallback } from 'react';
 
 import styles from './playerbar.module.css';
@@ -6,6 +7,7 @@ import { AudioPlayer } from '/@/renderer/components';
 import { CenterControls } from '/@/renderer/features/player/components/center-controls';
 import { LeftControls } from '/@/renderer/features/player/components/left-controls';
 import { RightControls } from '/@/renderer/features/player/components/right-controls';
+import { usePowerSaveBlocker } from '/@/renderer/features/player/hooks/use-power-save-blocker';
 import { PlayersRef } from '/@/renderer/features/player/ref/players-ref';
 import { updateSong } from '/@/renderer/features/player/update-remote-song';
 import {
@@ -24,6 +26,7 @@ import {
     usePlaybackType,
     useSettingsStore,
 } from '/@/renderer/store/settings.store';
+import { PlaybackSelectors } from '/@/shared/constants/playback-selectors';
 import { PlaybackType } from '/@/shared/types/types';
 
 export const Playerbar = () => {
@@ -41,6 +44,8 @@ export const Playerbar = () => {
     const { expanded: isFullScreenPlayerExpanded } = useFullScreenPlayerStore();
     const setFullScreenPlayerStore = useSetFullScreenPlayerStore();
 
+    usePowerSaveBlocker();
+
     const handleToggleFullScreenPlayer = (e?: KeyboardEvent | MouseEvent<HTMLDivElement>) => {
         e?.stopPropagation();
         setFullScreenPlayerStore({ expanded: !isFullScreenPlayerExpanded });
@@ -53,7 +58,7 @@ export const Playerbar = () => {
 
     return (
         <div
-            className={styles.container}
+            className={clsx(styles.container, PlaybackSelectors.mediaPlayer)}
             onClick={playerbarOpenDrawer ? handleToggleFullScreenPlayer : undefined}
         >
             <div className={styles.controlsGrid}>

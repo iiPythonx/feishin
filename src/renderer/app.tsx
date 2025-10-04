@@ -15,8 +15,6 @@ import '@ag-grid-community/styles/ag-grid.css';
 import 'overlayscrollbars/overlayscrollbars.css';
 
 import i18n from '/@/i18n/i18n';
-import { ContextMenuProvider } from '/@/renderer/features/context-menu';
-import '/styles/overlayscrollbars.css';
 import { useDiscordRpc } from '/@/renderer/features/discord-rpc/use-discord-rpc';
 import { PlayQueueHandlerContext } from '/@/renderer/features/player';
 import { WebAudioContext } from '/@/renderer/features/player/context/webaudio-context';
@@ -207,13 +205,20 @@ export const App = () => {
 
     return (
         <MantineProvider defaultColorScheme={mode as 'dark' | 'light'} theme={theme}>
-            <Notifications containerWidth="300px" position="bottom-center" zIndex={50000} />
+            <Notifications
+                containerWidth="300px"
+                position="bottom-center"
+                styles={{
+                    root: {
+                        marginBottom: 90,
+                    },
+                }}
+                zIndex={50000}
+            />
             <PlayQueueHandlerContext.Provider value={providerValue}>
-                <ContextMenuProvider>
-                    <WebAudioContext.Provider value={webAudioProvider}>
-                        <AppRouter />
-                    </WebAudioContext.Provider>{' '}
-                </ContextMenuProvider>
+                <WebAudioContext.Provider value={webAudioProvider}>
+                    <AppRouter />
+                </WebAudioContext.Provider>
             </PlayQueueHandlerContext.Provider>
             <IsUpdatedDialog />
         </MantineProvider>

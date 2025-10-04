@@ -88,7 +88,10 @@ const getSongCoverArtUrl = (args: {
             `/${args.item.Id}` +
             '/Images/Primary' +
             `?width=${size}` +
-            '&quality=96'
+            '&quality=96' +
+            // Invalidate the cache if the image chances. This appears to be
+            // how Jellyfin Web does it as well
+            `&tag=${args.item.ImageTags.Primary}`
         );
     }
 
@@ -258,6 +261,8 @@ const normalizeSong = (
         itemType: LibraryItem.SONG,
         lastPlayedAt: null,
         lyrics: null,
+        mbzRecordingId: null,
+        mbzTrackId: item.ProviderIds?.MusicBrainzTrack || null,
         name: item.Name,
         participants: getPeople(item),
         path,

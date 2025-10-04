@@ -35,39 +35,13 @@ mac:
     notarize: false
 dmg:
     contents: [{ x: 130, y: 220 }, { x: 410, y: 220, type: link, path: /Applications }]
-deb:
-    depends:
-        - libgssapi_krb5.so.2
-        - libavahi-common.so.3
-        - libavahi-client.so.3
-        - libkrb5.so.3
-        - libkrb5support.so.0
-        - libkeyutils.so.1
-        - libcups.so.2
-rpm:
-    depends:
-        - libgssapi_krb5.so.2
-        - libavahi-common.so.3
-        - libavahi-client.so.3
-        - libkrb5.so.3
-        - libkrb5support.so.0
-        - libkeyutils.so.1
-        - libcups.so.2
-freebsd:
-    depends:
-        - libgssapi_krb5.so.2
-        - libavahi-common.so.3
-        - libavahi-client.so.3
-        - libkrb5.so.3
-        - libkrb5support.so.0
-        - libkeyutils.so.1
-        - libcups.so.2
 linux:
     target:
         - AppImage
         - tar.xz
     category: AudioVideo;Audio;Player
     icon: assets/icons/icon.png
+    artifactName: ${productName}-${os}-${arch}.${ext}
 npmRebuild: false
 publish:
     provider: github

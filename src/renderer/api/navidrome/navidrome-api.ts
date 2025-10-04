@@ -349,7 +349,14 @@ axiosClient.interceptors.response.use(
                     .catch((newError: any) => {
                         if (newError !== TIMEOUT_ERROR) {
                             console.error('Error when trying to reauthenticate: ', newError);
-                            limitedFail(currentServer);
+
+                            if (isAxiosError(newError) && newError.code === 'ERR_NETWORK') {
+                                console.log(
+                                    'Network error during reauthentication - preserving credentials',
+                                );
+                            } else {
+                                limitedFail(currentServer);
+                            }
                         }
 
                         // make sure to pass the error so axios will error later on
@@ -360,7 +367,11 @@ axiosClient.interceptors.response.use(
                     });
             }
 
-            limitedFail(currentServer);
+            if (isAxiosError(error) && error.code === 'ERR_NETWORK') {
+                console.log('Network error during authentication - preserving credentials');
+            } else {
+                limitedFail(currentServer);
+            }
         }
 
         return Promise.reject(error);

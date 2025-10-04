@@ -133,6 +133,7 @@ export enum BindingActions {
     GLOBAL_SEARCH = 'globalSearch',
     LOCAL_SEARCH = 'localSearch',
     MUTE = 'volumeMute',
+    NAVIGATE_HOME = 'navigateHome',
     NEXT = 'next',
     PAUSE = 'pause',
     PLAY = 'play',
@@ -155,6 +156,19 @@ export enum BindingActions {
     VOLUME_UP = 'volumeUp',
     ZOOM_IN = 'zoomIn',
     ZOOM_OUT = 'zoomOut',
+}
+
+export enum DiscordDisplayType {
+    ARTIST_NAME = 'artist',
+    FEISHIN = 'feishin',
+    SONG_NAME = 'song',
+}
+
+export enum DiscordLinkType {
+    LAST_FM = 'last_fm',
+    MBZ = 'musicbrainz',
+    MBZ_LAST_FM = 'musicbrainz_last_fm',
+    NONE = 'none',
 }
 
 export enum GenreTarget {
@@ -200,6 +214,7 @@ export interface SettingsState {
     discord: {
         clientId: string;
         enabled: boolean;
+        linkType: DiscordLinkType;
         proxyType: string;
         proxyUrl: string;
         showArtistName: boolean;
@@ -320,6 +335,7 @@ export interface SettingsState {
     window: {
         exitToTray: boolean;
         minimizeToTray: boolean;
+        preventSleepOnPlayback: boolean;
         startMinimized: boolean;
         tray: boolean;
         windowBarStyle: Platform;
@@ -361,6 +377,7 @@ const initialState: SettingsState = {
     discord: {
         clientId: '1117545345690374277',
         enabled: true,
+        linkType: DiscordLinkType.NONE,
         proxyType: 'pizza',
         proxyUrl: '',
         showArtistName: false,
@@ -423,6 +440,7 @@ const initialState: SettingsState = {
             favoritePreviousToggle: { allowGlobal: true, hotkey: '', isGlobal: false },
             globalSearch: { allowGlobal: false, hotkey: 'mod+t', isGlobal: false },
             localSearch: { allowGlobal: false, hotkey: 'mod+f', isGlobal: false },
+            navigateHome: { allowGlobal: false, hotkey: '', isGlobal: false },
             next: { allowGlobal: true, hotkey: '', isGlobal: false },
             pause: { allowGlobal: true, hotkey: '', isGlobal: false },
             play: { allowGlobal: true, hotkey: '', isGlobal: false },
@@ -670,6 +688,7 @@ const initialState: SettingsState = {
     window: {
         exitToTray: false,
         minimizeToTray: false,
+        preventSleepOnPlayback: false,
         startMinimized: false,
         tray: true,
         windowBarStyle: platformDefaultWindowBarStyle,
@@ -809,7 +828,7 @@ export const useRemoteSettings = () => useSettingsStore((state) => state.remote,
 
 export const useFontSettings = () => useSettingsStore((state) => state.font, shallow);
 
-export const useDiscordSetttings = () => useSettingsStore((state) => state.discord, shallow);
+export const useDiscordSettings = () => useSettingsStore((state) => state.discord, shallow);
 
 export const useCssSettings = () => useSettingsStore((state) => state.css, shallow);
 

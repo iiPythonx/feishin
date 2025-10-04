@@ -104,13 +104,21 @@
         "year": "år",
         "yes": "ja",
         "descending": "synkende",
-        "dismiss": "avkreft",
+        "dismiss": "lukk",
         "delete": "slett",
         "description": "beskrivelse",
         "manage": "håndtere",
         "maximize": "maksimer",
         "right": "høyre",
-        "sortOrder": "rekkefølge"
+        "sortOrder": "rekkefølge",
+        "tags": "tagger",
+        "newVersion": "en ny versjon har blitt installert ({{version}})",
+        "viewReleaseNotes": "se utgivelsesnotater",
+        "additionalParticipants": "ytterligere deltakere",
+        "albumGain": "gjennomsnittlig lydnivå for album",
+        "albumPeak": "høyeste lydnivå for album",
+        "bitDepth": "bitdybde",
+        "sampleRate": "samplingsfrekvens"
     },
     "entity": {
         "smartPlaylist": "smart $t(entity.playlist_one)",
@@ -153,7 +161,7 @@
         "apiRouteError": "kan ikke behandle forespørselen",
         "mpvRequired": "MPV er påkrevd",
         "authenticationFailed": "autentisering feilet",
-        "badAlbum": "du ser denne siden fordi sangen ikke er med i et album. Mest sannsynlig opplever du dette problemet fordi du har en sang helt øverst i musikkmappen. jellyfin gruperer kun spor som ligger i en mappe.",
+        "badAlbum": "du ser denne siden fordi sangen ikke er med i et album. Mest sannsynlig opplever du dette problemet fordi du har en sang helt øverst i musikkmappen. Jellyfin grupperer kun spor som ligger i en mappe.",
         "endpointNotImplementedError": "endepunkt {{endpoint}} er ikke implementert for {{serverType}}",
         "credentialsRequired": "innloggingsdetaljer er påkrevd",
         "genericError": "en feil har oppstått",
@@ -171,7 +179,9 @@
         "sessionExpiredError": "sesjonen din har utløpt",
         "remotePortWarning": "ta omstart av serveren for å aktivere ny port",
         "remoteDisableError": "en problem oppstod ved å $t(common.disable) serveren",
-        "remoteEnableError": "et problem oppstod ved å $t(common.enable) serveren"
+        "remoteEnableError": "et problem oppstod ved å $t(common.enable) serveren",
+        "notificationDenied": "tillatelser for varsler ble avvist. Denne innstillingen har ingen effekt",
+        "badValue": "ugyldig alternativ \"{{value}}\". Denne verdien eksisterer ikke lenger"
     },
     "filter": {
         "bpm": "bpm",
@@ -214,7 +224,8 @@
         "recentlyAdded": "nylig lagt til",
         "channels": "$t(common.channel_other)",
         "genre": "$t(entity.genre_one)",
-        "trackNumber": "spor"
+        "trackNumber": "spor",
+        "albumCount": "$t(entity.album_other) opptelling"
     },
     "form": {
         "createPlaylist": {
@@ -233,7 +244,7 @@
         "addServer": {
             "ignoreCors": "ignorer cors ($t(common.restartRequired))",
             "ignoreSsl": "ignorer ssl ($t(common.restartRequired))",
-            "error_savePassword": "en problem oppstod ved lagring av passord",
+            "error_savePassword": "et problem oppstod ved lagring av passord",
             "input_savePassword": "lagre passord",
             "input_url": "lenke",
             "input_username": "brukernavn",
@@ -269,6 +280,11 @@
         "updateServer": {
             "success": "vellykket oppdatering av serveren",
             "title": "oppdater server"
+        },
+        "queryEditor": {
+            "input_optionMatchAll": "match alle",
+            "input_optionMatchAny": "matche hvilken som helst",
+            "title": "redigeringsverktøy for spørringer"
         }
     },
     "page": {
@@ -338,7 +354,7 @@
                 "lyricGap": "sangtekstavstand",
                 "dynamicImageBlur": "bilduskarphetstørrelse",
                 "lyricAlignment": "sangtekstjustering",
-                "lyricOffset": "sangtekstjustering (ms)",
+                "lyricOffset": "sangtekstforskyvning (ms)",
                 "lyricSize": "sangtekststørrelse",
                 "opacity": "absorpsjon",
                 "showLyricMatch": "vis sangteksttreff",
@@ -405,7 +421,8 @@
             "search": "$t(common.search)",
             "settings": "$t(common.setting_other)",
             "shared": "delt $t(entity.playlist_other)",
-            "artists": "$t(entity.artist_other)"
+            "artists": "$t(entity.artist_other)",
+            "myLibrary": "mitt bibliotek"
         },
         "setting": {
             "generalTab": "generelt",
@@ -416,6 +433,9 @@
         },
         "playlistList": {
             "title": "$t(entity.playlist_other)"
+        },
+        "playlist": {
+            "reorder": "omorganisering kun mulig ved sortering på id"
         }
     },
     "player": {
@@ -439,6 +459,68 @@
         "queue_moveToTop": "flytt valgte til bunnen",
         "playbackFetchNoResults": "ingen sanger funnet",
         "playbackSpeed": "avspillingshastighet",
-        "playSimilarSongs": "spill lignende sanger"
+        "playSimilarSongs": "spill lignende sanger",
+        "skip": "hopp over",
+        "shuffle": "spill i tilfeldig rekkefølge",
+        "shuffle_off": "tilfeldig rekkefølge skrudd av",
+        "skip_back": "hopp bakover",
+        "skip_forward": "hopp fremover",
+        "stop": "stopp",
+        "toggleFullscreenPlayer": "bytt til fullskjermspiller",
+        "pause": "sett på pause",
+        "viewQueue": "se kø",
+        "unfavorite": "fjern fra favoritter"
+    },
+    "setting": {
+        "accentColor": "aksentfarge",
+        "accentColor_description": "setter aksentfarge i applikasjonen",
+        "albumBackground": "album bakgrunnsbilde",
+        "albumBackgroundBlur": "album bakgrunnsbilde uskarphetsstørrelse",
+        "albumBackgroundBlur_description": "justerer grad av uskarphet lagt til på album bakgrunnsbilde",
+        "audioDevice": "lydenhet",
+        "zoom": "zoomprosent",
+        "zoom_description": "angir zoomprosent for applikasjonen"
+    },
+    "table": {
+        "config": {
+            "label": {
+                "playCount": "antall avspillinger",
+                "releaseDate": "utgivelsesdato",
+                "trackNumber": "spornummer",
+                "rowIndex": "radindeks",
+                "dateAdded": "dato lagt til",
+                "discNumber": "skivenummer",
+                "lastPlayed": "sist avspilt"
+            },
+            "view": {
+                "table": "tabell",
+                "card": "kort",
+                "grid": "rutenett",
+                "list": "liste",
+                "poster": "plakat"
+            },
+            "general": {
+                "autoFitColumns": "automatisk kolonnetilpasning",
+                "displayType": "visningstype",
+                "followCurrentSong": "følg gjeldende sang"
+            }
+        },
+        "column": {
+            "releaseYear": "år",
+            "comment": "kommentar",
+            "biography": "biografi",
+            "album": "album",
+            "albumArtist": "albumartist",
+            "dateAdded": "dato lagt til",
+            "discNumber": "skive",
+            "favorite": "favoritt",
+            "lastPlayed": "sist avspilt",
+            "path": "sti",
+            "playCount": "avspillinger",
+            "rating": "vurdering",
+            "releaseDate": "utgivelsesdato",
+            "title": "tittel",
+            "trackNumber": "spor"
+        }
     }
 }

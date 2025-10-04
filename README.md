@@ -88,6 +88,7 @@ Feishin supports any music server that implements a [Navidrome](https://www.navi
     - [LMS](https://github.com/epoupon/lms)
     - [Nextcloud Music](https://apps.nextcloud.com/apps/music)
     - [Supysonic](https://github.com/spl0k/supysonic)
+    - [Qm-Music](https://github.com/chenqimiao/qm-music)
     - More (?)
 
 ### I have the issue "The SUID sandbox helper binary was found, but is not configured correctly" on Linux
