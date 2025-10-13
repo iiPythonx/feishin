@@ -22,7 +22,7 @@
             "appearsOn": "apareix a",
             "recentReleases": "Llançaments recents",
             "viewDiscography": "Mosta la discografia",
-            "topSongs": "millos cançons",
+            "topSongs": "millors cançons",
             "topSongsFrom": "les millors cançons de {{title}}",
             "viewAll": "mostra-ho tot"
         },
@@ -89,7 +89,8 @@
             "explore": "explora la teva biblioteca",
             "newlyAdded": "afegits recentment",
             "mostPlayed": "els més reproduïts",
-            "recentlyPlayed": "reproduït recentment"
+            "recentlyPlayed": "reproduït recentment",
+            "recentlyReleased": "estrenat fa poc"
         },
         "playlistList": {
             "title": "$t(entity.playlist_other)"
@@ -349,7 +350,9 @@
             "input_savePassword": "desa la contrasenya",
             "input_url": "url",
             "success": "servidor afegit correctament",
-            "title": "afegeix un servidor"
+            "title": "afegeix un servidor",
+            "input_preferInstantMix": "prefereix el mix instantani",
+            "input_preferInstantMixDescription": "utilitza només el mix instantani per obtenir cançons similars. útil si teniu complements que modifiquin aquest comportament"
         },
         "shareItem": {
             "description": "descripció",
@@ -646,7 +649,11 @@
         "discordDisplayType_artistname": "nom de l'artista",
         "hotkey_navigateHome": "ves a l'inici",
         "preventSleepOnPlayback": "evitar entrar en repòs durant la reproducció",
-        "preventSleepOnPlayback_description": "evita que la pantalla s'adormi mentre la música es reprodueix"
+        "preventSleepOnPlayback_description": "evita que la pantalla s'adormi mentre la música es reprodueix",
+        "discordLinkType": "enllaços d'estat de {{discord}}",
+        "discordLinkType_description": "afegeix enllaços externs a {{lastfm}} o {{musicbrainz}} als camps de cançó i artista a l'estat d'activitat de {{discord}}. {{musicbrainz}} és el més precís, però requereix etiquetes i no proporciona enllaços d'artista, mentre que {{lastfm}} hauria de propocionar un enllaç sempre. no fa sol·licituds de xarxa addicionals",
+        "discordLinkType_none": "$t(common.none)",
+        "discordLinkType_mbz_lastfm": "{{musicbrainz}} amb {{lastfm}} com a alternativa"
     },
     "table": {
         "column": {

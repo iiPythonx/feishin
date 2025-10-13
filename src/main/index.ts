@@ -21,6 +21,7 @@ import { access, constants, readFile, writeFile } from 'fs';
 import path, { join } from 'path';
 import { deflate, inflate } from 'zlib';
 
+import packageJson from '../../package.json';
 import { disableMediaKeys, enableMediaKeys } from './features/core/player/media-keys';
 import { shutdownServer } from './features/core/remote';
 import { store } from './features/core/settings';
@@ -500,7 +501,14 @@ async function createWindow(first = true): Promise<void> {
     }
 }
 
-app.commandLine.appendSwitch('disable-features', 'HardwareMediaKeyHandling,MediaSessionService');
+const enableWindowsMediaSession = store.get('mediaSession', false) as boolean;
+const shouldDisableMediaFeatures = process.platform !== 'win32' || !enableWindowsMediaSession;
+if (shouldDisableMediaFeatures) {
+    app.commandLine.appendSwitch(
+        'disable-features',
+        'HardwareMediaKeyHandling,MediaSessionService',
+    );
+}
 
 // https://github.com/electron/electron/issues/46538#issuecomment-2808806722
 app.commandLine.appendSwitch('gtk-version', '3');

@@ -82,7 +82,7 @@ const formatArtists = (artists: null | RelatedArtist[] | undefined) =>
                     {artist.name || '—'}
                 </Text>
             ) : (
-                <Text overflow="visible" size="md">
+                <Text component="span" overflow="visible" size="md">
                     {artist.name || '-'}
                 </Text>
             )}

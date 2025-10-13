@@ -3,27 +3,32 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 
 import { useAlbumArtistDetail } from '/@/renderer/features/artists/queries/album-artist-detail-query';
-import { LibraryHeader, useCreateFavorite, useDeleteFavorite, useSetRating } from '/@/renderer/features/shared';
+import {
+    LibraryHeader,
+    useCreateFavorite,
+    useDeleteFavorite,
+    useSetRating,
+} from '/@/renderer/features/shared';
 import { AppRoute } from '/@/renderer/router/routes';
 import { useCurrentServer } from '/@/renderer/store';
 import { formatDurationString } from '/@/renderer/utils';
+import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
 import { Group } from '/@/shared/components/group/group';
 import { Rating } from '/@/shared/components/rating/rating';
 import { Stack } from '/@/shared/components/stack/stack';
 import { Text } from '/@/shared/components/text/text';
 import { LibraryItem, ServerType } from '/@/shared/types/domain-types';
-import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
 
 interface AlbumArtistDetailHeaderProps {
     background: {
         background?: string;
         blur: number;
+        loading: boolean;
     };
-    loading: boolean;
 }
 
 export const AlbumArtistDetailHeader = forwardRef(
-    ({ background, loading }: AlbumArtistDetailHeaderProps, ref: Ref<HTMLDivElement>) => {
+    ({ background }: AlbumArtistDetailHeaderProps, ref: Ref<HTMLDivElement>) => {
         const { albumArtistId, artistId } = useParams() as {
             albumArtistId?: string;
             artistId?: string;
@@ -78,36 +83,35 @@ export const AlbumArtistDetailHeader = forwardRef(
 
         const showRating = detailQuery?.data?.serverType === ServerType.NAVIDROME;
 
-            const createFavoriteMutation = useCreateFavorite({});
-            const deleteFavoriteMutation = useDeleteFavorite({});
-        
-            const handleFavorite = () => {
-                if (!detailQuery?.data) return;
-        
-                if (detailQuery.data.userFavorite) {
-                    deleteFavoriteMutation.mutate({
-                        query: {
-                            id: [detailQuery.data.id],
-                            type: LibraryItem.ALBUM_ARTIST,
-                        },
-                        serverId: detailQuery.data.serverId,
-                    });
-                } else {
-                    createFavoriteMutation.mutate({
-                        query: {
-                            id: [detailQuery.data.id],
-                            type: LibraryItem.ALBUM_ARTIST,
-                        },
-                        serverId: detailQuery.data.serverId,
-                    });
-                }
-            };
+        const createFavoriteMutation = useCreateFavorite({});
+        const deleteFavoriteMutation = useDeleteFavorite({});
+
+        const handleFavorite = () => {
+            if (!detailQuery?.data) return;
+
+            if (detailQuery.data.userFavorite) {
+                deleteFavoriteMutation.mutate({
+                    query: {
+                        id: [detailQuery.data.id],
+                        type: LibraryItem.ALBUM_ARTIST,
+                    },
+                    serverId: detailQuery.data.serverId,
+                });
+            } else {
+                createFavoriteMutation.mutate({
+                    query: {
+                        id: [detailQuery.data.id],
+                        type: LibraryItem.ALBUM_ARTIST,
+                    },
+                    serverId: detailQuery.data.serverId,
+                });
+            }
+        };
 
         return (
             <LibraryHeader
                 imageUrl={detailQuery?.data?.imageUrl}
                 item={{ route: AppRoute.LIBRARY_ALBUM_ARTISTS, type: LibraryItem.ALBUM_ARTIST }}
-                loading={loading}
                 ref={ref}
                 title={detailQuery?.data?.name || ''}
                 {...background}
@@ -136,6 +140,7 @@ export const AlbumArtistDetailHeader = forwardRef(
                         )}
                         •
                         <ActionIcon
+                            className="favorite_icon"
                             icon="favorite"
                             iconProps={{
                                 fill: detailQuery?.data?.userFavorite ? 'primary' : undefined,
@@ -146,7 +151,6 @@ export const AlbumArtistDetailHeader = forwardRef(
                             onClick={handleFavorite}
                             size="lg"
                             variant="transparent"
-                            className="favorite_icon"
                         />
                     </Group>
                 </Stack>

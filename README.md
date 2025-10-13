@@ -56,6 +56,56 @@ If you're using a device running macOS 12 (Monterey) or higher, [check here](htt
 
 For media keys to work, you will be prompted to allow Feishin to be a Trusted Accessibility Client. After allowing, you will need to restart Feishin for the privacy settings to take effect.
 
+#### Linux Notes
+
+If you're using a Linux device, a `.desktop` file is recommended for easy launching of Feishin.
+
+Download the [latest release (AppImage)](https://github.com/jeffvli/feishin/releases) and [application icon](https://github.com/jeffvli/feishin/blob/development/resources/icon.png?raw=true) to your `~/applications/` folder. This folder may need to be created if it does not already exist.
+
+Rename the icon to `Feishin-linux-x86_64.png`.
+
+Save the [example desktop file](https://raw.githubusercontent.com/jeffvli/feishin/refs/heads/development/feishin.desktop) as `~/.local/share/applications/feishin.desktop`.
+
+You will now see Feishin show up in your menu. The properties in the example desktop file may need to be modified to match your system.
+
+### Web and Docker
+
+Visit [https://feishin.vercel.app](https://feishin.vercel.app) to use the hosted web version of Feishin. The web client only supports the web player backend.
+
+Feishin is also available as a Docker image. The images are hosted via `ghcr.io` and are available to view [here](https://github.com/jeffvli/feishin/pkgs/container/feishin). You can run the container using the following commands:
+
+```bash
+# Run the latest version
+docker run --name feishin -p 9180:9180 ghcr.io/jeffvli/feishin:latest
+
+# Build the image locally
+docker build -t feishin .
+docker run --name feishin -p 9180:9180 feishin
+```
+
+#### Docker Compose
+
+To install via Docker Compose use the following snippit. This also works on Portainer.
+
+```yaml
+services:
+    feishin:
+        container_name: feishin
+        image: 'ghcr.io/jeffvli/feishin:latest'
+        environment:
+            - SERVER_NAME=jellyfin # pre defined server name
+            - SERVER_LOCK=true # When true AND name/type/url are set, only username/password can be toggled
+            - SERVER_TYPE=jellyfin # navidrome also works
+            - SERVER_URL= # http://address:port
+            - PUID=1000
+            - PGID=1000
+            - UMASK=002
+            - TZ=America/Los_Angeles
+        ports:
+            - 9180:9180
+        restart: unless-stopped
+```
+
 ### Configuration
 
 1. Upon startup, you will be prompted to select a server. Click the `Open menu` button and select `Manage servers`. Click the `Add server` button in the popup and fill out all applicable details. You will need to enter the full URL to your server, including the protocol and port if applicable (e.g. `https://navidrome.my-server.com` or `http://192.168.0.1:4533`).
@@ -116,14 +166,18 @@ This project is built off of [electron-vite](https://github.com/alex8088/electro
 - `pnpm run build:remote` - Build the remote app (remote)
 - `pnpm run build:web` - Build the standalone web app (renderer)
 - `pnpm run package` - Package the project
-- `pnpm run package:dev` - Package the project for development
-- `pnpm run package:linux` - Package the project for Linux
-- `pnpm run package:mac` - Package the project for Mac
-- `pnpm run package:win` - Package the project for Windows
+- `pnpm run package:dev` - Package the project for development locally
+- `pnpm run package:linux` - Package the project for Linux locally
+- `pnpm run package:mac` - Package the project for Mac locally
+- `pnpm run package:win` - Package the project for Windows locally
 - `pnpm run publish:linux` - Publish the project for Linux
+- `pnpm run publish:linux:beta` - Publish the project for Linux (beta channel)
 - `pnpm run publish:linux-arm64` - Publish the project for Linux ARM64
+- `pnpm run publish:linux-arm64:beta` - Publish the project for Linux ARM64 (beta channel)
 - `pnpm run publish:mac` - Publish the project for Mac
+- `pnpm run publish:mac:beta` - Publish the project for Mac (beta channel)
 - `pnpm run publish:win` - Publish the project for Windows
+- `pnpm run publish:win:beta` - Publish the project for Windows (beta channel)
 - `pnpm run typecheck` - Type check the project
 - `pnpm run typecheck:node` - Type check the project with tsconfig.node.json
 - `pnpm run typecheck:web` - Type check the project with tsconfig.web.json

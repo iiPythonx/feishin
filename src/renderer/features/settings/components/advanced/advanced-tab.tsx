@@ -7,7 +7,7 @@ export const AdvancedTab = () => {
     return (
         <Stack gap="md">
             <StylesSettings />
-            
+
             {isElectron() && <RemoteSettings />}
         </Stack>
     );

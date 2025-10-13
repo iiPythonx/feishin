@@ -96,6 +96,7 @@ export enum HomeItem {
     RANDOM = 'random',
     RECENTLY_ADDED = 'recentlyAdded',
     RECENTLY_PLAYED = 'recentlyPlayed',
+    RECENTLY_RELEASED = 'recentlyReleased',
 }
 
 export type SortableItem<T> = {
@@ -202,6 +203,7 @@ export interface SettingsSlice extends SettingsState {
         setTable: (type: TableType, data: DataTableProps) => void;
         setTranscodingConfig: (config: TranscodingConfig) => void;
         toggleContextMenuItem: (item: ContextMenuItemType) => void;
+        toggleMediaSession: () => void;
         toggleSidebarCollapseShare: () => void;
     };
 }
@@ -229,6 +231,10 @@ export interface SettingsState {
     general: {
         accent: string;
         albumArtRes?: null | number;
+        albumBackground: boolean;
+        albumBackgroundBlur: number;
+        artistBackground: boolean;
+        artistBackgroundBlur: number;
         artistItems: SortableItem<ArtistItem>[];
         buttonSize: number;
         disabledContextMenu: { [k in ContextMenuItemType]?: boolean };
@@ -294,6 +300,7 @@ export interface SettingsState {
         audioDeviceId?: null | string;
         crossfadeDuration: number;
         crossfadeStyle: CrossfadeStyle;
+        mediaSession: boolean;
         mpvExtraParameters: string[];
         mpvProperties: MpvSettings;
         muted: boolean;
@@ -324,18 +331,11 @@ export interface SettingsState {
         sideQueue: DataTableProps;
         songs: DataTableProps;
     };
-    tweaks: {
-        albumBackground: boolean;
-        artistBackground: boolean;
-        forkTheme: string;
-        headerBackgroundBlur: number;
-        serverRescan: boolean;
-        shareItemCustomUrl: string;
-    };
     window: {
         exitToTray: boolean;
         minimizeToTray: boolean;
         preventSleepOnPlayback: boolean;
+        releaseChannel: 'beta' | 'latest';
         startMinimized: boolean;
         tray: boolean;
         windowBarStyle: Platform;
@@ -391,7 +391,11 @@ const initialState: SettingsState = {
     },
     general: {
         accent: 'rgb(53, 116, 252)',
-        albumArtRes: 2500,
+        albumArtRes: undefined,
+        albumBackground: false,
+        albumBackgroundBlur: 6,
+        artistBackground: false,
+        artistBackgroundBlur: 6,
         artistItems,
         buttonSize: 10,
         disabledContextMenu: {},
@@ -489,6 +493,7 @@ const initialState: SettingsState = {
         audioDeviceId: undefined,
         crossfadeDuration: 5,
         crossfadeStyle: CrossfadeStyle.EQUALPOWER,
+        mediaSession: false,
         mpvExtraParameters: [],
         mpvProperties: {
             audioExclusiveMode: 'no',
@@ -677,18 +682,11 @@ const initialState: SettingsState = {
             rowHeight: 60,
         },
     },
-    tweaks: {
-        albumBackground: true,
-        artistBackground: true,
-        forkTheme: 'pyxfluff',
-        headerBackgroundBlur: 6,
-        serverRescan: false,
-        shareItemCustomUrl: '',
-    },
     window: {
         exitToTray: false,
         minimizeToTray: false,
         preventSleepOnPlayback: false,
+        releaseChannel: 'latest',
         startMinimized: false,
         tray: true,
         windowBarStyle: platformDefaultWindowBarStyle,
@@ -755,6 +753,11 @@ export const useSettingsStore = createWithEqualityFn<SettingsSlice>()(
                         set((state) => {
                             state.general.disabledContextMenu[item] =
                                 !state.general.disabledContextMenu[item];
+                        });
+                    },
+                    toggleMediaSession: () => {
+                        set((state) => {
+                            state.playback.mediaSession = !state.playback.mediaSession;
                         });
                     },
                     toggleSidebarCollapseShare: () => {

@@ -9,14 +9,14 @@ import { usePlayQueueAdd } from '/@/renderer/features/player';
 import { AnimatedPage, LibraryHeaderBar } from '/@/renderer/features/shared';
 import { useFastAverageColor } from '/@/renderer/hooks';
 import { useCurrentServer } from '/@/renderer/store';
-import { usePlayButtonBehavior, useTweaksSettings } from '/@/renderer/store/settings.store';
+import { useGeneralSettings, usePlayButtonBehavior } from '/@/renderer/store/settings.store';
 import { LibraryItem } from '/@/shared/types/domain-types';
 
 const AlbumArtistDetailRoute = () => {
     const scrollAreaRef = useRef<HTMLDivElement>(null);
     const headerRef = useRef<HTMLDivElement>(null);
     const server = useCurrentServer();
-    const { artistBackground, headerBackgroundBlur } = useTweaksSettings();
+    const { artistBackground, artistBackgroundBlur } = useGeneralSettings();
 
     const { albumArtistId, artistId } = useParams() as {
         albumArtistId?: string;
@@ -31,11 +31,15 @@ const AlbumArtistDetailRoute = () => {
         query: { id: routeId },
         serverId: server?.id,
     });
+
     const { background: backgroundColor, colorId } = useFastAverageColor({
-        id: routeId,
+        id: artistId,
         src: detailQuery.data?.imageUrl,
         srcLoaded: !detailQuery.isLoading,
     });
+
+    const backgroundUrl = detailQuery.data?.imageUrl || '';
+    const background = (artistBackground && `url(${backgroundUrl})`) || backgroundColor;
 
     const handlePlay = () => {
         handlePlayQueueAdd?.({
@@ -71,9 +75,9 @@ const AlbumArtistDetailRoute = () => {
                 <AlbumArtistDetailHeader
                     background={{
                         background,
-                        blur: (artistBackground && headerBackgroundBlur) || 0,
+                        blur: (artistBackground && artistBackgroundBlur) || 0,
+                        loading: !backgroundColor || colorId !== artistId,
                     }}
-                    loading={!background || colorId !== routeId}
                     ref={headerRef}
                 />
                 <AlbumArtistDetailContent background={background} />
