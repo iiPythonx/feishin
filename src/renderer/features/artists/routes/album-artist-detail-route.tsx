@@ -51,9 +51,6 @@ const AlbumArtistDetailRoute = () => {
         });
     };
 
-    const backgroundUrl = detailQuery.data?.imageUrl || '';
-    const background = (artistBackground && `url(${backgroundUrl})`) || backgroundColor;
-
     return (
         <AnimatedPage key={`album-artist-detail-${routeId}`}>
             <NativeScrollArea

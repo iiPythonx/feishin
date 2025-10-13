@@ -5,11 +5,7 @@ import {
     SettingOption,
     SettingsSection,
 } from '/@/renderer/features/settings/components/settings-section';
-import {
-    DiscordLinkType,
-    useDiscordSettings,
-    useSettingsStoreActions,
-} from '/@/renderer/store';
+import { DiscordLinkType, useDiscordSettings, useSettingsStoreActions } from '/@/renderer/store';
 import { Select } from '/@/shared/components/select/select';
 import { Switch } from '/@/shared/components/switch/switch';
 import { TextInput } from '/@/shared/components/text-input/text-input';

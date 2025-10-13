@@ -331,6 +331,11 @@ export interface SettingsState {
         sideQueue: DataTableProps;
         songs: DataTableProps;
     };
+    tweaks: {
+        forkTheme: string;
+        serverRescan: boolean;
+        shareItemCustomUrl: string;
+    };
     window: {
         exitToTray: boolean;
         minimizeToTray: boolean;
@@ -681,6 +686,11 @@ const initialState: SettingsState = {
             ],
             rowHeight: 60,
         },
+    },
+    tweaks: {
+        forkTheme: 'pyxfluff',
+        serverRescan: false,
+        shareItemCustomUrl: '',
     },
     window: {
         exitToTray: false,

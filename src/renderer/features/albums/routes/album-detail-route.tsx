@@ -11,14 +11,14 @@ import { usePlayQueueAdd } from '/@/renderer/features/player';
 import { AnimatedPage, LibraryHeaderBar } from '/@/renderer/features/shared';
 import { useFastAverageColor } from '/@/renderer/hooks';
 import { useCurrentServer } from '/@/renderer/store';
-import { usePlayButtonBehavior, useTweaksSettings } from '/@/renderer/store/settings.store';
+import { useGeneralSettings, usePlayButtonBehavior } from '/@/renderer/store/settings.store';
 import { LibraryItem } from '/@/shared/types/domain-types';
 
 const AlbumDetailRoute = () => {
     const tableRef = useRef<AgGridReactType | null>(null);
     const scrollAreaRef = useRef<HTMLDivElement>(null);
     const headerRef = useRef<HTMLDivElement>(null);
-    const { albumBackground, headerBackgroundBlur } = useTweaksSettings();
+    const { albumBackground, albumBackgroundBlur } = useGeneralSettings();
 
     const { albumId } = useParams() as { albumId: string };
     const server = useCurrentServer();
@@ -31,6 +31,9 @@ const AlbumDetailRoute = () => {
     const handlePlayQueueAdd = usePlayQueueAdd();
     const playButtonBehavior = usePlayButtonBehavior();
 
+    const backgroundUrl = detailQuery.data?.imageUrl || '';
+    const background = (albumBackground && `url(${backgroundUrl})`) || backgroundColor;
+
     const handlePlay = () => {
         handlePlayQueueAdd?.({
             byItemType: {
@@ -40,9 +43,6 @@ const AlbumDetailRoute = () => {
             playType: playButtonBehavior,
         });
     };
-
-    const backgroundUrl = detailQuery.data?.imageUrl || '';
-    const background = (albumBackground && `url(${backgroundUrl})`) || backgroundColor;
 
     return (
         <AnimatedPage key={`album-detail-${albumId}`}>
@@ -65,7 +65,7 @@ const AlbumDetailRoute = () => {
                 <AlbumDetailHeader
                     background={{
                         background,
-                        blur: (albumBackground && headerBackgroundBlur) || 0,
+                        blur: (albumBackground && albumBackgroundBlur) || 0,
                         loading: !backgroundColor || colorId !== albumId,
                     }}
                     ref={headerRef}
