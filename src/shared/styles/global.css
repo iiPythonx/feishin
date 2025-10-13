@@ -391,3 +391,13 @@ button {
         display: none;
     }
 }
+
+/* Potential fix for the artist bar thing but idk */
+
+.fs-library-header-module-background-overlay {
+    background: none;
+}
+
+.fs-library-header-bar-module-header-container {
+    backdrop-filter: blur(2rem);
+}

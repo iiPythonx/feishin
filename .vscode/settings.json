@@ -79,5 +79,11 @@
             "  return <div></div>;",
             "};"
         ]
-    }
+    },
+    "cSpell.words": [
+        "cmdk",
+        "fsplayer",
+        "mantine",
+        "playerbar"
+    ]
 }
