@@ -116,7 +116,8 @@
         "saveAs": "gorde honela",
         "trackGain": "pista irabazpena",
         "comingSoon": "laster…",
-        "trackPeak": "pistaren gailurra"
+        "trackPeak": "pistaren gailurra",
+        "albumPeak": "albumaren gailurra"
     },
     "player": {
         "repeat": "errepikatu",
@@ -161,7 +162,10 @@
             },
             "general": {
                 "gap": "$t(common.gap)",
-                "size": "$t(common.size)"
+                "size": "$t(common.size)",
+                "tableColumns": "taula zutabeak",
+                "itemSize": "elementuaren tamaina (px)",
+                "followCurrentSong": "jarraitu uneko abestia"
             },
             "label": {
                 "actions": "$t(common.action_other)",
@@ -183,7 +187,13 @@
                 "size": "$t(common.size)",
                 "songCount": "$t(entity.track_other)",
                 "title": "$t(common.title)",
-                "year": "$t(common.year)"
+                "year": "$t(common.year)",
+                "titleCombined": "$t(common.title) (batuta)",
+                "releaseDate": "argitalpen data",
+                "playCount": "erreprodukzio kopurua",
+                "lastPlayed": "azken aldiz entzundakoa",
+                "discNumber": "disko zenbakia",
+                "dateAdded": "gehitze data"
             }
         },
         "column": {
@@ -206,7 +216,11 @@
             "trackNumber": "pista",
             "bpm": "bpm",
             "comment": "iruzkina",
-            "playCount": "erreprodukzioak"
+            "playCount": "erreprodukzioak",
+            "releaseDate": "argitalpen data",
+            "lastPlayed": "azken aldiz entzundakoa",
+            "dateAdded": "gehitutako data",
+            "albumArtist": "albumeko artista"
         }
     },
     "entity": {
@@ -397,7 +411,7 @@
         "discordRichPresence": "{{discord}} jarduera-egoera",
         "discordRichPresence_description": "gaitu erreprodukzioa egoera {{discord}}-en jarduera-egoeran. Irudi gakoak hauek dira: {{icon}}, {{playing}}, eta {{paused}}",
         "discordServeImage": "zerbitzatu {{discord}} irudiak zerbitzaritik",
-        "discordServeImage_description": "partekatu {{discord}} jarduera-egoerarentzako azala artea zerbitzaritik bertatik, Jellyfin eta Navidrome-rentzat bakarrik eskuragarri",
+        "discordServeImage_description": "partekatu {{discord}} jarduera-egoerarentzako azala artea zerbitzaritik bertatik, Jellyfin eta Navidrome-rentzat bakarrik eskuragarri. {{discord}}-(e)k bot bat erabiltzen du irudiak eskuratzeko, beraz, zure zerbitzaria internet publikotik eskuragarri egon behar da.",
         "discordUpdateInterval": "{{discord}} jarduera-egoera eguneraketa tartea",
         "discordLinkType_none": "$t(common.none)",
         "albumBackground": "albumaren atzeko planoaren irudia",
@@ -413,7 +427,55 @@
         "discordDisplayType_songname": "abesti izena",
         "discordDisplayType_artistname": "artista izena(k)",
         "fontType_optionBuiltIn": "barneko letra-tipoa",
-        "hotkey_globalSearch": "bilaketa globala"
+        "hotkey_globalSearch": "bilaketa globala",
+        "albumBackgroundBlur_description": "albumaren atzeko planoaren irudiari aplikatzen zaion lausotze-kopurua doitzen du",
+        "artistBackground": "artistaren atzeko planoaren irudia",
+        "artistBackgroundBlur": "artistaren atzeko planoko irudiaren lausotze-tamaina",
+        "artistBackgroundBlur_description": "artistaren atzeko planoaren irudiari aplikatzen zaion lausotze-kopurua doitzen du",
+        "artistConfiguration": "albumaren artistaren konfigurazio orria",
+        "artistConfiguration_description": "konfiguratu zein elementu erakusten diren eta zein ordenatan albumaren artistaren orrian",
+        "audioExclusiveMode": "audio esklusiboko modua",
+        "releaseChannel_optionLatest": "egonkorra",
+        "releaseChannel_optionBeta": "beta",
+        "releaseChannel": "argitalpen kanala",
+        "releaseChannel_description": "aukeratu argitalpen egonkorren edo beta artean eguneratze automatikoak lortzeko",
+        "discordUpdateInterval_description": "eguneratze bakoitzaren arteko denbora segundotan (gutxienez 15 segundo)",
+        "discordDisplayType": "{{discord}} jarduera-pantailaren mota",
+        "discordDisplayType_description": "zure egoeran entzuten ari zarena aldatzen du",
+        "discordLinkType": "{{discord}} egoera estekak",
+        "fontType_description": "barneko letra-tipoa Feishinek eskaintzen dituen letra-tipoetako bat aukeratzen du. sistemaren letra-tipoa zure sistema eragileak eskaintzen duen edozein letra-tipo hautatzeko aukera ematen dizu. pertsonalizatua zure letra-tipoa eskaintzeko aukera ematen dizu",
+        "genreBehavior": "genero orriaren portaera lehenetsia",
+        "homeConfiguration_description": "konfiguratu zein elementu erakusten diren hasierako orrian eta zein ordenatan",
+        "homeFeature": "etxeko karrusela nabarmendua",
+        "homeFeature_description": "hasierako orrian karrusel nabarmen handia erakutsi behar den ala ez kontrolatzen du",
+        "hotkey_localSearch": "orrian bilatu",
+        "hotkey_rate0": "garbitu balorazioa",
+        "hotkey_rate1": "1 izarretako balorazioa",
+        "hotkey_rate2": "2 izarretako balorazioa",
+        "hotkey_rate3": "3 izarretako balorazioa",
+        "hotkey_rate4": "4 izarretako balorazioa",
+        "hotkey_rate5": "5 izarretako balorazioa",
+        "zoom_description": "aplikazioaren zoom ehunekoa ezartzen du",
+        "zoom": "zoom ehunekoa",
+        "windowBarStyle_description": "aukeratu leiho-barraren estiloa",
+        "windowBarStyle": "leiho-barra estiloa",
+        "webAudio": "erabili web audioa",
+        "useSystemTheme_description": "jarraitu sistemak definitutako argi edo iluntasun lehentasuna",
+        "useSystemTheme": "erabili sistemaren gaia",
+        "translationTargetLanguage_description": "itzulpenerako helburu-hizkuntza",
+        "translationTargetLanguage": "itzulpenerako helburu-hizkuntza",
+        "translationApiKey": "itzulpen api gakoa",
+        "translationApiProvider_description": "itzulpenerako api hornitzailea",
+        "translationApiProvider": "itzulpen api hornitzailea",
+        "mediaSession": "gaitu multimedia saioa",
+        "themeLight_description": "aplikaziorako erabiliko den gaia argia ezartzen du",
+        "themeLight": "gaia (argia)",
+        "themeDark_description": "aplikaziorako erabiliko den gai iluna ezartzen du",
+        "themeDark": "gaia (iluna)",
+        "theme_description": "aplikaziorako erabiliko den gaia ezartzen du",
+        "externalLinks": "kanpoko estekak erakutsi",
+        "externalLinks_description": "kanpoko estekak (Last.fm, MusicBrainz) artista/album orrietan erakustea gaitzen du",
+        "exitToTray": "irten erretilura"
     },
     "form": {
         "addServer": {
@@ -426,7 +488,8 @@
             "title": "zerbitzaria gehitu",
             "ignoreCors": "alde batera utzi cors $t(common.restartRequired)",
             "ignoreSsl": "alde batera utzi ssl $t(common.restartRequired)",
-            "input_legacyAuthentication": "gaitu zaharkitutako autentifikazioa"
+            "input_legacyAuthentication": "gaitu zaharkitutako autentifikazioa",
+            "success": "zerbitzaria behar bezala gehitu da"
         },
         "addToPlaylist": {
             "input_playlists": "$t(entity.playlist_other)",
@@ -462,7 +525,8 @@
         },
         "editPlaylist": {
             "success": "$t(entity.playlist_one) behar bezala eguneratu da",
-            "title": "$t(entity.playlist_one) editatu"
+            "title": "$t(entity.playlist_one) editatu",
+            "publicJellyfinNote": "Arrazoiren batengatik, Jellyfin ez du erakusten erreprodukzio-zerrendak publikoak diren edo ez. Hau publiko izaten jarraitzea nahi baduzu, hautatu sarrera hau"
         },
         "queryEditor": {
             "title": "kontsulta editorea",
@@ -504,7 +568,8 @@
             "privateModeOff": "itzali modu pribatua",
             "privateModeOn": "aktibatu modu pribatua",
             "selectServer": "aukeratu zerbitzaria",
-            "version": "bertsioa {{version}}"
+            "version": "bertsioa {{version}}",
+            "openBrowserDevtools": "ireki nabigatzailearen garapen tresnak"
         },
         "manageServers": {
             "url": "URLa",
@@ -552,7 +617,8 @@
                 "dynamicImageBlur": "irudiaren lausotze tamaina",
                 "lyricAlignment": "letraren lerrokatzea",
                 "showLyricMatch": "erakutsi letren bat-etortzea",
-                "showLyricProvider": "erakutsi letra hornitzailea"
+                "showLyricProvider": "erakutsi letra hornitzailea",
+                "lyricOffset": "letra-desplazamendua (ms)"
             },
             "lyrics": "letrak",
             "related": "erlazionatuta",

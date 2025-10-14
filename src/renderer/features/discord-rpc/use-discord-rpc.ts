@@ -3,10 +3,15 @@ import axios from 'axios';
 import isElectron from 'is-electron';
 import { useCallback, useEffect, useState } from 'react';
 
-import { DiscordLinkType, useAppStore, useDiscordSettings, usePlayerStore } from '/@/renderer/store';
+import {
+    DiscordLinkType,
+    useAppStore,
+    useDiscordSettings,
+    usePlayerStore,
+} from '/@/renderer/store';
+import { toast } from '/@/shared/components/toast/toast';
 import { QueueSong } from '/@/shared/types/domain-types';
 import { PlayerStatus } from '/@/shared/types/types';
-import { toast } from '/@/shared/components/toast/toast';
 
 const discordRpc = isElectron() ? window.api.discordRpc : null;
 
@@ -124,9 +129,8 @@ export const useDiscordRpc = () => {
                             imageUrl = response.data.url;
                         } catch (e) {
                             toast.error({
+                                message: `Could not reach the pizza proxy. Discord RPC falling back to the default icon. ${e}`,
                                 title: 'Pizza error',
-                                message:
-                                    `Could not reach the pizza proxy. Discord RPC falling back to the default icon. ${e}`,
                             });
                         }
                     } else {
