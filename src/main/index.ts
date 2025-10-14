@@ -21,7 +21,6 @@ import { access, constants, readFile, writeFile } from 'fs';
 import path, { join } from 'path';
 import { deflate, inflate } from 'zlib';
 
-import packageJson from '../../package.json';
 import { disableMediaKeys, enableMediaKeys } from './features/core/player/media-keys';
 import { shutdownServer } from './features/core/remote';
 import { store } from './features/core/settings';

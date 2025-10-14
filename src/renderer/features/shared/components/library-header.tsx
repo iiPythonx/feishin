@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 import styles from './library-header.module.css';
 
-import { useTweaksSettings } from '/@/renderer/store';
+import { useGeneralSettings } from '/@/renderer/store';
 import { Image } from '/@/shared/components/image/image';
 import { Stack } from '/@/shared/components/stack/stack';
 import { Text } from '/@/shared/components/text/text';
@@ -21,18 +21,18 @@ interface LibraryHeaderProps {
     imageUrl?: null | string;
     item: { route: string; type: LibraryItem };
     loading?: boolean;
-    title: string;
     subtitle?: string;
+    title: string;
 }
 
 export const LibraryHeader = forwardRef(
     (
-        { background, blur, children, imageUrl, item, title, subtitle }: LibraryHeaderProps,
+        { background, blur, children, imageUrl, item, subtitle, title }: LibraryHeaderProps,
         ref: Ref<HTMLDivElement>,
     ) => {
         const { t } = useTranslation();
         const [isImageError, setIsImageError] = useState<boolean | null>(false);
-        const { albumBackground } = useTweaksSettings();
+        const { albumBackground } = useGeneralSettings();
 
         const onImageError = () => {
             setIsImageError(true);
