@@ -51,7 +51,6 @@ img {
 }
 
 @media only screen and (width < 640px) {
-
     body,
     html {
         overflow-x: auto;
@@ -220,6 +219,7 @@ button {
     font-weight: 100 900;
     src: url('../../../assets/fonts/NotoSansJP-VariableFont_wght.ttf');
     unicode-range: U+3000-9FFF, U+FF00-FFEF;
+
     /* Japanese characters */
 }
 
@@ -395,7 +395,7 @@ button {
 /* Potential fix for the artist bar thing but idk */
 
 .fs-library-header-module-background-overlay {
-    background: none;
+    background: none !important;
 }
 
 .fs-library-header-bar-module-header-container {
