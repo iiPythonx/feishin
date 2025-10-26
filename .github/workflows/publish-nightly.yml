@@ -1,0 +1,81 @@
+name: Publish (Nightly)
+
+on:
+    schedule:
+        - cron: '0 3 * * *'
+    workflow_dispatch:
+
+jobs:
+    publish:
+        runs-on: ${{ matrix.os }}
+
+        strategy:
+            matrix:
+                os: [macos-latest, ubuntu-latest, windows-latest]
+
+        steps:
+            - name: Checkout git repo
+              uses: actions/checkout@v3
+
+            - name: Install Node and PNPM
+              uses: pnpm/action-setup@v4.1.0
+              with:
+                  version: 9
+
+            - name: Install dependencies
+              run: pnpm install
+
+            - name: Build for Windows
+              if: ${{ matrix.os == 'windows-latest' }}
+              uses: nick-invision/retry@v2.8.2
+              with:
+                  timeout_minutes: 30
+                  max_attempts: 3
+                  retry_on: error
+                  command: |
+                      pnpm run package:win:pr
+
+            - name: Build for Linux
+              if: ${{ matrix.os == 'ubuntu-latest' }}
+              uses: nick-invision/retry@v2.8.2
+              with:
+                  timeout_minutes: 30
+                  max_attempts: 3
+                  retry_on: error
+                  command: |
+                      pnpm run package:linux:pr
+
+            - name: Build for MacOS
+              if: ${{ matrix.os == 'macos-latest' }}
+              uses: nick-invision/retry@v2.8.2
+              with:
+                  timeout_minutes: 30
+                  max_attempts: 3
+                  retry_on: error
+                  command: |
+                      pnpm run package:mac:pr
+
+            - name: Fetch or create Nightly release
+              id: create_release
+              uses: ncipollo/release-action@v1
+              with:
+                tag: nightly
+                releaseName: "Nightly Build"
+                body: "Automatically updated nightly build."
+                draft: false
+                prerelease: true
+                allowUpdates: true
+                removeArtifacts: true
+
+            - name: Upload build artifacts
+              uses: softprops/action-gh-release@v2
+              with:
+                tag_name: nightly
+                files: |
+                  dist/*.exe
+                  dist/*.dmg
+                  dist/*.AppImage
+                  dist/*.zip
+                  dist/*.xz
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
