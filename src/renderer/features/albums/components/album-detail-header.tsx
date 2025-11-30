@@ -143,31 +143,6 @@ export const AlbumDetailHeader = forwardRef(
             });
         };
 
-        const createFavoriteMutation = useCreateFavorite({});
-        const deleteFavoriteMutation = useDeleteFavorite({});
-
-        const handleFavorite = () => {
-            if (!detailQuery?.data) return;
-
-            if (detailQuery.data.userFavorite) {
-                deleteFavoriteMutation.mutate({
-                    query: {
-                        id: [detailQuery.data.id],
-                        type: LibraryItem.ALBUM,
-                    },
-                    serverId: detailQuery.data.serverId,
-                });
-            } else {
-                createFavoriteMutation.mutate({
-                    query: {
-                        id: [detailQuery.data.id],
-                        type: LibraryItem.ALBUM,
-                    },
-                    serverId: detailQuery.data.serverId,
-                });
-            }
-        };
-
         return (
             <Stack ref={cq.ref}>
                 <LibraryHeader
