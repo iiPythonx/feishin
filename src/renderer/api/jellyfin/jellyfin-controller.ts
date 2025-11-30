@@ -13,8 +13,6 @@ import {
     LibraryItem,
     Played,
     playlistListSortMap,
-    RescanArgs,
-    ScanStatus,
     Song,
     songListSortMap,
     sortOrderMap,
@@ -610,6 +608,9 @@ export const JellyfinController: InternalControllerEndpoint = {
         };
     },
     getRoles: async () => [],
+    getScanStatus: async () => {
+        return { scanning: false };
+    },
     getServerInfo: async (args) => {
         const { apiClientProps } = args;
 
@@ -930,7 +931,7 @@ export const JellyfinController: InternalControllerEndpoint = {
 
         return null;
     },
-    rescan: async (args: RescanArgs): Promise<ScanStatus> => {
+    rescan: async (args) => {
         const { apiClientProps } = args;
 
         if (!apiClientProps.server?.userId) {

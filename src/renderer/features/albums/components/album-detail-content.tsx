@@ -133,13 +133,13 @@ export const AlbumDetailContent = ({ background, tableRef }: AlbumDetailContentP
                     name += `: ${discSubtitle}`;
                 }
 
-                if (!(onlyOneDisc && tableConfig.hideDiscOne)) rowData.push({ id, name });
+                if (!onlyOneDisc) rowData.push({ id, name });
             }
             rowData.push(song);
         }
 
         return rowData;
-    }, [detail?.songs, t, tableConfig.hideDiscOne]);
+    }, [detail?.songs, t]);
 
     const [pagination, setPagination] = useSetState({
         artist: 0,

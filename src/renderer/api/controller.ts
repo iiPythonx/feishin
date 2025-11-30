@@ -408,7 +408,18 @@ export const controller: GeneralController = {
         )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getScanStatus(args) {
-        return apiController('getScanStatus', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getScanStatus`,
+            );
+        }
+
+        return apiController(
+            'getScanStatus',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getServerInfo(args) {
         const server = getServerById(args.apiClientProps.serverId);
@@ -579,7 +590,18 @@ export const controller: GeneralController = {
         )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     rescan(args) {
-        return apiController('rescan', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: rescan`,
+            );
+        }
+
+        return apiController(
+            'rescan',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     scrobble(args) {
         const server = getServerById(args.apiClientProps.serverId);

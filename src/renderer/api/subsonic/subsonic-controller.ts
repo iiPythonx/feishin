@@ -20,9 +20,6 @@ import {
     InternalControllerEndpoint,
     LibraryItem,
     PlaylistListSort,
-    RescanArgs,
-    ScanStatus,
-    ScanStatusArgs,
     Song,
     sortAlbumArtistList,
     sortAlbumList,
@@ -830,7 +827,7 @@ export const SubsonicController: InternalControllerEndpoint = {
         final.splice(0, 0, { label: 'all artists', value: '' });
         return final;
     },
-    getScanStatus: async (args: ScanStatusArgs): Promise<ScanStatus> => {
+    getScanStatus: async (args) => {
         const { apiClientProps } = args;
 
         if (!apiClientProps.server?.userId) {
@@ -1360,7 +1357,7 @@ export const SubsonicController: InternalControllerEndpoint = {
 
         return null;
     },
-    rescan: async (args: RescanArgs): Promise<ScanStatus> => {
+    rescan: async (args) => {
         const { apiClientProps, full } = args;
 
         if (!apiClientProps.server?.userId) {

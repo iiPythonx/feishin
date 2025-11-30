@@ -375,18 +375,6 @@ export const TableConfigDropdown = ({ type }: TableConfigDropdownProps) => {
         });
     };
 
-    const handleUpdateDiscOne = (e: ChangeEvent<HTMLInputElement>) => {
-        setSettings({
-            tables: {
-                ...useSettingsStore.getState().tables,
-                [type]: {
-                    ...useSettingsStore.getState().tables[type],
-                    hideDiscOne: e.currentTarget.checked,
-                },
-            },
-        });
-    };
-
     return (
         <>
             <Option>
@@ -400,17 +388,6 @@ export const TableConfigDropdown = ({ type }: TableConfigDropdownProps) => {
                     />
                 </Option.Control>
             </Option>
-            {type === 'albumDetail' && (
-                <Option>
-                    <Option.Label>Hide disc one</Option.Label>
-                    <Option.Control>
-                        <Switch
-                            defaultChecked={tableConfig[type]?.hideDiscOne}
-                            onChange={handleUpdateDiscOne}
-                        />
-                    </Option.Control>
-                </Option>
-            )}
             {type !== 'albumDetail' && (
                 <Option>
                     <Option.Label>

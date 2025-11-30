@@ -146,7 +146,6 @@ const DiscordSettingsSchema = z.object({
     showArtistName: z.boolean(),
     showAsListening: z.boolean(),
     showPaused: z.boolean(),
-    showServerImage: z.boolean(),
 });
 
 const FontSettingsSchema = z.object({
@@ -281,10 +280,7 @@ const RemoteSettingsSchema = z.object({
 });
 
 const TablesSettingsSchema = z.object({
-    albumDetail: z.object({
-        ...DataTablePropsSchema.shape,
-        ...{ hideDiscOne: z.boolean() },
-    }),
+    albumDetail: DataTablePropsSchema,
     fullScreen: DataTablePropsSchema,
     nowPlaying: DataTablePropsSchema,
     sideDrawerQueue: DataTablePropsSchema,
@@ -293,7 +289,6 @@ const TablesSettingsSchema = z.object({
 });
 
 const WindowSettingsSchema = z.object({
-    disableAutoUpdate: z.boolean(),
     exitToTray: z.boolean(),
     minimizeToTray: z.boolean(),
     preventSleepOnPlayback: z.boolean(),
@@ -527,12 +522,14 @@ const initialState: SettingsState = {
     },
     discord: {
         clientId: '1117545345690374277',
+        displayType: DiscordDisplayType.ARTIST_NAME,
         enabled: true,
         linkType: DiscordLinkType.NONE,
         proxyType: 'pizza',
         proxyUrl: '',
         showArtistName: false,
         showAsListening: true,
+        showPaused: true,
     },
     font: {
         builtIn: 'Poppins',
@@ -708,7 +705,6 @@ const initialState: SettingsState = {
                     width: 100,
                 },
             ],
-            hideDiscOne: true,
             rowHeight: 60,
         },
         fullScreen: {
