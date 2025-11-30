@@ -9,16 +9,21 @@ import i18n from '/@/i18n/i18n';
 import { api } from '/@/renderer/api';
 import { queryClient } from '/@/renderer/lib/react-query';
 import { useAuthStoreActions } from '/@/renderer/store';
-import { Button } from '/@/shared/components/button/button';
 import { Checkbox } from '/@/shared/components/checkbox/checkbox';
 import { Group } from '/@/shared/components/group/group';
 import { Icon } from '/@/shared/components/icon/icon';
+import { ModalButton } from '/@/shared/components/modal/model-shared';
 import { PasswordInput } from '/@/shared/components/password-input/password-input';
 import { Stack } from '/@/shared/components/stack/stack';
 import { TextInput } from '/@/shared/components/text-input/text-input';
 import { toast } from '/@/shared/components/toast/toast';
 import { Tooltip } from '/@/shared/components/tooltip/tooltip';
-import { AuthenticationResponse, ServerListItem, ServerType } from '/@/shared/types/domain-types';
+import {
+    AuthenticationResponse,
+    ServerListItem,
+    ServerListItemWithCredential,
+    ServerType,
+} from '/@/shared/types/domain-types';
 
 const localSettings = isElectron() ? window.api.localSettings : null;
 
@@ -86,7 +91,7 @@ export const EditServerForm = ({ isUpdate, onCancel, password, server }: EditSer
                 });
             }
 
-            const serverItem: ServerListItem = {
+            const serverItem: ServerListItemWithCredential = {
                 credential: data.credential,
                 id: server.id,
                 name: values.name,
@@ -213,12 +218,10 @@ export const EditServerForm = ({ isUpdate, onCancel, password, server }: EditSer
                     />
                 )}
                 <Group justify="flex-end">
-                    <Button onClick={onCancel} variant="subtle">
-                        {t('common.cancel', { postProcess: 'titleCase' })}
-                    </Button>
-                    <Button loading={isLoading} type="submit" variant="filled">
-                        {t('common.save', { postProcess: 'titleCase' })}
-                    </Button>
+                    <ModalButton onClick={onCancel}>{t('common.cancel')}</ModalButton>
+                    <ModalButton loading={isLoading} type="submit" variant="filled">
+                        {t('common.save')}
+                    </ModalButton>
                 </Group>
             </Stack>
         </form>

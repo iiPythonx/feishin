@@ -3,7 +3,7 @@ import { debounce } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { api } from '/@/renderer/api';
-import { useAuthStoreActions, useCurrentServer } from '/@/renderer/store';
+import { getServerById, useAuthStoreActions, useCurrentServer } from '/@/renderer/store';
 import { toast } from '/@/shared/components/toast/toast';
 import { SongListSort, SortOrder } from '/@/shared/types/domain-types';
 import { AuthState, ServerListItem, ServerType } from '/@/shared/types/types';
@@ -26,7 +26,7 @@ export const useServerAuthenticated = () => {
             // making one request first
             try {
                 await api.controller.getSongList({
-                    apiClientProps: { server },
+                    apiClientProps: { serverId: server?.id || '' },
                     query: {
                         limit: 1,
                         sortBy: SongListSort.NAME,
@@ -59,11 +59,12 @@ export const useServerAuthenticated = () => {
 
     useEffect(() => {
         if (priorServerId.current !== server?.id) {
+            const serverWithAuth = getServerById(server!.id);
             priorServerId.current = server?.id || '';
 
             if (server?.type === ServerType.NAVIDROME) {
                 setReady(AuthState.LOADING);
-                debouncedAuth(server);
+                debouncedAuth(serverWithAuth!);
             } else {
                 setReady(AuthState.VALID);
             }

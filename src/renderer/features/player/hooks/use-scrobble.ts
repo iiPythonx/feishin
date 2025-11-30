@@ -75,13 +75,13 @@ export const useScrobble = () => {
                 currentSong?.serverType === ServerType.JELLYFIN ? currentTime * 1e7 : undefined;
 
             sendScrobble.mutate({
+                apiClientProps: { serverId: currentSong?.serverId || '' },
                 query: {
                     event: 'timeupdate',
                     id: currentSong.id,
                     position,
                     submission: false,
                 },
-                serverId: currentSong?.serverId,
             });
         },
         [isScrobbleEnabled, isPrivateModeEnabled, sendScrobble],
@@ -149,12 +149,12 @@ export const useScrobble = () => {
                             : undefined;
 
                     sendScrobble.mutate({
+                        apiClientProps: { serverId: previousSong?.serverId || '' },
                         query: {
                             id: previousSong.id,
                             position,
                             submission: true,
                         },
-                        serverId: previousSong?.serverId,
                     });
                 }
             }
@@ -173,13 +173,13 @@ export const useScrobble = () => {
                 // Send start scrobble when song changes and the new song is playing
                 if (currentStatus === PlayerStatus.PLAYING && currentSong?.id) {
                     sendScrobble.mutate({
+                        apiClientProps: { serverId: currentSong?.serverId || '' },
                         query: {
                             event: 'start',
                             id: currentSong.id,
                             position: 0,
                             submission: false,
                         },
-                        serverId: currentSong?.serverId,
                     });
 
                     if (currentSong?.serverType === ServerType.JELLYFIN) {
@@ -228,13 +228,13 @@ export const useScrobble = () => {
             // Whenever the player is restarted, send a 'start' scrobble
             if (currentStatus === PlayerStatus.PLAYING) {
                 sendScrobble.mutate({
+                    apiClientProps: { serverId: currentSong?.serverId || '' },
                     query: {
                         event: 'unpause',
                         id: currentSong.id,
                         position,
                         submission: false,
                     },
-                    serverId: currentSong?.serverId,
                 });
 
                 if (currentSong?.serverType === ServerType.JELLYFIN) {
@@ -253,13 +253,13 @@ export const useScrobble = () => {
                 // Jellyfin is the only one that needs to send a 'pause' event to the server
             } else if (currentSong?.serverType === ServerType.JELLYFIN) {
                 sendScrobble.mutate({
+                    apiClientProps: { serverId: currentSong?.serverId || '' },
                     query: {
                         event: 'pause',
                         id: currentSong.id,
                         position,
                         submission: false,
                     },
-                    serverId: currentSong?.serverId,
                 });
 
                 if (progressIntervalId.current) {
@@ -287,11 +287,11 @@ export const useScrobble = () => {
 
                 if (!isCurrentSongScrobbled && shouldSubmitScrobble) {
                     sendScrobble.mutate({
+                        apiClientProps: { serverId: currentSong?.serverId || '' },
                         query: {
                             id: currentSong.id,
                             submission: true,
                         },
-                        serverId: currentSong?.serverId,
                     });
 
                     setIsCurrentSongScrobbled(true);
@@ -332,24 +332,24 @@ export const useScrobble = () => {
 
             if (!isCurrentSongScrobbled && shouldSubmitScrobble) {
                 sendScrobble.mutate({
+                    apiClientProps: { serverId: currentSong?.serverId || '' },
                     query: {
                         id: currentSong.id,
                         position,
                         submission: true,
                     },
-                    serverId: currentSong?.serverId,
                 });
             }
 
             if (currentSong?.serverType === ServerType.JELLYFIN) {
                 sendScrobble.mutate({
+                    apiClientProps: { serverId: currentSong?.serverId || '' },
                     query: {
                         event: 'start',
                         id: currentSong.id,
                         position: 0,
                         submission: false,
                     },
-                    serverId: currentSong?.serverId,
                 });
             }
 

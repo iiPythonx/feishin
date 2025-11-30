@@ -14,11 +14,11 @@ import debounce from 'lodash/debounce';
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
-import { VirtualGridAutoSizerContainer } from '/@/renderer/components/virtual-grid';
+import { VirtualGridAutoSizerContainer } from '/@/renderer/components/virtual-grid/virtual-grid-wrapper';
 import { getColumnDefs, VirtualTable } from '/@/renderer/components/virtual-table';
-import { ErrorFallback } from '/@/renderer/features/action-required';
-import { useHandleTableContextMenu } from '/@/renderer/features/context-menu';
+import { ErrorFallback } from '/@/renderer/features/action-required/components/error-fallback';
 import { QUEUE_CONTEXT_MENU_ITEMS } from '/@/renderer/features/context-menu/context-menu-items';
+import { useHandleTableContextMenu } from '/@/renderer/features/context-menu/hooks/use-handle-context-menu';
 import { PlayersRef } from '/@/renderer/features/player/ref/players-ref';
 import { updateSong } from '/@/renderer/features/player/update-remote-song';
 import { useAppFocus } from '/@/renderer/hooks';

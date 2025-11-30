@@ -5,7 +5,7 @@ import isElectron from 'is-electron';
 import { api } from '/@/renderer/api';
 import { queryKeys } from '/@/renderer/api/query-keys';
 import { MutationHookArgs } from '/@/renderer/lib/react-query';
-import { getServerById, useSetAlbumListItemDataById, useSetQueueRating } from '/@/renderer/store';
+import { useSetAlbumListItemDataById, useSetQueueRating } from '/@/renderer/store';
 import { useRatingEvent } from '/@/renderer/store/event.store';
 import {
     Album,
@@ -30,13 +30,14 @@ export const useSetRating = (args: MutationHookArgs) => {
     return useMutation<
         RatingResponse,
         AxiosError,
-        Omit<SetRatingArgs, 'apiClientProps' | 'server'>,
+        SetRatingArgs,
         { previous: undefined | { items: AnyLibraryItems } }
     >({
         mutationFn: (args) => {
-            const server = getServerById(args.serverId);
-            if (!server) throw new Error('Server not found');
-            return api.controller.setRating({ ...args, apiClientProps: { server } });
+            return api.controller.setRating({
+                ...args,
+                apiClientProps: { serverId: args.apiClientProps.serverId },
+            });
         },
         onError: (_error, _variables, context) => {
             for (const item of context?.previous?.items || []) {

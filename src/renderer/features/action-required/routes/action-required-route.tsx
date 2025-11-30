@@ -6,10 +6,10 @@ import { PageHeader } from '/@/renderer/components/page-header/page-header';
 import { ActionRequiredContainer } from '/@/renderer/features/action-required/components/action-required-container';
 import { ServerCredentialRequired } from '/@/renderer/features/action-required/components/server-credential-required';
 import { ServerRequired } from '/@/renderer/features/action-required/components/server-required';
-import { ServerList } from '/@/renderer/features/servers';
-import { AnimatedPage } from '/@/renderer/features/shared';
+import { ServerList } from '/@/renderer/features/servers/components/server-list';
+import { AnimatedPage } from '/@/renderer/features/shared/components/animated-page';
 import { AppRoute } from '/@/renderer/router/routes';
-import { useCurrentServer } from '/@/renderer/store';
+import { useCurrentServerWithCredential } from '/@/renderer/store';
 import { Button } from '/@/shared/components/button/button';
 import { Center } from '/@/shared/components/center/center';
 import { Group } from '/@/shared/components/group/group';
@@ -18,7 +18,7 @@ import { Stack } from '/@/shared/components/stack/stack';
 
 const ActionRequiredRoute = () => {
     const { t } = useTranslation();
-    const currentServer = useCurrentServer();
+    const currentServer = useCurrentServerWithCredential();
     const isServerRequired = !currentServer;
     const isCredentialRequired = currentServer && !currentServer.credential;
 

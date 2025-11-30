@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 
 import { PlayQueueListControls } from './play-queue-list-controls';
 
-import { VirtualGridContainer } from '/@/renderer/components/virtual-grid';
+import { VirtualGridContainer } from '/@/renderer/components/virtual-grid/virtual-grid-wrapper';
 import { PlayQueue } from '/@/renderer/features/now-playing/components/play-queue';
 import { useWindowSettings } from '/@/renderer/store/settings.store';
 import { Box } from '/@/shared/components/box/box';

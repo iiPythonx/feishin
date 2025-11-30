@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import formatDuration from 'format-duration';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { TFunction, useTranslation } from 'react-i18next';
 import { generatePath } from 'react-router';
 import { Link } from 'react-router-dom';
 
@@ -180,7 +180,7 @@ export const ALBUM_CARD_ROWS: { [key: string]: CardRow<Album> } = {
         property: 'duration',
     },
     explicitStatus: {
-        format: (album, t) =>
+        format: (album, t: TFunction) =>
             album.explicitStatus === ExplicitStatus.EXPLICIT
                 ? t('common.explicit', { postProcess: 'sentenceCase' })
                 : album.explicitStatus === ExplicitStatus.CLEAN
@@ -250,7 +250,7 @@ export const SONG_CARD_ROWS: { [key: string]: CardRow<Song> } = {
         property: 'duration',
     },
     explicitStatus: {
-        format: (song, t) =>
+        format: (song, t: TFunction) =>
             song.explicitStatus === ExplicitStatus.EXPLICIT
                 ? t('common.explicit', { postProcess: 'sentenceCase' })
                 : song.explicitStatus === ExplicitStatus.CLEAN

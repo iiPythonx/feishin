@@ -15,7 +15,7 @@ export const useServerVersion = () => {
         queryFn: async ({ signal }) => {
             return controller.getServerInfo({
                 apiClientProps: {
-                    server,
+                    serverId: server?.id || '',
                     signal,
                 },
             });

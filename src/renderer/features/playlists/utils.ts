@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid/non-secure';
 
-import { NDSongQueryFields } from '/@/shared/api/navidrome.types';
+import { NDSongQueryFields } from '/@/shared/api/navidrome/navidrome-types';
 import { QueryBuilderGroup } from '/@/shared/types/types';
 
 export const parseQueryBuilderChildren = (groups: QueryBuilderGroup[], data: any[]) => {

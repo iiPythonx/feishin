@@ -11,7 +11,7 @@ import {
     Playlist,
     QueueSong,
     RelatedArtist,
-    ServerListItem,
+    ServerListItemWithCredential,
     ServerType,
 } from '/@/shared/types/domain-types';
 
@@ -117,7 +117,7 @@ const getGenres = (
 
 const normalizeSong = (
     item: z.infer<typeof ssType._response.song>,
-    server: null | ServerListItem,
+    server?: null | ServerListItemWithCredential,
     size?: number,
 ): QueueSong => {
     const imageUrl =
@@ -200,7 +200,7 @@ const normalizeAlbumArtist = (
     item:
         | z.infer<typeof ssType._response.albumArtist>
         | z.infer<typeof ssType._response.artistListEntry>,
-    server: null | ServerListItem,
+    server?: null | ServerListItemWithCredential,
     imageSize?: number,
 ): AlbumArtist => {
     const imageUrl =
@@ -235,7 +235,7 @@ const normalizeAlbumArtist = (
 
 const normalizeAlbum = (
     item: z.infer<typeof ssType._response.album> | z.infer<typeof ssType._response.albumListEntry>,
-    server: null | ServerListItem,
+    server?: null | ServerListItemWithCredential,
     imageSize?: number,
 ): Album => {
     const imageUrl =
@@ -272,7 +272,9 @@ const normalizeAlbum = (
         originalDate: null,
         participants: getParticipants(item),
         playCount: null,
+        recordLabels: item.recordLabels?.map((item) => item.name) || [],
         releaseDate: item.year ? new Date(Date.UTC(item.year, 0, 1)).toISOString() : null,
+        releaseTypes: item.releaseTypes || [],
         releaseYear: item.year ? Number(item.year) : null,
         serverId: server?.id || 'unknown',
         serverType: ServerType.SUBSONIC,
@@ -287,6 +289,7 @@ const normalizeAlbum = (
         updatedAt: item.created,
         userFavorite: item.starred || false,
         userRating: item.userRating || null,
+        version: item.version || null,
     };
 };
 
@@ -294,7 +297,7 @@ const normalizePlaylist = (
     item:
         | z.infer<typeof ssType._response.playlist>
         | z.infer<typeof ssType._response.playlistListEntry>,
-    server: null | ServerListItem,
+    server?: null | ServerListItemWithCredential,
 ): Playlist => {
     return {
         description: item.comment || null,

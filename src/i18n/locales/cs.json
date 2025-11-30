@@ -59,7 +59,6 @@
         "replayGainPreamp": "před-zesílení {{ReplayGain}} (dB)",
         "hotkey_favoriteCurrentSong": "oblíbit $t(common.currentSong)",
         "sampleRate": "vzorkovací frekvence",
-        "crossfadeStyle": "způsob prolnutí",
         "sidePlayQueueStyle_optionAttached": "připojené",
         "sidebarConfiguration": "nastavení postranního panelu",
         "sampleRate_description": "vyberte výstupní vzorkovací frekvenci k použití, když je vybraná vzorkovací frekvence jiná, než ta u aktuálního média. hodnota nižší než 8000 použije výchozí frekvenci",
@@ -107,7 +106,6 @@
         "playbackStyle_optionCrossFade": "křížové prolnutí",
         "hotkey_rate3": "hodnocení 3 hvězdami",
         "font": "písmo",
-        "mpvExtraParameters": "parametry mpv",
         "replayGainMode_optionTrack": "$t(entity.track_one)",
         "themeLight_description": "nastavit použití světlého motivu v aplikaci",
         "hotkey_toggleFullScreenPlayer": "přepnutí přehrávače na celou obrazovku",
@@ -119,7 +117,6 @@
         "hotkey_playbackPrevious": "předchozí skladba",
         "showSkipButtons_description": "zobrazit nebo skrýt tlačítka k přeskočení na liště přehrávače",
         "crossfadeDuration_description": "nastavte trvání efektu prolnutí",
-        "language": "jazyk",
         "playbackStyle": "způsob přehrávání",
         "hotkey_toggleShuffle": "přepnutí náhodného přehrávání",
         "theme": "motiv",
@@ -189,7 +186,6 @@
         "minimumScrobbleSeconds": "minimální scrobblování (v sekundách)",
         "hotkey_playbackStop": "zastavení",
         "windowBarStyle_description": "vyberte styl záhlaví okna",
-        "discordRichPresence": "{{discord}} rich presence",
         "font_description": "nastavení písma použitého v aplikaci",
         "savePlayQueue_description": "uložit frontu přehrávání, když je aplikace zavřena a obnovit ji při otevření aplikace",
         "useSystemTheme": "použít systémový motiv",
@@ -232,8 +228,6 @@
         "customCss": "vlastní CSS",
         "webAudio": "použít webový zvuk",
         "webAudio_description": "použít webový zvuk. tím povolíte pokročilé funkce jako replaygain. zakažte, pokud se objeví problémy",
-        "transcodeNote": "projeví se po 1 (web) - 2 (mpv) skladbách",
-        "transcode": "povolit překódování",
         "transcode_description": "zapnout překódování do různých formátů",
         "transcodeFormat_description": "vybere formát k překódování. pokud chcete nechat rozhodnout server, ponechte prázdné",
         "transcodeFormat": "formát k překódování",
@@ -272,8 +266,6 @@
         "discordPausedStatus_description": "pokud je povoleno, bude při pozastavení přehrávače zobrazen stav",
         "preservePitch": "zachovat výšku",
         "preservePitch_description": "zachová výšku při úpravě rychlosti přehrávání",
-        "notify": "povolit oznámení o skladbách",
-        "notify_description": "zobrazit oznámení při změně aktuální skladby",
         "discordDisplayType": "typ zobrazení stavu {{discord}}",
         "discordDisplayType_description": "změní, co posloucháte, ve vašem stavu",
         "discordDisplayType_songname": "název skladby",
@@ -281,7 +273,7 @@
         "hotkey_navigateHome": "přejít domů",
         "preventSleepOnPlayback": "zabránit uspání při přehrávání",
         "preventSleepOnPlayback_description": "zabránit uspání displeje během přehrávání hudby",
-        "discordLinkType": "odkazy ve stavu na službě {{discord}}",
+        "discordLinkType": "odkazy ve stavu na {{discord}}u",
         "discordLinkType_description": "přidá externí odkazy na {{lastfm}} nebo {{musicbrainz}} do polí skladby a umělce ve stavu na službě {{discord}}. {{musicbrainz}} je nejpřesnější, ale vyžaduje značky a neposkytuje odkazy na umělce, zatímco {{lastfm}} by mělo vždy poskytnout odkaz. neprovádí žádné další síťové požadavky",
         "discordLinkType_none": "$t(common.none)",
         "discordLinkType_mbz_lastfm": "{{musicbrainz}} se zálohou na {{lastfm}}",
@@ -289,12 +281,30 @@
         "artistBackground_description": "přidá obrázek na pozadí u stránek umělců",
         "artistBackgroundBlur": "velikost rozostření obrázku umělce na pozadí",
         "artistBackgroundBlur_description": "upraví velikost rozostření použitého na obrázek umělce na pozadí",
-        "releaseChannel_optionLatest": "stabilní",
+        "releaseChannel_optionLatest": "nejnovější",
         "releaseChannel_optionBeta": "beta",
         "releaseChannel": "kanál vydání",
         "releaseChannel_description": "vyberte si mezi stabilními vydáními nebo beta vydáními pro automatické aktualizace",
         "mediaSession": "povolit relaci médií",
-        "mediaSession_description": "povolí integraci do služby Windows Media Session, což zobrazí ovládání a metadata médií v překrytí systémové hlasitosti a na zamykací obrazovce (pouze Windows)"
+        "mediaSession_description": "povolí integraci do služby Windows Media Session, což zobrazí ovládání a metadata médií v překrytí systémové hlasitosti a na zamykací obrazovce (pouze Windows)",
+        "exportImportSettings_control_description": "exportovat a importovat nastavení pomocí souboru JSON",
+        "exportImportSettings_control_exportText": "exportovat nastavení",
+        "exportImportSettings_control_importText": "importovat nastavení",
+        "exportImportSettings_control_title": "importovat / exportovat nastavení",
+        "exportImportSettings_destructiveWarning": "importování nastavení je destruktivní, přečtěte si prosím informace výše, než kliknete na tlačítko „importovat“!",
+        "exportImportSettings_importBtn": "importovat nastavení",
+        "exportImportSettings_importModalTitle": "importovat nastavení feishin",
+        "exportImportSettings_importSuccess": "nastavení byla úspěšně importována!",
+        "exportImportSettings_notValidJSON": "poskytnutý soubor není platným souborem JSON",
+        "exportImportSettings_offendingKeyError": "Řetězec „{{offendingKey}}“ je nesprávný – {{reason}}",
+        "crossfadeStyle": "styl prolnutí",
+        "discordRichPresence": "stav na {{discord}}u",
+        "enableAutoTranslation_description": "povolit automatický překlad při načtení textů",
+        "enableAutoTranslation": "povolit automatický překlad",
+        "language": "jazyk",
+        "notify": "povolit oznámení o skladbách",
+        "notify_description": "zobrazit oznámení při změně aktuální skladby",
+        "transcode": "povolit překódování"
     },
     "action": {
         "editPlaylist": "upravit $t(entity.playlist_one)",
@@ -418,7 +428,14 @@
         "viewReleaseNotes": "zobrazit seznam změn",
         "newVersion": "byla nainstalována nová verze ({{version}})",
         "bitDepth": "bitová hloubka",
-        "sampleRate": "vzorkovací frekvence"
+        "sampleRate": "vzorkovací frekvence",
+        "explicitStatus": "stav explicitivity",
+        "explicit": "explicitní",
+        "clean": "čisté",
+        "private": "soukromý",
+        "public": "veřejný",
+        "recordLabel": "vydavatelství",
+        "releaseType": "typ vydání"
     },
     "table": {
         "config": {
@@ -565,7 +582,8 @@
         "fromYear": "z roku",
         "criticRating": "hodnocení kritiků",
         "album": "$t(entity.album_one)",
-        "trackNumber": "skladba"
+        "trackNumber": "skladba",
+        "explicitStatus": "$t(common.explicitStatus)"
     },
     "page": {
         "sidebar": {
@@ -756,7 +774,9 @@
             "success": "přidáno $t(entity.trackWithCount, {\"count\": {{message}} }) do $t(entity.playlistWithCount, {\"count\": {{numOfPlaylists}} })",
             "title": "přidat do $t(entity.playlist_one)",
             "input_skipDuplicates": "přeskočit duplicity",
-            "input_playlists": "$t(entity.playlist_other)"
+            "input_playlists": "$t(entity.playlist_other)",
+            "create": "vytvořit $t(entity.playlist_one) {{playlist}}",
+            "searchOrCreate": "vyhledejte $t(entity.playlist_other) nebo pište pro vytvoření nového"
         },
         "updateServer": {
             "title": "upravit server",
@@ -844,5 +864,33 @@
         "song_one": "píseň",
         "song_few": "písničky",
         "song_other": "písní"
+    },
+    "dragDropZone": {
+        "error_oneFileOnly": "Vyberte prosím pouze 1 soubor",
+        "error_readingFile": "během čtení souboru došlo k chybě: {{errorMessage}}",
+        "mainText": "přesuňte soubor sem"
+    },
+    "releaseType": {
+        "primary": {
+            "album": "$t(entity.album_one)",
+            "broadcast": "vysílání",
+            "ep": "ep",
+            "other": "jiné",
+            "single": "singl"
+        },
+        "secondary": {
+            "audiobook": "audiokniha",
+            "audioDrama": "rozhlasová hra",
+            "compilation": "kolekce",
+            "djMix": "dj mix",
+            "demo": "demo",
+            "fieldRecording": "field recording",
+            "interview": "rozhovor",
+            "live": "živě",
+            "mixtape": "mixtape",
+            "remix": "remix",
+            "soundtrack": "soundtrack",
+            "spokenWord": "mluvené slovo"
+        }
     }
 }

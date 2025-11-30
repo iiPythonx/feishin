@@ -30,14 +30,15 @@ import {
     useContextMenuEvents,
 } from '/@/renderer/features/context-menu/events';
 import { ItemDetailsModal } from '/@/renderer/features/item-details/components/item-details-modal';
-import { usePlayQueueAdd } from '/@/renderer/features/player';
+import { usePlayQueueAdd } from '/@/renderer/features/player/hooks/use-playqueue-add';
 import { updateSong } from '/@/renderer/features/player/update-remote-song';
-import { useDeletePlaylist } from '/@/renderer/features/playlists';
+import { useDeletePlaylist } from '/@/renderer/features/playlists/mutations/delete-playlist-mutation';
 import { useRemoveFromPlaylist } from '/@/renderer/features/playlists/mutations/remove-from-playlist-mutation';
-import { useCreateFavorite, useDeleteFavorite, useSetRating } from '/@/renderer/features/shared';
+import { useCreateFavorite } from '/@/renderer/features/shared/mutations/create-favorite-mutation';
+import { useDeleteFavorite } from '/@/renderer/features/shared/mutations/delete-favorite-mutation';
+import { useSetRating } from '/@/renderer/features/shared/mutations/set-rating-mutation';
 import { AppRoute } from '/@/renderer/router/routes';
 import {
-    getServerById,
     useAuthStore,
     useCurrentServer,
     usePlayerStore,
@@ -258,7 +259,7 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
     const handleDeletePlaylist = useCallback(() => {
         for (const item of ctx.data) {
             deletePlaylistMutation?.mutate(
-                { query: { id: item.id }, serverId: item.serverId },
+                { apiClientProps: { serverId: item.serverId }, query: { id: item.id } },
                 {
                     onError: (err) => {
                         toast.error({
@@ -328,11 +329,11 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
 
                 createFavoriteMutation.mutate(
                     {
+                        apiClientProps: { serverId },
                         query: {
                             id: items.map((item) => item.id),
                             type: ctx.type,
                         },
-                        serverId,
                     },
                     {
                         onError: (err) => {
@@ -367,11 +368,11 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
 
                 createFavoriteMutation.mutate(
                     {
+                        apiClientProps: { serverId },
                         query: {
                             id: items.map((item: AnyLibraryItem) => item.id),
                             type: ctx.type,
                         },
-                        serverId,
                     },
                     {
                         onError: (err) => {
@@ -406,11 +407,11 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
                 const idsToUnfavorite = nodesByServerId[serverId].map((node) => node.data.id);
                 deleteFavoriteMutation.mutate(
                     {
+                        apiClientProps: { serverId },
                         query: {
                             id: idsToUnfavorite,
                             type: ctx.type,
                         },
-                        serverId,
                     },
                     {
                         onSuccess: () => {
@@ -439,11 +440,11 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
                     (item: AnyLibraryItem) => item.id,
                 );
                 deleteFavoriteMutation.mutate({
+                    apiClientProps: { serverId },
                     query: {
                         id: idsToUnfavorite,
                         type: ctx.type,
                     },
-                    serverId,
                 });
             }
         }
@@ -504,7 +505,7 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
                 songId: songId.length > 0 ? songId : undefined,
             },
             modal: 'addToPlaylist',
-            size: 'md',
+            size: 'lg',
             title: t('page.contextMenu.addToPlaylist', { postProcess: 'sentenceCase' }),
         });
     }, [ctx.data, ctx.dataNodes, t]);
@@ -527,11 +528,11 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
         const confirm = () => {
             removeFromPlaylistMutation.mutate(
                 {
+                    apiClientProps: { serverId: ctx.data?.[0]?.serverId },
                     query: {
                         id: ctx.context.playlistId,
                         songId: songId || [],
                     },
-                    serverId: ctx.data?.[0]?.serverId,
                 },
                 {
                     onError: (err) => {
@@ -549,7 +550,7 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
 
         openModal({
             children: (
-                <ConfirmModal loading={removeFromPlaylistMutation.isLoading} onConfirm={confirm}>
+                <ConfirmModal loading={removeFromPlaylistMutation.isPending} onConfirm={confirm}>
                     {t('common.areYouSure', { postProcess: 'sentenceCase' })}
                 </ConfirmModal>
             ),
@@ -602,11 +603,11 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
 
                 updateRatingMutation.mutate(
                     {
+                        apiClientProps: { serverId },
                         query: {
                             item: items,
                             rating: ratingToSet,
                         },
-                        serverId,
                     },
                     {
                         onSuccess: () => {
@@ -717,7 +718,7 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
         const item = ctx.data[0];
         const songs = await controller.getSimilarSongs({
             apiClientProps: {
-                server: getServerById(item.serverId),
+                serverId: item.serverId,
                 signal: undefined,
             },
             query: { albumArtistIds: item.albumArtistIds, songId: item.id },
@@ -730,7 +731,7 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
     const handleDownload = useCallback(() => {
         const item = ctx.data[0];
         const url = api.controller.getDownloadUrl({
-            apiClientProps: { server },
+            apiClientProps: { serverId: item.serverId },
             query: { id: item.id },
         });
 
@@ -739,7 +740,7 @@ export const ContextMenuProvider = ({ children }: ContextMenuProviderProps) => {
         } else {
             window.open(url, '_blank');
         }
-    }, [ctx.data, server]);
+    }, [ctx.data]);
 
     const handleGoToAlbum = useCallback(() => {
         const item = ctx.data[0];

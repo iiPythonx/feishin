@@ -1,7 +1,6 @@
 import { nanoid } from 'nanoid';
 import z from 'zod';
 
-import { NDGenre } from '/@/shared/api/navidrome.types';
 import { ndType } from '/@/shared/api/navidrome/navidrome-types';
 import { ssType } from '/@/shared/api/subsonic/subsonic-types';
 import {
@@ -126,7 +125,7 @@ const getArtists = (
 
 const normalizeSong = (
     item: z.infer<typeof ndType._response.playlistSong> | z.infer<typeof ndType._response.song>,
-    server: null | ServerListItem,
+    server?: null | ServerListItem,
     imageSize?: number,
 ): Song => {
     let id;
@@ -218,11 +217,52 @@ const normalizeSong = (
     };
 };
 
+const parseAlbumTags = (
+    item: z.infer<typeof ndType._response.album>,
+): Pick<Album, 'recordLabels' | 'releaseTypes' | 'tags' | 'version'> => {
+    if (!item.tags) {
+        return {
+            recordLabels: [],
+            releaseTypes: [],
+            tags: null,
+            version: null,
+        };
+    }
+
+    // We get the genre from elsewhere. We don't need genre twice
+    delete item.tags['genre'];
+
+    let recordLabels: string[] = [];
+    if (item.tags['recordlabel']) {
+        recordLabels = item.tags['recordlabel'];
+        delete item.tags['recordlabel'];
+    }
+
+    let releaseTypes: string[] = [];
+    if (item.tags['releasetype']) {
+        releaseTypes = item.tags['releasetype'];
+        delete item.tags['releasetype'];
+    }
+
+    let version: null | string = null;
+    if (item.tags['albumversion']) {
+        version = item.tags['albumversion'].join(' · ');
+        delete item.tags['albumversion'];
+    }
+
+    return {
+        recordLabels,
+        releaseTypes,
+        tags: item.tags,
+        version,
+    };
+};
+
 const normalizeAlbum = (
     item: z.infer<typeof ndType._response.album> & {
         songs?: z.infer<typeof ndType._response.songList>;
     },
-    server: null | ServerListItem,
+    server?: null | ServerListItem,
     imageSize?: number,
 ): Album => {
     const imageUrl = getCoverArtUrl({
@@ -238,8 +278,9 @@ const normalizeAlbum = (
     const imageBackdropUrl = imageUrl?.replace(/size=\d+/, 'size=1000') || null;
 
     return {
-        albumArtist: item.albumArtist,
+        ...parseAlbumTags(item),
         ...getArtists(item),
+        albumArtist: item.albumArtist,
         backdropImageUrl: imageBackdropUrl,
         comment: item.comment || null,
         createdAt: item.createdAt.split('T')[0],
@@ -281,7 +322,6 @@ const normalizeAlbum = (
         size: item.size,
         songCount: item.songCount,
         songs: item.songs ? item.songs.map((song) => normalizeSong(song, server)) : undefined,
-        tags: item.tags || null,
         uniqueId: nanoid(),
         updatedAt: item.updatedAt,
         userFavorite: item.starred,
@@ -293,7 +333,7 @@ const normalizeAlbumArtist = (
     item: z.infer<typeof ndType._response.albumArtist> & {
         similarArtists?: z.infer<typeof ssType._response.artistInfo>['artistInfo']['similarArtist'];
     },
-    server: null | ServerListItem,
+    server?: null | ServerListItem,
 ): AlbumArtist => {
     let imageUrl = getImageUrl({ url: item?.largeImageUrl || null });
 
@@ -358,7 +398,7 @@ const normalizeAlbumArtist = (
 
 const normalizePlaylist = (
     item: z.infer<typeof ndType._response.playlist>,
-    server: null | ServerListItem,
+    server?: null | ServerListItem,
     imageSize?: number,
 ): Playlist => {
     const imageUrl = getCoverArtUrl({
@@ -392,7 +432,7 @@ const normalizePlaylist = (
     };
 };
 
-const normalizeGenre = (item: NDGenre): Genre => {
+const normalizeGenre = (item: z.infer<typeof ndType._response.genre>): Genre => {
     return {
         albumCount: undefined,
         id: item.id,

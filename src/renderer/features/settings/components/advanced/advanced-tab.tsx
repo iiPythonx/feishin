@@ -1,3 +1,4 @@
+import { ExportImportSettings } from '/@/renderer/features/settings/components/advanced/export-import-settings';
 import { StylesSettings } from '/@/renderer/features/settings/components/advanced/styles-settings';
 import { RemoteSettings } from '/@/renderer/features/settings/components/general/remote-settings';
 import isElectron from 'is-electron';
@@ -9,6 +10,7 @@ export const AdvancedTab = () => {
             <StylesSettings />
 
             {isElectron() && <RemoteSettings />}
+            <ExportImportSettings />
         </Stack>
     );
 };

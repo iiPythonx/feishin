@@ -7,7 +7,7 @@ import { z } from 'zod';
 import i18n from '/@/i18n/i18n';
 import { ssType } from '/@/shared/api/subsonic/subsonic-types';
 import { toast } from '/@/shared/components/toast/toast';
-import { ServerListItem } from '/@/shared/types/domain-types';
+import { ServerListItemWithCredential } from '/@/shared/types/domain-types';
 
 const c = initContract();
 
@@ -303,7 +303,7 @@ const silentlyTransformResponse = (data: any) => {
 };
 
 export const ssApiClient = (args: {
-    server: null | ServerListItem;
+    server: null | ServerListItemWithCredential;
     signal?: AbortSignal;
     silent?: boolean;
     url?: string;

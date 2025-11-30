@@ -3,11 +3,11 @@ import type { AgGridReact as AgGridReactType } from '@ag-grid-community/react/li
 
 import { useRef, useState } from 'react';
 
-import { VirtualGridContainer } from '/@/renderer/components/virtual-grid';
+import { VirtualGridContainer } from '/@/renderer/components/virtual-grid/virtual-grid-wrapper';
 import { NowPlayingHeader } from '/@/renderer/features/now-playing/components/now-playing-header';
 import { PlayQueue } from '/@/renderer/features/now-playing/components/play-queue';
 import { PlayQueueListControls } from '/@/renderer/features/now-playing/components/play-queue-list-controls';
-import { AnimatedPage } from '/@/renderer/features/shared';
+import { AnimatedPage } from '/@/renderer/features/shared/components/animated-page';
 
 const NowPlayingRoute = () => {
     const queueRef = useRef<null | { grid: AgGridReactType<Song> }>(null);

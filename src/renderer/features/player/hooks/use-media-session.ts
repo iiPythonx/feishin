@@ -39,22 +39,18 @@ export const useMediaSession = ({
         }
 
         mediaSession.setActionHandler('nexttrack', () => {
-            console.log('nexttrack');
             handleNextTrack();
         });
 
         mediaSession.setActionHandler('pause', () => {
-            console.log('pause');
             handlePause();
         });
 
         mediaSession.setActionHandler('play', () => {
-            console.log('play');
             handlePlay();
         });
 
         mediaSession.setActionHandler('previoustrack', () => {
-            console.log('previoustrack');
             handlePrevTrack();
         });
 

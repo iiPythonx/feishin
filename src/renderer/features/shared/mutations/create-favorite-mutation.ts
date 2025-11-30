@@ -5,7 +5,7 @@ import isElectron from 'is-electron';
 import { api } from '/@/renderer/api';
 import { queryKeys } from '/@/renderer/api/query-keys';
 import { MutationHookArgs } from '/@/renderer/lib/react-query';
-import { getServerById, useSetAlbumListItemDataById, useSetQueueFavorite } from '/@/renderer/store';
+import { useSetAlbumListItemDataById, useSetQueueFavorite } from '/@/renderer/store';
 import { useFavoriteEvent } from '/@/renderer/store/event.store';
 import {
     AlbumArtistDetailResponse,
@@ -24,19 +24,16 @@ export const useCreateFavorite = (args: MutationHookArgs) => {
     const setQueueFavorite = useSetQueueFavorite();
     const setFavoriteEvent = useFavoriteEvent();
 
-    return useMutation<
-        FavoriteResponse,
-        AxiosError,
-        Omit<FavoriteArgs, 'apiClientProps' | 'server'>,
-        null
-    >({
+    return useMutation<FavoriteResponse, AxiosError, FavoriteArgs, null>({
         mutationFn: (args) => {
-            const server = getServerById(args.serverId);
-            if (!server) throw new Error('Server not found');
-            return api.controller.createFavorite({ ...args, apiClientProps: { server } });
+            return api.controller.createFavorite({
+                ...args,
+                apiClientProps: { serverId: args.apiClientProps.serverId },
+            });
         },
         onSuccess: (_data, variables) => {
-            const { serverId } = variables;
+            const { apiClientProps } = variables;
+            const serverId = apiClientProps.serverId;
 
             if (!serverId) return;
 

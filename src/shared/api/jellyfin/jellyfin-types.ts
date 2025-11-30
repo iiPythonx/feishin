@@ -1,5 +1,65 @@
 import { z } from 'zod';
 
+export enum JFAlbumArtistListSort {
+    ALBUM = 'Album,SortName',
+    DURATION = 'Runtime,AlbumArtist,Album,SortName',
+    NAME = 'SortName,Name',
+    RANDOM = 'Random,SortName',
+    RECENTLY_ADDED = 'DateCreated,SortName',
+    RELEASE_DATE = 'PremiereDate,AlbumArtist,Album,SortName',
+}
+
+export enum JFAlbumListSort {
+    ALBUM_ARTIST = 'AlbumArtist,SortName',
+    COMMUNITY_RATING = 'CommunityRating,SortName',
+    CRITIC_RATING = 'CriticRating,SortName',
+    NAME = 'SortName',
+    PLAY_COUNT = 'PlayCount',
+    RANDOM = 'Random,SortName',
+    RECENTLY_ADDED = 'DateCreated,SortName',
+    RELEASE_DATE = 'ProductionYear,PremiereDate,SortName',
+}
+
+export enum JFArtistListSort {
+    ALBUM = 'Album,SortName',
+    DURATION = 'Runtime,AlbumArtist,Album,SortName',
+    NAME = 'SortName,Name',
+    RANDOM = 'Random,SortName',
+    RECENTLY_ADDED = 'DateCreated,SortName',
+    RELEASE_DATE = 'PremiereDate,AlbumArtist,Album,SortName',
+}
+
+export enum JFGenreListSort {
+    NAME = 'SortName',
+}
+
+export enum JFPlaylistListSort {
+    ALBUM_ARTIST = 'AlbumArtist,SortName',
+    DURATION = 'Runtime',
+    NAME = 'SortName',
+    RECENTLY_ADDED = 'DateCreated,SortName',
+    SONG_COUNT = 'ChildCount',
+}
+
+export enum JFSongListSort {
+    ALBUM = 'Album,SortName',
+    ALBUM_ARTIST = 'AlbumArtist,Album,SortName',
+    ARTIST = 'Artist,Album,SortName',
+    COMMUNITY_RATING = 'CommunityRating,SortName',
+    DURATION = 'Runtime,AlbumArtist,Album,SortName',
+    NAME = 'Name',
+    PLAY_COUNT = 'PlayCount,SortName',
+    RANDOM = 'Random,SortName',
+    RECENTLY_ADDED = 'DateCreated,SortName',
+    RECENTLY_PLAYED = 'DatePlayed,SortName',
+    RELEASE_DATE = 'PremiereDate,AlbumArtist,Album,SortName',
+}
+
+export enum JFSortOrder {
+    ASC = 'Ascending',
+    DESC = 'Descending',
+}
+
 const sortOrderValues = ['Ascending', 'Descending'] as const;
 
 const jfExternal = {
@@ -762,6 +822,7 @@ export const jfType = {
         genreList,
         lyrics,
         moveItem,
+        musicFolder,
         musicFolderList,
         playlist,
         playlistList,

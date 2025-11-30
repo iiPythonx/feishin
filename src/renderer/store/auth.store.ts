@@ -2,27 +2,28 @@ import merge from 'lodash/merge';
 import { nanoid } from 'nanoid/non-secure';
 import { devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
+import { shallow } from 'zustand/shallow';
 import { createWithEqualityFn } from 'zustand/traditional';
 
 import { useAlbumArtistListDataStore } from '/@/renderer/store/album-artist-list-data.store';
 import { useAlbumListDataStore } from '/@/renderer/store/album-list-data.store';
 import { useListStore } from '/@/renderer/store/list.store';
-import { ServerListItem } from '/@/shared/types/domain-types';
+import { ServerListItem, ServerListItemWithCredential } from '/@/shared/types/domain-types';
 
 export interface AuthSlice extends AuthState {
     actions: {
-        addServer: (args: ServerListItem) => void;
+        addServer: (args: ServerListItemWithCredential) => void;
         deleteServer: (id: string) => void;
-        getServer: (id: string) => null | ServerListItem;
-        setCurrentServer: (server: null | ServerListItem) => void;
-        updateServer: (id: string, args: Partial<ServerListItem>) => void;
+        getServer: (id: string) => null | ServerListItemWithCredential;
+        setCurrentServer: (server: null | ServerListItemWithCredential) => void;
+        updateServer: (id: string, args: Partial<ServerListItemWithCredential>) => void;
     };
 }
 
 export interface AuthState {
-    currentServer: null | ServerListItem;
+    currentServer: null | ServerListItemWithCredential;
     deviceId: string;
-    serverList: Record<string, ServerListItem>;
+    serverList: Record<string, ServerListItemWithCredential>;
 }
 
 export const useAuthStore = createWithEqualityFn<AuthSlice>()(
@@ -91,7 +92,24 @@ export const useAuthStore = createWithEqualityFn<AuthSlice>()(
 
 export const useCurrentServerId = () => useAuthStore((state) => state.currentServer)?.id || '';
 
-export const useCurrentServer = () => useAuthStore((state) => state.currentServer);
+export const useCurrentServer = () =>
+    useAuthStore((state) => {
+        return {
+            features: state.currentServer?.features,
+            id: state.currentServer?.id,
+            name: state.currentServer?.name,
+            preferInstantMix: state.currentServer?.preferInstantMix,
+            savePassword: state.currentServer?.savePassword,
+            type: state.currentServer?.type,
+            url: state.currentServer?.url,
+            userId: state.currentServer?.userId,
+            username: state.currentServer?.username,
+            version: state.currentServer?.version,
+        };
+    }, shallow) as ServerListItem;
+
+export const useCurrentServerWithCredential = () =>
+    useAuthStore((state) => state.currentServer) as ServerListItemWithCredential;
 
 export const useServerList = () => useAuthStore((state) => state.serverList);
 

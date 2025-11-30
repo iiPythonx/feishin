@@ -1,7 +1,6 @@
 import { AppRoute } from '@ts-rest/core';
+import { TFunction } from 'i18next';
 import { ReactNode } from 'react';
-import { TFunction } from 'react-i18next';
-import { Song } from 'src/main/features/core/lyrics/netease';
 
 import {
     Album,
@@ -10,6 +9,7 @@ import {
     LibraryItem,
     Playlist,
     QueueSong,
+    Song,
 } from '/@/shared/types/domain-types';
 import { ServerFeatures } from '/@/shared/types/features-types';
 

@@ -1,7 +1,7 @@
 import type { ICellRendererParams } from '@ag-grid-community/core';
 
 import { CellContainer } from '/@/renderer/components/virtual-table/cells/generic-cell';
-import { useSetRating } from '/@/renderer/features/shared';
+import { useSetRating } from '/@/renderer/features/shared/mutations/set-rating-mutation';
 import { Rating } from '/@/shared/components/rating/rating';
 
 export const RatingCell = ({ node, value }: ICellRendererParams) => {
@@ -10,11 +10,11 @@ export const RatingCell = ({ node, value }: ICellRendererParams) => {
     const handleUpdateRating = (rating: number) => {
         updateRatingMutation.mutate(
             {
+                apiClientProps: { serverId: value?.serverId || '' },
                 query: {
                     item: [value],
                     rating,
                 },
-                serverId: value?.serverId,
             },
             {
                 onSuccess: () => {

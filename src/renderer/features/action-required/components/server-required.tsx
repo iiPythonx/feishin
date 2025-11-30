@@ -3,10 +3,10 @@ import isElectron from 'is-electron';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
-import { AddServerForm } from '/@/renderer/features/servers';
 import JellyfinLogo from '/@/renderer/features/servers/assets/jellyfin.png';
 import NavidromeLogo from '/@/renderer/features/servers/assets/navidrome.png';
 import OpenSubsonicLogo from '/@/renderer/features/servers/assets/opensubsonic.png';
+import { AddServerForm } from '/@/renderer/features/servers/components/add-server-form';
 import { EditServerForm } from '/@/renderer/features/servers/components/edit-server-form';
 import { AppRoute } from '/@/renderer/router/routes';
 import { useAuthStoreActions, useCurrentServer, useServerList } from '/@/renderer/store';
@@ -18,7 +18,11 @@ import { Icon } from '/@/shared/components/icon/icon';
 import { ScrollArea } from '/@/shared/components/scroll-area/scroll-area';
 import { Stack } from '/@/shared/components/stack/stack';
 import { Text } from '/@/shared/components/text/text';
-import { ServerListItem, ServerType } from '/@/shared/types/domain-types';
+import {
+    ServerListItem,
+    ServerListItemWithCredential,
+    ServerType,
+} from '/@/shared/types/domain-types';
 
 const localSettings = isElectron() ? window.api.localSettings : null;
 
@@ -69,7 +73,7 @@ function ServerSelector() {
     const currentServer = useCurrentServer();
     const { setCurrentServer } = useAuthStoreActions();
 
-    const handleSetCurrentServer = (server: ServerListItem) => {
+    const handleSetCurrentServer = (server: ServerListItemWithCredential) => {
         navigate(AppRoute.HOME);
         setCurrentServer(server);
     };

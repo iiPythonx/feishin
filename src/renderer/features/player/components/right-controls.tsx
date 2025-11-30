@@ -5,15 +5,20 @@ import { useTranslation } from 'react-i18next';
 
 import { PlayerbarSlider } from '/@/renderer/features/player/components/playerbar-slider';
 import { useRightControls } from '/@/renderer/features/player/hooks/use-right-controls';
-import { useCreateFavorite, useDeleteFavorite, useSetRating } from '/@/renderer/features/shared';
+import { useCreateFavorite } from '/@/renderer/features/shared/mutations/create-favorite-mutation';
+import { useDeleteFavorite } from '/@/renderer/features/shared/mutations/delete-favorite-mutation';
+import { useSetRating } from '/@/renderer/features/shared/mutations/set-rating-mutation';
 import {
     useAppStoreActions,
     useCurrentServer,
     useCurrentSong,
     useHotkeySettings,
     useMuted,
+    usePlaybackSettings,
+    usePlaybackType,
     usePreviousSong,
     useSettingsStore,
+    useSettingsStoreActions,
     useSidebarStore,
     useSpeed,
     useVolume,
@@ -22,9 +27,12 @@ import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
 import { DropdownMenu } from '/@/shared/components/dropdown-menu/dropdown-menu';
 import { Flex } from '/@/shared/components/flex/flex';
 import { Group } from '/@/shared/components/group/group';
+import { Option } from '/@/shared/components/option/option';
 import { Rating } from '/@/shared/components/rating/rating';
 import { Slider } from '/@/shared/components/slider/slider';
+import { Switch } from '/@/shared/components/switch/switch';
 import { LibraryItem, QueueSong, ServerType, Song } from '/@/shared/types/domain-types';
+import { PlaybackType } from '/@/shared/types/types';
 
 const ipc = isElectron() ? window.api.ipc : null;
 const remote = isElectron() ? window.api.remote : null;
@@ -48,9 +56,13 @@ export const RightControls = () => {
         handleVolumeUp,
         handleVolumeWheel,
     } = useRightControls();
+    const { setSettings } = useSettingsStoreActions();
+    const playbackSettings = usePlaybackSettings();
+    const playbackType = usePlaybackType();
 
     const speed = useSpeed();
     const volumeWidth = useSettingsStore((state) => state.general.volumeWidth);
+    const speedPreservePitch = useSettingsStore((state) => state.playback.preservePitch);
 
     const updateRatingMutation = useSetRating({});
     const addToFavoritesMutation = useCreateFavorite({});
@@ -60,11 +72,11 @@ export const RightControls = () => {
         if (!song?.id) return;
 
         addToFavoritesMutation.mutate({
+            apiClientProps: { serverId: song?.serverId || '' },
             query: {
                 id: [song.id],
                 type: LibraryItem.SONG,
             },
-            serverId: song?.serverId,
         });
     };
 
@@ -72,11 +84,11 @@ export const RightControls = () => {
         if (!currentSong) return;
 
         updateRatingMutation.mutate({
+            apiClientProps: { serverId: currentSong?.serverId || '' },
             query: {
                 item: [currentSong],
                 rating,
             },
-            serverId: currentSong?.serverId,
         });
     };
 
@@ -84,11 +96,11 @@ export const RightControls = () => {
         if (!song?.id) return;
 
         removeFromFavoritesMutation.mutate({
+            apiClientProps: { serverId: song?.serverId || '' },
             query: {
                 id: [song.id],
                 type: LibraryItem.SONG,
             },
-            serverId: song?.serverId,
         });
     };
 
@@ -161,16 +173,17 @@ export const RightControls = () => {
             remote.requestFavorite((_event, { favorite, id, serverId }) => {
                 const mutator = favorite ? addToFavoritesMutation : removeFromFavoritesMutation;
                 mutator.mutate({
+                    apiClientProps: { serverId },
                     query: {
                         id: [id],
                         type: LibraryItem.SONG,
                     },
-                    serverId,
                 });
             });
 
             remote.requestRating((_event, { id, rating, serverId }) => {
                 updateRatingMutation.mutate({
+                    apiClientProps: { serverId },
                     query: {
                         item: [
                             {
@@ -181,7 +194,6 @@ export const RightControls = () => {
                         ],
                         rating,
                     },
-                    serverId,
                 });
             });
 
@@ -225,6 +237,28 @@ export const RightControls = () => {
                         />
                     </DropdownMenu.Target>
                     <DropdownMenu.Dropdown>
+                        {playbackType === PlaybackType.WEB && (
+                            <Option>
+                                <Option.Label>
+                                    {t('setting.preservePitch', {
+                                        postProcess: 'sentenceCase',
+                                    })}
+                                </Option.Label>
+                                <Option.Control>
+                                    <Switch
+                                        defaultChecked={speedPreservePitch}
+                                        onChange={(e) => {
+                                            setSettings({
+                                                playback: {
+                                                    ...playbackSettings,
+                                                    preservePitch: e.currentTarget.checked,
+                                                },
+                                            });
+                                        }}
+                                    />
+                                </Option.Control>
+                            </Option>
+                        )}
                         <Slider
                             label={formatPlaybackSpeedSliderLabel}
                             marks={[

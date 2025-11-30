@@ -4,7 +4,7 @@ import styles from './library-header-bar.module.css';
 
 import { PlayButton, PlayButtonProps } from '/@/renderer/features/shared/components/play-button';
 import { Badge, BadgeProps } from '/@/shared/components/badge/badge';
-import { SpinnerIcon } from '/@/shared/components/spinner/spinner';
+import { Spinner } from '/@/shared/components/spinner/spinner';
 import { TextTitle } from '/@/shared/components/text-title/text-title';
 
 interface LibraryHeaderBarProps {
@@ -40,7 +40,7 @@ interface HeaderBadgeProps extends BadgeProps {
 }
 
 const HeaderBadge = ({ children, isLoading, ...props }: HeaderBadgeProps) => {
-    return <Badge {...props}>{isLoading ? <SpinnerIcon /> : children}</Badge>;
+    return <Badge {...props}>{isLoading ? <Spinner /> : children}</Badge>;
 };
 
 LibraryHeaderBar.Title = Title;

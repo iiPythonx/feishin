@@ -1,19 +1,19 @@
 import { MutableRefObject, useCallback } from 'react';
 
-import { VirtualInfiniteGridRef } from '/@/renderer/components/virtual-grid';
+import { VirtualInfiniteGridRef } from '/@/renderer/components/virtual-grid/virtual-infinite-grid';
 import { useCreateFavorite } from '/@/renderer/features/shared/mutations/create-favorite-mutation';
 import { useDeleteFavorite } from '/@/renderer/features/shared/mutations/delete-favorite-mutation';
+import { useCurrentServerId } from '/@/renderer/store';
 import { LibraryItem } from '/@/shared/types/domain-types';
-import { ServerListItem } from '/@/shared/types/types';
 
 interface HandleFavoriteProps {
     gridRef: MutableRefObject<null | VirtualInfiniteGridRef>;
-    server: null | ServerListItem;
 }
 
-export const useHandleFavorite = ({ gridRef, server }: HandleFavoriteProps) => {
+export const useHandleFavorite = ({ gridRef }: HandleFavoriteProps) => {
     const createFavoriteMutation = useCreateFavorite({});
     const deleteFavoriteMutation = useDeleteFavorite({});
+    const serverId = useCurrentServerId();
 
     const handleFavorite = useCallback(
         async (options: { id: string[]; isFavorite: boolean; itemType: LibraryItem }) => {
@@ -21,19 +21,19 @@ export const useHandleFavorite = ({ gridRef, server }: HandleFavoriteProps) => {
             try {
                 if (isFavorite) {
                     await deleteFavoriteMutation.mutateAsync({
+                        apiClientProps: { serverId },
                         query: {
                             id,
                             type: itemType,
                         },
-                        serverId: server?.id,
                     });
                 } else {
                     await createFavoriteMutation.mutateAsync({
+                        apiClientProps: { serverId },
                         query: {
                             id,
                             type: itemType,
                         },
-                        serverId: server?.id,
                     });
                 }
 
@@ -50,7 +50,7 @@ export const useHandleFavorite = ({ gridRef, server }: HandleFavoriteProps) => {
                 console.error(error);
             }
         },
-        [createFavoriteMutation, deleteFavoriteMutation, gridRef, server?.id],
+        [createFavoriteMutation, deleteFavoriteMutation, gridRef, serverId],
     );
 
     return handleFavorite;

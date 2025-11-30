@@ -318,6 +318,10 @@ jobs:
                             $releaseNotes = "## Beta Release`n`nThis is a beta release."
                         }
 
+                      # Prepend beta update instructions to release notes
+                      $betaInstructions = "To receive automatic beta updates, set the release channel to ``Beta`` under ``Advanced`` settings.`n`n"
+                      $releaseNotes = $betaInstructions + $releaseNotes
+
                       # Update the release with new title and notes
                       Write-Host "Updating release with title 'Beta' and new notes..."
                       gh release edit $tagVersion --title "Beta" --notes "$releaseNotes"

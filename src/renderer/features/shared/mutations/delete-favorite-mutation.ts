@@ -5,7 +5,7 @@ import isElectron from 'is-electron';
 import { api } from '/@/renderer/api';
 import { queryKeys } from '/@/renderer/api/query-keys';
 import { MutationHookArgs } from '/@/renderer/lib/react-query';
-import { getServerById, useSetAlbumListItemDataById, useSetQueueFavorite } from '/@/renderer/store';
+import { useSetAlbumListItemDataById, useSetQueueFavorite } from '/@/renderer/store';
 import { useFavoriteEvent } from '/@/renderer/store/event.store';
 import {
     AlbumArtistDetailResponse,
@@ -24,21 +24,16 @@ export const useDeleteFavorite = (args: MutationHookArgs) => {
     const setQueueFavorite = useSetQueueFavorite();
     const setFavoriteEvent = useFavoriteEvent();
 
-    return useMutation<
-        FavoriteResponse,
-        AxiosError,
-        Omit<FavoriteArgs, 'apiClientProps' | 'server'>,
-        null
-    >({
+    return useMutation<FavoriteResponse, AxiosError, FavoriteArgs, null>({
         mutationFn: (args) => {
-            const server = getServerById(args.serverId);
-            if (!server) throw new Error('Server not found');
-            return api.controller.deleteFavorite({ ...args, apiClientProps: { server } });
+            return api.controller.deleteFavorite({
+                ...args,
+                apiClientProps: { serverId: args.apiClientProps.serverId },
+            });
         },
         onSuccess: (_data, variables) => {
-            const { serverId } = variables;
-
-            if (!serverId) return;
+            const { apiClientProps } = variables;
+            const serverId = apiClientProps.serverId;
 
             for (const id of variables.query.id) {
                 // Set the userFavorite property to false for the album in the album list data store
@@ -55,7 +50,9 @@ export const useDeleteFavorite = (args: MutationHookArgs) => {
 
             // We only need to set if we're already on the album detail page
             if (variables.query.type === LibraryItem.ALBUM && variables.query.id.length === 1) {
-                const queryKey = queryKeys.albums.detail(serverId, { id: variables.query.id[0] });
+                const queryKey = queryKeys.albums.detail(serverId, {
+                    id: variables.query.id[0],
+                });
                 const previous = queryClient.getQueryData<AlbumDetailResponse>(queryKey);
 
                 if (previous) {

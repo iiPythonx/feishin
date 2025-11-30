@@ -20,7 +20,7 @@ import {
     gaplessHandler,
 } from '/@/renderer/components/audio-player/utils/list-handlers';
 import { useWebAudio } from '/@/renderer/features/player/hooks/use-webaudio';
-import { getServerById, TranscodingConfig, usePlaybackSettings, useSpeed } from '/@/renderer/store';
+import { TranscodingConfig, usePlaybackSettings, useSpeed } from '/@/renderer/store';
 import { useSettingsStore, useSettingsStoreActions } from '/@/renderer/store/settings.store';
 import { toast } from '/@/shared/components/toast/toast';
 import { PlaybackStyle, PlayerStatus } from '/@/shared/types/types';
@@ -76,7 +76,7 @@ const useSongUrl = (transcode: TranscodingConfig, current: boolean, song?: Song)
 
             const result = api.controller.getTranscodingUrl({
                 apiClientProps: {
-                    server: getServerById(song.serverId),
+                    serverId: song.serverId,
                 },
                 query: {
                     base: song.streamUrl,

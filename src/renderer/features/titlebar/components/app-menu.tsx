@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 
 import packageJson from '../../../../../package.json';
 
-import { ServerList } from '/@/renderer/features/servers';
 import { EditServerForm } from '/@/renderer/features/servers/components/edit-server-form';
+import { ServerList } from '/@/renderer/features/servers/components/server-list';
 import { AppRoute } from '/@/renderer/router/routes';
 import {
     useAppStore,
@@ -20,7 +20,7 @@ import {
 import { DropdownMenu } from '/@/shared/components/dropdown-menu/dropdown-menu';
 import { Icon } from '/@/shared/components/icon/icon';
 import { toast } from '/@/shared/components/toast/toast';
-import { ServerListItem, ServerType } from '/@/shared/types/domain-types';
+import { ServerListItemWithCredential, ServerType } from '/@/shared/types/domain-types';
 
 const browser = isElectron() ? window.api.browser : null;
 const localSettings = isElectron() ? window.api.localSettings : null;
@@ -35,12 +35,12 @@ export const AppMenu = () => {
     const { privateMode } = useAppStore();
     const { setPrivateMode, setSideBar } = useAppStoreActions();
 
-    const handleSetCurrentServer = (server: ServerListItem) => {
+    const handleSetCurrentServer = (server: ServerListItemWithCredential) => {
         navigate(AppRoute.HOME);
         setCurrentServer(server);
     };
 
-    const handleCredentialsModal = async (server: ServerListItem) => {
+    const handleCredentialsModal = async (server: ServerListItemWithCredential) => {
         let password: null | string = null;
 
         try {

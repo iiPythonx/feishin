@@ -11,7 +11,7 @@ import { authenticationFailure } from '/@/renderer/api/utils';
 import { useAuthStore } from '/@/renderer/store';
 import { jfType } from '/@/shared/api/jellyfin/jellyfin-types';
 import { getClientType } from '/@/shared/api/utils';
-import { ServerListItem } from '/@/shared/types/domain-types';
+import { ServerListItemWithCredential } from '/@/shared/types/domain-types';
 
 const c = initContract();
 
@@ -368,7 +368,7 @@ export const createAuthHeader = (): string => {
 };
 
 export const jfApiClient = (args: {
-    server: null | ServerListItem;
+    server: null | ServerListItemWithCredential;
     signal?: AbortSignal;
     url?: string;
 }) => {

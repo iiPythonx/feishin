@@ -2,18 +2,19 @@ import i18n from '/@/i18n/i18n';
 import { JellyfinController } from '/@/renderer/api/jellyfin/jellyfin-controller';
 import { NavidromeController } from '/@/renderer/api/navidrome/navidrome-controller';
 import { SubsonicController } from '/@/renderer/api/subsonic/subsonic-controller';
-import { useAuthStore } from '/@/renderer/store';
+import { getServerById, useAuthStore } from '/@/renderer/store';
 import { toast } from '/@/shared/components/toast/toast';
 import {
     AuthenticationResponse,
     ControllerEndpoint,
+    InternalControllerEndpoint,
     ServerType,
 } from '/@/shared/types/domain-types';
 
 type ApiController = {
-    jellyfin: ControllerEndpoint;
-    navidrome: ControllerEndpoint;
-    subsonic: ControllerEndpoint;
+    jellyfin: InternalControllerEndpoint;
+    navidrome: InternalControllerEndpoint;
+    subsonic: InternalControllerEndpoint;
 };
 
 const endpoints: ApiController = {
@@ -25,7 +26,7 @@ const endpoints: ApiController = {
 const apiController = <K extends keyof ControllerEndpoint>(
     endpoint: K,
     type?: ServerType,
-): NonNullable<ControllerEndpoint[K]> => {
+): NonNullable<InternalControllerEndpoint[K]> => {
     const serverType = type || useAuthStore.getState().currentServer?.type;
 
     if (!serverType) {
@@ -68,135 +69,586 @@ export interface GeneralController extends Omit<Required<ControllerEndpoint>, 'a
 
 export const controller: GeneralController = {
     addToPlaylist(args) {
-        return apiController('addToPlaylist', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: addToPlaylist`,
+            );
+        }
+
+        return apiController(
+            'addToPlaylist',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     authenticate(url, body, type) {
         return apiController('authenticate', type)(url, body);
     },
     createFavorite(args) {
-        return apiController('createFavorite', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: createFavorite`,
+            );
+        }
+
+        return apiController(
+            'createFavorite',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     createPlaylist(args) {
-        return apiController('createPlaylist', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: createPlaylist`,
+            );
+        }
+
+        return apiController(
+            'createPlaylist',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     deleteFavorite(args) {
-        return apiController('deleteFavorite', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: deleteFavorite`,
+            );
+        }
+
+        return apiController(
+            'deleteFavorite',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     deletePlaylist(args) {
-        return apiController('deletePlaylist', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: deletePlaylist`,
+            );
+        }
+
+        return apiController(
+            'deletePlaylist',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getAlbumArtistDetail(args) {
-        return apiController('getAlbumArtistDetail', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getAlbumArtistDetail`,
+            );
+        }
+
+        return apiController(
+            'getAlbumArtistDetail',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getAlbumArtistList(args) {
-        return apiController('getAlbumArtistList', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getAlbumArtistList`,
+            );
+        }
+
+        return apiController(
+            'getAlbumArtistList',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getAlbumArtistListCount(args) {
-        return apiController('getAlbumArtistListCount', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getAlbumArtistListCount`,
+            );
+        }
+
+        return apiController(
+            'getAlbumArtistListCount',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getAlbumDetail(args) {
-        return apiController('getAlbumDetail', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getAlbumDetail`,
+            );
+        }
+
+        return apiController(
+            'getAlbumDetail',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getAlbumInfo(args) {
-        return apiController('getAlbumInfo', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getAlbumInfo`,
+            );
+        }
+
+        return apiController(
+            'getAlbumInfo',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getAlbumList(args) {
-        return apiController('getAlbumList', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getAlbumList`,
+            );
+        }
+
+        return apiController(
+            'getAlbumList',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getAlbumListCount(args) {
-        return apiController('getAlbumListCount', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getAlbumListCount`,
+            );
+        }
+
+        return apiController(
+            'getAlbumListCount',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getArtistList(args) {
-        return apiController('getArtistList', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getArtistList`,
+            );
+        }
+
+        return apiController(
+            'getArtistList',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getArtistListCount(args) {
-        return apiController('getArtistListCount', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getArtistListCount`,
+            );
+        }
+
+        return apiController(
+            'getArtistListCount',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getDownloadUrl(args) {
-        return apiController('getDownloadUrl', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getDownloadUrl`,
+            );
+        }
+
+        return apiController(
+            'getDownloadUrl',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getGenreList(args) {
-        return apiController('getGenreList', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getGenreList`,
+            );
+        }
+
+        return apiController(
+            'getGenreList',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getLyrics(args) {
-        return apiController('getLyrics', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getLyrics`,
+            );
+        }
+
+        return apiController(
+            'getLyrics',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getMusicFolderList(args) {
-        return apiController('getMusicFolderList', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getMusicFolderList`,
+            );
+        }
+
+        return apiController(
+            'getMusicFolderList',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getPlaylistDetail(args) {
-        return apiController('getPlaylistDetail', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getPlaylistDetail`,
+            );
+        }
+
+        return apiController(
+            'getPlaylistDetail',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getPlaylistList(args) {
-        return apiController('getPlaylistList', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getPlaylistList`,
+            );
+        }
+
+        return apiController(
+            'getPlaylistList',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getPlaylistListCount(args) {
-        return apiController('getPlaylistListCount', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getPlaylistListCount`,
+            );
+        }
+
+        return apiController(
+            'getPlaylistListCount',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getPlaylistSongList(args) {
-        return apiController('getPlaylistSongList', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getPlaylistSongList`,
+            );
+        }
+
+        return apiController(
+            'getPlaylistSongList',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getRandomSongList(args) {
-        return apiController('getRandomSongList', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getRandomSongList`,
+            );
+        }
+
+        return apiController(
+            'getRandomSongList',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getRoles(args) {
-        return apiController('getRoles', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getRoles`,
+            );
+        }
+
+        return apiController(
+            'getRoles',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getScanStatus(args) {
         return apiController('getScanStatus', args.apiClientProps.server?.type)?.(args);
     },
     getServerInfo(args) {
-        return apiController('getServerInfo', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getServerInfo`,
+            );
+        }
+
+        return apiController(
+            'getServerInfo',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getSimilarSongs(args) {
-        return apiController('getSimilarSongs', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getSimilarSongs`,
+            );
+        }
+
+        return apiController(
+            'getSimilarSongs',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getSongDetail(args) {
-        return apiController('getSongDetail', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getSongDetail`,
+            );
+        }
+
+        return apiController(
+            'getSongDetail',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getSongList(args) {
-        return apiController('getSongList', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getSongList`,
+            );
+        }
+
+        return apiController(
+            'getSongList',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getSongListCount(args) {
-        return apiController('getSongListCount', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getSongListCount`,
+            );
+        }
+
+        return apiController(
+            'getSongListCount',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getStructuredLyrics(args) {
-        return apiController('getStructuredLyrics', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getStructuredLyrics`,
+            );
+        }
+
+        return apiController(
+            'getStructuredLyrics',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getTags(args) {
-        return apiController('getTags', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getTags`,
+            );
+        }
+
+        return apiController(
+            'getTags',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getTopSongs(args) {
-        return apiController('getTopSongs', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getTopSongs`,
+            );
+        }
+
+        return apiController(
+            'getTopSongs',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getTranscodingUrl(args) {
-        return apiController('getTranscodingUrl', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getTranscodingUrl`,
+            );
+        }
+
+        return apiController(
+            'getTranscodingUrl',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     getUserList(args) {
-        return apiController('getUserList', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: getUserList`,
+            );
+        }
+
+        return apiController(
+            'getUserList',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     movePlaylistItem(args) {
-        return apiController('movePlaylistItem', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: movePlaylistItem`,
+            );
+        }
+
+        return apiController(
+            'movePlaylistItem',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     removeFromPlaylist(args) {
-        return apiController('removeFromPlaylist', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: removeFromPlaylist`,
+            );
+        }
+
+        return apiController(
+            'removeFromPlaylist',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     rescan(args) {
         return apiController('rescan', args.apiClientProps.server?.type)?.(args);
     },
     scrobble(args) {
-        return apiController('scrobble', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: scrobble`,
+            );
+        }
+
+        return apiController(
+            'scrobble',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     search(args) {
-        return apiController('search', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: search`,
+            );
+        }
+
+        return apiController(
+            'search',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     setRating(args) {
-        return apiController('setRating', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: setRating`,
+            );
+        }
+
+        return apiController(
+            'setRating',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     shareItem(args) {
-        return apiController('shareItem', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: shareItem`,
+            );
+        }
+
+        return apiController(
+            'shareItem',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
     updatePlaylist(args) {
-        return apiController('updatePlaylist', args.apiClientProps.server?.type)?.(args);
+        const server = getServerById(args.apiClientProps.serverId);
+
+        if (!server) {
+            throw new Error(
+                `${i18n.t('error.apiRouteError', { postProcess: 'sentenceCase' })}: updatePlaylist`,
+            );
+        }
+
+        return apiController(
+            'updatePlaylist',
+            server.type,
+        )?.({ ...args, apiClientProps: { ...args.apiClientProps, server } });
     },
 };

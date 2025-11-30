@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import debounce from 'lodash/debounce';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -6,15 +7,15 @@ import {
     MultiSelectWithInvalidData,
     SelectWithInvalidData,
 } from '/@/renderer/components/select-with-invalid-data';
-import { useGenreList } from '/@/renderer/features/genres';
-import { useTagList } from '/@/renderer/features/tag/queries/use-tag-list';
+import { genresQueries } from '/@/renderer/features/genres/api/genres-api';
+import { sharedQueries } from '/@/renderer/features/shared/api/shared-api';
 import {
-    getServerById,
     SongListFilter,
+    useCurrentServer,
     useListFilterByKey,
     useListStoreActions,
 } from '/@/renderer/store';
-import { NDSongQueryFields } from '/@/shared/api/navidrome.types';
+import { NDSongQueryFields } from '/@/shared/api/navidrome/navidrome-types';
 import { hasFeature } from '/@/shared/api/utils';
 import { Divider } from '/@/shared/components/divider/divider';
 import { Group } from '/@/shared/components/group/group';
@@ -29,7 +30,7 @@ interface NavidromeSongFiltersProps {
     customFilters?: Partial<SongListFilter>;
     onFilterChange: (filters: SongListFilter) => void;
     pageKey: string;
-    serverId?: string;
+    serverId: string;
 }
 
 export const NavidromeSongFilters = ({
@@ -41,25 +42,29 @@ export const NavidromeSongFilters = ({
     const { t } = useTranslation();
     const { setFilter } = useListStoreActions();
     const filter = useListFilterByKey<SongListQuery>({ key: pageKey });
-    const server = getServerById(serverId);
+    const server = useCurrentServer();
 
     const isGenrePage = customFilters?.genreIds !== undefined;
 
-    const genreListQuery = useGenreList({
-        query: {
-            sortBy: GenreListSort.NAME,
-            sortOrder: SortOrder.ASC,
-            startIndex: 0,
-        },
-        serverId,
-    });
+    const genreListQuery = useQuery(
+        genresQueries.list({
+            query: {
+                sortBy: GenreListSort.NAME,
+                sortOrder: SortOrder.ASC,
+                startIndex: 0,
+            },
+            serverId,
+        }),
+    );
 
-    const tagsQuery = useTagList({
-        query: {
-            type: LibraryItem.SONG,
-        },
-        serverId,
-    });
+    const tagsQuery = useQuery(
+        sharedQueries.tags({
+            query: {
+                type: LibraryItem.SONG,
+            },
+            serverId,
+        }),
+    );
 
     const genreList = useMemo(() => {
         if (!genreListQuery?.data) return [];

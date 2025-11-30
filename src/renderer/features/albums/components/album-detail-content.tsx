@@ -2,6 +2,7 @@ import type { AgGridReact as AgGridReactType } from '@ag-grid-community/react/li
 
 import { RowDoubleClickedEvent, RowHeightParams, RowNode } from '@ag-grid-community/core';
 import { useSetState } from '@mantine/hooks';
+import { useQuery } from '@tanstack/react-query';
 import { MutableRefObject, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { generatePath, useParams } from 'react-router';
@@ -18,19 +19,20 @@ import {
 } from '/@/renderer/components/virtual-table';
 import { FullWidthDiscCell } from '/@/renderer/components/virtual-table/cells/full-width-disc-cell';
 import { useCurrentSongRowStyles } from '/@/renderer/components/virtual-table/hooks/use-current-song-row-styles';
-import { useAlbumDetail } from '/@/renderer/features/albums/queries/album-detail-query';
-import { useAlbumList } from '/@/renderer/features/albums/queries/album-list-query';
-import {
-    useHandleGeneralContextMenu,
-    useHandleTableContextMenu,
-} from '/@/renderer/features/context-menu';
+import { albumQueries } from '/@/renderer/features/albums/api/album-api';
 import {
     ALBUM_CONTEXT_MENU_ITEMS,
     SONG_CONTEXT_MENU_ITEMS,
 } from '/@/renderer/features/context-menu/context-menu-items';
-import { usePlayQueueAdd } from '/@/renderer/features/player';
-import { PlayButton } from '/@/renderer/features/shared';
+import {
+    useHandleGeneralContextMenu,
+    useHandleTableContextMenu,
+} from '/@/renderer/features/context-menu/hooks/use-handle-context-menu';
+import { usePlayQueueAdd } from '/@/renderer/features/player/hooks/use-playqueue-add';
 import { LibraryBackgroundOverlay } from '/@/renderer/features/shared/components/library-background-overlay';
+import { PlayButton } from '/@/renderer/features/shared/components/play-button';
+import { useCreateFavorite } from '/@/renderer/features/shared/mutations/create-favorite-mutation';
+import { useDeleteFavorite } from '/@/renderer/features/shared/mutations/delete-favorite-mutation';
 import { useAppFocus, useContainerQuery } from '/@/renderer/hooks';
 import { useGenreRoute } from '/@/renderer/hooks/use-genre-route';
 import { AppRoute } from '/@/renderer/router/routes';
@@ -71,7 +73,14 @@ export const AlbumDetailContent = ({ background, tableRef }: AlbumDetailContentP
     const { t } = useTranslation();
     const { albumId } = useParams() as { albumId: string };
     const server = useCurrentServer();
-    const detailQuery = useAlbumDetail({ query: { id: albumId }, serverId: server?.id });
+    const detailQuery = useQuery(
+        albumQueries.detail({ query: { id: albumId }, serverId: server.id }),
+    );
+
+    const { data: detail } = useQuery(
+        albumQueries.detail({ query: { id: albumId }, serverId: server.id }),
+    );
+
     const cq = useContainerQuery();
     const handlePlayQueueAdd = usePlayQueueAdd();
     const tableConfig = useTableSettings('albumDetail');
@@ -99,7 +108,7 @@ export const AlbumDetailContent = ({ background, tableRef }: AlbumDetailContentP
     );
 
     const songsRowData = useMemo(() => {
-        if (!detailQuery.data?.songs) {
+        if (!detail?.songs) {
             return [];
         }
 
@@ -108,11 +117,11 @@ export const AlbumDetailContent = ({ background, tableRef }: AlbumDetailContentP
 
         const rowData: (QueueSong | { id: string; name: string })[] = [];
         const discTranslated = t('common.disc', { postProcess: 'upperCase' });
-
+    
         const onlyOneDisc =
-            new Set(detailQuery.data.songs.map((song) => song.discNumber)).size === 1;
+            new Set(detail.songs.map((song) => song.discNumber)).size === 1;
 
-        for (const song of detailQuery.data.songs) {
+        for (const song of detail.songs) {
             if (song.discNumber !== discNumber || song.discSubtitle !== discSubtitle) {
                 discNumber = song.discNumber;
                 discSubtitle = song.discSubtitle;
@@ -131,7 +140,7 @@ export const AlbumDetailContent = ({ background, tableRef }: AlbumDetailContentP
         }
 
         return rowData;
-    }, [detailQuery.data?.songs, t, tableConfig.hideDiscOne]);
+    }, [detail?.songs, t]);
 
     const [pagination, setPagination] = useSetState({
         artist: 0,
@@ -155,29 +164,46 @@ export const AlbumDetailContent = ({ background, tableRef }: AlbumDetailContentP
         [pagination, setPagination],
     );
 
-    const artistQuery = useAlbumList({
-        options: {
-            cacheTime: 1000 * 60,
-            enabled: detailQuery?.data?.albumArtists[0]?.id !== undefined,
-            keepPreviousData: true,
-            staleTime: 1000 * 60,
-        },
-        query: {
-            _custom: {
-                jellyfin: {
-                    ExcludeItemIds: detailQuery?.data?.id,
+    const artistQuery = useQuery(
+        albumQueries.list({
+            query: {
+                _custom: {
+                    jellyfin: {
+                        ExcludeItemIds: detail?.id,
+                    },
                 },
+                artistIds: detail?.albumArtists.length ? [detail?.albumArtists[0].id] : undefined,
+                limit: 15,
+                sortBy: AlbumListSort.YEAR,
+                sortOrder: SortOrder.DESC,
+                startIndex: 0,
             },
-            artistIds: detailQuery?.data?.albumArtists.length
-                ? [detailQuery?.data?.albumArtists[0].id]
-                : undefined,
-            limit: 15,
-            sortBy: AlbumListSort.YEAR,
-            sortOrder: SortOrder.DESC,
-            startIndex: 0,
-        },
-        serverId: server?.id,
-    });
+            serverId: server.id,
+        }),
+    );
+
+    // const artistQuery = useAlbumList({
+    //     options: {
+    //         enabled: detail?.albumArtists[0]?.id !== undefined,
+    //         gcTime: 1000 * 60,
+    //         placeholderData: true,
+    //     },
+    //     query: {
+    //         _custom: {
+    //             jellyfin: {
+    //                 ExcludeItemIds: detailQuery?.data?.id,
+    //             },
+    //         },
+    //         artistIds: detailQuery?.data?.albumArtists.length
+    //             ? [detailQuery?.data?.albumArtists[0].id]
+    //             : undefined,
+    //         limit: 15,
+    //         sortBy: AlbumListSort.YEAR,
+    //         sortOrder: SortOrder.DESC,
+    //         startIndex: 0,
+    //     },
+    //     serverId: server?.id,
+    // });
 
     const relatedAlbumGenresRequest: AlbumListQuery = {
         genres: detailQuery.data?.genres.length ? [detailQuery.data.genres[0].id] : undefined,
@@ -187,20 +213,21 @@ export const AlbumDetailContent = ({ background, tableRef }: AlbumDetailContentP
         startIndex: 0,
     };
 
-    const relatedAlbumGenresQuery = useAlbumList({
-        options: {
-            cacheTime: 1000 * 60,
-            enabled: !!detailQuery?.data?.genres?.[0],
-            queryKey: queryKeys.albums.related(
-                server?.id || '',
-                albumId,
-                relatedAlbumGenresRequest,
-            ),
-            staleTime: 1000 * 60,
-        },
-        query: relatedAlbumGenresRequest,
-        serverId: server?.id,
-    });
+    const relatedAlbumGenresQuery = useQuery(
+        albumQueries.list({
+            options: {
+                enabled: !!detailQuery?.data?.genres?.[0],
+                gcTime: 1000 * 60,
+                queryKey: queryKeys.albums.related(
+                    server?.id || '',
+                    albumId,
+                    relatedAlbumGenresRequest,
+                ),
+            },
+            query: relatedAlbumGenresRequest,
+            serverId: server?.id,
+        }),
+    );
 
     const carousels = [
         {
@@ -258,6 +285,31 @@ export const AlbumDetailContent = ({ background, tableRef }: AlbumDetailContentP
         });
     };
 
+    const createFavoriteMutation = useCreateFavorite({});
+    const deleteFavoriteMutation = useDeleteFavorite({});
+
+    const handleFavorite = () => {
+        if (!detailQuery?.data) return;
+
+        if (detailQuery.data.userFavorite) {
+            deleteFavoriteMutation.mutate({
+                apiClientProps: { serverId: detailQuery.data.serverId },
+                query: {
+                    id: [detailQuery.data.id],
+                    type: LibraryItem.ALBUM,
+                },
+            });
+        } else {
+            createFavoriteMutation.mutate({
+                apiClientProps: { serverId: detailQuery.data.serverId },
+                query: {
+                    id: [detailQuery.data.id],
+                    type: LibraryItem.ALBUM,
+                },
+            });
+        }
+    };
+
     const showGenres = detailQuery?.data?.genres ? detailQuery?.data?.genres.length !== 0 : false;
     const comment = detailQuery?.data?.comment;
 
@@ -305,97 +357,115 @@ export const AlbumDetailContent = ({ background, tableRef }: AlbumDetailContentP
                         <Group>
                             <PlayButton onClick={() => handlePlay(playButtonBehavior)} />
                             <Group gap="xs">
-                                {externalLinks && (lastFM || musicBrainz) ? (
-                                    <section>
-                                        <Group gap="sm">
-                                            {lastFM && (
-                                                <ActionIcon
-                                                    component="a"
-                                                    href={`https://www.last.fm/music/${encodeURIComponent(
-                                                        detailQuery?.data?.albumArtist || '',
-                                                    )}/${encodeURIComponent(detailQuery.data?.name || '')}`}
-                                                    icon="brandLastfm"
-                                                    iconProps={{
-                                                        fill: 'default',
-                                                        size: 'xl',
-                                                    }}
-                                                    radius="md"
-                                                    rel="noopener noreferrer"
-                                                    target="_blank"
-                                                    tooltip={{
-                                                        label: t('action.openIn.lastfm'),
-                                                    }}
-                                                    variant="subtle"
-                                                />
-                                            )}
-                                            {mbzId && musicBrainz ? (
-                                                <ActionIcon
-                                                    component="a"
-                                                    href={`https://musicbrainz.org/release/${mbzId}`}
-                                                    icon="brandMusicBrainz"
-                                                    iconProps={{
-                                                        fill: 'default',
-                                                        size: 'xl',
-                                                    }}
-                                                    radius="md"
-                                                    rel="noopener noreferrer"
-                                                    size="md"
-                                                    target="_blank"
-                                                    tooltip={{
-                                                        label: t('action.openIn.musicbrainz'),
-                                                    }}
-                                                    variant="subtle"
-                                                />
-                                            ) : null}
-                                        </Group>
-                                    </section>
-                                ) : null}
-                                {showGenres &&
-                                    detailQuery?.data?.genres?.map((genre) => (
-                                        <Button
-                                            component={Link}
-                                            key={`genre-${genre.id}`}
-                                            radius="md"
-                                            size="compact-md"
-                                            to={generatePath(genreRoute, {
-                                                genreId: genre.id,
-                                            })}
-                                            variant="outline"
-                                        >
-                                            {genre.name}
-                                        </Button>
-                                    ))}
+                                <ActionIcon
+                                    icon="favorite"
+                                    iconProps={{
+                                        fill: detailQuery?.data?.userFavorite
+                                            ? 'primary'
+                                            : undefined,
+                                    }}
+                                    loading={
+                                        createFavoriteMutation.isPending ||
+                                        deleteFavoriteMutation.isPending
+                                    }
+                                    onClick={handleFavorite}
+                                    size="lg"
+                                    variant="transparent"
+                                />
+                                <ActionIcon
+                                    icon="ellipsisHorizontal"
+                                    onClick={(e) => {
+                                        if (!detailQuery?.data) return;
+                                        handleGeneralContextMenu(e, [detailQuery.data!]);
+                                    }}
+                                    size="lg"
+                                    variant="transparent"
+                                />
                             </Group>
                         </Group>
-                        <Group gap="xs">
-                            <ActionIcon
-                                icon="ellipsisHorizontal"
-                                onClick={(e) => {
-                                    if (!detailQuery?.data) return;
-                                    handleGeneralContextMenu(e, [detailQuery.data!]);
-                                }}
-                                size="lg"
-                                variant="transparent"
-                            />
-                            <Popover position="bottom-end">
-                                <Popover.Target>
-                                    <ActionIcon
-                                        icon="settings"
-                                        onClick={(e) => {
-                                            if (!detailQuery?.data) return;
-                                            handleGeneralContextMenu(e, [detailQuery.data!]);
-                                        }}
-                                        size="lg"
-                                        variant="transparent"
-                                    />
-                                </Popover.Target>
-                                <Popover.Dropdown>
-                                    <TableConfigDropdown type="albumDetail" />
-                                </Popover.Dropdown>
-                            </Popover>
-                        </Group>
+                        <Popover position="bottom-end">
+                            <Popover.Target>
+                                <ActionIcon
+                                    icon="settings"
+                                    onClick={(e) => {
+                                        if (!detailQuery?.data) return;
+                                        handleGeneralContextMenu(e, [detailQuery.data!]);
+                                    }}
+                                    size="lg"
+                                    variant="transparent"
+                                />
+                            </Popover.Target>
+                            <Popover.Dropdown>
+                                <TableConfigDropdown type="albumDetail" />
+                            </Popover.Dropdown>
+                        </Popover>
                     </Group>
                 </section>
+                {showGenres && (
+                    <section>
+                        <Group gap="sm">
+                            {detailQuery?.data?.genres?.map((genre) => (
+                                <Button
+                                    component={Link}
+                                    key={`genre-${genre.id}`}
+                                    radius="md"
+                                    size="compact-md"
+                                    to={generatePath(genreRoute, {
+                                        genreId: genre.id,
+                                    })}
+                                    variant="outline"
+                                >
+                                    {genre.name}
+                                </Button>
+                            ))}
+                        </Group>
+                    </section>
+                )}
+                {externalLinks && (lastFM || musicBrainz) ? (
+                    <section>
+                        <Group gap="sm">
+                            {lastFM && (
+                                <ActionIcon
+                                    component="a"
+                                    href={`https://www.last.fm/music/${encodeURIComponent(
+                                        detailQuery?.data?.albumArtist || '',
+                                    )}/${encodeURIComponent(detailQuery.data?.name || '')}`}
+                                    icon="brandLastfm"
+                                    iconProps={{
+                                        fill: 'default',
+                                        size: 'xl',
+                                    }}
+                                    radius="md"
+                                    rel="noopener noreferrer"
+                                    target="_blank"
+                                    tooltip={{
+                                        label: t('action.openIn.lastfm'),
+                                    }}
+                                    variant="subtle"
+                                />
+                            )}
+                            {mbzId && musicBrainz ? (
+                                <ActionIcon
+                                    component="a"
+                                    href={`https://musicbrainz.org/release/${mbzId}`}
+                                    icon="brandMusicBrainz"
+                                    iconProps={{
+                                        fill: 'default',
+                                        size: 'xl',
+                                    }}
+                                    radius="md"
+                                    rel="noopener noreferrer"
+                                    size="md"
+                                    target="_blank"
+                                    tooltip={{
+                                        label: t('action.openIn.musicbrainz'),
+                                    }}
+                                    variant="subtle"
+                                />
+                            ) : null}
+                        </Group>
+                    </section>
+                ) : null}
                 {comment && (
                     <section>
                         <Spoiler maxHeight={75}>{replaceURLWithHTMLLinks(comment)}</Spoiler>

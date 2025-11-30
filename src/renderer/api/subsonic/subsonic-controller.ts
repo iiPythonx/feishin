@@ -16,8 +16,8 @@ import {
 } from '/@/shared/api/subsonic/subsonic-types';
 import {
     AlbumListSort,
-    ControllerEndpoint,
     GenreListSort,
+    InternalControllerEndpoint,
     LibraryItem,
     PlaylistListSort,
     RescanArgs,
@@ -54,7 +54,7 @@ const MAX_SUBSONIC_ITEMS = 500;
 // A trick to skip ahead 10x
 const SUBSONIC_FAST_BATCH_SIZE = MAX_SUBSONIC_ITEMS * 10;
 
-export const SubsonicController: ControllerEndpoint = {
+export const SubsonicController: InternalControllerEndpoint = {
     addToPlaylist: async ({ apiClientProps, body, query }) => {
         const res = await ssApiClient(apiClientProps).updatePlaylist({
             query: {
@@ -255,7 +255,10 @@ export const SubsonicController: ControllerEndpoint = {
         };
     },
     getAlbumArtistListCount: (args) =>
-        SubsonicController.getAlbumArtistList(args).then((res) => res!.totalRecordCount!),
+        SubsonicController.getAlbumArtistList({
+            ...args,
+            query: { ...args.query, startIndex: 0 },
+        }).then((res) => res!.totalRecordCount!),
     getAlbumDetail: async (args) => {
         const { apiClientProps, query } = args;
 
@@ -605,7 +608,10 @@ export const SubsonicController: ControllerEndpoint = {
         };
     },
     getArtistListCount: async (args) =>
-        SubsonicController.getArtistList(args).then((res) => res!.totalRecordCount!),
+        SubsonicController.getArtistList({
+            ...args,
+            query: { ...args.query, startIndex: 0 },
+        }).then((res) => res!.totalRecordCount!),
     getDownloadUrl: (args) => {
         const { apiClientProps, query } = args;
 

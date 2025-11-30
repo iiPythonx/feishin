@@ -134,7 +134,7 @@
         "quit": "quitter",
         "expand": "étendre",
         "search": "recherche",
-        "saveAs": "enregistrer en tant que",
+        "saveAs": "enregistrer sous",
         "disc": "disque",
         "yes": "oui",
         "random": "aléatoire",
@@ -157,7 +157,14 @@
         "newVersion": "une nouvelle version vient d'être installée ({{version}})",
         "viewReleaseNotes": "voir la note de version",
         "sampleRate": "taux d'échantillonnage",
-        "bitDepth": "format d'échantillonnage"
+        "bitDepth": "format d'échantillonnage",
+        "explicitStatus": "status explicite",
+        "explicit": "explicite",
+        "clean": "propre",
+        "private": "privé",
+        "public": "publique",
+        "recordLabel": "label de discographie",
+        "releaseType": "type de sortie"
     },
     "error": {
         "remotePortWarning": "redémarrer le serveur pour appliquer le nouveau port",
@@ -227,7 +234,8 @@
         "id": "id",
         "artist": "$t(entity.artist_one)",
         "isPublic": "est public",
-        "album": "$t(entity.album_one)"
+        "album": "$t(entity.album_one)",
+        "explicitStatus": "$t(common.explicitStatus)"
     },
     "page": {
         "sidebar": {
@@ -387,7 +395,6 @@
     },
     "setting": {
         "audioDevice_description": "sélectionnez le périphérique audio à utiliser pour la lecture (lecteur Web uniquement)",
-        "crossfadeStyle": "style du fondu enchaîné",
         "audioExclusiveMode_description": "activer le mode de sortie exclusif. Dans ce mode, le système est généralement verrouillé et seul mpv pourra émettre de l'audio",
         "audioPlayer_description": "sélectionnez le lecteur audio à utiliser pour la lecture",
         "crossfadeDuration_description": "définit la durée du fondu enchaîné",
@@ -448,7 +455,6 @@
         "playbackStyle_optionCrossFade": "fondu enchaîné",
         "hotkey_rate3": "noter 3 étoiles",
         "font": "police",
-        "mpvExtraParameters": "paramètres de mpv",
         "hotkey_toggleFullScreenPlayer": "basculer en plein écran",
         "hotkey_localSearch": "recherche dans la page",
         "hotkey_toggleQueue": "basculer la liste de lecteur",
@@ -456,7 +462,6 @@
         "hotkey_rate5": "noter 5 étoiles",
         "hotkey_playbackPrevious": "piste précédente",
         "showSkipButtons_description": "affiche ou cache les boutons suivants et précédents de la barre de lecture",
-        "language": "langage",
         "playbackStyle": "style de lecture",
         "hotkey_toggleShuffle": "basculer la lecture aléatoire",
         "playbackStyle_description": "sélectionnez le style de lecture à utiliser pour le lecteur audio",
@@ -471,7 +476,7 @@
         "showSkipButton_description": "affiche ou cache les boutons suivants et précédents de la barre de lecture",
         "savePlayQueue": "sauvegarder la liste de lecture",
         "minimumScrobbleSeconds_description": "la durée minimale en secondes de la chanson qui doit être jouée avant qu'elle ne soit scrobblée",
-        "fontType_description": "police intégré vous permet de sélectionner une des polices fourni par feishin. Police système vous permet de sélectionner une des polices fourni par votre système d'éxploitation. personnalisé vous permet de fournir votre propre police",
+        "fontType_description": "La police intégrée vous permet de sélectionner une des polices fourni par feishin. La police système vous permet de sélectionner une des polices fourni par votre système d'exploitation. L'option personnalisée vous permet d'importer votre propre police",
         "playButtonBehavior": "comportement du bouton play",
         "playbackStyle_optionNormal": "normale",
         "floatingQueueArea": "afficher le zone de file d'attente flottante",
@@ -492,7 +497,7 @@
         "hotkey_toggleCurrentSongFavorite": "basculer favori de la $t(common.currentSong)",
         "remoteUsername": "nom d'utilisateur du serveur de contrôle à distance",
         "hotkey_browserBack": "retour arrière",
-        "showSkipButton": "affiche les boutons suivants et précédents",
+        "showSkipButton": "afficher les boutons suivants et précédents",
         "minimizeToTray": "réduire vers la barre des tâches",
         "gaplessAudio_optionWeak": "faible (recommandée)",
         "minimumScrobbleSeconds": "scrobble minimum (secondes)",
@@ -531,7 +536,6 @@
         "audioExclusiveMode": "mode de sortie audio exclusif",
         "discordApplicationId": "identifiant d'application {{discord}}",
         "floatingQueueArea_description": "afficher une icon flottante sur le côté droit de l'écran pour afficher la liste d'attente",
-        "discordRichPresence": "status d'activité de {{discord}}",
         "playButtonBehavior_optionPlay": "$t(player.play)",
         "replayGainMode_optionNone": "$t(common.none)",
         "playButtonBehavior_optionAddLast": "$t(player.addLast)",
@@ -570,7 +574,6 @@
         "homeConfiguration_description": "configurer quels éléments sont affichés sur la page d'accueil, et dans quel ordre",
         "startMinimized": "démarrer l'application en mode réduit",
         "genreBehavior_description": "détermine si cliquer sur un genre ouvre par défaut la liste des pistes ou des albums",
-        "transcode": "activer le transcodage",
         "transcode_description": "permet le transcodage vers différents formats",
         "transcodeBitrate_description": "sélectionne le débit du transcodage. 0 signifie que le serveur choisit",
         "transcodeFormat_description": "sélectionne le format du transcodage. laisser vide pour laisser le serveur décider",
@@ -605,7 +608,6 @@
         "customCss_description": "contenu css personnalisé. Remarque : le contenu et les URL distantes sont des propriétés non autorisées. Un aperçu de votre contenu est affiché ci-dessous. Des champs supplémentaires que vous n'avez pas définis sont présents en raison de la vérification",
         "translationApiKey": "clé api de traduction",
         "translationTargetLanguage_description": "langue cible pour la traduction des paroles",
-        "transcodeNote": "prend effet après 1 (web) - 2 (mpv) titres",
         "trayEnabled_description": "afficher ou masquer l'icône et le menu de la barre d'état système. si désactivé, désactive également la réduction et la sortie vers la barre d'état système",
         "doubleClickBehavior_description": "si vrai, toutes les pistes correspondantes dans une recherche de piste seront mises en file d'attente. sinon, seule celle sur laquelle vous avez cliqué sera mise en file d'attente",
         "albumBackgroundBlur": "intensité du flou de l'image d'arrière-plan de l'album",
@@ -625,8 +627,6 @@
         "discordPausedStatus": "afficher le status d'activité en pause",
         "preservePitch": "préserver la hauteur",
         "preservePitch_description": "préserver la hauteur lors du changement de la vitesse de lecture",
-        "notify": "activer les notifications des chansons",
-        "notify_description": "affiche une notification lors du changement de chanson",
         "discordDisplayType": "type d'affichage du status {{discord}}",
         "discordDisplayType_description": "modifie ce que vous écoutez dans votre statut",
         "discordDisplayType_songname": "nom du morceau",
@@ -642,12 +642,30 @@
         "artistBackground_description": "ajoute une image d'arrière-plan pour les pages d'artiste contenant l'œuvre de l'artiste",
         "artistBackgroundBlur": "intensité du flou sur l'image d'arrière-plan d'artiste",
         "artistBackgroundBlur_description": "ajuste la quantité de flou appliquée à l'image d'arrière-plan de l'artiste",
-        "releaseChannel_optionLatest": "stable",
+        "releaseChannel_optionLatest": "dernière",
         "releaseChannel_optionBeta": "bêta",
         "releaseChannel": "canal de diffusion",
         "releaseChannel_description": "choisissez entre les versions stables ou les versions bêta pour les mises à jour automatiques",
         "mediaSession": "activer media session",
-        "mediaSession_description": "active l'intégration de la session Windows Media, affichant les commandes multimédias et les métadonnées dans la superposition du volume du système et l'écran de verrouillage (Windows uniquement)"
+        "mediaSession_description": "active l'intégration de la session Windows Media, affichant les commandes multimédias et les métadonnées dans la superposition du volume du système et l'écran de verrouillage (Windows uniquement)",
+        "enableAutoTranslation_description": "activer la traduction automatiquement lorsque les paroles sont chargées",
+        "enableAutoTranslation": "activer la traduction automatique",
+        "exportImportSettings_control_description": "exporter et importer les paramètres en JSON",
+        "exportImportSettings_control_exportText": "paramètres d'exportation",
+        "exportImportSettings_control_importText": "paramètres d'importation",
+        "exportImportSettings_control_title": "paramètres d'importation / exportation",
+        "exportImportSettings_destructiveWarning": "l'importation des paramètres est destructive, veuillez lire les informations ci-dessus avant de cliquer sur \"importer\" ci-dessous !",
+        "exportImportSettings_importBtn": "paramètres d'importation",
+        "exportImportSettings_importSuccess": "les paramètres ont été importés avec succès !",
+        "exportImportSettings_notValidJSON": "le fichier transmis n'est pas un JSON valide",
+        "exportImportSettings_offendingKeyError": "\"{{offendingKey}}\" est incorrecte - {{reason}}",
+        "exportImportSettings_importModalTitle": "paramètres d'importation feishin",
+        "crossfadeStyle": "style de fondu enchaîné",
+        "discordRichPresence": "{{discord}} Rich Presence",
+        "language": "langage",
+        "notify_description": "affiche une notification lorsque la chanson en cours change",
+        "transcode": "activer le transcodage",
+        "notify": "activer les notifications de chansons"
     },
     "form": {
         "deletePlaylist": {
@@ -674,7 +692,9 @@
             "success": "$t(entity.trackWithCount, {\"count\" : {{message}} }) ajouté à $t(entity.playlistWithCount, {\"count\" : {{numOfPlaylists}} })",
             "title": "ajouter à $t(entity.playlist_one)",
             "input_skipDuplicates": "sauter les doublons",
-            "input_playlists": "$t(entity.playlist_other)"
+            "input_playlists": "$t(entity.playlist_other)",
+            "create": "créer $t(entity.playlist_one) {{playlist}}",
+            "searchOrCreate": "rechercher $t(entity.playlist_other) ou tapez pour en créer une nouvelle"
         },
         "createPlaylist": {
             "title": "créer une $t(entity.playlist_one)",
@@ -846,6 +866,34 @@
             "channels": "$t(common.channel_other)",
             "size": "$t(common.size)",
             "codec": "$t(common.codec)"
+        }
+    },
+    "dragDropZone": {
+        "error_oneFileOnly": "Veuillez ne sélectionner qu'un seul fichier",
+        "error_readingFile": "un problème est survenu lors de la lecture du fichier : {{errorMessage}}",
+        "mainText": "déposez un fichier ici"
+    },
+    "releaseType": {
+        "primary": {
+            "album": "$t(entity.album_one)",
+            "broadcast": "diffuser",
+            "ep": "ep",
+            "other": "autre",
+            "single": "single"
+        },
+        "secondary": {
+            "audiobook": "livre audio",
+            "audioDrama": "dramatique radio",
+            "compilation": "compilation",
+            "djMix": "dj mix",
+            "demo": "démo",
+            "fieldRecording": "prise de son en extérieur",
+            "interview": "interview",
+            "live": "directe",
+            "mixtape": "mixtape",
+            "remix": "remix",
+            "soundtrack": "bande son",
+            "spokenWord": "spoken word"
         }
     }
 }

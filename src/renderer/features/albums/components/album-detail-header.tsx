@@ -1,20 +1,22 @@
-import { forwardRef, Fragment, Ref, useCallback, useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { forwardRef, Ref, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { generatePath, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import { queryKeys } from '/@/renderer/api/query-keys';
-import { useAlbumDetail } from '/@/renderer/features/albums/queries/album-detail-query';
-import { LibraryHeader, useSetRating } from '/@/renderer/features/shared';
-import { useCreateFavorite, useDeleteFavorite } from '/@/renderer/features/shared';
+import { albumQueries } from '/@/renderer/features/albums/api/album-api';
+import { LibraryHeader } from '/@/renderer/features/shared/components/library-header';
+import { useSetRating } from '/@/renderer/features/shared/mutations/set-rating-mutation';
 import { useContainerQuery } from '/@/renderer/hooks';
 import { useSongChange } from '/@/renderer/hooks/use-song-change';
 import { queryClient } from '/@/renderer/lib/react-query';
 import { AppRoute } from '/@/renderer/router/routes';
 import { useCurrentServer } from '/@/renderer/store';
-import { formatDateAbsoluteUTC, formatDurationString } from '/@/renderer/utils';
-import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
+import { formatDateAbsoluteUTC, formatDurationString, titleCase } from '/@/renderer/utils';
+import { normalizeReleaseTypes } from '/@/renderer/utils/normalize-release-types';
 import { Group } from '/@/shared/components/group/group';
+import { Pill } from '/@/shared/components/pill/pill';
 import { Rating } from '/@/shared/components/rating/rating';
 import { Stack } from '/@/shared/components/stack/stack';
 import { Text } from '/@/shared/components/text/text';
@@ -32,11 +34,15 @@ export const AlbumDetailHeader = forwardRef(
     ({ background }: AlbumDetailHeaderProps, ref: Ref<HTMLDivElement>) => {
         const { albumId } = useParams() as { albumId: string };
         const server = useCurrentServer();
-        const detailQuery = useAlbumDetail({ query: { id: albumId }, serverId: server?.id });
+        const detailQuery = useQuery(
+            albumQueries.detail({ query: { id: albumId }, serverId: server?.id }),
+        );
         const cq = useContainerQuery();
         const { t } = useTranslation();
 
-        const showRating = detailQuery?.data?.serverType === ServerType.NAVIDROME;
+        const showRating =
+            detailQuery?.data?.serverType === ServerType.NAVIDROME ||
+            detailQuery?.data?.serverType === ServerType.SUBSONIC;
 
         const originalDifferentFromRelease =
             detailQuery.data?.originalDate &&
@@ -74,7 +80,16 @@ export const AlbumDetailHeader = forwardRef(
             }
         }, detailQuery.data !== undefined);
 
-        const metadataItems = [
+        const releaseTypes = useMemo(
+            () =>
+                normalizeReleaseTypes(detailQuery.data?.releaseTypes ?? [], t).map((type) => ({
+                    id: type,
+                    value: titleCase(type),
+                })) || [],
+            [detailQuery.data?.releaseTypes, t],
+        );
+
+        const metadataItems = releaseTypes.concat([
             {
                 id: 'releaseDate',
                 value:
@@ -94,15 +109,21 @@ export const AlbumDetailHeader = forwardRef(
             },
             {
                 id: 'playCount',
-                value: t('entity.play', {
-                    count: detailQuery?.data?.playCount as number,
-                }),
+                value:
+                    typeof detailQuery?.data?.playCount === 'number' &&
+                    t('entity.play', {
+                        count: detailQuery?.data?.playCount,
+                    }),
             },
-        ];
+            {
+                id: 'version',
+                value: detailQuery.data?.version,
+            },
+        ]);
 
         if (originalDifferentFromRelease) {
-            const formatted = `Released ${formatDateAbsoluteUTC(detailQuery!.data!.originalDate)}`;
-            metadataItems.splice(0, 0, {
+            const formatted = `♫ ${formatDateAbsoluteUTC(detailQuery!.data!.originalDate)}`;
+            metadataItems.splice(releaseTypes.length, 0, {
                 id: 'originalDate',
                 value: formatted,
             });
@@ -114,11 +135,11 @@ export const AlbumDetailHeader = forwardRef(
             if (!detailQuery?.data) return;
 
             updateRatingMutation.mutate({
+                apiClientProps: { serverId: detailQuery.data.serverId },
                 query: {
                     item: [detailQuery.data],
                     rating,
                 },
-                serverId: detailQuery.data.serverId,
             });
         };
 
@@ -156,43 +177,22 @@ export const AlbumDetailHeader = forwardRef(
                     title={detailQuery?.data?.name || ''}
                     {...background}
                 >
-                    <Stack gap="sm">
-                        <Group gap="sm">
-                            {metadataItems.map((item, index) => (
-                                <Fragment key={`item-${item.id}-${index}`}>
-                                    {index > 0 && <Text isNoSelect>•</Text>}
-                                    <Text>{item.value}</Text>
-                                </Fragment>
-                            ))}
-                            {showRating && (
-                                <>
-                                    <Text isNoSelect>•</Text>
-                                    <Rating
-                                        onChange={handleUpdateRating}
-                                        readOnly={
-                                            detailQuery?.isFetching ||
-                                            updateRatingMutation.isLoading
-                                        }
-                                        value={detailQuery?.data?.userRating || 0}
-                                    />
-                                </>
+                    <Stack gap="lg">
+                        <Pill.Group>
+                            {metadataItems.map(
+                                (item, index) =>
+                                    item.value && (
+                                        <Pill key={`item-${item.id}-${index}`}>{item.value}</Pill>
+                                    ),
                             )}
-                            •
-                            <ActionIcon
-                                className="favorite_icon"
-                                icon="favorite"
-                                iconProps={{
-                                    fill: detailQuery?.data?.userFavorite ? 'primary' : undefined,
-                                }}
-                                loading={
-                                    createFavoriteMutation.isLoading ||
-                                    deleteFavoriteMutation.isLoading
-                                }
-                                onClick={handleFavorite}
-                                size="lg"
-                                variant="transparent"
+                        </Pill.Group>
+                        {showRating && (
+                            <Rating
+                                onChange={handleUpdateRating}
+                                readOnly={detailQuery?.isFetching || updateRatingMutation.isPending}
+                                value={detailQuery?.data?.userRating || 0}
                             />
-                        </Group>
+                        )}
                         <Group
                             gap="md"
                             mah="4rem"
