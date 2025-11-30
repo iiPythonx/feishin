@@ -15,7 +15,7 @@ import { RiRefreshLine } from 'react-icons/ri';
 import styles from './sidebar.module.css';
 
 import { api } from '/@/renderer/api';
-import { useCurrentServer } from '/@/renderer/store';
+import { useCurrentServer, useCurrentServerWithCredential } from '/@/renderer/store';
 import { Accordion } from '/@/shared/components/accordion/accordion';
 import { Button, ButtonProps } from '/@/shared/components/button/button';
 import { ServerType } from '/@/shared/types/domain-types';
@@ -55,7 +55,7 @@ const RescanMenu = ({
 }: {
     timerRef: MutableRefObject<ReturnType<typeof setInterval> | undefined>;
 }) => {
-    const server = useCurrentServer();
+    const server = useCurrentServerWithCredential();
     const {
         scanStatus: { folders, scanning, tracks },
         setScanStatus,
@@ -71,7 +71,9 @@ const RescanMenu = ({
             server.type !== ServerType.JELLYFIN
         ) {
             timerRef.current = setInterval(async () => {
-                const status = await api.controller.getScanStatus({ apiClientProps: { server } });
+                const status = await api.controller.getScanStatus({
+                    apiClientProps: { server, serverId: server.id },
+                });
                 if (status) setScanStatus!(status);
             }, 1000);
         } else if (!scanning && timerRef.current) {
@@ -86,7 +88,7 @@ const RescanMenu = ({
                 if (!server) return;
 
                 const results = await api.controller.rescan({
-                    apiClientProps: { server },
+                    apiClientProps: { server, serverId: server.id },
                     full,
                 });
                 if (results) {
