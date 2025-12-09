@@ -731,6 +731,8 @@
         "discordLinkType": "{{discord}} presence links",
         "discordListening_description": "show status as listening instead of playing",
         "discordListening": "show status as listening",
+        "discordPizza_description": "enable iiPython's cover art proxying service",
+        "discordPizza": "enable pizza",
         "discordPausedStatus_description": "when enabled, status will show when player is paused",
         "discordPausedStatus": "show rich presence when paused",
         "discordRichPresence": "{{discord}} rich presence",
