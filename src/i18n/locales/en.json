@@ -199,6 +199,7 @@
         "localFontAccessDenied": "access denied to local fonts",
         "loginRateError": "too many login attempts, please try again in a few seconds",
         "mpvRequired": "MPV required",
+        "multipleServerSaveQueueError": "the play queue has one or more songs which are not from the current server. this is not supported",
         "networkError": "a network error occurred",
         "notificationDenied": "permissions for notifications were denied. this setting has no effect",
         "openError": "could not open file",
@@ -207,6 +208,7 @@
         "remoteEnableError": "an error occurred when trying to $t(common.enable) the remote server",
         "remotePortError": "an error occurred when trying to set the remote server port",
         "remotePortWarning": "restart the server to apply the new port",
+        "saveQueueFailed": "failed to save queue",
         "serverNotSelectedError": "no server selected",
         "serverRequired": "server required",
         "sessionExpiredError": "your session has expired",
@@ -338,6 +340,9 @@
             "removeRuleGroup": "remove rule group",
             "resetToDefault": "reset to default",
             "clearFilters": "clear filters"
+        },
+        "saveQueue": {
+            "success": "saved play queue to server"
         },
         "shareItem": {
             "allowDownloading": "allow downloading",
@@ -562,6 +567,7 @@
         "addNextShuffled": "add next (shuffled)",
         "holdToShuffle": "hold to shuffle",
         "favorite": "favorite",
+        "lyrics": "lyrics",
         "mute": "mute",
         "muted": "muted",
         "next": "next",
@@ -585,6 +591,8 @@
         "repeat_off": "repeat disabled",
         "repeat_one": "repeat one",
         "repeat_other": "",
+        "restoreQueueFromServer": "restore queue from server",
+        "saveQueueToServer": "save queue to server",
         "shuffle": "play (shuffled)",
         "shuffle_off": "shuffle disabled",
         "skip": "skip",

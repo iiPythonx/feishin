@@ -27,6 +27,9 @@ export const formatDateAbsolute = (key: null | string) =>
 export const formatDateAbsoluteUTC = (key: null | string) =>
     key ? dayjs.utc(key).format(getDateFormat(key)) : '';
 
+export const formatHrDateTime = (key: null | string) =>
+    key ? dayjs(key).format('YYYY-MM-DD HH:mm') : '';
+
 export const formatDateRelative = (key: null | string) => (key ? dayjs(key).fromNow() : '');
 
 export const formatDurationString = (duration: number) => {
@@ -50,6 +53,11 @@ export const formatDurationString = (duration: number) => {
     }
 
     return string;
+};
+
+export const formatDurationStringShort = (duration: number) => {
+    const rawDuration = formatDuration(duration).split(':');
+    return `${rawDuration[0]}h ${rawDuration[1]}m`;
 };
 
 export const formatRating = (item: Album | AlbumArtist | Song) =>

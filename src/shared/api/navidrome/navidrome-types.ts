@@ -180,6 +180,14 @@ export const NDSongQueryFields = [
     { label: 'Year', type: 'number', value: 'year' },
 ];
 
+export const NDSongQueryFieldsLabelMap: Record<string, string> = NDSongQueryFields.reduce(
+    (acc, field) => {
+        acc[field.value] = field.label;
+        return acc;
+    },
+    {} as Record<string, string>,
+);
+
 export const NDSongQueryPlaylistOperators = [
     {
         label: i18n.t('filterOperator.inPlaylist', { postProcess: 'titleCase' }),
@@ -676,6 +684,25 @@ const tagListParameters = optionalPaginationParameters.extend({
     tag_value: z.string().optional(), // Search
 });
 
+const saveQueueParameters = z.object({
+    current: z.number().optional(),
+    ids: z.array(z.string()).optional(),
+    position: z.number().optional(),
+});
+
+const saveQueue = z.null();
+
+const queue = z.object({
+    changedBy: z.string(),
+    createdAt: z.string(),
+    current: z.number(),
+    id: z.string(),
+    items: z.array(song),
+    position: z.number(),
+    updatedAt: z.string(),
+    userId: z.string(),
+});
+
 export const ndType = {
     _enum: {
         albumArtistList: NDAlbumArtistListSort,
@@ -696,6 +723,7 @@ export const ndType = {
         moveItem: moveItemParameters,
         playlistList: playlistListParameters,
         removeFromPlaylist: removeFromPlaylistParameters,
+        saveQueue: saveQueueParameters,
         shareItem: shareItemParameters,
         songList: songListParameters,
         tagList: tagListParameters,
@@ -719,7 +747,9 @@ export const ndType = {
         playlistList,
         playlistSong,
         playlistSongList,
+        queue,
         removeFromPlaylist,
+        saveQueue,
         shareItem,
         song,
         songList,

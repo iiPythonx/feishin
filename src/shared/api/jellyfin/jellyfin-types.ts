@@ -253,6 +253,7 @@ const sessionInfo = z.object({
         CanSeek: z.boolean(),
         IsMuted: z.boolean(),
         IsPaused: z.boolean(),
+        PositionTicks: z.number().optional(),
         RepeatMode: z.string(),
     }),
     RemoteEndPoint: z.string(),
@@ -801,6 +802,28 @@ const folderParameters = z.object({
     SortOrder: z.enum(sortOrderValues).optional(),
 });
 
+const queueItem = z.object({
+    Id: z.string(),
+    PlaylistItemId: z.string().optional(),
+});
+
+const saveQueueParameters = scrobbleParameters.merge(
+    z.object({
+        NowPlayingQueue: z.array(queueItem),
+        PlaylistItemId: z.string().optional(),
+    }),
+);
+
+const getQueueParameters = z.object({});
+
+const getSessions = z.array(
+    sessionInfo.merge(
+        z.object({
+            PlaylistItemId: z.string().optional(),
+        }),
+    ),
+);
+
 export const jfType = {
     _enum: {
         albumArtistList: albumArtistListSort,
@@ -825,10 +848,12 @@ export const jfType = {
         filterList: filterListParameters,
         folder: folderParameters,
         genreList: genreListParameters,
+        getQueue: getQueueParameters,
         musicFolderList: musicFolderListParameters,
         playlistDetail: playlistDetailParameters,
         playlistList: playlistListParameters,
         removeFromPlaylist: removeFromPlaylistParameters,
+        saveQueue: saveQueueParameters,
         scrobble: scrobbleParameters,
         search: searchParameters,
         similarArtistList: similarArtistListParameters,
@@ -853,6 +878,7 @@ export const jfType = {
         folderList,
         genre,
         genreList,
+        getSessions,
         lyrics,
         moveItem,
         musicFolder,

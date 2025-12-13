@@ -13,6 +13,7 @@ import { useGenreList } from '/@/renderer/features/genres/api/genres-api';
 import { sharedQueries } from '/@/renderer/features/shared/api/shared-api';
 import { useCurrentServer, useCurrentServerId } from '/@/renderer/store';
 import { titleCase } from '/@/renderer/utils';
+import { NDSongQueryFieldsLabelMap } from '/@/shared/api/navidrome/navidrome-types';
 import { Divider } from '/@/shared/components/divider/divider';
 import { Group } from '/@/shared/components/group/group';
 import { NumberInput } from '/@/shared/components/number-input/number-input';
@@ -269,7 +270,7 @@ const TagFilters = () => {
         for (const tag of tagsQuery.data?.enumTags || []) {
             if (!tagsQuery.data?.excluded.album.includes(tag.name)) {
                 results.push({
-                    label: titleCase(tag.name),
+                    label: NDSongQueryFieldsLabelMap[tag.name] ?? titleCase(tag.name),
                     options: tag.options,
                     value: tag.name,
                 });

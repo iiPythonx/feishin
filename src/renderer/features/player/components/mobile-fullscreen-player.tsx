@@ -550,9 +550,7 @@ export const MobileFullscreenPlayer = () => {
                         variant={isPageHovered ? 'default' : 'subtle'}
                     />
                 </div>
-                <div className={styles.lyricsContent}>
-                    <Lyrics />
-                </div>
+                <div className={styles.lyricsContent}>{isLyricsState && <Lyrics />}</div>
             </motion.div>
         </MobilePlayerContainer>
     );

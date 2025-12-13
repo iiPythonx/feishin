@@ -20,13 +20,13 @@ const FolderListRoute = () => {
             pageKey,
             setItemCount,
         };
-    }, [itemCount, pageKey, setItemCount]);
+    }, [itemCount, pageKey]);
 
     return (
         <AnimatedPage>
             <ListContext.Provider value={providerValue}>
                 <FolderListHeader />
-                <ListWithSidebarContainer>
+                <ListWithSidebarContainer useBreakpoint>
                     <FolderListContent />
                 </ListWithSidebarContainer>
             </ListContext.Provider>

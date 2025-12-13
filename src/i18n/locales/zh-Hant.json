@@ -177,7 +177,8 @@
             "title": "$t(common.home)",
             "mostPlayed": "最多播放",
             "newlyAdded": "最近新增的發行",
-            "recentlyReleased": "最近發佈"
+            "recentlyReleased": "最近發佈",
+            "genres": "$t(entity.genre_other)"
         },
         "appMenu": {
             "openBrowserDevtools": "打開瀏覽器開發者工具",
@@ -244,7 +245,8 @@
             "transcoding": "轉碼",
             "discord": "Discord",
             "queryBuilder": "查詢建構器",
-            "playerFilters": "播放過濾器"
+            "playerFilters": "播放過濾器",
+            "logger": "日誌記錄器"
         },
         "albumArtistList": {
             "title": "$t(entity.albumArtist_other)"
@@ -356,7 +358,8 @@
         "queueType": "佇列類型",
         "queueType_default": "預設",
         "queueType_priority": "優先",
-        "holdToShuffle": "按住以隨機"
+        "holdToShuffle": "按住以隨機",
+        "lyrics": "歌詞"
     },
     "setting": {
         "audioPlayer_description": "選擇用於播放的音訊播放器",
@@ -392,7 +395,7 @@
         "discordUpdateInterval_description": "更新間隔秒數（至少 15 秒）",
         "enableRemote": "啟用遠端控制伺服器",
         "enableRemote_description": "啟用遠端控制伺服器，以允許其他設備控制此應用程式",
-        "exitToTray": "退出時最小化到托盤",
+        "exitToTray": "退出時最小化到系統匣",
         "followLyric": "跟隨目前歌詞",
         "font_description": "設定應用程式使用的字體",
         "fontType": "字體類型",
@@ -437,8 +440,8 @@
         "lyricOffset": "歌詞偏移（毫秒）",
         "lyricOffset_description": "將歌詞偏移指定的毫秒數",
         "lyricFetchProvider_description": "選擇歌詞來源。 來源順序即為搜尋的順序",
-        "minimizeToTray": "最小化到托盤",
-        "minimizeToTray_description": "將應用程式最小化到系統托盤",
+        "minimizeToTray": "最小化到匣",
+        "minimizeToTray_description": "將應用程式最小化到系統匣",
         "minimumScrobbleSeconds": "最小紀錄時間（秒）",
         "minimumScrobbleSeconds_description": "歌曲被記錄為已播放（scrobble）所需的最小播放時間",
         "mpvExecutablePath": "mpv 執行檔路徑",
@@ -495,7 +498,7 @@
         "sampleRate": "取樣率",
         "showSkipButtons_description": "在播放條顯示/隱藏播放按鈕",
         "playbackStyle": "播放風格",
-        "exitToTray_description": "退出應用程式時最小化到系統托盤而非關閉",
+        "exitToTray_description": "退出應用程式時最小化到系統匣而非關閉",
         "followLyric_description": "滾動歌詞到目前播放位置",
         "font": "字體",
         "globalMediaHotkeys_description": "啟用或禁用系統媒體快捷鍵以控制播放",
@@ -566,7 +569,7 @@
         "playerbarOpenDrawer": "播放器列全螢幕切換",
         "playerbarOpenDrawer_description": "允許點擊播放器列以開啟全螢幕播放器",
         "startMinimized": "最小化啟動",
-        "startMinimized_description": "在系統托盤中啟動應用程式",
+        "startMinimized_description": "在系統匣中啟動應用程式",
         "transcode_description": "啟用轉碼到不同格式",
         "transcodeBitrate": "要轉碼的比特率",
         "transcodeBitrate_description": "選擇要轉碼的比特率。 0 表示讓伺服器選擇",
@@ -578,8 +581,8 @@
         "translationApiKey_description": "翻譯的API金鑰（僅限全域服務端點）",
         "translationTargetLanguage": "目標翻譯語言",
         "translationTargetLanguage_description": "翻譯的目標語言",
-        "trayEnabled": "顯示托盤",
-        "trayEnabled_description": "顯示/隱藏托盤圖示/選單。如果停用，則也會停用最小化/退出到托盤",
+        "trayEnabled": "顯示系統匣",
+        "trayEnabled_description": "顯示/隱藏系統匣圖示/選單。如果停用，將同時停用最小化/退出到系統匣",
         "volumeWidth": "音量條寬度",
         "volumeWidth_description": "音量條的寬度",
         "webAudio": "使用網頁音訊",
@@ -628,7 +631,7 @@
         "notify_description": "當歌曲變更時顯示通知",
         "playerbarSlider": "播放進度條",
         "playerbarSliderType_optionSlider": "滑桿",
-        "playerbarSliderType_optionWaveform": "波型",
+        "playerbarSliderType_optionWaveform": "波形",
         "playerbarWaveformAlign": "波形對齊",
         "playerbarWaveformAlign_optionTop": "靠上對齊",
         "playerbarWaveformAlign_optionCenter": "置中對齊",
@@ -652,7 +655,19 @@
         "followCurrentSong": "跟隨當前歌曲",
         "playerbarSlider_description": "不建議在網路速度緩慢或計費的網路下使用波形",
         "playerFilters": "從佇列中過濾歌曲",
-        "playerFilters_description": "根據以下條件，排除要新增至佇列中的歌曲"
+        "playerFilters_description": "根據以下條件，排除要新增至佇列中的歌曲",
+        "autoDJ": "Auto DJ",
+        "autoDJ_description": "自動將相似的歌曲加入到播放佇列",
+        "autoDJ_itemCount": "歌曲數量",
+        "autoDJ_itemCount_description": "在啟用Auto DJ時嘗試加入佇列的歌曲數量",
+        "autoDJ_timing_description": "佇列中剩餘多少歌曲時啟動 Auto DJ",
+        "autoDJ_timing": "觸發時機",
+        "logLevel": "log等級",
+        "logLevel_description": "設定要顯示的最低日誌等級。Debug 會顯示所有日誌，Error 僅會顯示錯誤訊息",
+        "logLevel_optionDebug": "Debug",
+        "logLevel_optionError": "Error",
+        "logLevel_optionInfo": "Info",
+        "logLevel_optionWarn": "Warn"
     },
     "table": {
         "config": {
@@ -718,7 +733,9 @@
                 "songCount": "$t(entity.track_other)",
                 "albumCount": "$t(entity.album_other)",
                 "genreBadge": "$t(entity.genre_one) (徽章)",
-                "image": "圖片"
+                "image": "圖片",
+                "bitDepth": "$t(common.bitDepth)",
+                "sampleRate": "$t(common.sampleRate)"
             },
             "view": {
                 "table": "表格",
@@ -751,7 +768,9 @@
             "trackNumber": "曲目編號",
             "size": "$t(common.size)",
             "codec": "$t(common.codec)",
-            "owner": "擁有者"
+            "owner": "擁有者",
+            "bitDepth": "$t(common.bitDepth)",
+            "sampleRate": "$t(common.sampleRate)"
         }
     },
     "action": {
@@ -782,7 +801,11 @@
         "shuffle": "隨機播放",
         "shuffleAll": "全部隨機播放",
         "shuffleSelected": "隨機播放選取項目",
-        "viewMore": "查看更多"
+        "viewMore": "查看更多",
+        "moveUp": "向上移動",
+        "moveDown": "向下移動",
+        "holdToMoveToTop": "按住以移動至頂部",
+        "holdToMoveToBottom": "按住以移動至底部"
     },
     "entity": {
         "album_other": "專輯",
@@ -907,7 +930,8 @@
         "editPlaylist": {
             "title": "編輯$t(entity.playlist_one)",
             "publicJellyfinNote": "Jellyfin 出於某種原因，不會顯示播放清單是否公開。如果您希望保持公開狀態，請選擇以下輸入",
-            "success": "$t(entity.playlist_one) 更新成功"
+            "success": "$t(entity.playlist_one) 更新成功",
+            "editNote": "不建議手動編輯大型播放清單，你確定要承擔覆寫現有播放清單可能造成的資料遺失風險嗎？"
         },
         "shareItem": {
             "allowDownloading": "允許下載",

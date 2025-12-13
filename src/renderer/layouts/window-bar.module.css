@@ -3,6 +3,8 @@
     align-items: center;
     justify-content: space-between;
     width: 100vw;
+    background: var(--theme-colors-background);
+    border-bottom: 1px solid alpha(var(--theme-colors-border), 0.5);
     -webkit-app-region: drag;
 }
 
@@ -53,6 +55,8 @@
     align-items: center;
     justify-content: center;
     width: 100vw;
+    background: var(--theme-colors-background);
+    border-bottom: 1px solid alpha(var(--theme-colors-border), 0.5);
     -webkit-app-region: drag;
 }
 

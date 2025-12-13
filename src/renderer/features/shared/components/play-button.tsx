@@ -15,25 +15,26 @@ export interface DefaultPlayButtonProps extends ActionIconProps {
     size?: number | string;
 }
 
-export const DefaultPlayButton = ({
-    className,
-    variant = 'filled',
-    ...props
-}: DefaultPlayButtonProps) => {
-    return (
-        <ActionIcon
-            className={clsx(styles.textButton, className, {
-                [styles.unthemed]: variant !== 'filled',
-            })}
-            icon="mediaPlay"
-            iconProps={{
-                size: 'xl',
-            }}
-            variant={variant}
-            {...props}
-        />
-    );
-};
+export const DefaultPlayButton = forwardRef<HTMLButtonElement, DefaultPlayButtonProps>(
+    ({ className, variant = 'filled', ...props }, ref) => {
+        return (
+            <ActionIcon
+                className={clsx(styles.textButton, className, {
+                    [styles.unthemed]: variant !== 'filled',
+                })}
+                icon="mediaPlay"
+                iconProps={{
+                    size: 'xl',
+                }}
+                ref={ref}
+                variant={variant}
+                {...props}
+            />
+        );
+    },
+);
+
+DefaultPlayButton.displayName = 'DefaultPlayButton';
 
 interface TextPlayButtonProps extends ButtonProps {}
 

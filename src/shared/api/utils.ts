@@ -1,7 +1,6 @@
 import { AxiosHeaders } from 'axios';
 import isElectron from 'is-electron';
 import orderBy from 'lodash/orderBy';
-import reverse from 'lodash/reverse';
 import shuffle from 'lodash/shuffle';
 import semverCoerce from 'semver/functions/coerce';
 import semverGte from 'semver/functions/gte';
@@ -48,6 +47,18 @@ export const hasFeature = (server: null | ServerListItem, feature: ServerFeature
     }
 
     return (server.features[feature]?.length || 0) > 0;
+};
+
+export const hasFeatureWithVersion = (
+    server: null | ServerListItem,
+    feature: ServerFeature,
+    version: number,
+): boolean => {
+    if (!server || !server.features) {
+        return false;
+    }
+
+    return (server.features[feature] ?? []).includes(version);
 };
 
 export type VersionInfo = ReadonlyArray<
@@ -129,7 +140,7 @@ export const getClientType = (): string => {
 export const SEPARATOR_STRING = ' · ';
 
 export const sortSongList = (songs: Song[], sortBy: SongListSort, sortOrder: SortOrder) => {
-    let results = songs;
+    let results: Song[] = songs;
 
     const order = sortOrder === SortOrder.ASC ? 'asc' : 'desc';
 
@@ -192,8 +203,10 @@ export const sortSongList = (songs: Song[], sortBy: SongListSort, sortOrder: Sor
             break;
 
         case SongListSort.ID:
+            results = [...results];
+
             if (order === 'desc') {
-                results = reverse(results as any);
+                results.reverse();
             }
             break;
 

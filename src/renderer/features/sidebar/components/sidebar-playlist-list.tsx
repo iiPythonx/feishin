@@ -1,7 +1,7 @@
-import { closeAllModals, openContextModal, openModal } from '@mantine/modals';
+import { openContextModal } from '@mantine/modals';
 import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
-import { MouseEvent, useCallback, useMemo, useState } from 'react';
+import { memo, MouseEvent, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { generatePath, Link } from 'react-router';
 
@@ -11,26 +11,27 @@ import { getDraggedItems } from '/@/renderer/components/item-list/helpers/get-dr
 import { ContextMenuController } from '/@/renderer/features/context-menu/context-menu-controller';
 import { usePlayer } from '/@/renderer/features/player/context/player-context';
 import { playlistsQueries } from '/@/renderer/features/playlists/api/playlists-api';
-import { CreatePlaylistForm } from '/@/renderer/features/playlists/components/create-playlist-form';
+import { openCreatePlaylistModal } from '/@/renderer/features/playlists/components/create-playlist-form';
 import {
     LONG_PRESS_PLAY_BEHAVIOR,
     PlayTooltip,
 } from '/@/renderer/features/shared/components/play-button-group';
 import { usePlayButtonClick } from '/@/renderer/features/shared/hooks/use-play-button-click';
-import { SidebarItem } from '/@/renderer/features/sidebar/components/sidebar-item';
 import { useDragDrop } from '/@/renderer/hooks/use-drag-drop';
 import { AppRoute } from '/@/renderer/router/routes';
 import { useCurrentServer, useCurrentServerId } from '/@/renderer/store';
+import { formatDurationStringShort } from '/@/renderer/utils';
 import { Accordion } from '/@/shared/components/accordion/accordion';
 import { ActionIcon, ActionIconGroup } from '/@/shared/components/action-icon/action-icon';
 import { ButtonProps } from '/@/shared/components/button/button';
 import { Group } from '/@/shared/components/group/group';
+import { Icon } from '/@/shared/components/icon/icon';
+import { Image } from '/@/shared/components/image/image';
 import { Text } from '/@/shared/components/text/text';
 import {
     LibraryItem,
     Playlist,
     PlaylistListSort,
-    ServerType,
     Song,
     SortOrder,
 } from '/@/shared/types/domain-types';
@@ -40,11 +41,11 @@ import { Play } from '/@/shared/types/types';
 interface PlaylistRowButtonProps extends Omit<ButtonProps, 'onContextMenu' | 'onPlay'> {
     item: Playlist;
     name: string;
-    onContextMenu: (e: MouseEvent<HTMLButtonElement>, item: Playlist) => void;
+    onContextMenu: (e: MouseEvent<HTMLAnchorElement>, item: Playlist) => void;
     to: string;
 }
 
-const PlaylistRowButton = ({ item, name, onContextMenu, to }: PlaylistRowButtonProps) => {
+const PlaylistRowButton = memo(({ item, name, onContextMenu, to }: PlaylistRowButtonProps) => {
     const url = {
         pathname: generatePath(AppRoute.PLAYLISTS_DETAIL_SONGS, { playlistId: to }),
         state: { item },
@@ -53,7 +54,7 @@ const PlaylistRowButton = ({ item, name, onContextMenu, to }: PlaylistRowButtonP
 
     const [isHovered, setIsHovered] = useState(false);
 
-    const { isDraggedOver, isDragging, ref } = useDragDrop<HTMLDivElement>({
+    const { isDraggedOver, isDragging, ref } = useDragDrop<HTMLAnchorElement>({
         drag: {
             getId: () => {
                 const draggedItems = getDraggedItems(item, undefined);
@@ -158,31 +159,50 @@ const PlaylistRowButton = ({ item, name, onContextMenu, to }: PlaylistRowButtonP
     );
 
     return (
-        <div
+        <Link
             className={clsx(styles.row, {
                 [styles.rowDraggedOver]: isDraggedOver,
+                [styles.rowHover]: isHovered,
             })}
+            onContextMenu={(e: MouseEvent<HTMLAnchorElement>) => {
+                e.preventDefault();
+                onContextMenu(e, item);
+            }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             ref={ref}
             style={{
                 opacity: isDragging ? 0.5 : 1,
             }}
+            to={url}
         >
-            <SidebarItem
-                className={clsx({
-                    [styles.rowHover]: isHovered,
-                })}
-                onContextMenu={(e) => onContextMenu(e, item)}
-                to={url}
-                variant="subtle"
-            >
-                {name}
-            </SidebarItem>
+            <div className={styles.rowGroup}>
+                <Image containerClassName={styles.imageContainer} src={item.imageUrl || ''} />
+                <div className={styles.metadata}>
+                    <Text className={styles.name} fw={500} size="md">
+                        {name}
+                    </Text>
+                    <div className={styles.metadataGroup}>
+                        <div className={styles.metadataGroupItem}>
+                            <Icon color="muted" icon="track" size="sm" />
+                            <Text isMuted size="sm">
+                                {item.songCount || 0}
+                            </Text>
+                        </div>
+                        <div className={styles.metadataGroupItem}>
+                            <Icon color="muted" icon="duration" size="sm" />
+                            <Text isMuted size="sm">
+                                {formatDurationStringShort(item.duration ?? 0)}
+                            </Text>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             {isHovered && <RowControls id={to} onPlay={handlePlay} />}
-        </div>
+        </Link>
     );
-};
+});
 
 const RowControls = ({
     id,
@@ -284,7 +304,8 @@ export const SidebarPlaylistList = () => {
     );
 
     const handleContextMenu = useCallback(
-        (e: MouseEvent<HTMLButtonElement>, playlist: Playlist) => {
+        (e: MouseEvent<HTMLAnchorElement>, playlist: Playlist) => {
+            e.preventDefault();
             e.stopPropagation();
             ContextMenuController.call({
                 cmd: { items: [playlist], type: LibraryItem.PLAYLIST },
@@ -313,13 +334,7 @@ export const SidebarPlaylistList = () => {
     }, [playlistsQuery.data?.items, handlePlayPlaylist, server?.type, server.username]);
 
     const handleCreatePlaylistModal = (e: MouseEvent<HTMLButtonElement>) => {
-        e.stopPropagation();
-
-        openModal({
-            children: <CreatePlaylistForm onCancel={() => closeAllModals()} />,
-            size: server?.type === ServerType?.NAVIDROME ? 'lg' : 'sm',
-            title: t('form.createPlaylist.title', { postProcess: 'titleCase' }),
-        });
+        openCreatePlaylistModal(server, e);
     };
 
     return (
@@ -405,7 +420,8 @@ export const SidebarSharedPlaylistList = () => {
     );
 
     const handleContextMenu = useCallback(
-        (e: MouseEvent<HTMLButtonElement>, playlist: Playlist) => {
+        (e: MouseEvent<HTMLAnchorElement>, playlist: Playlist) => {
+            e.preventDefault();
             e.stopPropagation();
             ContextMenuController.call({
                 cmd: {
