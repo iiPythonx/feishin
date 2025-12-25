@@ -1,15 +1,14 @@
 import { SetActivity, StatusDisplayType } from '@xhayper/discord-rpc';
+import axios from 'axios';
 import isElectron from 'is-electron';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { api } from '/@/renderer/api';
 import { useItemImageUrl } from '/@/renderer/components/item-image/item-image';
 import {
     DiscordDisplayType,
     DiscordLinkType,
     useAppStore,
     useDiscordSettings,
-    useGeneralSettings,
     usePlayerSong,
     usePlayerStore,
     useTimestampStoreBase,
@@ -17,8 +16,9 @@ import {
 import { sentenceCase } from '/@/renderer/utils';
 import { LogCategory, logFn } from '/@/renderer/utils/logger';
 import { logMsg } from '/@/renderer/utils/logger-message';
+import { toast } from '/@/shared/components/toast/toast';
 import { useDebouncedCallback } from '/@/shared/hooks/use-debounced-callback';
-import { LibraryItem, QueueSong, ServerType } from '/@/shared/types/domain-types';
+import { LibraryItem, QueueSong } from '/@/shared/types/domain-types';
 import { PlayerStatus } from '/@/shared/types/types';
 
 const discordRpc = isElectron() ? window.api.discordRpc : null;
@@ -31,9 +31,9 @@ const truncate = (field: string) =>
 
 export const useDiscordRpc = () => {
     const discordSettings = useDiscordSettings();
-    const generalSettings = useGeneralSettings();
     const privateMode = useAppStore((state) => state.privateMode);
     const [lastUniqueId, setlastUniqueId] = useState('');
+    const [lastProxiedUrl, setlastProxiedUrl] = useState('');
 
     const currentSong = usePlayerSong();
     const imageUrl = useItemImageUrl({
@@ -142,7 +142,7 @@ export const useDiscordRpc = () => {
                 const activity: SetActivity = {
                     details: truncate((song?.name && song.name.padEnd(2, ' ')) || 'Idle'),
                     instance: false,
-                    largeImageKey: undefined,
+                    largeImageKey: lastProxiedUrl,
                     largeImageText: truncate(
                         (song?.album && song.album.padEnd(2, ' ')) || 'Unknown album',
                     ),
@@ -194,44 +194,43 @@ export const useDiscordRpc = () => {
                     activity.smallImageKey = 'paused';
                 }
 
-                if (discordSettings.showServerImage && song) {
-                    if (song._uniqueId === currentSong?._uniqueId && imageUrlRef.current) {
-                        if (song._serverType === ServerType.JELLYFIN && song.imageUrl) {
-                            activity.largeImageKey = imageUrlRef.current;
-                        } else if (
-                            song._serverType === ServerType.NAVIDROME ||
-                            song._serverType === ServerType.SUBSONIC
-                        ) {
-                            try {
-                                const info = await api.controller.getAlbumInfo({
-                                    apiClientProps: { serverId: song._serverId },
-                                    query: { id: song.albumId },
-                                });
+                // Handle pizza
+                if (trackChanged && song.imageUrl) {
+                    const fetchedImage = await axios({
+                        method: 'GET',
+                        responseType: 'blob',
+                        url: song.imageUrl.replace(/&size=\d+/, '&size=100'),
+                    });
 
-                                if (info.imageUrl) {
-                                    activity.largeImageKey = info.imageUrl;
-                                }
-                            } catch {
-                                /* empty */
-                            }
-                        }
-                    }
-                }
+                    // Send off to pizza
+                    const formData = new FormData();
+                    formData.append('file', new File([fetchedImage.data], 'file'));
 
-                if (
-                    activity.largeImageKey === undefined &&
-                    generalSettings.lastfmApiKey &&
-                    song?.album &&
-                    song?.albumArtists.length
-                ) {
-                    const albumInfo = await fetch(
-                        `https://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=${generalSettings.lastfmApiKey}&artist=${encodeURIComponent(song.albumArtists[0].name)}&album=${encodeURIComponent(song.album)}&format=json`,
-                    );
-
-                    const albumInfoJson = await albumInfo.json();
-
-                    if (albumInfoJson.album?.image?.[3]['#text']) {
-                        activity.largeImageKey = albumInfoJson.album.image[3]['#text'];
+                    try {
+                        activity.largeImageKey = (
+                            await axios({
+                                data: formData,
+                                headers: {
+                                    'Content-Type': 'multipart/form-data',
+                                },
+                                method: 'POST',
+                                url: 'https://covers.iipython.dev/api/image',
+                            })
+                        ).data.url;
+                        if (activity.largeImageKey) setlastProxiedUrl(activity.largeImageKey);
+                    } catch (e: any) {
+                        logFn.debug('An error occured during Pizza image upload', {
+                            category: LogCategory.EXTERNAL,
+                            meta: {
+                                imageUrl: song.imageUrl,
+                                sourceError: e.toString(),
+                            },
+                        });
+                        toast.error({
+                            message:
+                                'Pizza failed to proxy the image art, falling back to default icon.',
+                            title: 'Proxying Failure',
+                        });
                     }
                 }
 
@@ -290,14 +289,12 @@ export const useDiscordRpc = () => {
         },
         [
             discordSettings.showAsListening,
-            discordSettings.showServerImage,
             discordSettings.showPaused,
-            generalSettings.lastfmApiKey,
             discordSettings.clientId,
             discordSettings.displayType,
             discordSettings.linkType,
             lastUniqueId,
-            currentSong?._uniqueId,
+            lastProxiedUrl,
         ],
     );
 
