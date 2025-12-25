@@ -9,7 +9,6 @@ import {
     DiscordDisplayType,
     DiscordLinkType,
     useDiscordSettings,
-    useGeneralSettings,
     useSettingsStoreActions,
 } from '/@/renderer/store';
 import { Select } from '/@/shared/components/select/select';
@@ -19,7 +18,6 @@ import { TextInput } from '/@/shared/components/text-input/text-input';
 export const DiscordSettings = () => {
     const { t } = useTranslation();
     const settings = useDiscordSettings();
-    const generalSettings = useGeneralSettings();
     const { setSettings } = useSettingsStoreActions();
 
     const discordOptions: SettingOption[] = [
@@ -218,51 +216,23 @@ export const DiscordSettings = () => {
         {
             control: (
                 <Switch
-                    checked={settings.showServerImage}
+                    checked={settings.enablePizza}
                     onChange={(e) => {
                         setSettings({
                             discord: {
                                 ...settings,
-                                showServerImage: e.currentTarget.checked,
+                                enablePizza: e.currentTarget.checked,
                             },
                         });
                     }}
                 />
             ),
-            description: t('setting.discordServeImage', {
+            description: t('setting.discordPizza', {
                 context: 'description',
-
-                discord: 'Discord',
                 postProcess: 'sentenceCase',
             }),
             isHidden: !isElectron(),
-            title: t('setting.discordServeImage', {
-                discord: 'Discord',
-                postProcess: 'sentenceCase',
-            }),
-        },
-        {
-            control: (
-                <TextInput
-                    defaultValue={generalSettings.lastfmApiKey}
-                    onBlur={(e) => {
-                        setSettings({
-                            general: {
-                                ...generalSettings,
-                                lastfmApiKey: e.currentTarget.value,
-                            },
-                        });
-                    }}
-                />
-            ),
-            description: t('setting.lastfmApiKey', {
-                context: 'description',
-                lastfm: 'Last.fm',
-                postProcess: 'sentenceCase',
-            }),
-            isHidden: !isElectron(),
-            title: t('setting.lastfmApiKey', {
-                lastfm: 'Last.fm',
+            title: t('setting.discordPizza', {
                 postProcess: 'sentenceCase',
             }),
         },
