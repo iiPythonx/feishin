@@ -57,7 +57,7 @@ export const useDiscordRpc = () => {
         id: currentSong?.imageId || undefined,
         imageUrl: currentSong?.imageUrl,
         itemType: LibraryItem.SONG,
-        type: 'table',
+        size: 100,
         useRemoteUrl: true,
     });
 
@@ -274,11 +274,11 @@ export const useDiscordRpc = () => {
                 }
 
                 // Handle pizza
-                if (trackChanged && song.imageUrl) {
+                if (trackChanged && imageUrl) {
                     const fetchedImage = await axios({
                         method: 'GET',
                         responseType: 'blob',
-                        url: song.imageUrl.replace(/&size=\d+/, '&size=100'),
+                        url: imageUrl,
                     });
 
                     // Send off to pizza
@@ -375,6 +375,7 @@ export const useDiscordRpc = () => {
             discordSettings.linkType,
             lastUniqueId,
             lastProxiedUrl,
+            imageUrl,
             isRadioActive,
             isRadioPlaying,
             radioMetadata?.artist,
