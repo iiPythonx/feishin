@@ -276,10 +276,10 @@ const DiscordSettingsSchema = z.object({
     clientId: z.string(),
     displayType: DiscordDisplayTypeSchema,
     enabled: z.boolean(),
+    enablePizza: z.boolean(),
     linkType: DiscordLinkTypeSchema,
     showAsListening: z.boolean(),
     showPaused: z.boolean(),
-    showServerImage: z.boolean(),
     showStateIcon: z.boolean(),
 });
 
@@ -1087,10 +1087,10 @@ const initialState: SettingsState = {
         clientId: '1165957668758900787',
         displayType: DiscordDisplayType.FEISHIN,
         enabled: false,
+        enablePizza: true,
         linkType: DiscordLinkType.NONE,
         showAsListening: false,
         showPaused: true,
-        showServerImage: false,
         showStateIcon: true,
     },
     font: {
