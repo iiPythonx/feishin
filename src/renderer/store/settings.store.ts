@@ -185,10 +185,10 @@ const DiscordSettingsSchema = z.object({
     clientId: z.string(),
     displayType: DiscordDisplayTypeSchema,
     enabled: z.boolean(),
+    enablePizza: z.boolean(),
     linkType: DiscordLinkTypeSchema,
     showAsListening: z.boolean(),
     showPaused: z.boolean(),
-    showServerImage: z.boolean(),
 });
 
 const FontSettingsSchema = z.object({
@@ -362,7 +362,6 @@ export const GeneralSettingsSchema = z.object({
     }),
     language: z.string(),
     lastFM: z.boolean(),
-    lastfmApiKey: z.string(),
     musicBrainz: z.boolean(),
     nativeAspectRatio: z.boolean(),
     passwordStore: z.string().optional(),
@@ -823,10 +822,10 @@ const initialState: SettingsState = {
         clientId: '1165957668758900787',
         displayType: DiscordDisplayType.FEISHIN,
         enabled: false,
+        enablePizza: true,
         linkType: DiscordLinkType.NONE,
         showAsListening: false,
         showPaused: true,
-        showServerImage: false,
     },
     font: {
         builtIn: 'Poppins',
@@ -859,7 +858,6 @@ const initialState: SettingsState = {
         },
         language: 'en',
         lastFM: true,
-        lastfmApiKey: '',
         musicBrainz: true,
         nativeAspectRatio: false,
         passwordStore: undefined,
