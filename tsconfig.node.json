@@ -13,16 +13,15 @@
     "composite": true,
     "types": ["electron-vite/node"],
     "esModuleInterop": true,
-    "baseUrl": ".",
     "paths": {
       "/@/main/*": [
-        "src/main/*"
+        "./src/main/*"
       ],
       "/@/preload/*": [
-        "src/preload/*"
+        "./src/preload/*"
       ],
       "/@/shared/*": [
-        "src/shared/*"
+        "./src/shared/*"
       ],
     }
   }

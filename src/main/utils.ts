@@ -18,10 +18,6 @@ if (process.env.NODE_ENV === 'development') {
     };
 }
 
-export const disableAutoUpdates = () => {
-    return process.env['DISABLE_AUTO_UPDATES'];
-};
-
 export const isMacOS = () => {
     return process.platform === 'darwin';
 };
@@ -82,22 +78,4 @@ export const createLog = (data: {
     type: 'debug' | 'error' | 'info' | 'success' | 'verbose' | 'warning';
 }) => {
     logMethod[data.type](`%c${data.message}`, `color: ${logColor[data.type]}`);
-};
-
-export const autoUpdaterLogInterface = {
-    debug: (message: string) => {
-        createLog({ message: `[SYSTEM] ${message}`, type: 'debug' });
-    },
-
-    error: (message: string) => {
-        createLog({ message: `[SYSTEM] ${message}`, type: 'error' });
-    },
-
-    info: (message: string) => {
-        createLog({ message: `[SYSTEM] ${message}`, type: 'info' });
-    },
-
-    warn: (message: string) => {
-        createLog({ message: `[SYSTEM] ${message}`, type: 'warning' });
-    },
 };
