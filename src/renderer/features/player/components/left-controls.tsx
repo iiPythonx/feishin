@@ -81,7 +81,8 @@ export const LeftControls = () => {
         }
     };
 
-    const handleToggleSidebarImage = () => {
+    const handleToggleSidebarImage = (e?: MouseEvent<HTMLButtonElement>) => {
+        e?.stopPropagation();
         setSideBar({ image: true });
     };
 
