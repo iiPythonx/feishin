@@ -1,6 +1,7 @@
 .container {
     width: 100vw;
     height: 100%;
+    position: relative;
     border-top: 1px solid alpha(var(--theme-colors-border), 0.5);
 }
 
@@ -22,10 +23,18 @@
     overflow: hidden;
 }
 
+.right-grid-item > div > * {
+    z-index: 5;
+}
+
 .left-grid-item {
     width: 100%;
     height: 100%;
     overflow: hidden;
+}
+
+.left-grid-item > div > div > * {
+    z-index: 5;
 }
 
 .center-grid-item {
@@ -37,4 +46,17 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
+}
+
+.center-grid-item > div {
+    z-index: 5;
+}
+
+.clickDetector {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 2;
 }

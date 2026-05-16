@@ -14,10 +14,17 @@ const MobilePlayerbar = lazy(() =>
         default: module.MobilePlayerbar,
     })),
 );
+import { useFullScreenPlayerStore, useSetFullScreenPlayerStore } from '/@/renderer/store';
 import { PlaybackSelectors } from '/@/shared/constants/playback-selectors';
 
 export const Playerbar = () => {
+    const { expanded: isFullScreenPlayerExpanded } = useFullScreenPlayerStore();
+    const setFullScreenPlayerStore = useSetFullScreenPlayerStore();
     const isMobile = useIsMobile();
+
+    const handleToggleFullScreenPlayer = () => {
+        setFullScreenPlayerStore({ expanded: !isFullScreenPlayerExpanded });
+    };
 
     if (isMobile) {
         return (
@@ -40,6 +47,7 @@ export const Playerbar = () => {
                     <RightControls />
                 </div>
             </div>
+            <div className={styles.clickDetector} onClick={handleToggleFullScreenPlayer}></div>
         </div>
     );
 };
