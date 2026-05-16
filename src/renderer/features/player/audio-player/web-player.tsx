@@ -14,7 +14,7 @@ import { PlayerOnProgressProps } from '/@/renderer/features/player/audio-player/
 import { usePlayer } from '/@/renderer/features/player/context/player-context';
 import { useWebAudio } from '/@/renderer/features/player/hooks/use-webaudio';
 import {
-    useMpvSettings,
+    useAdvancedAudioSettings,
     usePlaybackSettings,
     usePlayerActions,
     usePlayerData,
@@ -35,7 +35,7 @@ export function WebPlayer() {
     const { t } = useTranslation();
     const { num, player1, player2, status } = usePlayerData();
     const { mediaAutoNext, mediaPause, setTimestamp } = usePlayerActions();
-    const playback = useMpvSettings();
+    const playback = useAdvancedAudioSettings();
     const { webAudio } = useWebAudio();
 
     const { crossfadeDuration, crossfadeStyle, speed, transitionType } = usePlayerProperties();

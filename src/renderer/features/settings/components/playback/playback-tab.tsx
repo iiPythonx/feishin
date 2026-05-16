@@ -9,9 +9,9 @@ import { useSettingsStore } from '/@/renderer/store';
 import { Divider } from '/@/shared/components/divider/divider';
 import { Stack } from '/@/shared/components/stack/stack';
 
-const MpvSettings = lazy(() =>
-    import('/@/renderer/features/settings/components/playback/mpv-settings').then((module) => {
-        return { default: module.MpvSettings };
+const AdvancedSettings = lazy(() =>
+    import('./advanced-settings').then((module) => {
+        return { default: module.AdvancedSettings };
     }),
 );
 
@@ -28,7 +28,7 @@ export const PlaybackTab = memo(() => {
         <Stack gap="md">
             <AudioSettings />
             <Suspense fallback={<></>}>
-                {useWebAudio && 'AudioContext' in window && <MpvSettings />}
+                {useWebAudio && 'AudioContext' in window && <AdvancedSettings />}
             </Suspense>
             <Divider />
             <TranscodeSettings />

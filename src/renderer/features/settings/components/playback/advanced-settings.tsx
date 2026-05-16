@@ -15,18 +15,18 @@ import { Select } from '/@/shared/components/select/select';
 import { Switch } from '/@/shared/components/switch/switch';
 import { Text } from '/@/shared/components/text/text';
 
-export const MpvSettings = memo(() => {
+export const AdvancedSettings = memo(() => {
     const { t } = useTranslation();
     const settings = usePlaybackSettings();
     const { setSettings } = useSettingsStoreActions();
 
-    const handleSetMpvProperty = (
-        setting: keyof SettingsState['playback']['mpvProperties'],
+    const handleSetAdvancedProperty = (
+        setting: keyof SettingsState['playback']['advancedProperties'],
         value: any,
     ) => {
         setSettings({
             playback: {
-                mpvProperties: {
+                advancedProperties: {
                     [setting]: value,
                 },
             },
@@ -37,13 +37,15 @@ export const MpvSettings = memo(() => {
         {
             control: (
                 <NumberInput
-                    defaultValue={settings.mpvProperties.audioSampleRateHz || undefined}
+                    defaultValue={settings.advancedProperties.audioSampleRateHz || undefined}
                     max={192000}
                     min={0}
                     onBlur={(e) => {
                         const value = Number(e.currentTarget.value);
-                        // Setting a value of `undefined` causes an error for MPV. Use 0 instead
-                        handleSetMpvProperty('audioSampleRateHz', value >= 8000 ? value : value);
+                        handleSetAdvancedProperty(
+                            'audioSampleRateHz',
+                            value >= 8000 ? value : value,
+                        );
                     }}
                     placeholder="48000"
                     rightSection={<Text size="xs">Hz</Text>}
@@ -82,8 +84,8 @@ export const MpvSettings = memo(() => {
                             value: 'album',
                         },
                     ]}
-                    defaultValue={settings.mpvProperties.replayGainMode}
-                    onChange={(e) => handleSetMpvProperty('replayGainMode', e)}
+                    defaultValue={settings.advancedProperties.replayGainMode}
+                    onChange={(e) => handleSetAdvancedProperty('replayGainMode', e)}
                 />
             ),
             description: t('setting.replayGainMode', {
@@ -97,8 +99,10 @@ export const MpvSettings = memo(() => {
         {
             control: (
                 <NumberInput
-                    defaultValue={settings.mpvProperties.replayGainPreampDB}
-                    onChange={(e) => handleSetMpvProperty('replayGainPreampDB', Number(e) || 0)}
+                    defaultValue={settings.advancedProperties.replayGainPreampDB}
+                    onChange={(e) =>
+                        handleSetAdvancedProperty('replayGainPreampDB', Number(e) || 0)
+                    }
                     width={75}
                 />
             ),
@@ -112,9 +116,9 @@ export const MpvSettings = memo(() => {
         {
             control: (
                 <Switch
-                    defaultChecked={settings.mpvProperties.replayGainClip}
+                    defaultChecked={settings.advancedProperties.replayGainClip}
                     onChange={(e) =>
-                        handleSetMpvProperty('replayGainClip', e.currentTarget.checked)
+                        handleSetAdvancedProperty('replayGainClip', e.currentTarget.checked)
                     }
                 />
             ),
@@ -128,9 +132,12 @@ export const MpvSettings = memo(() => {
         {
             control: (
                 <NumberInput
-                    defaultValue={settings.mpvProperties.replayGainFallbackDB}
+                    defaultValue={settings.advancedProperties.replayGainFallbackDB}
                     onBlur={(e) =>
-                        handleSetMpvProperty('replayGainFallbackDB', Number(e.currentTarget.value))
+                        handleSetAdvancedProperty(
+                            'replayGainFallbackDB',
+                            Number(e.currentTarget.value),
+                        )
                     }
                     width={75}
                 />

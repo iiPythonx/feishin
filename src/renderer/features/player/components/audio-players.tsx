@@ -107,8 +107,8 @@ export const AudioPlayers = () => {
     const { resetSampleRate } = useSettingsStoreActions();
 
     const {
+        advancedProperties: { audioSampleRateHz },
         audioDeviceId,
-        mpvProperties: { audioSampleRateHz },
         webAudio,
     } = usePlaybackSettings();
     const { setWebAudio, webAudio: audioContext } = useWebAudio();

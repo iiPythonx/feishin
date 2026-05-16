@@ -260,11 +260,9 @@ const TranscodingConfigSchema = z.object({
     format: z.string().optional(),
 });
 
-const MpvSettingsSchema = z.object({
-    audioExclusiveMode: z.enum(['no', 'yes']),
+const AdvancedAudioSchema = z.object({
     audioFormat: z.enum(['float', 's16', 's32']).optional(),
     audioSampleRateHz: z.number().optional(),
-    gaplessAudio: z.enum(['no', 'weak', 'yes']),
     replayGainClip: z.boolean(),
     replayGainFallbackDB: z.number().optional(),
     replayGainMode: z.enum(['album', 'no', 'track']),
@@ -616,13 +614,11 @@ const PlayerFilterSchema = z.object({
 });
 
 const PlaybackSettingsSchema = z.object({
+    advancedProperties: AdvancedAudioSchema,
     audioDeviceId: z.string().nullable().optional(),
     audioFadeOnStatusChange: z.boolean(),
     filters: z.array(PlayerFilterSchema),
     mediaSession: z.boolean(),
-    mpvAudioDeviceId: z.string().nullable().optional(),
-    mpvExtraParameters: z.array(z.string()),
-    mpvProperties: MpvSettingsSchema,
     preservePitch: z.boolean(),
     scrobble: ScrobbleSettingsSchema,
     transcode: TranscodingConfigSchema,
@@ -1814,22 +1810,18 @@ const initialState: SettingsState = {
         },
     },
     playback: {
-        audioDeviceId: undefined,
-        audioFadeOnStatusChange: true,
-        filters: [],
-        mediaSession: false,
-        mpvAudioDeviceId: undefined,
-        mpvExtraParameters: [],
-        mpvProperties: {
-            audioExclusiveMode: 'no',
+        advancedProperties: {
             audioFormat: undefined,
             audioSampleRateHz: 0,
-            gaplessAudio: 'weak',
             replayGainClip: true,
             replayGainFallbackDB: undefined,
             replayGainMode: 'no',
             replayGainPreampDB: 0,
         },
+        audioDeviceId: undefined,
+        audioFadeOnStatusChange: true,
+        filters: [],
+        mediaSession: false,
         preservePitch: true,
         scrobble: {
             enabled: true,
@@ -1961,7 +1953,7 @@ export const useSettingsStore = createWithEqualityFn<SettingsSlice>()(
                         },
                         resetSampleRate: () => {
                             set((state) => {
-                                state.playback.mpvProperties.audioSampleRateHz = 0;
+                                state.playback.advancedProperties.audioSampleRateHz = 0;
                             });
                         },
                         setArtistItems: (items) => {
@@ -2461,8 +2453,8 @@ export const useLayoutHotkeyBindings = () =>
         shallow,
     );
 
-export const useMpvSettings = () =>
-    useSettingsStore((state) => state.playback.mpvProperties, shallow);
+export const useAdvancedAudioSettings = () =>
+    useSettingsStore((state) => state.playback.advancedProperties, shallow);
 
 export const useLyricsSettings = () => useSettingsStore((state) => state.lyrics, shallow);
 

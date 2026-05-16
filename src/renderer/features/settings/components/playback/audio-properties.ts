@@ -1,12 +1,10 @@
 import type { SettingsState } from '/@/renderer/store/settings.store';
 
-export const getMpvSetting = (
-    key: keyof SettingsState['playback']['mpvProperties'],
+export const getAdvancedSetting = (
+    key: keyof SettingsState['playback']['advancedProperties'],
     value: any,
 ) => {
     switch (key) {
-        case 'audioExclusiveMode':
-            return { 'audio-exclusive': value || 'no' };
         case 'audioSampleRateHz':
             return { 'audio-samplerate': value };
         case 'replayGainClip':
@@ -22,9 +20,10 @@ export const getMpvSetting = (
     }
 };
 
-export const getMpvProperties = (settings: SettingsState['playback']['mpvProperties']) => {
+export const getAdvancedProperties = (
+    settings: SettingsState['playback']['advancedProperties'],
+) => {
     const properties: Record<string, any> = {
-        'audio-exclusive': settings.audioExclusiveMode || 'no',
         'audio-samplerate':
             settings.audioSampleRateHz === 0 ? undefined : settings.audioSampleRateHz,
         replaygain: settings.replayGainMode || 'no',
