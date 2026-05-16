@@ -1,10 +1,11 @@
-import { useSuspenseQuery, UseSuspenseQueryResult } from '@tanstack/react-query';
+import { useQueryClient, useSuspenseQuery, UseSuspenseQueryResult } from '@tanstack/react-query';
 import { forwardRef, Fragment, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 
 import styles from './album-artist-detail-header.module.css';
 
+import { queryKeys } from '/@/renderer/api/query-keys';
 import { useItemImageUrl } from '/@/renderer/components/item-image/item-image';
 import { artistsQueries } from '/@/renderer/features/artists/api/artists-api';
 import { getArtistAlbumsGrouped } from '/@/renderer/features/artists/hooks/use-artist-albums-grouped';
@@ -18,9 +19,14 @@ import {
 } from '/@/renderer/features/shared/components/library-header';
 import { useSetFavorite } from '/@/renderer/features/shared/hooks/use-set-favorite';
 import { useSetRating } from '/@/renderer/features/shared/hooks/use-set-rating';
+import { songsQueries } from '/@/renderer/features/songs/api/songs-api';
 import { AppRoute } from '/@/renderer/router/routes';
 import { useAppStore, useCurrentServer, useShowRatings } from '/@/renderer/store';
-import { useArtistReleaseTypeItems, usePlayButtonBehavior } from '/@/renderer/store/settings.store';
+import {
+    useArtistRadioCount,
+    useArtistReleaseTypeItems,
+    usePlayButtonBehavior,
+} from '/@/renderer/store/settings.store';
 import { formatDurationString } from '/@/renderer/utils';
 import { hasFeature, SEPARATOR_STRING, sortAlbumList } from '/@/shared/api/utils';
 import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
@@ -105,7 +111,10 @@ export const AlbumArtistDetailHeader = forwardRef<HTMLDivElement, AlbumArtistDet
         const routeId = (artistId || albumArtistId) as string;
         const server = useCurrentServer();
         const showRatings = useShowRatings();
+        const queryClient = useQueryClient();
+        const artistRadioCount = useArtistRadioCount();
         const { t } = useTranslation();
+        const { addToQueueByData } = usePlayer();
         const detailQuery = useSuspenseQuery(
             artistsQueries.albumArtistDetail({
                 query: { id: routeId },
@@ -263,6 +272,28 @@ export const AlbumArtistDetailHeader = forwardRef<HTMLDivElement, AlbumArtistDet
             [detailQuery.data, uploadArtistImageMutation],
         );
 
+        const handleArtistRadio = async () => {
+            if (!server?.id || !routeId) return;
+
+            try {
+                const artistRadioSongs = await queryClient.fetchQuery({
+                    ...songsQueries.artistRadio({
+                        query: {
+                            artistId: routeId,
+                            count: artistRadioCount,
+                        },
+                        serverId: server.id,
+                    }),
+                    queryKey: queryKeys.player.fetch({ artistId: routeId }),
+                });
+                if (artistRadioSongs && artistRadioSongs.length > 0) {
+                    addToQueueByData(artistRadioSongs, Play.NOW);
+                }
+            } catch (error) {
+                console.error('Failed to load artist radio:', error);
+            }
+        };
+
         return (
             <LibraryHeader
                 imageOverlay={
@@ -299,6 +330,7 @@ export const AlbumArtistDetailHeader = forwardRef<HTMLDivElement, AlbumArtistDet
                     </Group>
                     <LibraryHeaderMenu
                         favorite={detailQuery.data?.userFavorite}
+                        onArtistRadio={handleArtistRadio}
                         onFavorite={handleFavorite}
                         onMore={handleMoreOptions}
                         onPlay={(type) => handlePlay(type)}
