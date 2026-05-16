@@ -173,16 +173,18 @@ export const FullScreenPlayerImage = () => {
     ]);
 
     const builtDataItems = {
-        bit_depth: currentSong?.bitDepth && <Badge>{currentSong?.bitDepth} bit</Badge>,
-        bit_rate: currentSong?.bitRate && <Badge>{currentSong?.bitRate} kbps</Badge>,
+        bit_depth: currentSong?.bitDepth && (
+            <Badge key="bitDepth">{currentSong?.bitDepth} bit</Badge>
+        ),
+        bit_rate: currentSong?.bitRate && <Badge key="bitRate">{currentSong?.bitRate} kbps</Badge>,
         bpm: currentSong?.bpm && (
-            <Badge>
+            <Badge key="bpm">
                 {currentSong?.bpm} {t('common.bpm')}
             </Badge>
         ),
-        codec: currentSong?.container && <Badge>{currentSong?.container}</Badge>,
+        codec: currentSong?.container && <Badge key="codec">{currentSong?.container}</Badge>,
         disc_number: currentSong?.discNumber && (
-            <Badge>
+            <Badge key="discNumber">
                 {t('common.disc')} {currentSong?.discNumber}
             </Badge>
         ),
@@ -190,15 +192,21 @@ export const FullScreenPlayerImage = () => {
             currentSong?.genres &&
             currentSong?.genres
                 .slice(0, 2)
-                .map((genre) => <Badge key={genre.id}>{genre.name}</Badge>),
-        release_date: currentSong?.releaseDate && <Badge>{currentSong?.releaseDate}</Badge>,
-        release_type: currentSong?.tags?.releasetype && (
-            <Badge>{currentSong?.tags?.releasetype[0]}</Badge>
+                .map((genre) => <Badge key={`genre-${genre.id}`}>{genre.name}</Badge>),
+        release_date: currentSong?.releaseDate && (
+            <Badge key="releaseDate">{currentSong?.releaseDate}</Badge>
         ),
-        release_year: currentSong?.releaseYear && <Badge>{currentSong?.releaseYear}</Badge>,
-        sample_rate: currentSong?.sampleRate && <Badge>{currentSong?.sampleRate / 1000} kHz</Badge>,
+        release_type: currentSong?.tags?.releasetype && (
+            <Badge key="releaseType">{currentSong?.tags?.releasetype[0]}</Badge>
+        ),
+        release_year: currentSong?.releaseYear && (
+            <Badge key="releaseYear">{currentSong?.releaseYear}</Badge>
+        ),
+        sample_rate: currentSong?.sampleRate && (
+            <Badge key="sampleRate">{currentSong?.sampleRate / 1000} kHz</Badge>
+        ),
         track_number: currentSong?.trackNumber && (
-            <Badge>
+            <Badge key="trackNumber">
                 {t('common.trackNumber')} {currentSong?.trackNumber}
             </Badge>
         ),
