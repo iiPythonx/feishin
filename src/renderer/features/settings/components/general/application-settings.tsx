@@ -19,7 +19,6 @@ import {
     SettingsSection,
 } from '/@/renderer/features/settings/components/settings-section';
 import {
-    HomeFeatureStyle,
     SideQueueLayout,
     SideQueueType,
     useFontSettings,
@@ -40,21 +39,6 @@ const localSettings = isElectron() ? window.api.localSettings : null;
 const ipc = isElectron() ? window.api.ipc : null;
 // Electron 32+ removed file.path, use this which is exposed in preload to get real path
 const webUtils = isElectron() ? window.electron.webUtils : null;
-
-const HOME_FEATURE_STYLE_OPTIONS = [
-    {
-        label: t('setting.homeFeatureStyle', {
-            context: 'optionSingle',
-        }),
-        value: HomeFeatureStyle.SINGLE,
-    },
-    {
-        label: t('setting.homeFeatureStyle', {
-            context: 'optionMultiple',
-        }),
-        value: HomeFeatureStyle.MULTIPLE,
-    },
-];
 
 const SIDE_QUEUE_OPTIONS = [
     {
@@ -376,28 +360,6 @@ export const ApplicationSettings = memo(() => {
             }),
             isHidden: false,
             title: t('setting.homeFeature'),
-        },
-        {
-            control: (
-                <SegmentedControl
-                    aria-label={t('setting.homeFeatureStyle')}
-                    data={HOME_FEATURE_STYLE_OPTIONS}
-                    defaultValue={settings.homeFeatureStyle}
-                    onChange={(e) =>
-                        setSettings({
-                            general: {
-                                ...settings,
-                                homeFeatureStyle: e as HomeFeatureStyle,
-                            },
-                        })
-                    }
-                />
-            ),
-            description: t('setting.homeFeatureStyle', {
-                context: 'description',
-            }),
-            isHidden: false,
-            title: t('setting.homeFeatureStyle'),
         },
         {
             control: (

@@ -187,12 +187,6 @@ const ENV_SETTING_SPECS: EnvSettingSpec[] = [
     { key: 'FS_GENERAL_FOLLOW_CURRENT_SONG', path: ['general', 'followCurrentSong'], type: 'bool' },
     { key: 'FS_GENERAL_HOME_FEATURE', path: ['general', 'homeFeature'], type: 'bool' },
     {
-        enumSet: HOME_FEATURE_STYLES,
-        key: 'FS_GENERAL_HOME_FEATURE_STYLE',
-        path: ['general', 'homeFeatureStyle'],
-        type: 'enum',
-    },
-    {
         key: 'FS_GENERAL_LANGUAGE',
         path: ['general', 'language'],
         skipIfEmpty: true,

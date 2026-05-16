@@ -433,11 +433,6 @@ const VisualizerSettingsSchema = z.object({
     type: z.enum(['audiomotionanalyzer', 'butterchurn']),
 });
 
-export enum HomeFeatureStyle {
-    MULTIPLE = 'multiple',
-    SINGLE = 'single',
-}
-
 const AutoSaveSchema = z.object({
     count: z.number().min(0),
     enabled: z.boolean(),
@@ -471,7 +466,6 @@ export const GeneralSettingsSchema = z.object({
     followSystemTheme: z.boolean(),
     genreTarget: GenreTargetSchema,
     homeFeature: z.boolean(),
-    homeFeatureStyle: z.nativeEnum(HomeFeatureStyle),
     homeItems: z.array(SortableItemSchema(HomeItemSchema)),
     imageRes: z.object({
         fullScreenPlayer: z.number(),
@@ -1139,7 +1133,6 @@ const initialState: SettingsState = {
         followSystemTheme: false,
         genreTarget: GenreTarget.TRACK,
         homeFeature: true,
-        homeFeatureStyle: HomeFeatureStyle.SINGLE,
         homeItems,
         imageRes: {
             fullScreenPlayer: 0,
@@ -2647,9 +2640,6 @@ export const useExternalLinks = () =>
     );
 
 export const useHomeFeature = () => useSettingsStore((state) => state.general.homeFeature, shallow);
-
-export const useHomeFeatureStyle = () =>
-    useSettingsStore((state) => state.general.homeFeatureStyle);
 
 export const useHomeItems = () => useSettingsStore((state) => state.general.homeItems, shallow);
 
