@@ -482,7 +482,7 @@
         },
         "appMenu": {
             "collapseSidebar": "Collapse sidebar",
-            "commandPalette": "Open command palette",
+            "commandPalette": "Open global search",
             "expandSidebar": "Expand sidebar",
             "goBack": "Go back",
             "goForward": "Go forward",

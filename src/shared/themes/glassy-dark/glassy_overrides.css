@@ -319,3 +319,8 @@ table {
 .fs-item-table-list-module-height-100 {
     padding-bottom: 65px !important;
 }
+
+.fs-collapsible-command-group-module-root .fs-paper-module-root {
+    border: 0px;
+    border-radius: 16px;
+}

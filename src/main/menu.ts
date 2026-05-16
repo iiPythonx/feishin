@@ -126,7 +126,7 @@ export default class MenuBuilder {
                     click: () => {
                         this.mainWindow.webContents.send('renderer-open-command-palette');
                     },
-                    label: 'Command Palette...',
+                    label: 'Global search...',
                 },
                 {
                     checked: sidebarCollapsed,
@@ -168,7 +168,7 @@ export default class MenuBuilder {
                     click: () => {
                         this.mainWindow.webContents.send('renderer-open-command-palette');
                     },
-                    label: 'Command Palette...',
+                    label: 'Global search...',
                 },
                 {
                     checked: sidebarCollapsed,
