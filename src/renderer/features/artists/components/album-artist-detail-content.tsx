@@ -956,9 +956,7 @@ const AlbumArtistMetadataExternalLinks = ({
                     {spotify && (
                         <ActionIcon
                             component="a"
-                            href={
-                                `https://open.spotify.com/search/${encodeURIComponent(artistName || '')}`
-                            }
+                            href={`https://open.spotify.com/search/${encodeURIComponent(artistName || '')}`}
                             icon="brandSpotify"
                             iconProps={{
                                 size: '2xl',
@@ -1070,8 +1068,7 @@ export const AlbumArtistDetailContent = ({
     detailQuery,
 }: AlbumArtistDetailContentProps) => {
     const artistItems = useArtistItems();
-    const { externalLinks, lastFM, listenBrainz, musicBrainz, qobuz, spotify } =
-        useExternalLinks();
+    const { externalLinks, lastFM, listenBrainz, musicBrainz, qobuz, spotify } = useExternalLinks();
     const { albumArtistId, artistId } = useParams() as {
         albumArtistId?: string;
         artistId?: string;

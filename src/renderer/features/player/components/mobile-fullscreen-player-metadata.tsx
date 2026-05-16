@@ -86,8 +86,7 @@ export const MobileFullscreenPlayerMetadata = memo(
                             variant="subtle"
                         />
                         (
-                            <Rating onChange={onUpdateRating} size="sm" value={rating || 0} />
-                        )
+                        <Rating onChange={onUpdateRating} size="sm" value={rating || 0} />)
                     </Group>
                 )}
             </div>

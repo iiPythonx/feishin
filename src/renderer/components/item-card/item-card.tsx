@@ -224,7 +224,7 @@ const ItemCardStandardImageArea = memo(function ItemCardStandardImageArea({
         typeof (data as { userRating: null | number }).userRating === 'number'
             ? (data as { userRating: null | number }).userRating
             : null;
-    const hasRating = userRating && userRating > 0 || 0;
+    const hasRating = (userRating && userRating > 0) || 0;
 
     const imageContainerContent = (
         <>
@@ -243,7 +243,6 @@ const ItemCardStandardImageArea = memo(function ItemCardStandardImageArea({
                     className={clsx(styles.image, { [styles.isRound]: isRound })}
                     enableDebounce={false}
                     {...(variant === 'poster' ? { enableViewport: enableImageViewport } : {})}
-                    explicitStatus={'explicitStatus' in data && data ? data.explicitStatus : null}
                     fetchPriority={imageFetchPriority}
                     id={(data as { imageId?: string })?.imageId}
                     itemType={itemType}

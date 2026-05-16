@@ -321,6 +321,6 @@ table {
 }
 
 .fs-collapsible-command-group-module-root .fs-paper-module-root {
-    border: 0px;
+    border: 0;
     border-radius: 16px;
 }

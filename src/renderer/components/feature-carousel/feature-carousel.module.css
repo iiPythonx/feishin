@@ -134,9 +134,9 @@
 }
 
 .album-image-container {
-    aspect-ratio: 1;
-    width: auto;
     position: relative;
+    width: auto;
+    aspect-ratio: 1;
     overflow: hidden;
     border-radius: var(--theme-radius-md);
     filter: drop-shadow(0 6px 20px rgb(0 0 0 / 50%)) drop-shadow(0 2px 8px rgb(0 0 0 / 40%));
