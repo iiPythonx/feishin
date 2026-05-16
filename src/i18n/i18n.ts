@@ -234,6 +234,7 @@ i18n.use(lowerCasePostProcessor)
             escapeValue: false, // react already safes from xss
         },
         resources,
+        showSupportNotice: false,
     });
 
 export default i18n;
