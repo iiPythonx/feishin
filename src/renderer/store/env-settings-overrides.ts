@@ -219,7 +219,6 @@ const ENV_SETTING_SPECS: EnvSettingSpec[] = [
     { key: 'FS_GENERAL_MUSIC_BRAINZ', path: ['general', 'musicBrainz'], type: 'bool' },
     { key: 'FS_GENERAL_QOBUZ', path: ['general', 'qobuz'], type: 'bool' },
     { key: 'FS_GENERAL_SPOTIFY', path: ['general', 'spotify'], type: 'bool' },
-    { key: 'FS_GENERAL_SPOTIFY_NATIVE_APP', path: ['general', 'nativeSpotify'], type: 'bool' },
     { key: 'FS_GENERAL_NATIVE_ASPECT_RATIO', path: ['general', 'nativeAspectRatio'], type: 'bool' },
     { key: 'FS_GENERAL_EXTERNAL_LINKS', path: ['general', 'externalLinks'], type: 'bool' },
     {

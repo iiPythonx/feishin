@@ -311,7 +311,6 @@ interface AlbumMetadataExternalLinksProps {
     mbzId?: null | string;
     mbzReleaseGroupId?: null | string;
     musicBrainz: boolean;
-    nativeSpotify: boolean;
     qobuz: boolean;
     spotify: boolean;
 }
@@ -349,7 +348,6 @@ const AlbumMetadataExternalLinks = ({
     mbzId,
     mbzReleaseGroupId,
     musicBrainz,
-    nativeSpotify,
     qobuz,
     spotify,
 }: AlbumMetadataExternalLinksProps) => {
@@ -441,18 +439,14 @@ const AlbumMetadataExternalLinks = ({
                 {spotify && (
                     <ActionIcon
                         component="a"
-                        href={
-                            nativeSpotify
-                                ? `spotify:search:${encodeURIComponent(albumArtist || '')}%20${encodeURIComponent(albumName || '')}`
-                                : `https://open.spotify.com/search/${encodeURIComponent(albumArtist || '')}%20${encodeURIComponent(albumName || '')}`
-                        }
+                        href={`https://open.spotify.com/search/${encodeURIComponent(albumArtist || '')}%20${encodeURIComponent(albumName || '')}`}
                         icon="brandSpotify"
                         iconProps={{
                             size: '2xl',
                         }}
                         radius="md"
                         rel="noopener noreferrer"
-                        target={nativeSpotify ? undefined : '_blank'}
+                        target={'_blank'}
                         tooltip={{
                             label: t('action.openIn.spotify'),
                         }}
@@ -471,7 +465,7 @@ export const AlbumDetailContent = () => {
         albumQueries.detail({ query: { id: albumId }, serverId: server.id }),
     );
 
-    const { externalLinks, lastFM, listenBrainz, musicBrainz, nativeSpotify, qobuz, spotify } =
+    const { externalLinks, lastFM, listenBrainz, musicBrainz, qobuz, spotify } =
         useExternalLinks();
 
     const comment = detailQuery?.data?.comment;
@@ -529,7 +523,6 @@ export const AlbumDetailContent = () => {
                             mbzId={mbzId || undefined}
                             mbzReleaseGroupId={detailQuery?.data?.mbzReleaseGroupId}
                             musicBrainz={musicBrainz}
-                            nativeSpotify={nativeSpotify}
                             qobuz={qobuz}
                             spotify={spotify}
                         />

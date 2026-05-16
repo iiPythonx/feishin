@@ -133,26 +133,6 @@ export const ExternalLinksSettings = memo(() => {
             isHidden: !settings.externalLinks,
             title: t('setting.spotify'),
         },
-        {
-            control: (
-                <Switch
-                    defaultChecked={settings.nativeSpotify}
-                    onChange={(e) => {
-                        setSettings({
-                            general: {
-                                ...settings,
-                                nativeSpotify: e.currentTarget.checked,
-                            },
-                        });
-                    }}
-                />
-            ),
-            description: t('setting.nativeSpotify', {
-                context: 'description',
-            }),
-            isHidden: !settings.externalLinks || !settings.spotify,
-            title: t('setting.nativeSpotify'),
-        },
     ];
 
     return <SettingsSection options={options} title={t('common.externalLinks')} />;

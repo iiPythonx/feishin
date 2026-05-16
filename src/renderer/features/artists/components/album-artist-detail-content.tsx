@@ -838,7 +838,6 @@ interface AlbumArtistMetadataExternalLinksProps {
     listenBrainz: boolean;
     mbzId?: null | string;
     musicBrainz: boolean;
-    nativeSpotify: boolean;
     order?: number;
     qobuz: boolean;
     spotify: boolean;
@@ -871,7 +870,6 @@ const AlbumArtistMetadataExternalLinks = ({
     listenBrainz,
     mbzId,
     musicBrainz,
-    nativeSpotify,
     order,
     qobuz,
     spotify,
@@ -959,16 +957,14 @@ const AlbumArtistMetadataExternalLinks = ({
                         <ActionIcon
                             component="a"
                             href={
-                                nativeSpotify
-                                    ? `spotify:search:${encodeURIComponent(artistName || '')}`
-                                    : `https://open.spotify.com/search/${encodeURIComponent(artistName || '')}`
+                                `https://open.spotify.com/search/${encodeURIComponent(artistName || '')}`
                             }
                             icon="brandSpotify"
                             iconProps={{
                                 size: '2xl',
                             }}
                             rel="noopener noreferrer"
-                            target={nativeSpotify ? undefined : '_blank'}
+                            target={'_blank'}
                             tooltip={{
                                 label: t('action.openIn.spotify'),
                             }}
@@ -1074,7 +1070,7 @@ export const AlbumArtistDetailContent = ({
     detailQuery,
 }: AlbumArtistDetailContentProps) => {
     const artistItems = useArtistItems();
-    const { externalLinks, lastFM, listenBrainz, musicBrainz, nativeSpotify, qobuz, spotify } =
+    const { externalLinks, lastFM, listenBrainz, musicBrainz, qobuz, spotify } =
         useExternalLinks();
     const { albumArtistId, artistId } = useParams() as {
         albumArtistId?: string;
@@ -1144,7 +1140,6 @@ export const AlbumArtistDetailContent = ({
                                 listenBrainz={listenBrainz}
                                 mbzId={mbzId}
                                 musicBrainz={musicBrainz}
-                                nativeSpotify={nativeSpotify}
                                 order={externalLinksOrder}
                                 qobuz={qobuz}
                                 spotify={spotify}

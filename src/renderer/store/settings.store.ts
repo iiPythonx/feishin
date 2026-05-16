@@ -475,7 +475,6 @@ export const GeneralSettingsSchema = z.object({
     listenBrainz: z.boolean(),
     musicBrainz: z.boolean(),
     nativeAspectRatio: z.boolean(),
-    nativeSpotify: z.boolean(),
     passwordStore: z.string().optional(),
     playButtonBehavior: z.nativeEnum(Play),
     playerbarSlider: PlayerbarSliderSchema,
@@ -1126,7 +1125,6 @@ const initialState: SettingsState = {
         listenBrainz: true,
         musicBrainz: true,
         nativeAspectRatio: false,
-        nativeSpotify: false,
         passwordStore: undefined,
         playButtonBehavior: Play.NOW,
         playerbarSlider: {
@@ -2578,7 +2576,6 @@ export const useExternalLinks = () =>
             lastFM: state.general.lastFM,
             listenBrainz: state.general.listenBrainz,
             musicBrainz: state.general.musicBrainz,
-            nativeSpotify: state.general.nativeSpotify,
             qobuz: state.general.qobuz,
             spotify: state.general.spotify,
         }),
