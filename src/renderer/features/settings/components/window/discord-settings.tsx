@@ -73,25 +73,6 @@ export const DiscordSettings = memo(() => {
         {
             control: (
                 <Switch
-                    checked={settings.showPaused}
-                    onChange={(e) => {
-                        setSettings({
-                            discord: {
-                                showPaused: e.currentTarget.checked,
-                            },
-                        });
-                    }}
-                />
-            ),
-            description: t('setting.discordPausedStatus', {
-                context: 'description',
-            }),
-            isHidden: !isElectron(),
-            title: t('setting.discordPausedStatus'),
-        },
-        {
-            control: (
-                <Switch
                     checked={settings.showStateIcon}
                     onChange={(e) => {
                         setSettings({
@@ -225,7 +206,6 @@ export const DiscordSettings = memo(() => {
             ),
             description: t('setting.discordPizza', {
                 context: 'description',
-                postProcess: 'sentenceCase',
             }),
             isHidden: !isElectron(),
             title: t('setting.discordPizza', {

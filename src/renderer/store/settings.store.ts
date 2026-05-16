@@ -281,7 +281,6 @@ const DiscordSettingsSchema = z.object({
     enablePizza: z.boolean(),
     linkType: DiscordLinkTypeSchema,
     showAsListening: z.boolean(),
-    showPaused: z.boolean(),
     showStateIcon: z.boolean(),
 });
 
@@ -473,7 +472,6 @@ export const GeneralSettingsSchema = z.object({
     }),
     language: z.string(),
     lastFM: z.boolean(),
-    lastfmApiKey: z.string(),
     listenBrainz: z.boolean(),
     musicBrainz: z.boolean(),
     nativeAspectRatio: z.boolean(),
@@ -1087,7 +1085,6 @@ const initialState: SettingsState = {
         enablePizza: true,
         linkType: DiscordLinkType.NONE,
         showAsListening: false,
-        showPaused: true,
         showStateIcon: true,
     },
     font: {
@@ -1130,7 +1127,6 @@ const initialState: SettingsState = {
         },
         language: 'en',
         lastFM: true,
-        lastfmApiKey: '',
         listenBrainz: true,
         musicBrainz: true,
         nativeAspectRatio: false,
@@ -2621,9 +2617,6 @@ export const usePathReplace = () =>
         }),
         shallow,
     );
-
-export const useLastfmApiKey = () =>
-    useSettingsStore((state) => state.general.lastfmApiKey, shallow);
 
 export const useSidebarPanelOrder = () =>
     useSettingsStore((state) => state.general.sidebarPanelOrder, shallow);

@@ -217,7 +217,6 @@ const ENV_SETTING_SPECS: EnvSettingSpec[] = [
     { key: 'FS_GENERAL_FOLLOW_SYSTEM_THEME', path: ['general', 'followSystemTheme'], type: 'bool' },
     { key: 'FS_GENERAL_PATH_REPLACE', path: ['general', 'pathReplace'], type: 'string' },
     { key: 'FS_GENERAL_PATH_REPLACE_WITH', path: ['general', 'pathReplaceWith'], type: 'string' },
-    { key: 'FS_GENERAL_LASTFM_API_KEY', path: ['general', 'lastfmApiKey'], type: 'string' },
     { key: 'FS_GENERAL_LAST_FM', path: ['general', 'lastFM'], type: 'bool' },
     { key: 'FS_GENERAL_LISTEN_BRAINZ', path: ['general', 'listenBrainz'], type: 'bool' },
     { key: 'FS_GENERAL_MUSIC_BRAINZ', path: ['general', 'musicBrainz'], type: 'bool' },

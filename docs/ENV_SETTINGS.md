@@ -25,7 +25,6 @@ These variables override app settings **on first run** when no persisted setting
 | `general.theme` | `defaultDark` | `FS_GENERAL_THEME` | One of: `ayuDark`, `ayuLight`, `catppuccinLatte`, `catppuccinMocha`, `defaultDark`, `defaultLight`, `dracula`, `githubDark`, `githubLight`, `glassyDark`, `gruvboxDark`, `gruvboxLight`, `highContrastDark`, `highContrastLight`, `materialDark`, `materialLight`, `monokai`, `nightOwl`, `nord`, `oneDark`, `rosePine`, `rosePineDawn`, `rosePineMoon`, `shadesOfPurple`, `solarizedDark`, `solarizedLight`, `tokyoNight`, `vscodeDarkPlus`, `vscodeLightPlus`. |
 | `general.themeDark` | `defaultDark` | `FS_GENERAL_THEME_DARK` | Same as theme (used when system is dark). |
 | `general.themeLight` | `defaultLight` | `FS_GENERAL_THEME_LIGHT` | Same as theme (used when system is light). |
-| `general.lastfmApiKey` | *(empty)* | `FS_GENERAL_LASTFM_API_KEY` | Last.fm API key. |
 | `general.lastFM` | `true` | `FS_GENERAL_LAST_FM` | `true` / `false` — Enable Last.fm. |
 | `general.listenBrainz` | `true` | `FS_GENERAL_LISTEN_BRAINZ` | `true` / `false` — ListenBrainz links. |
 | `general.musicBrainz` | `true` | `FS_GENERAL_MUSIC_BRAINZ` | `true` / `false` — MusicBrainz links. |
