@@ -35,21 +35,6 @@
     overflow: hidden;
 }
 
-.censored .image {
-    filter: blur(10px);
-}
-
-.censored::after {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    font-weight: bold;
-    color: var(--theme-colors-background);
-    background-color: alpha(var(--theme-colors-background), 0.5);
-    border-radius: var(--theme-radius-md);
-}
-
 .unloader {
     display: flex;
     align-items: center;

@@ -83,16 +83,10 @@ export const PlayerbarWaveform = () => {
 
         wavesurfer.on('ready', handleReady);
 
-        const waveformTimeout = setTimeout(
-            () => {
-                wavesurfer.load(streamUrl);
-            },
-            0
-        );
+        wavesurfer.load(streamUrl);
 
         return () => {
             wavesurfer.un('ready', handleReady);
-            clearTimeout(waveformTimeout);
         };
     }, [wavesurfer, streamUrl]);
 
