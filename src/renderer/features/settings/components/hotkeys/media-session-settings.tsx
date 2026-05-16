@@ -54,7 +54,6 @@ export const MediaSessionSettings = memo(() => {
             description: t('setting.mediaSession', {
                 context: 'description',
             }),
-            isHidden: isLinux || !isDesktop,
             note: t('common.restartRequired'),
             title: t('setting.mediaSession'),
         },

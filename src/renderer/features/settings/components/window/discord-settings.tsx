@@ -65,7 +65,7 @@ export const DiscordSettings = memo(() => {
                 defaultId: '1165957668758900787',
                 discord: 'Discord',
             }),
-            isHidden: !isElectron(),
+            isHidden: !isElectron() || !settings.enabled,
             title: t('setting.discordApplicationId', {
                 discord: 'Discord',
             }),
@@ -86,7 +86,7 @@ export const DiscordSettings = memo(() => {
             description: t('setting.discordStateIcon', {
                 context: 'description',
             }),
-            isHidden: !isElectron(),
+            isHidden: !isElectron() || !settings.enabled,
             title: t('setting.discordStateIcon'),
         },
         {
@@ -105,7 +105,7 @@ export const DiscordSettings = memo(() => {
             description: t('setting.discordListening', {
                 context: 'description',
             }),
-            isHidden: !isElectron(),
+            isHidden: !isElectron() || !settings.enabled,
             title: t('setting.discordListening'),
         },
         {
@@ -142,7 +142,7 @@ export const DiscordSettings = memo(() => {
             description: t('setting.discordDisplayType', {
                 context: 'description',
             }),
-            isHidden: !isElectron(),
+            isHidden: !isElectron() || !settings.enabled,
             title: t('setting.discordDisplayType', {
                 discord: 'Discord',
                 musicbrainz: 'musicbrainz',
@@ -185,7 +185,7 @@ export const DiscordSettings = memo(() => {
                 lastfm: 'last.fm',
                 musicbrainz: 'musicbrainz',
             }),
-            isHidden: !isElectron(),
+            isHidden: !isElectron() || !settings.enabled,
             title: t('setting.discordLinkType', {
                 discord: 'Discord',
             }),
@@ -207,7 +207,7 @@ export const DiscordSettings = memo(() => {
             description: t('setting.discordPizza', {
                 context: 'description',
             }),
-            isHidden: !isElectron(),
+            isHidden: !isElectron() || !settings.enabled,
             title: t('setting.discordPizza', {
                 postProcess: 'sentenceCase',
             }),

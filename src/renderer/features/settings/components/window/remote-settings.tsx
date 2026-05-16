@@ -56,8 +56,6 @@ export const RemoteSettings = memo(() => {
         }
     }, 100);
 
-    const isHidden = !isElectron();
-
     const controlOptions = [
         {
             control: (
@@ -79,7 +77,7 @@ export const RemoteSettings = memo(() => {
                     </a>
                 </Text>
             ),
-            isHidden,
+            isHidden: !isElectron(),
             title: t('setting.enableRemote'),
         },
         {
@@ -97,7 +95,7 @@ export const RemoteSettings = memo(() => {
             description: t('setting.remotePort', {
                 context: 'description',
             }),
-            isHidden,
+            isHidden: !isElectron() || !settings.enabled,
             title: t('setting.remotePort'),
         },
         {
@@ -119,7 +117,7 @@ export const RemoteSettings = memo(() => {
             description: t('setting.remoteUsername', {
                 context: 'description',
             }),
-            isHidden,
+            isHidden: !isElectron() || !settings.enabled,
             title: t('setting.remoteUsername'),
         },
         {
@@ -141,7 +139,7 @@ export const RemoteSettings = memo(() => {
             description: t('setting.remotePassword', {
                 context: 'description',
             }),
-            isHidden,
+            isHidden: !isElectron() || !settings.enabled,
             title: t('setting.remotePassword'),
         },
     ];
