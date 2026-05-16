@@ -581,27 +581,6 @@ export const ApplicationSettings = memo(() => {
         {
             control: (
                 <Switch
-                    aria-label={t('setting.playerbarOpenDrawer')}
-                    defaultChecked={settings.playerbarOpenDrawer}
-                    onChange={(e) =>
-                        setSettings({
-                            general: {
-                                ...settings,
-                                playerbarOpenDrawer: e.currentTarget.checked,
-                            },
-                        })
-                    }
-                />
-            ),
-            description: t('setting.playerbarOpenDrawer', {
-                context: 'description',
-            }),
-            isHidden: false,
-            title: t('setting.playerbarOpenDrawer'),
-        },
-        {
-            control: (
-                <Switch
                     aria-label={t('setting.autosave')}
                     defaultChecked={settings.autoSave.enabled}
                     onChange={(e) => {

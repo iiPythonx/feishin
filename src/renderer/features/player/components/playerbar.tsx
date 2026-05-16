@@ -15,11 +15,9 @@ const MobilePlayerbar = lazy(() =>
     })),
 );
 import { useFullScreenPlayerStore, useSetFullScreenPlayerStore } from '/@/renderer/store';
-import { usePlayerbarOpenDrawer } from '/@/renderer/store';
 import { PlaybackSelectors } from '/@/shared/constants/playback-selectors';
 
 export const Playerbar = () => {
-    const playerbarOpenDrawer = usePlayerbarOpenDrawer();
     const { expanded: isFullScreenPlayerExpanded } = useFullScreenPlayerStore();
     const setFullScreenPlayerStore = useSetFullScreenPlayerStore();
     const isMobile = useIsMobile();
@@ -40,7 +38,7 @@ export const Playerbar = () => {
     return (
         <div
             className={clsx(styles.container, PlaybackSelectors.mediaPlayer)}
-            onClick={playerbarOpenDrawer ? handleToggleFullScreenPlayer : undefined}
+            onClick={handleToggleFullScreenPlayer}
         >
             <div className={styles.controlsGrid}>
                 <div className={styles.leftGridItem}>

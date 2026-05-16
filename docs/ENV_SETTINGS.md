@@ -31,7 +31,6 @@ These variables override app settings **on first run** when no persisted setting
 | `general.nativeAspectRatio` | `false` | `FS_GENERAL_NATIVE_ASPECT_RATIO` | `true` / `false` — Use native cover art aspect ratio. |
 | `general.pathReplace` | *(empty)* | `FS_GENERAL_PATH_REPLACE` | Path pattern to replace (e.g. server path in Docker). |
 | `general.pathReplaceWith` | *(empty)* | `FS_GENERAL_PATH_REPLACE_WITH` | Replacement path. |
-| `general.playerbarOpenDrawer` | `false` | `FS_GENERAL_PLAYERBAR_OPEN_DRAWER` | `true` / `false` — Open queue/lyrics as drawer from player bar. |
 | `general.primaryShade` | `6` | `FS_GENERAL_PRIMARY_SHADE` | Mantine primary shade 0–9 (number). |
 | `general.qobuz` | `true` | `FS_GENERAL_QOBUZ` | `true` / `false` — Qobuz links. |
 | `general.resume` | `true` | `FS_GENERAL_RESUME` | `true` / `false` — Resume playback on load. |

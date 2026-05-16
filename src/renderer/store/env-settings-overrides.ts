@@ -221,11 +221,6 @@ const ENV_SETTING_SPECS: EnvSettingSpec[] = [
     { key: 'FS_GENERAL_SPOTIFY', path: ['general', 'spotify'], type: 'bool' },
     { key: 'FS_GENERAL_SPOTIFY_NATIVE_APP', path: ['general', 'nativeSpotify'], type: 'bool' },
     { key: 'FS_GENERAL_NATIVE_ASPECT_RATIO', path: ['general', 'nativeAspectRatio'], type: 'bool' },
-    {
-        key: 'FS_GENERAL_PLAYERBAR_OPEN_DRAWER',
-        path: ['general', 'playerbarOpenDrawer'],
-        type: 'bool',
-    },
     { key: 'FS_GENERAL_EXTERNAL_LINKS', path: ['general', 'externalLinks'], type: 'bool' },
     {
         key: 'FS_GENERAL_SHOW_LYRICS_IN_SIDEBAR',

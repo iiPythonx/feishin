@@ -478,7 +478,6 @@ export const GeneralSettingsSchema = z.object({
     nativeSpotify: z.boolean(),
     passwordStore: z.string().optional(),
     playButtonBehavior: z.nativeEnum(Play),
-    playerbarOpenDrawer: z.boolean(),
     playerbarSlider: PlayerbarSliderSchema,
     playerItems: z.array(SortableItemSchema(PlayerItemSchema)),
     playlistTarget: PlaylistTargetSchema,
@@ -1131,7 +1130,6 @@ const initialState: SettingsState = {
         nativeSpotify: false,
         passwordStore: undefined,
         playButtonBehavior: Play.NOW,
-        playerbarOpenDrawer: false,
         playerbarSlider: {
             barAlign: BarAlign.CENTER,
             barGap: 1,
@@ -2553,9 +2551,6 @@ export const usePlayerItems = () => useSettingsStore((state) => state.general.pl
 
 export const useSidebarCollapsedNavigation = () =>
     useSettingsStore((state) => state.general.sidebarCollapsedNavigation, shallow);
-
-export const usePlayerbarOpenDrawer = () =>
-    useSettingsStore((state) => state.general.playerbarOpenDrawer, shallow);
 
 export const useShowRatings = () => useSettingsStore((state) => state.general.showRatings, shallow);
 
