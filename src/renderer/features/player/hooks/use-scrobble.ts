@@ -498,14 +498,12 @@ export const useScrobble = () => {
             onPlayerProgress: handleProgressUpdate,
             onPlayerRepeated: handleScrobbleFromRepeat,
             onPlayerSeekToTimestamp: handleScrobbleFromSeek,
-            onPlayerStatus: handleScrobbleFromStatus,
         },
         [
             handleScrobbleFromSongChange,
             handleProgressUpdate,
             handleScrobbleFromRepeat,
             handleScrobbleFromSeek,
-            handleScrobbleFromStatus,
         ],
     );
 };

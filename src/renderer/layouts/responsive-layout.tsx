@@ -31,8 +31,6 @@ const ResponsiveLayoutBase = ({ shell }: ResponsiveLayoutProps) => {
 };
 
 export const ResponsiveLayout = ({ shell }: ResponsiveLayoutProps) => {
-    useAppTracker();
-
     return (
         <>
             <ResponsiveLayoutBase shell={shell} />
