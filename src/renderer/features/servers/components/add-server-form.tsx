@@ -9,7 +9,6 @@ import {
     isLegacyAuth,
     isServerLock,
 } from '/@/renderer/features/action-required/utils/window-properties';
-import JellyfinIcon from '/@/renderer/features/servers/assets/jellyfin.png';
 import NavidromeIcon from '/@/renderer/features/servers/assets/navidrome.png';
 import SubsonicIcon from '/@/renderer/features/servers/assets/opensubsonic.png';
 import { IgnoreCorsSslSwitches } from '/@/renderer/features/servers/components/ignore-cors-ssl-switches';
@@ -71,10 +70,6 @@ function useAutodiscovery() {
 }
 
 const SERVER_TYPES: Record<ServerType, ServerDetails> = {
-    [ServerType.JELLYFIN]: {
-        icon: JellyfinIcon,
-        name: 'Jellyfin',
-    },
     [ServerType.NAVIDROME]: {
         icon: NavidromeIcon,
         name: 'Navidrome',
@@ -317,19 +312,6 @@ export const AddServerForm = ({ onCancel }: AddServerFormProps) => {
                                 context: 'legacyAuthentication',
                             })}
                             {...form.getInputProps('legacyAuth', { type: 'checkbox' })}
-                        />
-                    )}
-                    {form.values.type === ServerType.JELLYFIN && (
-                        <Checkbox
-                            description={t('form.addServer.input', {
-                                context: 'preferInstantMixDescription',
-                            })}
-                            label={t('form.addServer.input', {
-                                context: 'preferInstantMix',
-                            })}
-                            {...form.getInputProps('preferInstantMix', {
-                                type: 'checkbox',
-                            })}
                         />
                     )}
                     {isElectron() && (

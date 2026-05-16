@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
 import { isServerLock } from '/@/renderer/features/action-required/utils/window-properties';
-import JellyfinLogo from '/@/renderer/features/servers/assets/jellyfin.png';
 import NavidromeLogo from '/@/renderer/features/servers/assets/navidrome.png';
 import OpenSubsonicLogo from '/@/renderer/features/servers/assets/opensubsonic.png';
 import { ServerList } from '/@/renderer/features/servers/components/server-list';
@@ -93,17 +92,11 @@ export const ServerSelectorItems = () => {
         <>
             <DropdownMenu.Label>{t('page.appMenu.selectServer')}</DropdownMenu.Label>
             {Object.values(serverList).map((server) => {
-                const isNavidromeExpired =
+                const isSessionExpired =
                     server.type === ServerType.NAVIDROME && !server.ndCredential;
-                const isJellyfinExpired = server.type === ServerType.JELLYFIN && !server.credential;
-                const isSessionExpired = isNavidromeExpired || isJellyfinExpired;
 
                 const logo =
-                    server.type === ServerType.NAVIDROME
-                        ? NavidromeLogo
-                        : server.type === ServerType.JELLYFIN
-                          ? JellyfinLogo
-                          : OpenSubsonicLogo;
+                    server.type === ServerType.NAVIDROME ? NavidromeLogo : OpenSubsonicLogo;
 
                 return (
                     <DropdownMenu.Item

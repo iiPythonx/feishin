@@ -144,17 +144,6 @@ export const ShuffleAllContextModal = () => {
             <Suspense fallback={<Select data={[]} />}>
                 <GenreSelect />
             </Suspense>
-            {server?.type === ServerType.JELLYFIN && (
-                <Select
-                    clearable
-                    data={PLAYED_DATA}
-                    label={t('form.shuffleAll.input_played')}
-                    onChange={(e) => {
-                        setStore({ played: e as Played });
-                    }}
-                    value={played}
-                />
-            )}
             <Divider />
             <PlayButtonGroup
                 loading={(isFetching && fetchTypeRef.current) || false}

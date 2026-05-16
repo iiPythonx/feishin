@@ -1,13 +1,4 @@
 import {
-    JFAlbumArtistListSort,
-    JFAlbumListSort,
-    JFArtistListSort,
-    JFGenreListSort,
-    JFPlaylistListSort,
-    JFSongListSort,
-    JFSortOrder,
-} from '/@/shared/api/jellyfin/jellyfin-types';
-import {
     NDAlbumArtistListSort,
     NDAlbumListSort,
     NDGenreListSort,
@@ -34,7 +25,6 @@ export enum LibraryItem {
 }
 
 export enum ServerType {
-    JELLYFIN = 'jellyfin',
     NAVIDROME = 'navidrome',
     SUBSONIC = 'subsonic',
 }
@@ -116,16 +106,11 @@ export type User = {
 };
 
 type SortOrderMap = {
-    jellyfin: Record<SortOrder, JFSortOrder>;
     navidrome: Record<SortOrder, NDSortOrder>;
     subsonic: Record<SortOrder, undefined>;
 };
 
 export const sortOrderMap: SortOrderMap = {
-    jellyfin: {
-        ASC: JFSortOrder.ASC,
-        DESC: JFSortOrder.DESC,
-    },
     navidrome: {
         ASC: NDSortOrder.ASC,
         DESC: NDSortOrder.DESC,
@@ -304,7 +289,6 @@ export type GenreListArgs = BaseEndpointArgs & { query: GenreListQuery };
 
 export interface GenreListQuery extends BaseQuery<GenreListSort> {
     _custom?: {
-        jellyfin?: null;
         navidrome?: null;
     };
     limit?: number;
@@ -430,15 +414,11 @@ type BaseEndpointArgs = {
 };
 
 type GenreListSortMap = {
-    jellyfin: Record<GenreListSort, JFGenreListSort | undefined>;
     navidrome: Record<GenreListSort, NDGenreListSort | undefined>;
     subsonic: Record<UserListSort, undefined>;
 };
 
 export const genreListSortMap: GenreListSortMap = {
-    jellyfin: {
-        name: JFGenreListSort.NAME,
-    },
     navidrome: {
         name: NDGenreListSort.NAME,
     },
@@ -448,15 +428,11 @@ export const genreListSortMap: GenreListSortMap = {
 };
 
 type TagListSortMap = {
-    jellyfin: Record<TagListSort, undefined>;
     navidrome: Record<TagListSort, NDTagListSort | undefined>;
     subsonic: Record<TagListSort, undefined>;
 };
 
 export const tagListSortMap: TagListSortMap = {
-    jellyfin: {
-        name: undefined,
-    },
     navidrome: {
         name: NDTagListSort.TAG_VALUE,
     },
@@ -515,32 +491,11 @@ interface AlbumListNavidromeQuery {
 }
 
 type AlbumListSortMap = {
-    jellyfin: Record<AlbumListSort, JFAlbumListSort | undefined>;
     navidrome: Record<AlbumListSort, NDAlbumListSort | undefined>;
     subsonic: Record<AlbumListSort, undefined>;
 };
 
 export const albumListSortMap: AlbumListSortMap = {
-    jellyfin: {
-        albumArtist: JFAlbumListSort.ALBUM_ARTIST,
-        artist: undefined,
-        communityRating: JFAlbumListSort.COMMUNITY_RATING,
-        criticRating: JFAlbumListSort.CRITIC_RATING,
-        duration: undefined,
-        explicitStatus: undefined,
-        favorited: undefined,
-        id: undefined,
-        name: JFAlbumListSort.NAME,
-        playCount: JFAlbumListSort.PLAY_COUNT,
-        random: JFAlbumListSort.RANDOM,
-        rating: undefined,
-        recentlyAdded: JFAlbumListSort.RECENTLY_ADDED,
-        recentlyPlayed: undefined,
-        releaseDate: JFAlbumListSort.RELEASE_DATE,
-        songCount: undefined,
-        sortName: JFAlbumListSort.NAME,
-        year: undefined,
-    },
     navidrome: {
         albumArtist: NDAlbumListSort.ALBUM_ARTIST,
         artist: NDAlbumListSort.ARTIST,
@@ -644,34 +599,11 @@ export interface SongListQuery extends BaseQuery<SongListSort> {
 export type SongListResponse = BasePaginatedResponse<Song[]>;
 
 type SongListSortMap = {
-    jellyfin: Record<SongListSort, JFSongListSort | undefined>;
     navidrome: Record<SongListSort, NDSongListSort | undefined>;
     subsonic: Record<SongListSort, undefined>;
 };
 
 export const songListSortMap: SongListSortMap = {
-    jellyfin: {
-        album: JFSongListSort.ALBUM,
-        albumArtist: JFSongListSort.ALBUM_ARTIST,
-        artist: JFSongListSort.ARTIST,
-        bpm: undefined,
-        channels: undefined,
-        comment: undefined,
-        duration: JFSongListSort.DURATION,
-        explicitStatus: undefined,
-        favorited: undefined,
-        genre: undefined,
-        id: undefined,
-        name: JFSongListSort.NAME,
-        playCount: JFSongListSort.PLAY_COUNT,
-        random: JFSongListSort.RANDOM,
-        rating: undefined,
-        recentlyAdded: JFSongListSort.RECENTLY_ADDED,
-        recentlyPlayed: JFSongListSort.RECENTLY_PLAYED,
-        releaseDate: JFSongListSort.RELEASE_DATE,
-        sortName: JFSongListSort.NAME,
-        year: undefined,
-    },
     navidrome: {
         album: NDSongListSort.ALBUM_SONGS,
         albumArtist: NDSongListSort.ALBUM_ARTIST,
@@ -758,25 +690,11 @@ export type SongDetailQuery = { id: string };
 export type SongDetailResponse = Song;
 
 type AlbumArtistListSortMap = {
-    jellyfin: Record<AlbumArtistListSort, JFAlbumArtistListSort | undefined>;
     navidrome: Record<AlbumArtistListSort, NDAlbumArtistListSort | undefined>;
     subsonic: Record<AlbumArtistListSort, undefined>;
 };
 
 export const albumArtistListSortMap: AlbumArtistListSortMap = {
-    jellyfin: {
-        album: JFAlbumArtistListSort.ALBUM,
-        albumCount: undefined,
-        duration: JFAlbumArtistListSort.DURATION,
-        favorited: undefined,
-        name: JFAlbumArtistListSort.NAME,
-        playCount: undefined,
-        random: JFAlbumArtistListSort.RANDOM,
-        rating: undefined,
-        recentlyAdded: JFAlbumArtistListSort.RECENTLY_ADDED,
-        releaseDate: undefined,
-        songCount: undefined,
-    },
     navidrome: {
         album: undefined,
         albumCount: NDAlbumArtistListSort.ALBUM_COUNT,
@@ -855,25 +773,11 @@ export interface ArtistListQuery extends BaseQuery<ArtistListSort> {
 export type ArtistListResponse = BasePaginatedResponse<AlbumArtist[]>;
 
 type ArtistListSortMap = {
-    jellyfin: Record<ArtistListSort, JFArtistListSort | undefined>;
     navidrome: Record<ArtistListSort, undefined>;
     subsonic: Record<ArtistListSort, undefined>;
 };
 
 export const artistListSortMap: ArtistListSortMap = {
-    jellyfin: {
-        album: JFArtistListSort.ALBUM,
-        albumCount: undefined,
-        duration: JFArtistListSort.DURATION,
-        favorited: undefined,
-        name: JFArtistListSort.NAME,
-        playCount: undefined,
-        random: JFArtistListSort.RANDOM,
-        rating: undefined,
-        recentlyAdded: JFArtistListSort.RECENTLY_ADDED,
-        releaseDate: undefined,
-        songCount: undefined,
-    },
     navidrome: {
         album: undefined,
         albumCount: undefined,
@@ -1190,20 +1094,11 @@ export type UploadPlaylistImageQuery = {
 export type UploadPlaylistImageResponse = boolean;
 
 type PlaylistListSortMap = {
-    jellyfin: Record<PlaylistListSort, JFPlaylistListSort | undefined>;
     navidrome: Record<PlaylistListSort, NDPlaylistListSort | undefined>;
     subsonic: Record<PlaylistListSort, undefined>;
 };
 
 export const playlistListSortMap: PlaylistListSortMap = {
-    jellyfin: {
-        duration: JFPlaylistListSort.DURATION,
-        name: JFPlaylistListSort.NAME,
-        owner: undefined,
-        public: undefined,
-        songCount: JFPlaylistListSort.SONG_COUNT,
-        updatedAt: undefined,
-    },
     navidrome: {
         duration: NDPlaylistListSort.DURATION,
         name: NDPlaylistListSort.NAME,
@@ -1274,15 +1169,11 @@ export interface UserListQuery extends BaseQuery<UserListSort> {
 export type UserListResponse = BasePaginatedResponse<User[]>;
 
 type UserListSortMap = {
-    jellyfin: Record<UserListSort, undefined>;
     navidrome: Record<UserListSort, NDUserListSort | undefined>;
     subsonic: Record<UserListSort, undefined>;
 };
 
 export const userListSortMap: UserListSortMap = {
-    jellyfin: {
-        name: undefined,
-    },
     navidrome: {
         name: NDUserListSort.NAME,
     },

@@ -294,53 +294,6 @@ export const CLIENT_SIDE_ALBUM_FILTERS = [
 const ALBUM_LIST_FILTERS: Partial<
     Record<ServerType, Array<{ defaultOrder: SortOrder; name: string; value: string }>>
 > = {
-    [ServerType.JELLYFIN]: [
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.albumArtist'),
-            value: AlbumListSort.ALBUM_ARTIST,
-        },
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.id'),
-            value: AlbumListSort.ID,
-        },
-        {
-            defaultOrder: SortOrder.DESC,
-            name: i18n.t('filter.communityRating'),
-            value: AlbumListSort.COMMUNITY_RATING,
-        },
-        {
-            defaultOrder: SortOrder.DESC,
-            name: i18n.t('filter.criticRating'),
-            value: AlbumListSort.CRITIC_RATING,
-        },
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.name'),
-            value: AlbumListSort.NAME,
-        },
-        {
-            defaultOrder: SortOrder.DESC,
-            name: i18n.t('filter.playCount'),
-            value: AlbumListSort.PLAY_COUNT,
-        },
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.random'),
-            value: AlbumListSort.RANDOM,
-        },
-        {
-            defaultOrder: SortOrder.DESC,
-            name: i18n.t('filter.recentlyAdded'),
-            value: AlbumListSort.RECENTLY_ADDED,
-        },
-        {
-            defaultOrder: SortOrder.DESC,
-            name: i18n.t('filter.releaseDate'),
-            value: AlbumListSort.RELEASE_DATE,
-        },
-    ],
     [ServerType.NAVIDROME]: [
         {
             defaultOrder: SortOrder.ASC,
@@ -460,58 +413,6 @@ const ALBUM_LIST_FILTERS: Partial<
 const SONG_LIST_FILTERS: Partial<
     Record<ServerType, Array<{ defaultOrder: SortOrder; name: string; value: string }>>
 > = {
-    [ServerType.JELLYFIN]: [
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.album'),
-            value: SongListSort.ALBUM,
-        },
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.albumArtist'),
-            value: SongListSort.ALBUM_ARTIST,
-        },
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.artist'),
-            value: SongListSort.ARTIST,
-        },
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.duration'),
-            value: SongListSort.DURATION,
-        },
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.playCount'),
-            value: SongListSort.PLAY_COUNT,
-        },
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.name'),
-            value: SongListSort.NAME,
-        },
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.random'),
-            value: SongListSort.RANDOM,
-        },
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.recentlyAdded'),
-            value: SongListSort.RECENTLY_ADDED,
-        },
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.recentlyPlayed'),
-            value: SongListSort.RECENTLY_PLAYED,
-        },
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.releaseDate'),
-            value: SongListSort.RELEASE_DATE,
-        },
-    ],
     [ServerType.NAVIDROME]: [
         {
             defaultOrder: SortOrder.ASC,
@@ -606,14 +507,6 @@ const SONG_LIST_FILTERS: Partial<
 const FOLDER_LIST_FILTERS: Partial<
     Record<ServerType, Array<{ defaultOrder: SortOrder; name: string; value: string }>>
 > = {
-    [ServerType.JELLYFIN]: [
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.id'),
-            value: SongListSort.ID,
-        },
-        ...(SONG_LIST_FILTERS[ServerType.JELLYFIN] || []),
-    ],
     [ServerType.NAVIDROME]: [
         {
             defaultOrder: SortOrder.ASC,
@@ -635,7 +528,6 @@ const FOLDER_LIST_FILTERS: Partial<
 const PLAYLIST_SONG_LIST_FILTERS: Partial<
     Record<ServerType, Array<{ defaultOrder: SortOrder; name: string; value: string }>>
 > = {
-    [ServerType.JELLYFIN]: CLIENT_SIDE_SONG_FILTERS,
     [ServerType.NAVIDROME]: CLIENT_SIDE_SONG_FILTERS,
     [ServerType.SUBSONIC]: CLIENT_SIDE_SONG_FILTERS,
 };
@@ -643,33 +535,6 @@ const PLAYLIST_SONG_LIST_FILTERS: Partial<
 const ALBUM_ARTIST_LIST_FILTERS: Partial<
     Record<ServerType, Array<{ defaultOrder: SortOrder; name: string; value: string }>>
 > = {
-    [ServerType.JELLYFIN]: [
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.album'),
-            value: AlbumArtistListSort.ALBUM,
-        },
-        {
-            defaultOrder: SortOrder.DESC,
-            name: i18n.t('filter.duration'),
-            value: AlbumArtistListSort.DURATION,
-        },
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.name'),
-            value: AlbumArtistListSort.NAME,
-        },
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.random'),
-            value: AlbumArtistListSort.RANDOM,
-        },
-        {
-            defaultOrder: SortOrder.DESC,
-            name: i18n.t('filter.recentlyAdded'),
-            value: AlbumArtistListSort.RECENTLY_ADDED,
-        },
-    ],
     [ServerType.NAVIDROME]: [
         {
             defaultOrder: SortOrder.DESC,
@@ -729,33 +594,6 @@ const ALBUM_ARTIST_LIST_FILTERS: Partial<
 const ARTIST_LIST_FILTERS: Partial<
     Record<ServerType, Array<{ defaultOrder: SortOrder; name: string; value: string }>>
 > = {
-    [ServerType.JELLYFIN]: [
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.album'),
-            value: ArtistListSort.ALBUM,
-        },
-        {
-            defaultOrder: SortOrder.DESC,
-            name: i18n.t('filter.duration'),
-            value: ArtistListSort.DURATION,
-        },
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.name'),
-            value: ArtistListSort.NAME,
-        },
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.random'),
-            value: ArtistListSort.RANDOM,
-        },
-        {
-            defaultOrder: SortOrder.DESC,
-            name: i18n.t('filter.recentlyAdded'),
-            value: ArtistListSort.RECENTLY_ADDED,
-        },
-    ],
     [ServerType.NAVIDROME]: [
         {
             defaultOrder: SortOrder.DESC,
@@ -815,13 +653,6 @@ const ARTIST_LIST_FILTERS: Partial<
 const GENRE_LIST_FILTERS: Partial<
     Record<ServerType, Array<{ defaultOrder: SortOrder; name: string; value: string }>>
 > = {
-    [ServerType.JELLYFIN]: [
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.name'),
-            value: GenreListSort.NAME,
-        },
-    ],
     [ServerType.NAVIDROME]: [
         {
             defaultOrder: SortOrder.ASC,
@@ -841,23 +672,6 @@ const GENRE_LIST_FILTERS: Partial<
 const PLAYLIST_LIST_FILTERS: Partial<
     Record<ServerType, Array<{ defaultOrder: SortOrder; name: string; value: string }>>
 > = {
-    [ServerType.JELLYFIN]: [
-        {
-            defaultOrder: SortOrder.DESC,
-            name: i18n.t('filter.duration'),
-            value: PlaylistListSort.DURATION,
-        },
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.name'),
-            value: PlaylistListSort.NAME,
-        },
-        {
-            defaultOrder: SortOrder.DESC,
-            name: i18n.t('filter.songCount'),
-            value: PlaylistListSort.SONG_COUNT,
-        },
-    ],
     [ServerType.NAVIDROME]: [
         {
             defaultOrder: SortOrder.DESC,
@@ -902,18 +716,6 @@ const PLAYLIST_LIST_FILTERS: Partial<
 const RADIO_LIST_FILTERS: Partial<
     Record<ServerType, Array<{ defaultOrder: SortOrder; name: string; value: string }>>
 > = {
-    [ServerType.JELLYFIN]: [
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.id'),
-            value: RadioListSort.ID,
-        },
-        {
-            defaultOrder: SortOrder.ASC,
-            name: i18n.t('filter.name'),
-            value: RadioListSort.NAME,
-        },
-    ],
     [ServerType.NAVIDROME]: [
         {
             defaultOrder: SortOrder.ASC,

@@ -159,11 +159,6 @@ export const UpdatePlaylistContextModal = ({
     }
 
     if (isPublicDisplayed) {
-        if (server?.type === ServerType.JELLYFIN) {
-            fieldNodes.push(
-                <div key="jellyfin-public-note">{t('form.editPlaylist.publicJellyfinNote')}</div>,
-            );
-        }
         fieldNodes.push(
             <Switch
                 key="public"

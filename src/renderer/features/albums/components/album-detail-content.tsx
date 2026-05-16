@@ -187,15 +187,9 @@ const AlbumMetadataTags = ({ album }: AlbumMetadataTagsProps) => {
             }
 
             const searchParams = new URLSearchParams();
-            const customFilters =
-                album._serverType === ServerType.JELLYFIN
-                    ? { Studios: [label] }
-                    : { recordlabel: [label] };
-            const paramsWithCustom = setJsonSearchParam(
-                searchParams,
-                FILTER_KEYS.ALBUM._CUSTOM,
-                customFilters,
-            );
+            const paramsWithCustom = setJsonSearchParam(searchParams, FILTER_KEYS.ALBUM._CUSTOM, {
+                recordlabel: [label],
+            });
             const url = `${AppRoute.LIBRARY_ALBUMS}?${paramsWithCustom.toString()}`;
 
             return {

@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 
 import styles from './server-selector.module.css';
 
-import JellyfinLogo from '/@/renderer/features/servers/assets/jellyfin.png';
 import NavidromeLogo from '/@/renderer/features/servers/assets/navidrome.png';
 import OpenSubsonicLogo from '/@/renderer/features/servers/assets/opensubsonic.png';
 import { sharedQueries } from '/@/renderer/features/shared/api/shared-api';
@@ -54,12 +53,7 @@ export const ServerSelector = () => {
         return selectedMusicFolders[0].name;
     })();
 
-    const logo =
-        currentServer.type === ServerType.NAVIDROME
-            ? NavidromeLogo
-            : currentServer.type === ServerType.JELLYFIN
-              ? JellyfinLogo
-              : OpenSubsonicLogo;
+    const logo = currentServer.type === ServerType.NAVIDROME ? NavidromeLogo : OpenSubsonicLogo;
 
     return (
         <DropdownMenu offset={0} position="right-start" withinPortal={false}>

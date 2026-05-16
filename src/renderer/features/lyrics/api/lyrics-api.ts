@@ -164,22 +164,6 @@ export async function fetchLocalLyrics(params: {
             })
             .catch(console.error);
         if (subsonicLyrics?.length) return subsonicLyrics;
-    } else if (hasFeature(server, ServerFeature.LYRICS_SINGLE_STRUCTURED)) {
-        const jfLyrics = await api.controller
-            .getLyrics({
-                apiClientProps: { serverId, signal },
-                query: { songId: song.id },
-            })
-            .catch((err) => console.error(err));
-        if (jfLyrics) {
-            return {
-                artist: song.artists?.[0]?.name,
-                lyrics: jfLyrics,
-                name: song.name,
-                remote: false,
-                source: server?.name ?? 'music server',
-            };
-        }
     } else if (song.lyrics) {
         return {
             artist: song.artists?.[0]?.name,

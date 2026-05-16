@@ -25,7 +25,7 @@ body:
       attributes:
           label: Music Server and Version
           description: What music server are you using?
-          placeholder: ex. Navidrome v0.55.0, LMS v3.67.0, Jellyfin v10.10.7, etc.
+          placeholder: ex. Navidrome v0.55.0, LMS v3.67.0, etc.
       validations:
           required: true
 

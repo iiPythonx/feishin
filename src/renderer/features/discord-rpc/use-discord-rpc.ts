@@ -276,27 +276,20 @@ export const useDiscordRpc = () => {
 
                 if (discordSettings.showServerImage && song) {
                     if (song._uniqueId === currentSong?._uniqueId && imageUrlRef.current) {
-                        if (song._serverType === ServerType.JELLYFIN) {
-                            activity.largeImageKey = imageUrlRef.current;
-                        } else if (
-                            song._serverType === ServerType.NAVIDROME ||
-                            song._serverType === ServerType.SUBSONIC
-                        ) {
-                            try {
-                                const info = await api.controller.getAlbumInfo({
-                                    apiClientProps: {
-                                        forceRemoteUrl: true,
-                                        serverId: song._serverId,
-                                    },
-                                    query: { id: song.albumId },
-                                });
+                        try {
+                            const info = await api.controller.getAlbumInfo({
+                                apiClientProps: {
+                                    forceRemoteUrl: true,
+                                    serverId: song._serverId,
+                                },
+                                query: { id: song.albumId },
+                            });
 
-                                if (info.imageUrl) {
-                                    activity.largeImageKey = info.imageUrl;
-                                }
-                            } catch {
-                                /* empty */
+                            if (info.imageUrl) {
+                                activity.largeImageKey = info.imageUrl;
                             }
+                        } catch {
+                            /* empty */
                         }
                     }
                 }

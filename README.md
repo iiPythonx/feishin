@@ -51,81 +51,6 @@ Rewrite of [Sonixd](https://github.com/jeffvli/sonixd).
 
 Download the [latest desktop client](https://github.com/jeffvli/feishin/releases). The desktop client is the recommended way to use Feishin. It supports both the MPV and web player backends, as well as includes built-in fetching for lyrics.
 
-#### macOS Notes
-
-If you're using a device running macOS 12 (Monterey) or higher, [check here](https://github.com/jeffvli/feishin/issues/104#issuecomment-1553914730) for instructions on how to remove the app from quarantine.
-
-For media keys to work, you will be prompted to allow Feishin to be a Trusted Accessibility Client. After allowing, you will need to restart Feishin for the privacy settings to take effect.
-
-#### Linux Notes
-
-Feishin is available in [Flathub](https://flathub.org/en/apps/org.jeffvli.feishin).
-
-Alternatively, you can install it as an Appimage.
-We provide a small install script to download the latest `.AppImage`, make it executable, and also download the icons required by Desktop Environments.
-Finally, it generates a `.desktop` file to add Feishin to your Application Launcher.
-
-Simply run the installer like this:
-
-```sh
-dir=/your/application/directory
-curl 'https://raw.githubusercontent.com/jeffvli/feishin/refs/heads/development/install-feishin-appimage' | sh -s -- "$dir"
-```
-
-The script also has an option to add launch arguments to run Feishin in native Wayland mode. Note that this is experimental in Electron and therefore not officially supported. If you want to use it, run this instead:
-
-```sh
-dir=/your/application/directory
-curl 'https://raw.githubusercontent.com/jeffvli/feishin/refs/heads/development/install-feishin-appimage' | sh -s -- "$dir" wayland-native
-```
-
-It also provides a simple uninstall routine, removing the downloaded files:
-
-```sh
-dir=/your/application/directory
-curl 'https://raw.githubusercontent.com/jeffvli/feishin/refs/heads/development/install-feishin-appimage' | sh -s -- "$dir" remove
-```
-
-The entry should show up in your Application Launcher immediately. If it does not, simply log out, wait 10 seconds, and log back in. Your Desktop Environment may alternatively provide a way to reload entries.
-
-### Web and Docker
-
-Visit [https://feishin.vercel.app](https://feishin.vercel.app) to use the hosted web version of Feishin. The web client only supports the web player backend.
-
-Feishin is also available as a Docker image. The images are hosted via `ghcr.io` and are available to view [here](https://github.com/jeffvli/feishin/pkgs/container/feishin). You can run the container using the following commands:
-
-```bash
-# Run the latest version
-docker run --name feishin -p 9180:9180 ghcr.io/jeffvli/feishin:latest
-
-# Build the image locally
-docker build -t feishin .
-docker run --name feishin -p 9180:9180 feishin
-```
-
-#### Docker Compose
-
-To install via Docker Compose, use the following snippet. This also works on Portainer.
-
-```yaml
-services:
-    feishin:
-        container_name: feishin
-        image: 'ghcr.io/jeffvli/feishin:latest'
-        restart: unless-stopped
-        environment:
-            - SERVER_NAME=jellyfin # pre-defined server name
-            - SERVER_LOCK=true # When true AND name/type/url are set, only username/password can be toggled
-            - SERVER_TYPE=jellyfin # the allowed types are: jellyfin, navidrome, subsonic. These values are case insensitive
-            - SERVER_URL= # http://address:port or https://address:port
-            - REMOTE_URL= # http://address or https://address
-            - LEGACY_AUTHENTICATION=false # When SERVER_LOCK is true, sets the legacy (plaintext) authentication flag for Subsonic/OpenSubsonic servers
-            - ANALYTICS_DISABLED=true # Set to true to disable Umami analytics tracking
-        ports:
-            - 9180:9180
-            # Alternatively, to restrict to only localhost, - 127.0.0.1:9180:8190
-```
-
 ### Configuration
 
 1. Upon startup you will be greeted with a prompt to select the path to your MPV binary. If you do not have MPV installed, you can download it [here](https://mpv.io/installation/) or install it using any package manager supported by your OS. After inputting the path, restart the app.
@@ -137,7 +62,7 @@ services:
 
 3. _Optional_ - If you want to host Feishin on a subpath (not `/`), then pass in the following environment variable: `PUBLIC_PATH=PATH`. For example, to host on `/feishin`, pass in `PUBLIC_PATH=/feishin`.
 
-4. _Optional_ - To hard code the server url, pass the following environment variables: `SERVER_NAME`, `SERVER_TYPE` (one of `jellyfin` or `navidrome` or `subsonic`), `SERVER_URL`. To prevent users from changing these settings, pass `SERVER_LOCK=true`. This can only be set if all three of the previous values are set. When `SERVER_LOCK=true`, you can also set `LEGACY_AUTHENTICATION=true` or `LEGACY_AUTHENTICATION=false` to configure the legacy authentication flag for the server (only applicable for Subsonic/OpenSubsonic servers).
+4. _Optional_ - To hard code the server url, pass the following environment variables: `SERVER_NAME`, `SERVER_TYPE` (one of `navidrome` or `subsonic`), `SERVER_URL`. To prevent users from changing these settings, pass `SERVER_LOCK=true`. This can only be set if all three of the previous values are set. When `SERVER_LOCK=true`, you can also set `LEGACY_AUTHENTICATION=true` or `LEGACY_AUTHENTICATION=false` to configure the legacy authentication flag for the server (only applicable for Subsonic/OpenSubsonic servers).
 
 5. _Optional_ - If your server uses a separate public-facing URL than what integrating applications use internally to communicate with your server, such as a separate Navidrome `ShareURL`, set `REMOTE_URL` to said public-facing URL.
 
@@ -153,10 +78,9 @@ First thing to do is check that your MPV binary path is correct. Navigate to the
 
 ### What music servers does Feishin support?
 
-Feishin supports any music server that implements a [Navidrome](https://www.navidrome.org/), [Jellyfin](https://jellyfin.org/), or [OpenSubsonic compatible](https://opensubsonic.netlify.app/) API.
+Feishin supports any music server that implements a [Navidrome](https://www.navidrome.org/), or [OpenSubsonic compatible](https://opensubsonic.netlify.app/) API.
 
 - [Navidrome](https://github.com/navidrome/navidrome)
-- [Jellyfin](https://github.com/jellyfin/jellyfin)
 - [OpenSubsonic](https://opensubsonic.netlify.app/) compatible servers, such as...
     - [Airsonic-Advanced](https://github.com/airsonic-advanced/airsonic-advanced)
     - [Ampache](https://ampache.org)

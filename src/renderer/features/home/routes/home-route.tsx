@@ -15,7 +15,6 @@ import { SongInfiniteCarousel } from '/@/renderer/features/songs/components/song
 import {
     HomeFeatureStyle,
     HomeItem,
-    useCurrentServer,
     useHomeFeature,
     useHomeFeatureStyle,
     useHomeItems,
@@ -23,32 +22,23 @@ import {
 } from '/@/renderer/store';
 import { Spinner } from '/@/shared/components/spinner/spinner';
 import { Stack } from '/@/shared/components/stack/stack';
-import {
-    AlbumListSort,
-    LibraryItem,
-    ServerType,
-    SongListSort,
-    SortOrder,
-} from '/@/shared/types/domain-types';
+import { AlbumListSort, LibraryItem, SongListSort, SortOrder } from '/@/shared/types/domain-types';
 import { Platform } from '/@/shared/types/types';
 
 const HomeRoute = () => {
     const { t } = useTranslation();
     const scrollAreaRef = useRef<HTMLDivElement>(null);
-    const server = useCurrentServer();
     const { windowBarStyle } = useWindowSettings();
     const homeFeature = useHomeFeature();
     const homeFeatureStyle = useHomeFeatureStyle();
     const homeItems = useHomeItems();
     const containerQuery = useGridCarouselContainerQuery();
 
-    const isJellyfin = server?.type === ServerType.JELLYFIN;
-
     const carousels = {
         [HomeItem.MOST_PLAYED]: {
             enableRefresh: true,
-            itemType: isJellyfin ? LibraryItem.SONG : LibraryItem.ALBUM,
-            sortBy: isJellyfin ? SongListSort.PLAY_COUNT : AlbumListSort.PLAY_COUNT,
+            itemType: LibraryItem.ALBUM,
+            sortBy: AlbumListSort.PLAY_COUNT,
             sortOrder: SortOrder.DESC,
             title: t('page.home.mostPlayed'),
         },
@@ -68,8 +58,8 @@ const HomeRoute = () => {
         },
         [HomeItem.RECENTLY_PLAYED]: {
             enableRefresh: true,
-            itemType: isJellyfin ? LibraryItem.SONG : LibraryItem.ALBUM,
-            sortBy: isJellyfin ? SongListSort.RECENTLY_PLAYED : AlbumListSort.RECENTLY_PLAYED,
+            itemType: LibraryItem.ALBUM,
+            sortBy: AlbumListSort.RECENTLY_PLAYED,
             sortOrder: SortOrder.DESC,
             title: t('page.home.recentlyPlayed'),
         },

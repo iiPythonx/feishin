@@ -1,4 +1,3 @@
-import './autodiscover';
 import './lyrics';
 import './player';
 import './remote';

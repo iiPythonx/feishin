@@ -6,7 +6,6 @@ export enum ServerFeature {
     BFR = 'bfr',
     INTERNET_RADIO_IMAGE_UPLOAD = 'internetRadioImageUpload',
     LYRICS_MULTIPLE_STRUCTURED = 'lyricsMultipleStructured',
-    LYRICS_SINGLE_STRUCTURED = 'lyricsSingleStructured',
     MUSIC_FOLDER_MULTISELECT = 'musicFolderMultiselect',
     OS_FORM_POST = 'osFormPost',
     OS_TRANSCODE_DECISION = 'osTranscodeDecision',
