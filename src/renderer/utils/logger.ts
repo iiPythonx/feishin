@@ -1,7 +1,6 @@
 import dayjs from 'dayjs';
 
 export enum LogCategory {
-    ANALYTICS = 'analytics',
     API = 'api',
     EXTERNAL = 'external',
     GENERAL = 'general',

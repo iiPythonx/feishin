@@ -1,6 +1,5 @@
 declare global {
     interface Window {
-        ANALYTICS_DISABLED?: boolean | string;
         FS_AUTO_DJ_ENABLED?: string;
         FS_AUTO_DJ_ITEM_COUNT?: string;
         FS_AUTO_DJ_TIMING?: string;

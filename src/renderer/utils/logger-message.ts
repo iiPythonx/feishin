@@ -1,10 +1,6 @@
 import { LogCategory } from '/@/renderer/utils/logger';
 
 export const logMsg = {
-    [LogCategory.ANALYTICS]: {
-        appTracked: 'Analytics sent',
-        pageViewTracked: 'Page view tracked',
-    },
     [LogCategory.API]: {},
     [LogCategory.EXTERNAL]: {
         discordRpcActivityCleared: 'Activity was cleared for Discord RPC',
