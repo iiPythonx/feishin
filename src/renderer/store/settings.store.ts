@@ -1791,8 +1791,8 @@ const initialState: SettingsState = {
     },
     lyricsDisplay: {
         default: {
-            fontSize: 24,
-            fontSizeUnsync: 24,
+            fontSize: 28,
+            fontSizeUnsync: 28,
             gap: 24,
             gapUnsync: 24,
             opacityNonActive: 0.2,
@@ -2197,8 +2197,8 @@ export const useSettingsStore = createWithEqualityFn<SettingsSlice>()(
 
                         // Extract display settings
                         const displaySettings = {
-                            fontSize: defaultSettings.fontSize || 24,
-                            fontSizeUnsync: defaultSettings.fontSizeUnsync || 24,
+                            fontSize: defaultSettings.fontSize || 28,
+                            fontSizeUnsync: defaultSettings.fontSizeUnsync || 28,
                             gap: defaultSettings.gap || 24,
                             gapUnsync: defaultSettings.gapUnsync || 24,
                         };

@@ -33,7 +33,7 @@ export const useFullScreenPlayerStore = createWithEqualityFn<FullScreenPlayerSli
                 activeTab: 'queue',
                 dynamicBackground: true,
                 dynamicImageBlur: 1.5,
-                dynamicIsImage: false,
+                dynamicIsImage: true,
                 expanded: false,
                 opacity: 60,
                 useImageAspectRatio: false,
