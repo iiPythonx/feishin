@@ -37,7 +37,6 @@ export const store = new Store<any>({
         global_media_hotkeys: true,
         lyrics: ['NetEase', 'lrclib.net'],
         mediaSession: false,
-        playbackType: 'web',
         should_prompt_accessibility: true,
         shown_accessibility_warning: false,
         visualizer_system_audio_consent_granted: false,

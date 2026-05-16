@@ -7,7 +7,6 @@ import {
     SettingOption,
     SettingsSection,
 } from '/@/renderer/features/settings/components/settings-section';
-import { usePlaybackType } from '/@/renderer/store';
 import { usePlaybackSettings, useSettingsStoreActions } from '/@/renderer/store/settings.store';
 import { Select } from '/@/shared/components/select/select';
 import { Switch } from '/@/shared/components/switch/switch';
@@ -56,9 +55,8 @@ export const AudioSettings = memo(() => {
     const { t } = useTranslation();
     const settings = usePlaybackSettings();
     const { setSettings } = useSettingsStoreActions();
-    const playbackType = usePlaybackType();
 
-    const audioDevices = useAudioDevices(playbackType);
+    const audioDevices = useAudioDevices();
     const audioDeviceId = settings.audioDeviceId;
 
     const audioOptions: SettingOption[] = [

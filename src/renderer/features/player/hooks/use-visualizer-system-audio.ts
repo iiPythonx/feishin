@@ -3,7 +3,6 @@ import { useCallback, useEffect, useRef } from 'react';
 
 import i18n from '/@/i18n/i18n';
 import { useWebAudio } from '/@/renderer/features/player/hooks/use-webaudio';
-import { usePlaybackType } from '/@/renderer/store/settings.store';
 import { toast } from '/@/shared/components/toast/toast';
 
 export function useVisualizerSystemAudio(options: {
@@ -17,7 +16,6 @@ export function useVisualizerSystemAudio(options: {
     const onSuccessRef = useRef(onSystemAudioCaptureSuccess);
     onDeniedRef.current = onSystemAudioCaptureDenied;
     onSuccessRef.current = onSystemAudioCaptureSuccess;
-    const playbackType = usePlaybackType();
     const isMacOS = Boolean(window.api?.utils?.isMacOS?.());
     const { setWebAudio, webAudio } = useWebAudio();
     const webAudioRef = useRef(webAudio);
@@ -144,10 +142,5 @@ export function useVisualizerSystemAudio(options: {
         }
 
         void connectRef.current();
-    }, [
-        playbackType,
-        shouldAttemptConnection,
-        webAudio?.context,
-        webAudio?.visualizerInputs?.length,
-    ]);
+    }, [shouldAttemptConnection, webAudio?.context, webAudio?.visualizerInputs?.length]);
 }

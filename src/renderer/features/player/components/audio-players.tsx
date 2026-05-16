@@ -28,7 +28,6 @@ import {
     updateQueueRatings,
     useCurrentServerId,
     usePlaybackSettings,
-    usePlaybackType,
     useSettingsStoreActions,
 } from '/@/renderer/store';
 import { logFn } from '/@/renderer/utils/logger';
@@ -102,7 +101,6 @@ function isSafari() {
 }
 
 export const AudioPlayers = () => {
-    const playbackType = usePlaybackType();
     const serverId = useCurrentServerId();
     const { resetSampleRate } = useSettingsStoreActions();
 
@@ -137,7 +135,6 @@ export const AudioPlayers = () => {
                 audioContext={audioContext}
                 audioDeviceId={audioDeviceId}
                 audioSampleRateHz={audioSampleRateHz}
-                playbackType={playbackType}
                 resetSampleRate={resetSampleRate}
                 serverId={serverId}
                 setWebAudio={setWebAudio}

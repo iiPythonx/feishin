@@ -2,7 +2,6 @@ import isElectron from 'is-electron';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { languages } from '/@/i18n/i18n';
 import {
     SettingOption,
     SettingsSection,
@@ -10,9 +9,7 @@ import {
 import { useLyricsSettings, useSettingsStoreActions } from '/@/renderer/store';
 import { MultiSelect } from '/@/shared/components/multi-select/multi-select';
 import { NumberInput } from '/@/shared/components/number-input/number-input';
-import { Select } from '/@/shared/components/select/select';
 import { Switch } from '/@/shared/components/switch/switch';
-import { TextInput } from '/@/shared/components/text-input/text-input';
 import { LyricSource } from '/@/shared/types/domain-types';
 
 const localSettings = isElectron() ? window.api.localSettings : null;
@@ -95,24 +92,6 @@ export const LyricSettings = memo(() => {
         },
         {
             control: (
-                <Switch
-                    aria-label="Enable NetEase translations"
-                    defaultChecked={settings.enableNeteaseTranslation}
-                    onChange={(e) => {
-                        const isChecked = e.currentTarget.checked;
-                        updateSetting({ enableNeteaseTranslation: isChecked });
-                        localSettings?.set('enableNeteaseTranslation', isChecked);
-                    }}
-                />
-            ),
-            description: t('setting.neteaseTranslation', {
-                context: 'description',
-            }),
-            isHidden: !isElectron(),
-            title: t('setting.neteaseTranslation'),
-        },
-        {
-            control: (
                 <NumberInput
                     defaultValue={settings.delayMs}
                     onBlur={(e) => {
@@ -128,70 +107,6 @@ export const LyricSettings = memo(() => {
             }),
             isHidden: !isElectron(),
             title: t('setting.lyricOffset'),
-        },
-        {
-            control: (
-                <Select
-                    data={languages}
-                    onChange={(value) => {
-                        updateSetting({ translationTargetLanguage: value });
-                    }}
-                    value={settings.translationTargetLanguage}
-                />
-            ),
-            description: t('setting.translationTargetLanguage', {
-                context: 'description',
-            }),
-            isHidden: !isElectron(),
-            title: t('setting.translationTargetLanguage'),
-        },
-        {
-            control: (
-                <Select
-                    clearable
-                    data={['Microsoft Azure', 'Google Cloud']}
-                    onChange={(value) => {
-                        updateSetting({ translationApiProvider: value });
-                    }}
-                    value={settings.translationApiProvider}
-                />
-            ),
-            description: t('setting.translationApiProvider', {
-                context: 'description',
-            }),
-            isHidden: !isElectron(),
-            title: t('setting.translationApiProvider'),
-        },
-        {
-            control: (
-                <TextInput
-                    onChange={(e) => {
-                        updateSetting({ translationApiKey: e.currentTarget.value });
-                    }}
-                    value={settings.translationApiKey}
-                />
-            ),
-            description: t('setting.translationApiKey', {
-                context: 'description',
-            }),
-            isHidden: !isElectron(),
-            title: t('setting.translationApiKey'),
-        },
-        {
-            control: (
-                <Switch
-                    aria-label="Enable auto translation"
-                    defaultChecked={settings.enableAutoTranslation}
-                    onChange={(e) =>
-                        updateSetting({ enableAutoTranslation: e.currentTarget.checked })
-                    }
-                />
-            ),
-            description: t('setting.enableAutoTranslation', {
-                context: 'description',
-            }),
-            isHidden: !isElectron(),
-            title: t('setting.enableAutoTranslation'),
         },
     ];
 

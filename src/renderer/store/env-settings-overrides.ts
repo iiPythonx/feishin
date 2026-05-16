@@ -399,18 +399,6 @@ const ENV_SETTING_SPECS: EnvSettingSpec[] = [
     { key: 'FS_LYRICS_SHOW_MATCH', path: ['lyrics', 'showMatch'], type: 'bool' },
     { key: 'FS_LYRICS_SHOW_PROVIDER', path: ['lyrics', 'showProvider'], type: 'bool' },
     {
-        key: 'FS_LYRICS_ENABLE_AUTO_TRANSLATION',
-        path: ['lyrics', 'enableAutoTranslation'],
-        type: 'bool',
-    },
-    { key: 'FS_LYRICS_TRANSLATION_API_KEY', path: ['lyrics', 'translationApiKey'], type: 'string' },
-    {
-        key: 'FS_LYRICS_TRANSLATION_TARGET_LANGUAGE',
-        path: ['lyrics', 'translationTargetLanguage'],
-        skipIfEmpty: true,
-        type: 'string',
-    },
-    {
         enumSet: LYRICS_ALIGNMENTS,
         key: 'FS_LYRICS_ALIGNMENT',
         path: ['lyrics', 'alignment'],

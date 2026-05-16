@@ -6,7 +6,7 @@ import { useWebAudio } from '/@/renderer/features/player/hooks/use-webaudio';
 import { getVisualizerAudioNodes } from '/@/renderer/features/player/utils/get-visualizer-audio-nodes';
 import { openVisualizerSettingsModal } from '/@/renderer/features/player/utils/open-visualizer-settings-modal';
 import { ComponentErrorBoundary } from '/@/renderer/features/shared/components/component-error-boundary';
-import { useAccent, usePlaybackType, useSettingsStore } from '/@/renderer/store';
+import { useAccent, useSettingsStore } from '/@/renderer/store';
 import {
     useFullScreenPlayerStore,
     useFullScreenPlayerStoreActions,
@@ -21,7 +21,6 @@ const VisualizerInner = () => {
     const canvasRef = createRef<HTMLDivElement>();
     const accent = useAccent();
     const visualizer = useSettingsStore((store) => store.visualizer);
-    const playbackType = usePlaybackType();
     const opacity = useSettingsStore((store) => store.visualizer.audiomotionanalyzer.opacity);
     const [motion, setMotion] = useState<any>();
     const [libraryLoaded, setLibraryLoaded] = useState(false);
@@ -222,7 +221,7 @@ const VisualizerInner = () => {
 
     useEffect(() => {
         const { context } = webAudio || {};
-        const inputNodes = getVisualizerAudioNodes(webAudio, playbackType);
+        const inputNodes = getVisualizerAudioNodes(webAudio);
 
         let audioMotion: any | undefined;
         if (
@@ -282,7 +281,6 @@ const VisualizerInner = () => {
         accent,
         canvasRef,
         registerCustomGradients,
-        playbackType,
         webAudio,
         visualizer,
         options,

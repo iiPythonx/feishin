@@ -90,16 +90,8 @@ export const useSyncSettingsToMain = () => {
                     rendererValue: settings.playback.mediaSession,
                 },
                 {
-                    mainStoreKey: 'playbackType',
-                    rendererValue: settings.playback.type,
-                },
-                {
                     mainStoreKey: 'global_media_hotkeys',
                     rendererValue: settings.hotkeys.globalMediaHotkeys,
-                },
-                {
-                    mainStoreKey: 'enableNeteaseTranslation',
-                    rendererValue: settings.lyrics.enableNeteaseTranslation,
                 },
             ];
 

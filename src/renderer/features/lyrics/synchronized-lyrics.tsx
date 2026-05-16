@@ -8,7 +8,6 @@ import { LyricLine } from '/@/renderer/features/lyrics/lyric-line';
 import {
     useLyricsDisplaySettings,
     useLyricsSettings,
-    usePlaybackType,
     usePlayerActions,
     usePlayerStatus,
 } from '/@/renderer/store';
@@ -24,7 +23,6 @@ export interface SynchronizedLyricsProps extends Omit<FullLyricsMetadata, 'lyric
     offsetMs?: number;
     settingsKey?: string;
     style?: React.CSSProperties;
-    translatedLyrics?: null | string;
 }
 
 export const SynchronizedLyrics = ({
@@ -36,9 +34,7 @@ export const SynchronizedLyrics = ({
     settingsKey = 'default',
     source,
     style,
-    translatedLyrics,
 }: SynchronizedLyricsProps) => {
-    const playbackType = usePlaybackType();
     const lyricsSettings = useLyricsSettings();
     const displaySettings = useLyricsDisplaySettings(settingsKey);
     const settings = {
@@ -363,10 +359,7 @@ export const SynchronizedLyrics = ({
                             handleSeek(time / 1000);
                         }
                     }}
-                    text={
-                        text +
-                        (translatedLyrics ? `_BREAK_${translatedLyrics.split('\n')[idx]}` : '')
-                    }
+                    text={text + ''}
                 />
             ))}
         </div>

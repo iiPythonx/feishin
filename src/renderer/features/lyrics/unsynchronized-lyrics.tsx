@@ -9,7 +9,6 @@ import { FullLyricsMetadata } from '/@/shared/types/domain-types';
 export interface UnsynchronizedLyricsProps extends Omit<FullLyricsMetadata, 'lyrics'> {
     lyrics: string;
     settingsKey?: string;
-    translatedLyrics?: null | string;
 }
 
 export const UnsynchronizedLyrics = ({
@@ -19,7 +18,6 @@ export const UnsynchronizedLyrics = ({
     remote,
     settingsKey = 'default',
     source,
-    translatedLyrics,
 }: UnsynchronizedLyricsProps) => {
     const lyricsSettings = useLyricsSettings();
     const displaySettings = useLyricsDisplaySettings(settingsKey);
@@ -37,10 +35,6 @@ export const UnsynchronizedLyrics = ({
     const lines = useMemo(() => {
         return lyrics.split('\n');
     }, [lyrics]);
-
-    const translatedLines = useMemo(() => {
-        return translatedLyrics ? translatedLyrics.split('\n') : [];
-    }, [translatedLyrics]);
 
     return (
         <div className={styles.container} style={{ gap: `${settings.gapUnsync}px` }}>
@@ -67,7 +61,7 @@ export const UnsynchronizedLyrics = ({
                     fontSize={settings.fontSizeUnsync}
                     id={`lyric-${idx}`}
                     key={idx}
-                    text={text + (translatedLines[idx] ? `_BREAK_${translatedLines[idx]}` : '')}
+                    text={text}
                 />
             ))}
         </div>

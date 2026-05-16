@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import styles from './lyrics.module.css';
 
 import { queryKeys } from '/@/renderer/api/query-keys';
-import { translateLyrics } from '/@/renderer/features/lyrics/api/lyric-translate';
 import {
     computeSelectedFromResult,
     getDisplayOffset,
@@ -47,17 +46,9 @@ export const Lyrics = ({ fadeOutNoLyricsMessage = true, settingsKey = 'default' 
 
     const isLyricsDisabled = isRadioActive;
 
-    const {
-        enableAutoTranslation,
-        preferLocalLyrics,
-        translationApiKey,
-        translationApiProvider,
-        translationTargetLanguage,
-    } = useLyricsSettings();
+    const { preferLocalLyrics } = useLyricsSettings();
     const { t } = useTranslation();
     const [index, setIndexState] = useState(0);
-    const [translatedLyrics, setTranslatedLyrics] = useState<null | string>(null);
-    const [showTranslation, setShowTranslation] = useState(false);
     const [pendingSongId, setPendingSongId] = useState<string | undefined>(currentSong?.id);
     const lyricsFetchTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
     const previousSongIdRef = useRef<string | undefined>(currentSong?.id);
@@ -201,51 +192,14 @@ export const Lyrics = ({ fadeOutNoLyricsMessage = true, settingsKey = 'default' 
         await queryClient.invalidateQueries({ queryKey: lyricsKey });
     }, [currentSong, lyricsKey]);
 
-    const fetchTranslation = useCallback(async () => {
-        if (!lyrics || isLyricsDisabled) return;
-        const originalLyrics = Array.isArray(lyrics.lyrics)
-            ? lyrics.lyrics.map(([, line]) => line).join('\n')
-            : lyrics.lyrics;
-        const TranslatedText: null | string = await translateLyrics(
-            originalLyrics,
-            translationApiKey,
-            translationApiProvider,
-            translationTargetLanguage,
-        );
-        setTranslatedLyrics(TranslatedText);
-        setShowTranslation(true);
-    }, [
-        isLyricsDisabled,
-        lyrics,
-        translationApiKey,
-        translationApiProvider,
-        translationTargetLanguage,
-    ]);
-
-    const handleOnTranslateLyric = useCallback(async () => {
-        if (translatedLyrics) {
-            setShowTranslation(!showTranslation);
-            return;
-        }
-        await fetchTranslation();
-    }, [translatedLyrics, showTranslation, fetchTranslation]);
-
     usePlayerEvents(
         {
             onCurrentSongChange: () => {
                 setIndexState(0);
-                setShowTranslation(false);
-                setTranslatedLyrics(null);
             },
         },
         [],
     );
-
-    useEffect(() => {
-        if (displayLyrics && !translatedLyrics && enableAutoTranslation) {
-            fetchTranslation();
-        }
-    }, [displayLyrics, translatedLyrics, enableAutoTranslation, fetchTranslation]);
 
     const languages = useMemo(() => {
         const local = data?.local;
@@ -335,13 +289,11 @@ export const Lyrics = ({ fadeOutNoLyricsMessage = true, settingsKey = 'default' 
                                         {...(displayLyrics as SynchronizedLyricsProps)}
                                         offsetMs={displayOffsetMs}
                                         settingsKey={settingsKey}
-                                        translatedLyrics={showTranslation ? translatedLyrics : null}
                                     />
                                 ) : (
                                     <UnsynchronizedLyrics
                                         {...(displayLyrics as UnsynchronizedLyricsProps)}
                                         settingsKey={settingsKey}
-                                        translatedLyrics={showTranslation ? translatedLyrics : null}
                                     />
                                 )}
                             </motion.div>
@@ -357,11 +309,6 @@ export const Lyrics = ({ fadeOutNoLyricsMessage = true, settingsKey = 'default' 
                         onExportLyrics={handleExportLyrics}
                         onRemoveLyric={handleOnRemoveLyric}
                         onSearchOverride={handleOnSearchOverride}
-                        onTranslateLyric={
-                            translationApiProvider && translationApiKey
-                                ? handleOnTranslateLyric
-                                : undefined
-                        }
                         onUpdateOffset={handleUpdateOffset}
                         setIndex={setIndex}
                         settingsKey={settingsKey}

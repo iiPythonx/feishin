@@ -1,11 +1,9 @@
-import isElectron from 'is-electron';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useAudioDevices } from '/@/renderer/features/settings/components/playback/audio-settings';
 import { ListConfigTable } from '/@/renderer/features/shared/components/list-config-menu';
 import {
-    usePlaybackType,
     usePlayerActions,
     usePlayerProperties,
     usePlayerSongProperties,
@@ -189,11 +187,10 @@ export const PlayerConfig = () => {
 
 const AudioDeviceConfig = () => {
     const status = usePlayerStatus();
-    const playbackType = usePlaybackType();
     const playbackSettings = usePlaybackSettings();
     const { setSettings } = useSettingsStoreActions();
 
-    const audioDevices = useAudioDevices(playbackType);
+    const audioDevices = useAudioDevices();
     const audioDeviceId = playbackSettings.audioDeviceId;
 
     return (

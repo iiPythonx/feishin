@@ -546,17 +546,12 @@ const LyricsDisplaySettingsSchema = z.object({
 const LyricsSettingsSchema = z.object({
     alignment: z.enum(['center', 'left', 'right']),
     delayMs: z.number(),
-    enableAutoTranslation: z.boolean(),
-    enableNeteaseTranslation: z.boolean(),
     fetch: z.boolean(),
     follow: z.boolean(),
     preferLocalLyrics: z.boolean(),
     showMatch: z.boolean(),
     showProvider: z.boolean(),
     sources: z.array(z.nativeEnum(LyricSource)),
-    translationApiKey: z.string(),
-    translationApiProvider: z.string().nullable(),
-    translationTargetLanguage: z.string().nullable(),
 });
 
 const ScrobbleSettingsSchema = z.object({
@@ -1787,17 +1782,12 @@ const initialState: SettingsState = {
     lyrics: {
         alignment: 'center',
         delayMs: 0,
-        enableAutoTranslation: false,
-        enableNeteaseTranslation: false,
         fetch: false,
         follow: true,
         preferLocalLyrics: true,
         showMatch: false,
         showProvider: false,
         sources: [LyricSource.NETEASE, LyricSource.LRCLIB],
-        translationApiKey: '',
-        translationApiProvider: '',
-        translationTargetLanguage: 'en',
     },
     lyricsDisplay: {
         default: {
@@ -2425,8 +2415,6 @@ export const useTableSettings = (type: ItemListKey) =>
     useSettingsStore((state) => state.lists[type as keyof typeof state.lists]);
 
 export const useGeneralSettings = () => useSettingsStore((state) => state.general, shallow);
-
-export const usePlaybackType = () => useSettingsStore((state) => state.playback.type, shallow);
 
 export const usePlayButtonBehavior = () =>
     useSettingsStore((state) => state.general.playButtonBehavior, shallow);
