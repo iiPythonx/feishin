@@ -56,7 +56,6 @@ export const ScrobbleStatus = ({ formattedTime }: { formattedTime: string }) => 
                     fz="xs"
                     gap="sm"
                     justify="center"
-                    onClick={(e) => e.stopPropagation()}
                     style={{ userSelect: 'none' }}
                     wrap="nowrap"
                 >
@@ -79,7 +78,7 @@ export const ScrobbleStatus = ({ formattedTime }: { formattedTime: string }) => 
                     </Text>
                 </Group>
             </HoverCard.Target>
-            <HoverCard.Dropdown onClick={(e) => e.stopPropagation()}>
+            <HoverCard.Dropdown>
                 <Stack gap="md" p="sm">
                     {hookInactive ? (
                         <Text size="sm">{t('form.privateMode.enabled')}</Text>

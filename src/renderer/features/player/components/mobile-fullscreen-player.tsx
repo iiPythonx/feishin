@@ -398,7 +398,6 @@ export const MobileFullscreenPlayer = () => {
     const handleToggleContextMenu = useCallback(
         (e: MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
             e.preventDefault();
-            e.stopPropagation();
 
             if (!currentSong) {
                 return;
@@ -416,16 +415,12 @@ export const MobileFullscreenPlayer = () => {
         setStore({ activeTab: activeTab === 'queue' ? 'player' : 'queue' });
     }, [activeTab, setStore]);
 
-    const handleToggleFavorite = useCallback(
-        (e: MouseEvent<HTMLButtonElement>) => {
-            e.stopPropagation();
-            const song = currentSongData;
-            if (!song?.id) return;
+    const handleToggleFavorite = useCallback(() => {
+        const song = currentSongData;
+        if (!song?.id) return;
 
-            setFavorite(song._serverId, [song.id], LibraryItem.SONG, !song.userFavorite);
-        },
-        [currentSongData, setFavorite],
-    );
+        setFavorite(song._serverId, [song.id], LibraryItem.SONG, !song.userFavorite);
+    }, [currentSongData, setFavorite]);
 
     const handleToggleLyrics = useCallback(() => {
         setStore({ activeTab: activeTab === 'lyrics' ? 'player' : 'lyrics' });

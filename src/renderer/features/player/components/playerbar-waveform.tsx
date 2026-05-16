@@ -314,29 +314,11 @@ export const PlayerbarWaveform = () => {
 
     // Show disabled slider when there's no current song
     if (!currentSong) {
-        return (
-            <CustomPlayerbarSlider
-                disabled
-                max={100}
-                min={0}
-                onClick={(e) => {
-                    e?.stopPropagation();
-                }}
-                size={6}
-                value={0}
-                w="100%"
-            />
-        );
+        return <CustomPlayerbarSlider disabled max={100} min={0} size={6} value={0} w="100%" />;
     }
 
     return (
-        <div
-            className={styles.wavesurferContainer}
-            onClick={(e) => {
-                e?.stopPropagation();
-            }}
-            style={{ position: 'relative' }}
-        >
+        <div className={styles.wavesurferContainer} style={{ position: 'relative' }}>
             <motion.div
                 animate={{ opacity: isLoading ? 0 : 1 }}
                 className={styles.waveform}

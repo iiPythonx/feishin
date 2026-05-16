@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { lazy, MouseEvent, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 
 import styles from './playerbar.module.css';
 
@@ -14,18 +14,10 @@ const MobilePlayerbar = lazy(() =>
         default: module.MobilePlayerbar,
     })),
 );
-import { useFullScreenPlayerStore, useSetFullScreenPlayerStore } from '/@/renderer/store';
 import { PlaybackSelectors } from '/@/shared/constants/playback-selectors';
 
 export const Playerbar = () => {
-    const { expanded: isFullScreenPlayerExpanded } = useFullScreenPlayerStore();
-    const setFullScreenPlayerStore = useSetFullScreenPlayerStore();
     const isMobile = useIsMobile();
-
-    const handleToggleFullScreenPlayer = (e?: KeyboardEvent | MouseEvent<HTMLDivElement>) => {
-        e?.stopPropagation();
-        setFullScreenPlayerStore({ expanded: !isFullScreenPlayerExpanded });
-    };
 
     if (isMobile) {
         return (
@@ -36,10 +28,7 @@ export const Playerbar = () => {
     }
 
     return (
-        <div
-            className={clsx(styles.container, PlaybackSelectors.mediaPlayer)}
-            onClick={handleToggleFullScreenPlayer}
-        >
+        <div className={clsx(styles.container, PlaybackSelectors.mediaPlayer)}>
             <div className={styles.controlsGrid}>
                 <div className={styles.leftGridItem}>
                     <LeftControls />

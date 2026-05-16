@@ -12,14 +12,10 @@ import { Text } from '/@/shared/components/text/text';
 import { PlaybackSelectors } from '/@/shared/constants/playback-selectors';
 
 interface RadioMetadataDisplayProps {
-    onStopPropagation: (e?: React.MouseEvent) => void;
     onToggleContextMenu: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-export const RadioMetadataDisplay = ({
-    onStopPropagation,
-    onToggleContextMenu,
-}: RadioMetadataDisplayProps) => {
+export const RadioMetadataDisplay = ({ onToggleContextMenu }: RadioMetadataDisplayProps) => {
     const radioMetadata = useRadioStore((state) => state.metadata);
     const stationName = useRadioStore((state) => state.stationName);
 
@@ -31,7 +27,7 @@ export const RadioMetadataDisplay = ({
 
     return (
         <>
-            <div className={styles.lineItem} onClick={onStopPropagation}>
+            <div className={styles.lineItem}>
                 <Text
                     className={PlaybackSelectors.songTitle}
                     fw={500}
@@ -42,18 +38,12 @@ export const RadioMetadataDisplay = ({
                     {radioMetadata?.title || '—'}
                 </Text>
             </div>
-            <div
-                className={clsx(styles.lineItem, styles.secondary, PlaybackSelectors.songArtist)}
-                onClick={onStopPropagation}
-            >
+            <div className={clsx(styles.lineItem, styles.secondary, PlaybackSelectors.songArtist)}>
                 <Text isMuted isNoSelect overflow="hidden" size="md">
                     {radioMetadata?.artist || '—'}
                 </Text>
             </div>
-            <div
-                className={clsx(styles.lineItem, styles.secondary, PlaybackSelectors.songAlbum)}
-                onClick={onStopPropagation}
-            >
+            <div className={clsx(styles.lineItem, styles.secondary, PlaybackSelectors.songAlbum)}>
                 <Group align="center" gap="xs" wrap="nowrap">
                     <Icon color="muted" icon="radio" size="sm" />
                     <Text

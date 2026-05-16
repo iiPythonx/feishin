@@ -197,8 +197,7 @@ export const SleepTimerButton = () => {
                         color: active ? 'primary' : undefined,
                         size: 'lg',
                     }}
-                    onClick={(e) => {
-                        e.stopPropagation();
+                    onClick={() => {
                         setOpened((prev) => !prev);
                     }}
                     size="sm"
@@ -237,8 +236,7 @@ export const SleepTimerButton = () => {
                                 </Text>
                             )}
                             <Button
-                                onClick={(e) => {
-                                    e.stopPropagation();
+                                onClick={() => {
                                     handleCancel();
                                 }}
                                 size="compact-xs"
@@ -255,8 +253,7 @@ export const SleepTimerButton = () => {
                                 fullWidth
                                 justify="flex-start"
                                 key={index}
-                                onClick={(e) => {
-                                    e.stopPropagation();
+                                onClick={() => {
                                     handlePreset(option);
                                 }}
                                 size="xs"
@@ -277,8 +274,7 @@ export const SleepTimerButton = () => {
                                         fullWidth
                                         justify="flex-start"
                                         key={index}
-                                        onClick={(e) => {
-                                            e.stopPropagation();
+                                        onClick={() => {
                                             handlePreset(option);
                                         }}
                                         size="xs"
@@ -297,8 +293,7 @@ export const SleepTimerButton = () => {
                         <Button
                             fullWidth
                             justify="flex-start"
-                            onClick={(e) => {
-                                e.stopPropagation();
+                            onClick={() => {
                                 setShowCustom(true);
                             }}
                             size="xs"
@@ -339,8 +334,7 @@ export const SleepTimerButton = () => {
                             </Group>
                             <Group gap="xs" grow>
                                 <Button
-                                    onClick={(e) => {
-                                        e.stopPropagation();
+                                    onClick={() => {
                                         handleCustomStart();
                                     }}
                                     size="xs"
@@ -349,8 +343,7 @@ export const SleepTimerButton = () => {
                                     {t('player.sleepTimer_setCustom')}
                                 </Button>
                                 <Button
-                                    onClick={(e) => {
-                                        e.stopPropagation();
+                                    onClick={() => {
                                         setShowCustom(false);
                                     }}
                                     size="xs"

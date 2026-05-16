@@ -72,8 +72,6 @@ export const LeftControls = () => {
             return;
         }
 
-        e?.stopPropagation();
-
         const shouldClose = isFullScreenPlayerExpanded || isFullScreenVisualizerExpanded;
 
         if (shouldClose) {
@@ -83,14 +81,12 @@ export const LeftControls = () => {
         }
     };
 
-    const handleToggleSidebarImage = (e?: MouseEvent<HTMLButtonElement>) => {
-        e?.stopPropagation();
+    const handleToggleSidebarImage = () => {
         setSideBar({ image: true });
     };
 
     const handleToggleContextMenu = (e: MouseEvent<HTMLDivElement>) => {
         e.preventDefault();
-        e.stopPropagation();
 
         if (!currentSong) {
             return;
@@ -101,8 +97,6 @@ export const LeftControls = () => {
             event: e,
         });
     };
-
-    const stopPropagation = (e?: MouseEvent) => e?.stopPropagation();
 
     useHotkeys([
         [
@@ -198,13 +192,10 @@ export const LeftControls = () => {
                 </AnimatePresence>
                 <motion.div className={styles.metadataStack} layout="position">
                     {isRadioMode ? (
-                        <RadioMetadataDisplay
-                            onStopPropagation={stopPropagation}
-                            onToggleContextMenu={handleToggleContextMenu}
-                        />
+                        <RadioMetadataDisplay onToggleContextMenu={handleToggleContextMenu} />
                     ) : (
                         <>
-                            <div className={styles.lineItem} onClick={stopPropagation}>
+                            <div className={styles.lineItem}>
                                 <Group align="center" gap="xs" wrap="nowrap">
                                     <Text
                                         className={PlaybackSelectors.songTitle}
@@ -229,7 +220,6 @@ export const LeftControls = () => {
                                             icon="ellipsisVertical"
                                             onClick={(e) => {
                                                 e.preventDefault();
-                                                e.stopPropagation();
                                                 if (currentSong) {
                                                     ContextMenuController.call({
                                                         cmd: {
@@ -257,7 +247,6 @@ export const LeftControls = () => {
                                     styles.secondary,
                                     PlaybackSelectors.songArtist,
                                 )}
-                                onClick={stopPropagation}
                             >
                                 <JoinedArtists
                                     artistName={currentSong?.artistName || ''}
@@ -278,7 +267,6 @@ export const LeftControls = () => {
                                     styles.secondary,
                                     PlaybackSelectors.songAlbum,
                                 )}
-                                onClick={stopPropagation}
                             >
                                 <Text
                                     component={Link}

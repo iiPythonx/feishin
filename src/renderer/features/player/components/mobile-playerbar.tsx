@@ -40,8 +40,7 @@ export const MobilePlayerbar = () => {
     const artists = currentSong?.artists;
     const isSongDefined = Boolean(currentSong?.id);
 
-    const handleToggleFullScreenPlayer = (e?: KeyboardEvent | MouseEvent<HTMLDivElement>) => {
-        e?.stopPropagation();
+    const handleToggleFullScreenPlayer = () => {
         // Set active tab to player when opening fullscreen player
         setStore({ activeTab: 'player' });
         setFullScreenPlayerStore({ expanded: !isFullScreenPlayerExpanded });
@@ -49,7 +48,6 @@ export const MobilePlayerbar = () => {
 
     const handleToggleContextMenu = (e: MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
         e.preventDefault();
-        e.stopPropagation();
 
         if (!currentSong) {
             return;
@@ -60,8 +58,6 @@ export const MobilePlayerbar = () => {
             event: e as MouseEvent<HTMLDivElement>,
         });
     };
-
-    const stopPropagation = (e?: MouseEvent) => e?.stopPropagation();
 
     return (
         <div className={clsx(styles.container, PlaybackSelectors.mediaPlayer)}>
@@ -104,7 +100,7 @@ export const MobilePlayerbar = () => {
                         )}
                     </AnimatePresence>
                     <motion.div className={styles.metadataStack} layout="position">
-                        <div className={styles.lineItem} onClick={stopPropagation}>
+                        <div className={styles.lineItem}>
                             <Group align="center" gap="xs" wrap="nowrap">
                                 <Text
                                     className={PlaybackSelectors.songTitle}
@@ -141,7 +137,6 @@ export const MobilePlayerbar = () => {
                                 styles.secondary,
                                 PlaybackSelectors.songArtist,
                             )}
-                            onClick={stopPropagation}
                         >
                             {artists?.map((artist, index) => (
                                 <React.Fragment key={`bar-${artist.id}`}>
@@ -175,7 +170,6 @@ export const MobilePlayerbar = () => {
                                 styles.secondary,
                                 PlaybackSelectors.songAlbum,
                             )}
-                            onClick={stopPropagation}
                         >
                             <Text
                                 component={Link}
@@ -201,8 +195,7 @@ export const MobilePlayerbar = () => {
             <div className={styles.controlsWrapper}>
                 <PlayerButton
                     icon={<Icon fill="default" icon="mediaPrevious" size="md" />}
-                    onClick={(e) => {
-                        e.stopPropagation();
+                    onClick={() => {
                         mediaPrevious();
                     }}
                     tooltip={{
@@ -214,15 +207,13 @@ export const MobilePlayerbar = () => {
                 <MainPlayButton
                     disabled={currentSong?.id === undefined}
                     isPaused={status === PlayerStatus.PAUSED}
-                    onClick={(e) => {
-                        e.stopPropagation();
+                    onClick={() => {
                         mediaTogglePlayPause();
                     }}
                 />
                 <PlayerButton
                     icon={<Icon fill="default" icon="mediaNext" size="md" />}
-                    onClick={(e) => {
-                        e.stopPropagation();
+                    onClick={() => {
                         mediaNext();
                     }}
                     tooltip={{

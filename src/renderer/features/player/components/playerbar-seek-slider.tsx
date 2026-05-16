@@ -80,9 +80,6 @@ export const PlayerbarSeekSlider = ({ max, min }: PlayerbarSeekSliderProps) => {
                     seekTimeoutRef.current = null;
                 }, 1000);
             }}
-            onClick={(e) => {
-                e?.stopPropagation();
-            }}
             size={6}
             value={
                 isSeeking

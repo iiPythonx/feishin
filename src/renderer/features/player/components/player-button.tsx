@@ -27,7 +27,6 @@ export const PlayerButton = forwardRef<HTMLButtonElement, PlayerButtonProps>(
                         ref={ref}
                         {...rest}
                         onClick={(e) => {
-                            e.stopPropagation();
                             rest.onClick?.(e);
                         }}
                         variant="subtle"
@@ -46,7 +45,6 @@ export const PlayerButton = forwardRef<HTMLButtonElement, PlayerButtonProps>(
                 ref={ref}
                 {...rest}
                 onClick={(e) => {
-                    e.stopPropagation();
                     rest.onClick?.(e);
                 }}
                 variant="subtle"
@@ -75,7 +73,6 @@ export const MainPlayButton = forwardRef<HTMLButtonElement, PlayButtonProps>(
                     size: 'lg',
                 }}
                 onClick={(e) => {
-                    e.stopPropagation();
                     onClick?.(e);
                 }}
                 ref={ref}

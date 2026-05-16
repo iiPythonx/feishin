@@ -100,8 +100,7 @@ const AutoDJButton = () => {
 
     return (
         <Button
-            onClick={(e) => {
-                e.stopPropagation();
+            onClick={() => {
                 toggleAutoDJ();
             }}
             size="compact-xs"
@@ -140,9 +139,7 @@ const QueueButton = () => {
         [bindings.toggleQueue.isGlobal ? '' : bindings.toggleQueue.hotkey, handleToggleQueue],
     ]);
 
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.stopPropagation();
-
+    const handleClick = () => {
         if (sideQueueType === 'sideQueue') {
             return handleToggleQueue();
         }
@@ -169,8 +166,7 @@ const QueueButton = () => {
     return (
         <PopoverPlayQueue
             onClose={handlePopoverClose}
-            onToggle={(e) => {
-                e.stopPropagation();
+            onToggle={() => {
                 handleToggleQueue();
             }}
             opened={popoverOpened}
@@ -196,8 +192,7 @@ const LyricsButton = () => {
                 color: activeTab === 'lyrics' && isFullScreenPlayerExpanded ? 'primary' : undefined,
                 size: 'lg',
             }}
-            onClick={(e) => {
-                e.stopPropagation();
+            onClick={() => {
                 if (!isFullScreenPlayerExpanded) setStore({ activeTab: 'lyrics' });
                 expandFullScreenPlayer();
             }}
@@ -281,8 +276,7 @@ const FavoriteButton = () => {
                 fill: currentSong?.userFavorite ? 'primary' : undefined,
                 size: 'lg',
             }}
-            onClick={(e) => {
-                e.stopPropagation();
+            onClick={() => {
                 handleToggleFavorite(currentSong);
             }}
             size="sm"
@@ -424,8 +418,7 @@ const VolumeButton = () => {
                     color: muted ? 'muted' : undefined,
                     size: 'xl',
                 }}
-                onClick={(e) => {
-                    e.stopPropagation();
+                onClick={() => {
                     handleMute();
                 }}
                 onWheel={handleVolumeWheel}
@@ -441,9 +434,6 @@ const VolumeButton = () => {
                     max={100}
                     min={0}
                     onChange={handleVolumeSlider}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                    }}
                     onWheel={handleVolumeWheel}
                     size={6}
                     value={sliderValue}
