@@ -20,7 +20,6 @@ interface LyricsActionsProps {
     onExportLyrics: () => void;
     onRemoveLyric: () => void;
     onSearchOverride: (params: LyricsOverride) => void;
-    onTranslateLyric?: () => void;
     onUpdateOffset: (offsetMs: number) => void;
     setIndex: (idx: number) => void;
     settingsKey?: string;
@@ -35,7 +34,6 @@ export const LyricsActions = ({
     onExportLyrics,
     onRemoveLyric,
     onSearchOverride,
-    onTranslateLyric,
     onUpdateOffset,
     setIndex,
 }: LyricsActionsProps) => {
@@ -132,19 +130,6 @@ export const LyricsActions = ({
                         </Button>
                     ) : null}
                 </Group>
-
-                <div style={{ position: 'absolute', right: 0, top: -50 }}>
-                    {isDesktop && sources.length && onTranslateLyric ? (
-                        <Button
-                            disabled={isActionsDisabled}
-                            onClick={onTranslateLyric}
-                            uppercase
-                            variant="subtle"
-                        >
-                            {t('common.translation')}
-                        </Button>
-                    ) : null}
-                </div>
             </div>
         </>
     );

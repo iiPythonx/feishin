@@ -1,7 +1,6 @@
 import isElectron from 'is-electron';
 import { useTranslation } from 'react-i18next';
 
-import { languages } from '/@/i18n/i18n';
 import {
     SettingOption,
     SettingsSection,
@@ -16,11 +15,9 @@ import { Fieldset } from '/@/shared/components/fieldset/fieldset';
 import { MultiSelect } from '/@/shared/components/multi-select/multi-select';
 import { NumberInput } from '/@/shared/components/number-input/number-input';
 import { SegmentedControl } from '/@/shared/components/segmented-control/segmented-control';
-import { Select } from '/@/shared/components/select/select';
 import { Slider } from '/@/shared/components/slider/slider';
 import { Stack } from '/@/shared/components/stack/stack';
 import { Switch } from '/@/shared/components/switch/switch';
-import { TextInput } from '/@/shared/components/text-input/text-input';
 import { Text } from '/@/shared/components/text/text';
 import { LyricSource } from '/@/shared/types/domain-types';
 
@@ -293,24 +290,6 @@ export const LyricsSettingsForm = ({ settingsKey }: LyricsSettingsFormProps) => 
         },
         {
             control: (
-                <Switch
-                    aria-label="Enable NetEase translations"
-                    defaultChecked={lyricsSettings.enableNeteaseTranslation}
-                    onChange={(e) => {
-                        const isChecked = e.currentTarget.checked;
-                        updateLyricsSetting({ enableNeteaseTranslation: isChecked });
-                        localSettings?.set('enableNeteaseTranslation', isChecked);
-                    }}
-                />
-            ),
-            description: t('setting.neteaseTranslation', {
-                context: 'description',
-            }),
-            isHidden: !isElectron(),
-            title: t('setting.neteaseTranslation'),
-        },
-        {
-            control: (
                 <NumberInput
                     defaultValue={lyricsSettings.delayMs}
                     onBlur={(e) => {
@@ -326,70 +305,6 @@ export const LyricsSettingsForm = ({ settingsKey }: LyricsSettingsFormProps) => 
             }),
             isHidden: !isElectron(),
             title: t('setting.lyricOffset'),
-        },
-        {
-            control: (
-                <Select
-                    data={languages}
-                    onChange={(value) => {
-                        updateLyricsSetting({ translationTargetLanguage: value });
-                    }}
-                    value={lyricsSettings.translationTargetLanguage}
-                />
-            ),
-            description: t('setting.translationTargetLanguage', {
-                context: 'description',
-            }),
-            isHidden: !isElectron(),
-            title: t('setting.translationTargetLanguage'),
-        },
-        {
-            control: (
-                <Select
-                    clearable
-                    data={['Microsoft Azure', 'Google Cloud']}
-                    onChange={(value) => {
-                        updateLyricsSetting({ translationApiProvider: value });
-                    }}
-                    value={lyricsSettings.translationApiProvider}
-                />
-            ),
-            description: t('setting.translationApiProvider', {
-                context: 'description',
-            }),
-            isHidden: !isElectron(),
-            title: t('setting.translationApiProvider'),
-        },
-        {
-            control: (
-                <TextInput
-                    onChange={(e) => {
-                        updateLyricsSetting({ translationApiKey: e.currentTarget.value });
-                    }}
-                    value={lyricsSettings.translationApiKey}
-                />
-            ),
-            description: t('setting.translationApiKey', {
-                context: 'description',
-            }),
-            isHidden: !isElectron(),
-            title: t('setting.translationApiKey'),
-        },
-        {
-            control: (
-                <Switch
-                    aria-label="Enable auto translation"
-                    defaultChecked={lyricsSettings.enableAutoTranslation}
-                    onChange={(e) =>
-                        updateLyricsSetting({ enableAutoTranslation: e.currentTarget.checked })
-                    }
-                />
-            ),
-            description: t('setting.enableAutoTranslation', {
-                context: 'description',
-            }),
-            isHidden: !isElectron(),
-            title: t('setting.enableAutoTranslation'),
         },
     ];
 

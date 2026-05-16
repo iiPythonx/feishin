@@ -398,11 +398,6 @@ export type Song = {
     userRating: null | number;
 };
 
-type ApiContext = {
-    pathReplace?: string;
-    pathReplaceWith?: string;
-};
-
 type BaseEndpointArgs = {
     apiClientProps: {
         forceRemoteUrl?: boolean;

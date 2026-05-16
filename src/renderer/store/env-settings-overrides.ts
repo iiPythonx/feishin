@@ -106,7 +106,6 @@ const DISCORD_DISPLAY_TYPES = new Set(['artist', 'feishin', 'song']);
 const DISCORD_LINK_TYPES = new Set(['last_fm', 'musicbrainz', 'musicbrainz_last_fm', 'none']);
 const LYRICS_ALIGNMENTS = new Set(['center', 'left', 'right']);
 const FONT_TYPES = new Set(['builtIn', 'custom', 'system']);
-const HOME_FEATURE_STYLES = new Set(['multiple', 'single']);
 const SIDE_QUEUE_TYPES = new Set(['sideDrawerQueue', 'sideQueue']);
 const SIDE_QUEUE_LAYOUTS = new Set(['horizontal', 'vertical']);
 const SIDEBAR_PLAYLIST_FOLDER_VIEWS = new Set(['navigation', 'single', 'tree']);
@@ -215,8 +214,6 @@ const ENV_SETTING_SPECS: EnvSettingSpec[] = [
         type: 'enum',
     },
     { key: 'FS_GENERAL_FOLLOW_SYSTEM_THEME', path: ['general', 'followSystemTheme'], type: 'bool' },
-    { key: 'FS_GENERAL_PATH_REPLACE', path: ['general', 'pathReplace'], type: 'string' },
-    { key: 'FS_GENERAL_PATH_REPLACE_WITH', path: ['general', 'pathReplaceWith'], type: 'string' },
     { key: 'FS_GENERAL_LAST_FM', path: ['general', 'lastFM'], type: 'bool' },
     { key: 'FS_GENERAL_LISTEN_BRAINZ', path: ['general', 'listenBrainz'], type: 'bool' },
     { key: 'FS_GENERAL_MUSIC_BRAINZ', path: ['general', 'musicBrainz'], type: 'bool' },

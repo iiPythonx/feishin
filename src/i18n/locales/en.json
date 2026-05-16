@@ -947,8 +947,6 @@
         "spotify": "Show Spotify links",
         "nativeSpotify_description": "Open in the Spotify app instead of your browser",
         "nativeSpotify": "Use Spotify app",
-        "neteaseTranslation_description": "When enabled, fetches and displays translated lyrics from NetEase if available",
-        "neteaseTranslation": "Enable NetEase translations",
         "notify": "Enable song notifications",
         "notify_description": "Show notifications when changing the current song",
         "pathReplace": "File path replacement",

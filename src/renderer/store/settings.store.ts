@@ -477,8 +477,6 @@ export const GeneralSettingsSchema = z.object({
     nativeAspectRatio: z.boolean(),
     nativeSpotify: z.boolean(),
     passwordStore: z.string().optional(),
-    pathReplace: z.string(),
-    pathReplaceWith: z.string(),
     playButtonBehavior: z.nativeEnum(Play),
     playerbarOpenDrawer: z.boolean(),
     playerbarSlider: PlayerbarSliderSchema,
@@ -1132,8 +1130,6 @@ const initialState: SettingsState = {
         nativeAspectRatio: false,
         nativeSpotify: false,
         passwordStore: undefined,
-        pathReplace: '',
-        pathReplaceWith: '',
         playButtonBehavior: Play.NOW,
         playerbarOpenDrawer: false,
         playerbarSlider: {
@@ -2608,15 +2604,6 @@ export const useArtistReleaseTypeItems = () =>
     useSettingsStore((state) => state.general.artistReleaseTypeItems, shallow);
 
 export const useZoomFactor = () => useSettingsStore((state) => state.general.zoomFactor, shallow);
-
-export const usePathReplace = () =>
-    useSettingsStore(
-        (state) => ({
-            pathReplace: state.general.pathReplace,
-            pathReplaceWith: state.general.pathReplaceWith,
-        }),
-        shallow,
-    );
 
 export const useSidebarPanelOrder = () =>
     useSettingsStore((state) => state.general.sidebarPanelOrder, shallow);

@@ -2,7 +2,7 @@ import i18n from '/@/i18n/i18n';
 import { NavidromeController } from '/@/renderer/api/navidrome/navidrome-controller';
 import { SubsonicController } from '/@/renderer/api/subsonic/subsonic-controller';
 import { mergeMusicFolderId } from '/@/renderer/api/utils-music-folder';
-import { getServerById, useAuthStore, useSettingsStore } from '/@/renderer/store';
+import { getServerById, useAuthStore } from '/@/renderer/store';
 import { toast } from '/@/shared/components/toast/toast';
 import {
     AuthenticationResponse,
@@ -57,19 +57,11 @@ const apiController = <K extends keyof ControllerEndpoint>(
     return controllerFn;
 };
 
-const getPathReplaceSettings = () => {
-    const { pathReplace, pathReplaceWith } = useSettingsStore.getState().general;
-    return { pathReplace, pathReplaceWith };
-};
-
 const addContext = <T extends { apiClientProps: any; context?: any }>(args: T): T => {
-    const pathSettings = getPathReplaceSettings();
-
     return {
         ...args,
         context: {
             ...(args.context || {}),
-            ...pathSettings,
         },
     };
 };
