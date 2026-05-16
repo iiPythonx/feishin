@@ -123,3 +123,13 @@
         max-height: calc(100vh - 90px - var(--theme-spacing-lg) - 4rem);
     }
 }
+
+.artist-avatar {
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+}
+
+.artist-pill {
+    flex-wrap: nowrap;
+}

@@ -11,6 +11,7 @@ import { generatePath, Link, useParams } from 'react-router';
 import styles from './album-detail-content.module.css';
 
 import { useGridCarouselContainerQuery } from '/@/renderer/components/grid-carousel/grid-carousel-v2';
+import { useItemImageUrl } from '/@/renderer/components/item-image/item-image';
 import { useItemListStateSubscription } from '/@/renderer/components/item-list/helpers/item-list-state';
 import { useItemListColumnReorder } from '/@/renderer/components/item-list/helpers/use-item-list-column-reorder';
 import { useItemListColumnResize } from '/@/renderer/components/item-list/helpers/use-item-list-column-resize';
@@ -252,6 +253,32 @@ const AlbumMetadataGenres = ({ genres }: AlbumMetadataGenresProps) => {
     );
 };
 
+interface ArtistPillProps {
+    artist: AlbumArtist;
+}
+
+const ArtistPill = ({ artist }: ArtistPillProps) => {
+    const imageUrl = useItemImageUrl({
+        id: artist.id,
+        itemType: LibraryItem.ALBUM_ARTIST,
+        type: 'table',
+    });
+
+    return (
+        <PillLink
+            size="md"
+            to={generatePath(AppRoute.LIBRARY_ALBUM_ARTISTS_DETAIL, {
+                albumArtistId: artist.id,
+            })}
+        >
+            <Group className={styles.artistPill} gap="xs">
+                <img className={styles.artistAvatar} src={imageUrl} />
+                <Text size="sm">{artist.name}</Text>
+            </Group>
+        </PillLink>
+    );
+};
+
 interface AlbumMetadataArtistsProps {
     artists: Array<{ id: string; name: string }>;
 }
@@ -268,15 +295,7 @@ const AlbumMetadataArtists = ({ artists }: AlbumMetadataArtistsProps) => {
             </Text>
             <Pill.Group>
                 {artists.map((artist) => (
-                    <PillLink
-                        key={`artist-${artist.id}`}
-                        size="md"
-                        to={generatePath(AppRoute.LIBRARY_ARTISTS_DETAIL, {
-                            artistId: artist.id,
-                        })}
-                    >
-                        {artist.name}
-                    </PillLink>
+                    <ArtistPill artist={artist} key={`artist-${artist.id}`} />
                 ))}
             </Pill.Group>
         </Stack>
