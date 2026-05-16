@@ -475,7 +475,7 @@ export const AlbumDetailContent = () => {
 
             return {
                 id: label,
-                label,
+                name: label,
                 url,
             };
         });
@@ -520,17 +520,14 @@ export const AlbumDetailContent = () => {
                 {recordLabels && (
                     <Stack gap="xs">
                         {recordLabels.map((label) => (
-                            <Text
-                                component={Link}
-                                isLink
-                                isMuted
-                                key={`label-${label.id}`}
-                                size="sm"
-                                style={{ width: 'fit-content' }}
-                                to={label.url}
-                            >
-                                ℗{releaseYear ? ` ${releaseYear}` : ''} {label.label}
-                            </Text>
+                            <Group gap="xs" key={`label-${label.id}`}>
+                                <Text isMuted size="sm">
+                                    ℗{releaseYear ? ` ${releaseYear}` : ''}
+                                </Text>
+                                <Text component={Link} isLink isMuted size="sm" to={label.url}>
+                                    {label.name}
+                                </Text>
+                            </Group>
                         ))}
                     </Stack>
                 )}
