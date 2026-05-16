@@ -19,7 +19,6 @@ interface MobileFullscreenPlayerMetadataProps {
     radioArtist?: string;
     radioStationName?: string;
     radioTitle?: string;
-    showRating?: boolean;
 }
 
 export const MobileFullscreenPlayerMetadata = memo(
@@ -30,7 +29,6 @@ export const MobileFullscreenPlayerMetadata = memo(
         radioArtist,
         radioStationName,
         radioTitle,
-        showRating,
     }: MobileFullscreenPlayerMetadataProps) => {
         const isRadio = radioTitle !== undefined || radioStationName !== undefined;
 
@@ -87,9 +85,9 @@ export const MobileFullscreenPlayerMetadata = memo(
                             size="sm"
                             variant="subtle"
                         />
-                        {showRating && (
+                        (
                             <Rating onChange={onUpdateRating} size="sm" value={rating || 0} />
-                        )}
+                        )
                     </Group>
                 )}
             </div>

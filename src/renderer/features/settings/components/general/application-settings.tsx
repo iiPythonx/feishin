@@ -519,26 +519,6 @@ export const ApplicationSettings = memo(() => {
         {
             control: (
                 <Switch
-                    defaultChecked={settings.showRatings}
-                    onChange={(e) => {
-                        setSettings({
-                            general: {
-                                ...settings,
-                                showRatings: e.currentTarget.checked,
-                            },
-                        });
-                    }}
-                />
-            ),
-            description: t('setting.showRatings', {
-                context: 'description',
-            }),
-            isHidden: false,
-            title: t('setting.showRatings'),
-        },
-        {
-            control: (
-                <Switch
                     aria-label={t('setting.blurExplicitImages')}
                     defaultChecked={settings.blurExplicitImages}
                     onChange={(e) =>

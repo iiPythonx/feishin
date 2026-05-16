@@ -19,7 +19,6 @@ import { ItemControls } from '/@/renderer/components/item-list/types';
 import { JoinedArtists } from '/@/renderer/features/albums/components/joined-artists';
 import { useDragDrop } from '/@/renderer/hooks/use-drag-drop';
 import { AppRoute } from '/@/renderer/router/routes';
-import { useShowRatings } from '/@/renderer/store';
 import {
     formatDateAbsolute,
     formatDateRelative,
@@ -89,7 +88,6 @@ export const ItemCard = ({
     type = 'poster',
     withControls,
 }: ItemCardProps) => {
-    const showRatings = useShowRatings();
     const imageUrl = getImageUrl(data);
     const rows = providedRows || [];
 
@@ -110,7 +108,6 @@ export const ItemCard = ({
                     isRound={isRound}
                     itemType={itemType}
                     rows={rows}
-                    showRating={showRatings}
                     withControls={withControls}
                 />
             );
@@ -130,7 +127,6 @@ export const ItemCard = ({
                     isRound={isRound}
                     itemType={itemType}
                     rows={rows}
-                    showRating={showRatings}
                     withControls={withControls}
                 />
             );
@@ -150,7 +146,6 @@ export const ItemCard = ({
                     isRound={isRound}
                     itemType={itemType}
                     rows={rows}
-                    showRating={showRatings}
                     withControls={withControls}
                 />
             );
@@ -166,7 +161,6 @@ export interface ItemCardDerivativeProps extends Omit<ItemCardProps, 'type'> {
     imageUrl: string | undefined;
     internalState?: ItemListStateActions;
     rows: DataRow[];
-    showRating: boolean;
 }
 
 type ItemCardData = NonNullable<ItemCardProps['data']>;
@@ -186,7 +180,6 @@ const ItemCardStandardImageArea = memo(function ItemCardStandardImageArea({
     isRound,
     itemType,
     navigationPath,
-    showRating,
     variant,
     withControls,
 }: {
@@ -204,7 +197,6 @@ const ItemCardStandardImageArea = memo(function ItemCardStandardImageArea({
     isRound?: boolean;
     itemType: LibraryItem;
     navigationPath: null | string;
-    showRating: boolean;
     variant: 'default' | 'poster';
     withControls?: boolean;
 }) {
@@ -232,7 +224,7 @@ const ItemCardStandardImageArea = memo(function ItemCardStandardImageArea({
         typeof (data as { userRating: null | number }).userRating === 'number'
             ? (data as { userRating: null | number }).userRating
             : null;
-    const hasRating = showRating && userRating !== null && userRating > 0;
+    const hasRating = userRating && userRating > 0 || 0;
 
     const imageContainerContent = (
         <>
@@ -269,7 +261,6 @@ const ItemCardStandardImageArea = memo(function ItemCardStandardImageArea({
                         {...(variant === 'poster' ? { internalState } : {})}
                         item={data}
                         itemType={itemType}
-                        showRating={showRating}
                         type={variant}
                     />
                 )}
@@ -321,7 +312,6 @@ const CompactItemCardImageArea = memo(function CompactItemCardImageArea({
     itemType,
     navigationPath,
     rows,
-    showRating,
     withControls,
 }: {
     controls?: ItemControls;
@@ -338,7 +328,6 @@ const CompactItemCardImageArea = memo(function CompactItemCardImageArea({
     itemType: LibraryItem;
     navigationPath: null | string;
     rows: DataRow[];
-    showRating: boolean;
     withControls?: boolean;
 }) {
     const [showControls, setShowControls] = useState(false);
@@ -365,7 +354,7 @@ const CompactItemCardImageArea = memo(function CompactItemCardImageArea({
         typeof (data as { userRating: null | number }).userRating === 'number'
             ? (data as { userRating: null | number }).userRating
             : null;
-    const hasRating = showRating && userRating !== null && userRating > 0;
+    const hasRating = userRating && userRating !== null && userRating > 0;
 
     const imageContainerContent = (
         <>
@@ -403,7 +392,6 @@ const CompactItemCardImageArea = memo(function CompactItemCardImageArea({
                         internalState={internalState}
                         item={data}
                         itemType={itemType}
-                        showRating={showRating}
                         type="compact"
                     />
                 )}
@@ -468,7 +456,6 @@ const CompactItemCard = ({
     isRound,
     itemType,
     rows,
-    showRating,
     withControls,
 }: ItemCardDerivativeProps) => {
     const itemRowId =
@@ -634,7 +621,6 @@ const CompactItemCard = ({
                     itemType={itemType}
                     navigationPath={navigationPath}
                     rows={rows}
-                    showRating={showRating}
                     withControls={withControls}
                 />
             </div>
@@ -679,7 +665,6 @@ const DefaultItemCard = ({
     isRound,
     itemType,
     rows,
-    showRating,
     withControls,
 }: ItemCardDerivativeProps) => {
     const itemRowId =
@@ -777,7 +762,6 @@ const DefaultItemCard = ({
                     isRound={isRound}
                     itemType={itemType}
                     navigationPath={navigationPath}
-                    showRating={showRating}
                     variant="default"
                     withControls={withControls}
                 />
@@ -840,7 +824,6 @@ const PosterItemCard = ({
     isRound,
     itemType,
     rows,
-    showRating,
     withControls,
 }: ItemCardDerivativeProps) => {
     const itemRowId =
@@ -1005,7 +988,6 @@ const PosterItemCard = ({
                     isRound={isRound}
                     itemType={itemType}
                     navigationPath={navigationPath}
-                    showRating={showRating}
                     variant="poster"
                     withControls={withControls}
                 />

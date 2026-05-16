@@ -387,7 +387,6 @@ export const MobileFullscreenPlayer = () => {
     const isPlayingRadio = isRadioActive && isRadioPlaying;
     const effectiveDynamicBackground = dynamicBackground && !isPlayingRadio;
     const setFavorite = useSetFavorite();
-    const { showRatings: showRatingsSetting } = useGeneralSettings();
     const setRating = useSetRating();
 
     const [isPageHovered, setIsPageHovered] = useState(false);
@@ -445,11 +444,6 @@ export const MobileFullscreenPlayer = () => {
     const isQueueState = activeTab === 'queue';
     const isLyricsState = activeTab === 'lyrics';
     const isSongDefined = Boolean(currentSong?.id);
-    const showRating =
-        showRatingsSetting &&
-        isSongDefined &&
-        (server?.type === ServerType.NAVIDROME || server?.type === ServerType.SUBSONIC);
-
     return (
         <MobilePlayerContainer
             dynamicBackground={effectiveDynamicBackground}
@@ -482,7 +476,6 @@ export const MobileFullscreenPlayer = () => {
                     radioArtist={isPlayingRadio ? (radioMetadata?.artist ?? undefined) : undefined}
                     radioStationName={isPlayingRadio ? (stationName ?? undefined) : undefined}
                     radioTitle={isPlayingRadio ? (radioMetadata?.title ?? undefined) : undefined}
-                    showRating={showRating}
                 />
                 <MobileFullscreenPlayerProgress currentSong={currentSong} />
                 <MobileFullscreenPlayerControls currentSong={currentSong} />

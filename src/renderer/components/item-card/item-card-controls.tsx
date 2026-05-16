@@ -33,7 +33,6 @@ interface ItemCardControlsProps {
     internalState?: ItemListStateActions;
     item: Album | AlbumArtist | Artist | Genre | Playlist | Song | undefined;
     itemType: LibraryItem;
-    showRating: boolean;
     type?: 'compact' | 'default' | 'poster';
 }
 
@@ -205,7 +204,6 @@ export const ItemCardControls = ({
     internalState,
     item,
     itemType,
-    showRating,
     type = 'default',
 }: ItemCardControlsProps) => {
     const playNowHandler = useMemo(
@@ -292,7 +290,7 @@ export const ItemCardControls = ({
             {controls?.onFavorite && (
                 <FavoriteButton isFavorite={isFavorite} onClick={favoriteHandler} />
             )}
-            {controls?.onRating && showRating && (
+            {controls?.onRating && (
                 <RatingButton
                     onChange={ratingChangeHandler}
                     rating={(item as { userRating: number }).userRating}

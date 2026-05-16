@@ -15,7 +15,7 @@ import { useSetFavorite } from '/@/renderer/features/shared/hooks/use-set-favori
 import { useSetRating } from '/@/renderer/features/shared/hooks/use-set-rating';
 import { songsQueries } from '/@/renderer/features/songs/api/songs-api';
 import { AppRoute } from '/@/renderer/router/routes';
-import { useCurrentServer, useShowRatings } from '/@/renderer/store';
+import { useCurrentServer } from '/@/renderer/store';
 import { useArtistRadioCount, usePlayButtonBehavior } from '/@/renderer/store/settings.store';
 import { normalizeReleaseTypes } from '/@/renderer/utils/normalize-release-types';
 import { ExplicitIndicator } from '/@/shared/components/explicit-indicator/explicit-indicator';
@@ -30,7 +30,6 @@ export const AlbumDetailHeader = forwardRef<HTMLDivElement>((_props, ref) => {
     const { albumId } = useParams() as { albumId: string };
     const { t } = useTranslation();
     const server = useCurrentServer();
-    const showRatings = useShowRatings();
     const queryClient = useQueryClient();
     const albumRadioCount = useArtistRadioCount();
     const detailQuery = useQuery(
@@ -53,27 +52,25 @@ export const AlbumDetailHeader = forwardRef<HTMLDivElement>((_props, ref) => {
         );
     };
 
-    const handleUpdateRating = showRatings
-        ? (rating: number) => {
-              if (!detailQuery?.data) return;
+    const handleUpdateRating = (rating: number) => {
+        if (!detailQuery?.data) return;
 
-              if (detailQuery.data.userRating === rating) {
-                  return setRating(
-                      detailQuery.data._serverId,
-                      [detailQuery.data.id],
-                      LibraryItem.ALBUM,
-                      0,
-                  );
-              }
+        if (detailQuery.data.userRating === rating) {
+            return setRating(
+                detailQuery.data._serverId,
+                [detailQuery.data.id],
+                LibraryItem.ALBUM,
+                0,
+            );
+        }
 
-              return setRating(
-                  detailQuery.data._serverId,
-                  [detailQuery.data.id],
-                  LibraryItem.ALBUM,
-                  rating,
-              );
-          }
-        : undefined;
+        return setRating(
+            detailQuery.data._serverId,
+            [detailQuery.data.id],
+            LibraryItem.ALBUM,
+            rating,
+        );
+    };
 
     const handlePlay = (type?: Play) => {
         if (!server?.id || !albumId) return;

@@ -35,7 +35,6 @@ These variables override app settings **on first run** when no persisted setting
 | `general.qobuz` | `true` | `FS_GENERAL_QOBUZ` | `true` / `false` — Qobuz links. |
 | `general.resume` | `true` | `FS_GENERAL_RESUME` | `true` / `false` — Resume playback on load. |
 | `general.showLyricsInSidebar` | `true` | `FS_GENERAL_SHOW_LYRICS_IN_SIDEBAR` | `true` / `false` — Show lyrics in sidebar. |
-| `general.showRatings` | `true` | `FS_GENERAL_SHOW_RATINGS` | `true` / `false` — Show star ratings. |
 | `general.showVisualizerInSidebar` | `true` | `FS_GENERAL_SHOW_VISUALIZER_IN_SIDEBAR` | `true` / `false` — Show visualizer in sidebar. |
 | `general.sidebarCollapsedNavigation` | `true` | `FS_GENERAL_SIDEBAR_COLLAPSED_NAVIGATION` | `true` / `false` — Start with collapsed sidebar nav. |
 | `general.sidebarCollapseShared` | `false` | `FS_GENERAL_SIDEBAR_COLLAPSE_SHARED` | `true` / `false` — Share sidebar collapse state. |

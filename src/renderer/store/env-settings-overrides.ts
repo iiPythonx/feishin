@@ -227,7 +227,6 @@ const ENV_SETTING_SPECS: EnvSettingSpec[] = [
         path: ['general', 'showLyricsInSidebar'],
         type: 'bool',
     },
-    { key: 'FS_GENERAL_SHOW_RATINGS', path: ['general', 'showRatings'], type: 'bool' },
     {
         key: 'FS_GENERAL_SHOW_VISUALIZER_IN_SIDEBAR',
         path: ['general', 'showVisualizerInSidebar'],

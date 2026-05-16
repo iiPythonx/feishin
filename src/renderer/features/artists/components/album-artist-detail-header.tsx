@@ -21,7 +21,7 @@ import { useSetFavorite } from '/@/renderer/features/shared/hooks/use-set-favori
 import { useSetRating } from '/@/renderer/features/shared/hooks/use-set-rating';
 import { songsQueries } from '/@/renderer/features/songs/api/songs-api';
 import { AppRoute } from '/@/renderer/router/routes';
-import { useAppStore, useCurrentServer, useShowRatings } from '/@/renderer/store';
+import { useAppStore, useCurrentServer } from '/@/renderer/store';
 import {
     useArtistRadioCount,
     useArtistReleaseTypeItems,
@@ -110,7 +110,6 @@ export const AlbumArtistDetailHeader = forwardRef<HTMLDivElement, AlbumArtistDet
         };
         const routeId = (artistId || albumArtistId) as string;
         const server = useCurrentServer();
-        const showRatings = useShowRatings();
         const queryClient = useQueryClient();
         const artistRadioCount = useArtistRadioCount();
         const { t } = useTranslation();
@@ -249,7 +248,7 @@ export const AlbumArtistDetailHeader = forwardRef<HTMLDivElement, AlbumArtistDet
             type: 'header',
         });
 
-        const showRating = showRatings && detailQuery?.data?._serverType === ServerType.NAVIDROME;
+        const showRating = detailQuery?.data?._serverType === ServerType.NAVIDROME;
 
         const canUploadArtistImage =
             hasFeature(server, ServerFeature.ARTIST_IMAGE_UPLOAD) &&

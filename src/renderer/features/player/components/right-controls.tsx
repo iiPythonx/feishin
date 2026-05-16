@@ -65,11 +65,10 @@ const calculateVolumeDown = (volume: number, volumeWheelStep: number) => {
 };
 
 export const RightControls = () => {
-    const { showRatings } = useGeneralSettings();
     return (
         <Flex align="flex-end" direction="column" h="100%" px="1rem" py="0.5rem">
             <Group h="calc(100% / 3)">
-                {showRatings && <RatingButton />}
+                <RatingButton />
                 <AutoDJButton />
             </Group>
             <Group align="center" gap="xs" wrap="nowrap">
@@ -327,14 +326,8 @@ const useFavoritePreviousSongHotkeys = ({
 };
 
 const RatingButton = () => {
-    const server = useCurrentServer();
     const currentSong = usePlayerSong();
     const setRating = useSetRating();
-
-    const isSongDefined = Boolean(currentSong?.id);
-    const showRating =
-        isSongDefined &&
-        (server?.type === ServerType.NAVIDROME || server?.type === ServerType.SUBSONIC);
 
     const handleUpdateRating = (rating: number) => {
         if (!currentSong) return;
@@ -355,13 +348,8 @@ const RatingButton = () => {
 
     return (
         <>
-            {showRating && (
-                <Rating
-                    onChange={handleUpdateRating}
-                    size="xs"
-                    value={currentSong?.userRating || 0}
-                />
-            )}
+            (
+            <Rating onChange={handleUpdateRating} size="xs" value={currentSong?.userRating || 0} />)
         </>
     );
 };

@@ -485,7 +485,6 @@ export const GeneralSettingsSchema = z.object({
     qobuz: z.boolean(),
     resume: z.boolean(),
     showLyricsInSidebar: z.boolean(),
-    showRatings: z.boolean(),
     showVisualizerInSidebar: z.boolean(),
     sidebarCollapsedNavigation: z.boolean(),
     sidebarCollapseShared: z.boolean(),
@@ -1145,7 +1144,6 @@ const initialState: SettingsState = {
         qobuz: true,
         resume: true,
         showLyricsInSidebar: true,
-        showRatings: true,
         showVisualizerInSidebar: true,
         sidebarCollapsedNavigation: true,
         sidebarCollapseShared: false,
@@ -2551,8 +2549,6 @@ export const usePlayerItems = () => useSettingsStore((state) => state.general.pl
 
 export const useSidebarCollapsedNavigation = () =>
     useSettingsStore((state) => state.general.sidebarCollapsedNavigation, shallow);
-
-export const useShowRatings = () => useSettingsStore((state) => state.general.showRatings, shallow);
 
 export const useArtistRadioCount = () =>
     useSettingsStore((state) => state.general.artistRadioCount, shallow);
