@@ -86,7 +86,7 @@ const installExtensions = async () => {
             )
             .then((installedExtensions) => {
                 createLog({
-                    message: `Installed extension: ${installedExtensions}`,
+                    message: `Installed extension(s): ${installedExtensions.map((e) => e.name).join(', ')}`,
                     type: 'info',
                 });
             })
