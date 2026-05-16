@@ -30,7 +30,7 @@ import { BaseImage } from '/@/shared/components/image/image';
 import { Rating } from '/@/shared/components/rating/rating';
 import { Spinner } from '/@/shared/components/spinner/spinner';
 import { Text } from '/@/shared/components/text/text';
-import { ExplicitStatus, LibraryItem } from '/@/shared/types/domain-types';
+import { LibraryItem } from '/@/shared/types/domain-types';
 import { Play } from '/@/shared/types/types';
 
 interface LibraryHeaderProps {
@@ -42,7 +42,6 @@ interface LibraryHeaderProps {
     imageUrl?: null | string;
     item: {
         children?: ReactNode;
-        explicitStatus?: ExplicitStatus | null;
         imageId?: null | string;
         imageUrl?: null | string;
         route: string;
@@ -169,7 +168,6 @@ export const LibraryHeader = forwardRef(
                             containerClassName={styles.image}
                             enableDebounce={false}
                             enableViewport={false}
-                            explicitStatus={item.explicitStatus ?? null}
                             fetchPriority="high"
                             id={item.imageId}
                             itemType={item.type as LibraryItem}
@@ -194,7 +192,6 @@ export const LibraryHeader = forwardRef(
                             containerClassName={styles.image}
                             enableDebounce={false}
                             enableViewport={false}
-                            explicitStatus={item.explicitStatus ?? null}
                             fetchPriority="high"
                             id={item.imageId}
                             itemType={item.type as LibraryItem}

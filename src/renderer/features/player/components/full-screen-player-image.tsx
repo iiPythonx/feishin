@@ -26,7 +26,7 @@ import { Icon } from '/@/shared/components/icon/icon';
 import { Stack } from '/@/shared/components/stack/stack';
 import { Text } from '/@/shared/components/text/text';
 import { useSetState } from '/@/shared/hooks/use-set-state';
-import { ExplicitStatus, LibraryItem } from '/@/shared/types/domain-types';
+import { LibraryItem } from '/@/shared/types/domain-types';
 
 const imageVariants: Variants = {
     closed: {
@@ -55,11 +55,9 @@ const MotionImage = motion.img;
 
 const ImageWithPlaceholder = ({
     className,
-    explicit,
     placeholderIcon = 'itemAlbum',
     ...props
 }: HTMLMotionProps<'img'> & {
-    explicit?: boolean;
     placeholder?: string;
     placeholderIcon?: 'itemAlbum' | 'radio';
 }) => {
@@ -82,9 +80,7 @@ const ImageWithPlaceholder = ({
 
     return (
         <MotionImage
-            className={clsx(styles.image, className, {
-                [styles.censored]: explicit,
-            })}
+            className={clsx(styles.image, className)}
             style={{
                 objectFit: nativeAspectRatio ? 'contain' : 'cover',
                 width: nativeAspectRatio ? 'auto' : '100%',
@@ -121,10 +117,8 @@ export const FullScreenPlayerImage = () => {
     });
 
     const [imageState, setImageState] = useSetState({
-        bottomExplicit: nextSong?.explicitStatus === ExplicitStatus.EXPLICIT,
         bottomImage: nextImageUrl,
         current: 0,
-        topExplicit: currentSong?.explicitStatus === ExplicitStatus.EXPLICIT,
         topImage: currentImageUrl,
     });
 
@@ -149,14 +143,8 @@ export const FullScreenPlayerImage = () => {
         const isTop = imageStateRef.current.current === 0;
 
         setImageState({
-            bottomExplicit:
-                (isTop ? currentSong?.explicitStatus : nextSong?.explicitStatus) ===
-                ExplicitStatus.EXPLICIT,
             bottomImage: isTop ? currentImageUrl : nextImageUrl,
             current: isTop ? 1 : 0,
-            topExplicit:
-                (isTop ? nextSong?.explicitStatus : currentSong?.explicitStatus) ===
-                ExplicitStatus.EXPLICIT,
             topImage: isTop ? nextImageUrl : currentImageUrl,
         });
 
@@ -168,8 +156,6 @@ export const FullScreenPlayerImage = () => {
         nextSong?._uniqueId,
         nextImageUrl,
         setImageState,
-        currentSong?.explicitStatus,
-        nextSong?.explicitStatus,
     ]);
 
     const builtDataItems = {

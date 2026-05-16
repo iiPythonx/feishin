@@ -11,7 +11,7 @@ import {
     useSettingsStore,
 } from '/@/renderer/store';
 import { BaseImage, ImageProps } from '/@/shared/components/image/image';
-import { ExplicitStatus, ImageRequest, LibraryItem } from '/@/shared/types/domain-types';
+import { ImageRequest, LibraryItem } from '/@/shared/types/domain-types';
 
 const getUnloaderIcon = (itemType: LibraryItem) => {
     switch (itemType) {
@@ -34,7 +34,6 @@ const getUnloaderIcon = (itemType: LibraryItem) => {
 
 const BaseItemImage = (
     props: Omit<ImageProps, 'id' | 'src'> & {
-        explicitStatus?: ExplicitStatus | null;
         id?: null | string;
         itemType: LibraryItem;
         serverId?: null | string;

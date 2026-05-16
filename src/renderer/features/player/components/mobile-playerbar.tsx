@@ -88,7 +88,6 @@ export const MobilePlayerbar = () => {
                                             )}
                                             enableDebounce={false}
                                             enableViewport={false}
-                                            explicitStatus={currentSong.explicitStatus}
                                             fetchPriority="high"
                                             id={currentSong.imageId}
                                             itemType={LibraryItem.SONG}

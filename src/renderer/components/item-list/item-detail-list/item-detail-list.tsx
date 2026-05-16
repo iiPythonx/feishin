@@ -559,7 +559,6 @@ const MetadataSection = memo(
                     >
                         <ItemImage
                             className={styles.image}
-                            explicitStatus={item.explicitStatus}
                             id={item.imageId}
                             itemType={item._itemType}
                             serverId={item._serverId}

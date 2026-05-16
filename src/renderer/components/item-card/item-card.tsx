@@ -373,7 +373,6 @@ const CompactItemCardImageArea = memo(function CompactItemCardImageArea({
                         [styles.isRound]: isRound,
                     })}
                     enableDebounce={false}
-                    explicitStatus={'explicitStatus' in data && data ? data.explicitStatus : null}
                     fetchPriority={imageFetchPriority}
                     id={data?.imageId}
                     itemType={itemType}
