@@ -23,7 +23,6 @@ import {
     useAppStore,
     useAppStoreActions,
     useFullScreenPlayerStore,
-    useGeneralSettings,
     usePlayerSong,
     useSetFullScreenPlayerStore,
 } from '/@/renderer/store';
@@ -42,7 +41,7 @@ import { ImageUnloader } from '/@/shared/components/image/image';
 import { ScrollArea } from '/@/shared/components/scroll-area/scroll-area';
 import { Text } from '/@/shared/components/text/text';
 import { Tooltip } from '/@/shared/components/tooltip/tooltip';
-import { ExplicitStatus, LibraryItem } from '/@/shared/types/domain-types';
+import { LibraryItem } from '/@/shared/types/domain-types';
 import { Platform } from '/@/shared/types/types';
 
 export const Sidebar = () => {

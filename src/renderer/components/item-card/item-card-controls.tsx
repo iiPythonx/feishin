@@ -22,7 +22,6 @@ import {
     Genre,
     LibraryItem,
     Playlist,
-    ServerType,
     Song,
 } from '/@/shared/types/domain-types';
 import { Play } from '/@/shared/types/types';

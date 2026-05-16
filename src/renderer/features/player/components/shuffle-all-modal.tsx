@@ -56,12 +56,6 @@ const useShuffleAllStore = createWithEqualityFn<ShuffleAllSlice>()(
     ),
 );
 
-const PLAYED_DATA: { label: string; value: Played }[] = [
-    { label: 'all tracks', value: Played.All },
-    { label: 'only unplayed tracks', value: Played.Never },
-    { label: 'only played tracks', value: Played.Played },
-];
-
 export const useShuffleAllStoreActions = () => useShuffleAllStore((state) => state.actions);
 
 export const ShuffleAllContextModal = () => {

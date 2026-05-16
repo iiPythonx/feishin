@@ -87,7 +87,7 @@ export const useDiscordRpc = () => {
 
             if (
                 !hasTrackOrRadio || // No track and not playing radio
-                (current[2] === 'paused' && !discordSettings.showPaused) // Paused with show paused setting disabled
+                current[2] === 'paused' // Paused
             ) {
                 let reason: string;
                 if (!hasTrackOrRadio) {
@@ -95,7 +95,7 @@ export const useDiscordRpc = () => {
                 } else if (current[1] === 0 && !isPlayingRadio) {
                     reason = 'start_of_track';
                 } else {
-                    reason = 'paused_with_show_paused_disabled';
+                    reason = 'paused';
                 }
 
                 logFn.debug(logMsg[LogCategory.EXTERNAL].discordRpcActivityCleared, {
@@ -369,7 +369,6 @@ export const useDiscordRpc = () => {
         [
             discordSettings.showAsListening,
             discordSettings.showStateIcon,
-            discordSettings.showPaused,
             discordSettings.clientId,
             discordSettings.displayType,
             discordSettings.linkType,

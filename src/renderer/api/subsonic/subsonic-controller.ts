@@ -551,7 +551,6 @@ export const SubsonicController: InternalControllerEndpoint = {
     getAlbumArtistListCount: (args) =>
         SubsonicController.getAlbumArtistList({
             ...args,
-            context: args.context,
             query: { ...args.query, startIndex: 0 },
         }).then((res) => res!.totalRecordCount!),
     getAlbumDetail: async (args) => {
@@ -929,7 +928,6 @@ export const SubsonicController: InternalControllerEndpoint = {
     getArtistListCount: async (args) =>
         SubsonicController.getArtistList({
             ...args,
-            context: args.context,
             query: { ...args.query, startIndex: 0 },
         }).then((res) => res!.totalRecordCount!),
     getArtistRadio: async (args) => {
@@ -1966,7 +1964,7 @@ export const SubsonicController: InternalControllerEndpoint = {
         });
     },
     getTopSongs: async (args) => {
-        const { apiClientProps, context, query } = args;
+        const { apiClientProps, query } = args;
 
         const type = query.type === 'personal' ? 'personal' : 'community';
 
@@ -1993,7 +1991,6 @@ export const SubsonicController: InternalControllerEndpoint = {
 
         const res = await SubsonicController.getSongList({
             apiClientProps,
-            context,
             query: {
                 artistIds: [query.artistId],
                 sortBy: SongListSort.PLAY_COUNT,

@@ -20,7 +20,6 @@ import { usePlayButtonClick } from '/@/renderer/features/shared/hooks/use-play-b
 import { useIsMutatingCreateFavorite } from '/@/renderer/features/shared/mutations/create-favorite-mutation';
 import { useIsMutatingDeleteFavorite } from '/@/renderer/features/shared/mutations/delete-favorite-mutation';
 import { useIsMutatingRating } from '/@/renderer/features/shared/mutations/set-rating-mutation';
-import { useGeneralSettings } from '/@/renderer/store';
 import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
 import { Button } from '/@/shared/components/button/button';
 import { Center } from '/@/shared/components/center/center';
@@ -134,7 +133,7 @@ export const LibraryHeader = forwardRef(
                 ),
                 fullScreen: true,
             });
-        }, [item.explicitStatus, item.imageId, item.type]);
+        }, [item.imageId, item.type]);
 
         const imageSectionSharedProps = {
             onClick: () => {

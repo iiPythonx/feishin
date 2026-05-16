@@ -4,6 +4,7 @@
     "src/renderer/env.d.ts",
     "src/renderer/**/*",
     "src/renderer/**/*.tsx",
+    "src/preload/*.d.ts",
     "src/i18n/**/*",
     "src/shared/**/*",
     "src/remote/**/*",

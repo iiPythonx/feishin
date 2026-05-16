@@ -7,7 +7,6 @@ import {
     getServerById,
     useAuthStore,
     useCurrentServerId,
-    useGeneralSettings,
     useImageRes,
     useSettingsStore,
 } from '/@/renderer/store';
@@ -43,7 +42,7 @@ const BaseItemImage = (
         type?: keyof z.infer<typeof GeneralSettingsSchema>['imageRes'];
     },
 ) => {
-    const { explicitStatus, serverId, src, ...rest } = props;
+    const { serverId, src, ...rest } = props;
 
     const imageUrl = useItemImageUrl({
         id: props.id,

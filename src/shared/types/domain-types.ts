@@ -405,7 +405,6 @@ type BaseEndpointArgs = {
         serverId: string;
         signal?: AbortSignal;
     };
-    context?: ApiContext;
 };
 
 type GenreListSortMap = {
@@ -1781,5 +1780,4 @@ type BaseEndpointArgsWithServer = {
         serverId: string;
         signal?: AbortSignal;
     };
-    context?: ApiContext;
 };

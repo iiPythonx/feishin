@@ -32,17 +32,15 @@ import { useSetFavorite } from '/@/renderer/features/shared/hooks/use-set-favori
 import { useSetRating } from '/@/renderer/features/shared/hooks/use-set-rating';
 import { useFastAverageColor } from '/@/renderer/hooks';
 import {
-    useCurrentServer,
     useFullScreenPlayerStore,
     useFullScreenPlayerStoreActions,
-    useGeneralSettings,
     usePlayerData,
     usePlayerSong,
     useSetFullScreenPlayerStore,
 } from '/@/renderer/store';
 import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
 import { Text } from '/@/shared/components/text/text';
-import { LibraryItem, ServerType } from '/@/shared/types/domain-types';
+import { LibraryItem } from '/@/shared/types/domain-types';
 import { ItemListKey } from '/@/shared/types/types';
 
 const mainBackground = 'var(--theme-colors-background)';
@@ -382,7 +380,6 @@ export const MobileFullscreenPlayer = () => {
     const { currentSong: currentSongData } = usePlayerData();
     const isRadioActive = useIsRadioActive();
     const { isPlaying: isRadioPlaying, metadata: radioMetadata, stationName } = useRadioPlayer();
-    const server = useCurrentServer();
 
     const isPlayingRadio = isRadioActive && isRadioPlaying;
     const effectiveDynamicBackground = dynamicBackground && !isPlayingRadio;
@@ -438,7 +435,6 @@ export const MobileFullscreenPlayer = () => {
     const isPlayerState = activeTab !== 'queue' && activeTab !== 'lyrics';
     const isQueueState = activeTab === 'queue';
     const isLyricsState = activeTab === 'lyrics';
-    const isSongDefined = Boolean(currentSong?.id);
     return (
         <MobilePlayerContainer
             dynamicBackground={effectiveDynamicBackground}

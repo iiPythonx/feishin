@@ -57,6 +57,7 @@ import { Text } from '/@/shared/components/text/text';
 import { useDebouncedValue } from '/@/shared/hooks/use-debounced-value';
 import {
     Album,
+    AlbumArtist,
     AlbumListSort,
     LibraryItem,
     ServerType,
@@ -280,7 +281,7 @@ const ArtistPill = ({ artist }: ArtistPillProps) => {
 };
 
 interface AlbumMetadataArtistsProps {
-    artists: Array<{ id: string; name: string }>;
+    artists: Array<AlbumArtist>;
 }
 
 const AlbumMetadataArtists = ({ artists }: AlbumMetadataArtistsProps) => {
@@ -465,8 +466,7 @@ export const AlbumDetailContent = () => {
         albumQueries.detail({ query: { id: albumId }, serverId: server.id }),
     );
 
-    const { externalLinks, lastFM, listenBrainz, musicBrainz, qobuz, spotify } =
-        useExternalLinks();
+    const { externalLinks, lastFM, listenBrainz, musicBrainz, qobuz, spotify } = useExternalLinks();
 
     const comment = detailQuery?.data?.comment;
 
@@ -477,7 +477,7 @@ export const AlbumDetailContent = () => {
 
         return detailQuery.data.recordLabels.map((label) => {
             if (detailQuery.data._serverType === ServerType.SUBSONIC) {
-                return { id: label, label: label, url: null };
+                return { id: label, label: label, url: undefined };
             }
 
             const searchParams = new URLSearchParams();
@@ -511,7 +511,9 @@ export const AlbumDetailContent = () => {
                         )}
                     </div>
                     <div className={styles.metadataColumn}>
-                        <AlbumMetadataArtists artists={detailQuery.data?.albumArtists} />
+                        <AlbumMetadataArtists
+                            artists={detailQuery.data?.albumArtists as AlbumArtist[]}
+                        />
                         <AlbumMetadataGenres genres={detailQuery?.data?.genres} />
                         <AlbumMetadataTags album={detailQuery?.data} />
                         <AlbumMetadataExternalLinks

@@ -18,7 +18,6 @@ const AdvancedSettings = lazy(() =>
 export const PlaybackTab = memo(() => {
     const { useWebAudio } = useSettingsStore(
         (state) => ({
-            audioType: state.playback.type,
             useWebAudio: state.playback.webAudio,
         }),
         shallow,
