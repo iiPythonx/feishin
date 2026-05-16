@@ -11,7 +11,6 @@ import { isServerLock } from '/@/renderer/features/action-required/utils/window-
 import { ServerList } from '/@/renderer/features/servers/components/server-list';
 import { openSettingsModal } from '/@/renderer/features/settings/utils/open-settings-modal';
 import { ServerSelector } from '/@/renderer/features/sidebar/components/server-selector';
-import { openReleaseNotesModal } from '/@/renderer/release-notes-modal';
 import {
     useAppStore,
     useAppStoreActions,
@@ -271,10 +270,6 @@ export const AppMenu = () => {
             icon: 'brandGitHub',
             id: 'version',
             label: t('page.appMenu.version', { version: packageJson.version }),
-            onClick: () =>
-                openReleaseNotesModal(
-                    t('common.newVersion', { version: packageJson.version }) as string,
-                ),
             type: 'item',
         },
         {

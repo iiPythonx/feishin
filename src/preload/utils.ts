@@ -1,6 +1,6 @@
 import { ipcRenderer, IpcRendererEvent, webFrame } from 'electron';
 
-import { disableAutoUpdates, isLinux, isMacOS, isWindows } from '../main/utils';
+import { isLinux, isMacOS, isWindows } from '../main/utils';
 
 const openItem = async (path: string) => {
     return ipcRenderer.invoke('open-item', path);
@@ -87,7 +87,6 @@ const rendererOpenReleaseNotes = (cb: (event: IpcRendererEvent) => void) => {
 
 export const utils = {
     checkForUpdates,
-    disableAutoUpdates,
     download,
     forceGarbageCollection,
     isLinux,
