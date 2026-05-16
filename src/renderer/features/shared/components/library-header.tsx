@@ -349,7 +349,6 @@ export const LibraryHeaderMenu = ({
     onRating,
     rating,
 }: LibraryHeaderMenuProps) => {
-    const { t } = useTranslation();
     const isMutatingRating = useIsMutatingRating();
     const isMutatingCreateFavorite = useIsMutatingCreateFavorite();
     const isMutatingDeleteFavorite = useIsMutatingDeleteFavorite();
@@ -393,40 +392,6 @@ export const LibraryHeaderMenu = ({
                 {onPlay && (
                     <PlayLastTextButton {...handlePlayLast.handlers} {...handlePlayLast.props} />
                 )}
-                {onAlbumRadio && (
-                    <Button
-                        disabled={isPlayerFetching}
-                        leftSection={
-                            isPlayerFetching ? (
-                                <Spinner color="white" />
-                            ) : (
-                                <Icon icon="radio" size="lg" />
-                            )
-                        }
-                        onClick={onAlbumRadio}
-                        size="md"
-                        variant="transparent"
-                    >
-                        {t('player.albumRadio')}
-                    </Button>
-                )}
-                {onArtistRadio && (
-                    <Button
-                        disabled={isPlayerFetching}
-                        leftSection={
-                            isPlayerFetching ? (
-                                <Spinner color="white" />
-                            ) : (
-                                <Icon icon="radio" size="lg" />
-                            )
-                        }
-                        onClick={onArtistRadio}
-                        size="md"
-                        variant="transparent"
-                    >
-                        {t('player.artistRadio')}
-                    </Button>
-                )}
             </Group>
             <Group gap="sm" wrap="nowrap">
                 {onRating && (
@@ -448,6 +413,34 @@ export const LibraryHeaderMenu = ({
                         size="lg"
                         variant="transparent"
                     />
+                )}
+                {onAlbumRadio && (
+                    <Button
+                        disabled={isPlayerFetching}
+                        onClick={onAlbumRadio}
+                        size="md"
+                        variant="transparent"
+                    >
+                        {isPlayerFetching ? (
+                            <Spinner color="white" />
+                        ) : (
+                            <Icon icon="radio" size="lg" />
+                        )}
+                    </Button>
+                )}
+                {onArtistRadio && (
+                    <Button
+                        disabled={isPlayerFetching}
+                        onClick={onArtistRadio}
+                        size="md"
+                        variant="transparent"
+                    >
+                        {isPlayerFetching ? (
+                            <Spinner color="white" />
+                        ) : (
+                            <Icon icon="radio" size="lg" />
+                        )}
+                    </Button>
                 )}
                 {onMore && (
                     <ActionIcon

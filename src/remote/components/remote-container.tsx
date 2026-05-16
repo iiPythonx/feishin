@@ -96,18 +96,16 @@ export const RemoteContainer = () => {
                     }}
                     variant="transparent"
                 />
-                {(song?._serverType === 'navidrome' || song?._serverType === 'subsonic') && (
-                    <div style={{ margin: 'auto' }}>
-                        <Tooltip label="Double click to clear" openDelay={1000}>
-                            <Rating
-                                onChange={debouncedSetRating}
-                                onDoubleClick={() => debouncedSetRating(0)}
-                                style={{ margin: 'auto' }}
-                                value={song.userRating ?? 0}
-                            />
-                        </Tooltip>
-                    </div>
-                )}
+                <div style={{ margin: 'auto' }}>
+                    <Tooltip label="Double click to clear" openDelay={1000}>
+                        <Rating
+                            onChange={debouncedSetRating}
+                            onDoubleClick={() => debouncedSetRating(0)}
+                            style={{ margin: 'auto' }}
+                            value={song.userRating ?? 0}
+                        />
+                    </Tooltip>
+                </div>
             </Group>
             <Group gap="xs" grow>
                 <ActionIcon

@@ -6,7 +6,7 @@ import type {
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { ReactNode, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { generatePath, useParams } from 'react-router';
+import { generatePath, Link, useParams } from 'react-router';
 
 import styles from './album-detail-content.module.css';
 
@@ -35,9 +35,13 @@ import { useHotkeys } from '/@/renderer/hooks/use-hotkeys';
 import { AppRoute } from '/@/renderer/router/routes';
 import { useCurrentServer, usePlayerSong } from '/@/renderer/store';
 import { useExternalLinks, useSettingsStore } from '/@/renderer/store/settings.store';
-import { sentenceCase, titleCase } from '/@/renderer/utils';
+import {
+    formatDurationString,
+    formatPartialIsoDateUTC,
+    formatSizeString,
+    sentenceCase,
+} from '/@/renderer/utils';
 import { replaceURLWithHTMLLinks } from '/@/renderer/utils/linkify';
-import { normalizeReleaseTypes } from '/@/renderer/utils/normalize-release-types';
 import { setJsonSearchParam } from '/@/renderer/utils/query-params';
 import { sortSongList } from '/@/shared/api/utils';
 import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
@@ -53,7 +57,6 @@ import { useDebouncedValue } from '/@/shared/hooks/use-debounced-value';
 import {
     Album,
     AlbumListSort,
-    ExplicitStatus,
     LibraryItem,
     ServerType,
     Song,
@@ -104,10 +107,10 @@ const AlbumMetadataTags = ({ album }: AlbumMetadataTagsProps) => {
     const defaultTagItems = useMemo(() => {
         if (!album) return [];
 
-        const releaseTypes = normalizeReleaseTypes(album.releaseTypes ?? [], t).map((type) => ({
-            id: type,
-            value: titleCase(type),
-        }));
+        const items: Array<{ id: string; value: ReactNode | string | undefined }> = [];
+
+        const usedDate = album.originalDate || album.releaseDate;
+        const usedYear = album.originalYear || album.releaseYear;
 
         const releaseCountries =
             album.tags?.[RELEASE_COUNTRY_TAG]?.map((country) => ({
@@ -121,10 +124,7 @@ const AlbumMetadataTags = ({ album }: AlbumMetadataTagsProps) => {
                 value: status,
             })) || [];
 
-        const items: Array<{ id: string; value: ReactNode | string | undefined }> = [];
-
         items.push(
-            ...releaseTypes,
             {
                 id: 'isCompilation',
                 value: album?.isCompilation ? t('filter.isCompilation') : undefined,
@@ -132,13 +132,24 @@ const AlbumMetadataTags = ({ album }: AlbumMetadataTagsProps) => {
             ...releaseCountries,
             ...releaseStatuses,
             {
-                id: 'explicitStatus',
-                value:
-                    album.explicitStatus === ExplicitStatus.EXPLICIT
-                        ? t('common.explicit')
-                        : album.explicitStatus === ExplicitStatus.CLEAN
-                          ? t('common.clean')
-                          : undefined,
+                id: 'size',
+                value: album.size ? formatSizeString(album.size) : undefined,
+            },
+            {
+                id: 'releaseDate',
+                value: usedDate
+                    ? formatPartialIsoDateUTC(usedDate)
+                    : usedYear
+                      ? usedYear
+                      : undefined,
+            },
+            {
+                id: 'duration',
+                value: album.duration ? formatDurationString(album.duration) : undefined,
+            },
+            {
+                id: 'playCount',
+                value: album.playCount ? t('entity.play', { count: album.playCount }) : undefined,
             },
         );
 
@@ -178,61 +189,10 @@ const AlbumMetadataTags = ({ album }: AlbumMetadataTagsProps) => {
         );
     }, [album]);
 
-    const recordLabels = useMemo(() => {
-        if (!album?.recordLabels || album.recordLabels.length === 0) return [];
-
-        return album.recordLabels.map((label) => {
-            if (album._serverType === ServerType.SUBSONIC) {
-                return { id: label, label: label, url: null };
-            }
-
-            const searchParams = new URLSearchParams();
-            const paramsWithCustom = setJsonSearchParam(searchParams, FILTER_KEYS.ALBUM._CUSTOM, {
-                recordlabel: [label],
-            });
-            const url = `${AppRoute.LIBRARY_ALBUMS}?${paramsWithCustom.toString()}`;
-
-            return {
-                id: label,
-                label,
-                url,
-            };
-        });
-    }, [album]);
-
     return (
         <>
             <MetadataPillGroup items={defaultTagItems} title={t('common.tags')} />
-
-            {recordLabels.length > 0 && (
-                <Stack align="center" className={styles.metadataPillGroup} gap="xs">
-                    <Text fw={600} isNoSelect size="sm" tt="uppercase">
-                        {t('common.recordLabel')}
-                    </Text>
-                    <div className={styles['pill-group-wrapper']}>
-                        <Pill.Group>
-                            {recordLabels.map((recordLabel) =>
-                                recordLabel.url ? (
-                                    <PillLink
-                                        key={`recordlabel-${recordLabel.id}`}
-                                        size="md"
-                                        to={recordLabel.url}
-                                    >
-                                        {recordLabel.label}
-                                    </PillLink>
-                                ) : (
-                                    <Pill key={`recordlabel-${recordLabel.id}`} size="md">
-                                        {recordLabel.label}
-                                    </Pill>
-                                ),
-                            )}
-                        </Pill.Group>
-                    </div>
-                </Stack>
-            )}
-
             <MetadataPillGroup items={moodTagItems} title={t('common.mood')} />
-
             {groupingItems.length > 0 && (
                 <Stack align="center" className={styles.metadataPillGroup} gap="xs">
                     <Text fw={600} isNoSelect size="sm" tt="uppercase">
@@ -292,38 +252,36 @@ const AlbumMetadataGenres = ({ genres }: AlbumMetadataGenresProps) => {
     );
 };
 
-// interface AlbumMetadataArtistsProps {
-//     artists?: Array<{ id: string; name: string }>;
-// }
+interface AlbumMetadataArtistsProps {
+    artists: Array<{ id: string; name: string }>;
+}
 
-// const AlbumMetadataArtists = ({ artists }: AlbumMetadataArtistsProps) => {
-//     const { t } = useTranslation();
+const AlbumMetadataArtists = ({ artists }: AlbumMetadataArtistsProps) => {
+    const { t } = useTranslation();
 
-//     if (!artists || artists.length === 0) return null;
-
-//     return (
-//         <Stack gap="xs">
-//             <Text fw={600} isNoSelect size="sm" tt="uppercase">
-//                 {t('entity.albumArtist', {
-//                     count: artists.length,
-//                 })}
-//             </Text>
-//             <Pill.Group>
-//                 {artists.map((artist) => (
-//                     <PillLink
-//                         key={`artist-${artist.id}`}
-//                         size="md"
-//                         to={generatePath(AppRoute.LIBRARY_ALBUM_ARTISTS_DETAIL, {
-//                             albumArtistId: artist.id,
-//                         })}
-//                     >
-//                         {artist.name}
-//                     </PillLink>
-//                 ))}
-//             </Pill.Group>
-//         </Stack>
-//     );
-// };
+    return (
+        <Stack gap="xs">
+            <Text fw={600} isNoSelect size="sm" tt="uppercase">
+                {t('entity.artist', {
+                    count: artists.length,
+                })}
+            </Text>
+            <Pill.Group>
+                {artists.map((artist) => (
+                    <PillLink
+                        key={`artist-${artist.id}`}
+                        size="md"
+                        to={generatePath(AppRoute.LIBRARY_ARTISTS_DETAIL, {
+                            artistId: artist.id,
+                        })}
+                    >
+                        {artist.name}
+                    </PillLink>
+                ))}
+            </Pill.Group>
+        </Stack>
+    );
+};
 
 interface AlbumMetadataExternalLinksProps {
     albumArtist?: string;
@@ -500,7 +458,28 @@ export const AlbumDetailContent = () => {
     const comment = detailQuery?.data?.comment;
 
     const releaseYear = detailQuery?.data?.releaseYear;
-    const labels = detailQuery?.data?.recordLabels;
+    const recordLabels = useMemo(() => {
+        if (!detailQuery?.data?.recordLabels || detailQuery?.data?.recordLabels.length === 0)
+            return [];
+
+        return detailQuery.data.recordLabels.map((label) => {
+            if (detailQuery.data._serverType === ServerType.SUBSONIC) {
+                return { id: label, label: label, url: null };
+            }
+
+            const searchParams = new URLSearchParams();
+            const paramsWithCustom = setJsonSearchParam(searchParams, FILTER_KEYS.ALBUM._CUSTOM, {
+                recordlabel: [label],
+            });
+            const url = `${AppRoute.LIBRARY_ALBUMS}?${paramsWithCustom.toString()}`;
+
+            return {
+                id: label,
+                label,
+                url,
+            };
+        });
+    }, [detailQuery]);
 
     const mbzId = detailQuery?.data?.mbzId;
 
@@ -519,6 +498,7 @@ export const AlbumDetailContent = () => {
                         )}
                     </div>
                     <div className={styles.metadataColumn}>
+                        <AlbumMetadataArtists artists={detailQuery.data?.albumArtists} />
                         <AlbumMetadataGenres genres={detailQuery?.data?.genres} />
                         <AlbumMetadataTags album={detailQuery?.data} />
                         <AlbumMetadataExternalLinks
@@ -536,11 +516,20 @@ export const AlbumDetailContent = () => {
                         />
                     </div>
                 </div>
-                {labels && (
+
+                {recordLabels && (
                     <Stack gap="xs">
-                        {labels.map((label) => (
-                            <Text isMuted key={`label-${label}`} size="sm">
-                                ℗{releaseYear ? ` ${releaseYear}` : ''} {label}
+                        {recordLabels.map((label) => (
+                            <Text
+                                component={Link}
+                                isLink
+                                isMuted
+                                key={`label-${label.id}`}
+                                size="sm"
+                                style={{ width: 'fit-content' }}
+                                to={label.url}
+                            >
+                                ℗{releaseYear ? ` ${releaseYear}` : ''} {label.label}
                             </Text>
                         ))}
                     </Stack>

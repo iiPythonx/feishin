@@ -292,15 +292,12 @@ export const ItemCardControls = ({
             {controls?.onFavorite && (
                 <FavoriteButton isFavorite={isFavorite} onClick={favoriteHandler} />
             )}
-            {controls?.onRating &&
-                showRating &&
-                (item?._serverType === ServerType.NAVIDROME ||
-                    item?._serverType === ServerType.SUBSONIC) && (
-                    <RatingButton
-                        onChange={ratingChangeHandler}
-                        rating={(item as { userRating: number }).userRating}
-                    />
-                )}
+            {controls?.onRating && showRating && (
+                <RatingButton
+                    onChange={ratingChangeHandler}
+                    rating={(item as { userRating: number }).userRating}
+                />
+            )}
             {controls?.onMore && (
                 <SecondaryButton
                     className={styles.options}
