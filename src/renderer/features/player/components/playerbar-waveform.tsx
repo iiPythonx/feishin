@@ -87,14 +87,14 @@ export const PlayerbarWaveform = () => {
             () => {
                 wavesurfer.load(streamUrl);
             },
-            playerbarSlider?.loadingDelay ? playerbarSlider.loadingDelay * 1000 : 2000,
+            0
         );
 
         return () => {
             wavesurfer.un('ready', handleReady);
             clearTimeout(waveformTimeout);
         };
-    }, [wavesurfer, streamUrl, playerbarSlider.loadingDelay]);
+    }, [wavesurfer, streamUrl]);
 
     useEffect(() => {
         if (!wavesurfer) return;

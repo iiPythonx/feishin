@@ -470,35 +470,6 @@ export const ControlSettings = memo(() => {
                       isHidden: false,
                       title: t('setting.playerbarWaveformStretch'),
                   },
-                  {
-                      control: (
-                          <NumberInput
-                              defaultValue={playerbarSlider?.loadingDelay ?? 2}
-                              max={30}
-                              min={0}
-                              onBlur={(e) => {
-                                  setSettings({
-                                      general: {
-                                          ...settings,
-                                          playerbarSlider: {
-                                              ...playerbarSlider,
-                                              loadingDelay: e.currentTarget.value
-                                                  ? Number(e.currentTarget.value)
-                                                  : 2,
-                                          },
-                                      },
-                                  });
-                              }}
-                              rightSection={<Text size="sm">s</Text>}
-                              width={75}
-                          />
-                      ),
-                      description: t('setting.waveformLoadingDelay', {
-                          context: 'description',
-                      }),
-                      isHidden: false,
-                      title: t('setting.waveformLoadingDelay'),
-                  },
               ]
             : []),
     ];

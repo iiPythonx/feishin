@@ -306,7 +306,6 @@ const PlayerbarSliderSchema = z.object({
     barGap: z.number(),
     barRadius: z.number(),
     barWidth: z.number(),
-    loadingDelay: z.number(),
     stretched: z.boolean(),
     type: PlayerbarSliderTypeSchema,
 });
@@ -1130,7 +1129,6 @@ const initialState: SettingsState = {
             barGap: 1,
             barRadius: 4,
             barWidth: 2,
-            loadingDelay: 2,
             stretched: false,
             type: PlayerbarSliderType.SLIDER,
         },
