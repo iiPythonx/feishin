@@ -14,7 +14,7 @@ import {
 import { usePlayerStatus } from '/@/renderer/store/player.store';
 import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
 import { Group } from '/@/shared/components/group/group';
-import { PlayerStatus, PlayerType } from '/@/shared/types/types';
+import { PlayerStatus } from '/@/shared/types/types';
 
 const VisualizerInner = () => {
     const { webAudio } = useWebAudio();
@@ -223,9 +223,6 @@ const VisualizerInner = () => {
     useEffect(() => {
         const { context } = webAudio || {};
         const inputNodes = getVisualizerAudioNodes(webAudio, playbackType);
-        const shouldRunForWebPlayback = playbackType === PlayerType.WEB && isPlaying;
-        const shouldRunForMpvLoopback =
-            playbackType === PlayerType.LOCAL && isPlaying && inputNodes.length > 0;
 
         let audioMotion: any | undefined;
         if (
@@ -234,7 +231,7 @@ const VisualizerInner = () => {
             canvasRef.current &&
             !motion &&
             libraryLoaded &&
-            (shouldRunForWebPlayback || shouldRunForMpvLoopback)
+            isPlaying
         ) {
             const AudioMotionAnalyzer = AudioMotionAnalyzerRef.current;
             if (!AudioMotionAnalyzer) return;

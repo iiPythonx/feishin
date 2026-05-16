@@ -1,11 +1,10 @@
 import IcecastMetadataStats from 'icecast-metadata-stats';
-import isElectron from 'is-electron';
 import React, { useEffect } from 'react';
 import { createWithEqualityFn } from 'zustand/traditional';
 
 import { usePlayerEvents } from '/@/renderer/features/player/audio-player/hooks/use-player-events';
-import { usePlaybackType, usePlayerStoreBase, useSettingsStore } from '/@/renderer/store';
-import { PlayerStatus, PlayerType } from '/@/shared/types/types';
+import { usePlayerStoreBase } from '/@/renderer/store';
+import { PlayerStatus } from '/@/shared/types/types';
 
 export type RadioCurrentStationArt = {
     id: string;
@@ -84,8 +83,6 @@ export const useRadioStore = createWithEqualityFn<RadioStore>((set) => ({
         setMetadata: (metadata) => set({ metadata }),
         setStationName: (stationName) => set({ stationName }),
         stop: () => {
-            const playbackType = useSettingsStore.getState().playback.type;
-
             set({
                 currentStationArt: null,
                 currentStreamUrl: null,
@@ -94,13 +91,7 @@ export const useRadioStore = createWithEqualityFn<RadioStore>((set) => ({
                 stationName: null,
             });
 
-            // When stopping radio with mpv, just pause instead of calling mediaStop
-            // This prevents mpv from quitting
-            if (playbackType === PlayerType.LOCAL && mpvPlayer) {
-                mpvPlayer.pause();
-            } else {
-                usePlayerStoreBase.getState().mediaStop();
-            }
+            usePlayerStoreBase.getState().mediaStop();
         },
     },
     currentStationArt: null,
@@ -140,69 +131,8 @@ export const useRadioControls = () => {
     };
 };
 
-const mpvPlayer = isElectron() ? window.api.mpvPlayer : null;
-const mpvPlayerListener = isElectron() ? window.api.mpvPlayerListener : null;
-const ipc = isElectron() ? window.api.ipc : null;
-
 export const useRadioAudioInstance = () => {
     const { actions } = useRadioStore();
-    const { setCurrentStreamUrl, setIsPlaying, setStationName } = actions;
-    const currentStreamUrl = useRadioStore((state) => state.currentStreamUrl);
-    const isPlaying = useRadioStore((state) => state.isPlaying);
-    const isRadioActive = useIsRadioActive();
-    const playbackType = usePlaybackType();
-    const isUsingMpv = playbackType === PlayerType.LOCAL && mpvPlayer;
-
-    // Handle mpv playback
-    useEffect(() => {
-        if (!isUsingMpv || !mpvPlayer) {
-            return;
-        }
-
-        if (currentStreamUrl) {
-            mpvPlayer.setQueue(currentStreamUrl, undefined, !isPlaying);
-        } else {
-            mpvPlayer.pause();
-        }
-    }, [
-        currentStreamUrl,
-        isPlaying,
-        isUsingMpv,
-        setIsPlaying,
-        setCurrentStreamUrl,
-        setStationName,
-    ]);
-
-    useEffect(() => {
-        if (!isUsingMpv || !mpvPlayerListener || !ipc || !isRadioActive) {
-            return;
-        }
-
-        const handleMpvPlay = () => {
-            setIsPlaying(true);
-        };
-
-        const handleMpvPause = () => {
-            setIsPlaying(false);
-        };
-
-        const handleMpvStop = () => {
-            setIsPlaying(false);
-            setCurrentStreamUrl(null);
-            setStationName(null);
-            useRadioStore.setState({ currentStationArt: null, metadata: null });
-        };
-
-        mpvPlayerListener.rendererPlay(handleMpvPlay);
-        mpvPlayerListener.rendererPause(handleMpvPause);
-        mpvPlayerListener.rendererStop(handleMpvStop);
-
-        return () => {
-            ipc.removeAllListeners('renderer-player-play');
-            ipc.removeAllListeners('renderer-player-pause');
-            ipc.removeAllListeners('renderer-player-stop');
-        };
-    }, [isUsingMpv, isRadioActive, setIsPlaying, setCurrentStreamUrl, setStationName]);
 
     usePlayerEvents(
         {
@@ -233,8 +163,6 @@ export const useRadioAudioInstance = () => {
 export const useRadioMetadata = () => {
     const { actions, currentStreamUrl } = useRadioStore();
     const { setMetadata } = actions;
-    const playbackType = usePlaybackType();
-    const isUsingMpv = playbackType === PlayerType.LOCAL && mpvPlayer;
 
     useEffect(() => {
         if (!currentStreamUrl) {
@@ -242,30 +170,7 @@ export const useRadioMetadata = () => {
             return;
         }
 
-        // If using mpv, fetch metadata from mpv periodically
-        if (isUsingMpv && mpvPlayer) {
-            let intervalId: NodeJS.Timeout | null = null;
-
-            const fetchMpvMetadata = async () => {
-                try {
-                    const metadata = await mpvPlayer.getStreamMetadata();
-                    setMetadata(metadata);
-                } catch {
-                    // Ignore error
-                }
-            };
-
-            intervalId = setInterval(fetchMpvMetadata, 5000);
-
-            return () => {
-                if (intervalId) {
-                    clearInterval(intervalId);
-                }
-                setMetadata(null);
-            };
-        }
-
-        // Otherwise, use IcecastMetadataStats for web player
+        // Use IcecastMetadataStats for web player
         let statsListener: IcecastMetadataStats | null = null;
 
         try {
@@ -313,7 +218,7 @@ export const useRadioMetadata = () => {
             }
             setMetadata(null);
         };
-    }, [currentStreamUrl, setMetadata, isUsingMpv]);
+    }, [currentStreamUrl, setMetadata]);
 };
 
 const RadioAudioInstanceHookInner = () => {

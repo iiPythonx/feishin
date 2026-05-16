@@ -9,8 +9,6 @@ export const getMpvSetting = (
             return { 'audio-exclusive': value || 'no' };
         case 'audioSampleRateHz':
             return { 'audio-samplerate': value };
-        case 'gaplessAudio':
-            return { 'gapless-audio': value || 'weak' };
         case 'replayGainClip':
             return { 'replaygain-clip': value || 'no' };
         case 'replayGainFallbackDB':
@@ -29,7 +27,6 @@ export const getMpvProperties = (settings: SettingsState['playback']['mpvPropert
         'audio-exclusive': settings.audioExclusiveMode || 'no',
         'audio-samplerate':
             settings.audioSampleRateHz === 0 ? undefined : settings.audioSampleRateHz,
-        'gapless-audio': settings.gaplessAudio || 'weak',
         replaygain: settings.replayGainMode || 'no',
         'replaygain-clip': settings.replayGainClip || 'no',
         'replaygain-fallback': settings.replayGainFallbackDB,

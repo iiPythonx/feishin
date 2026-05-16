@@ -5,7 +5,6 @@ import i18n from '/@/i18n/i18n';
 import { useWebAudio } from '/@/renderer/features/player/hooks/use-webaudio';
 import { usePlaybackType } from '/@/renderer/store/settings.store';
 import { toast } from '/@/shared/components/toast/toast';
-import { PlayerType } from '/@/shared/types/types';
 
 export function useVisualizerSystemAudio(options: {
     onSystemAudioCaptureDenied?: () => void;
@@ -52,10 +51,8 @@ export function useVisualizerSystemAudio(options: {
     }, [setWebAudio]);
 
     useEffect(() => {
-        if (playbackType === PlayerType.WEB || !shouldAttemptConnection) {
-            disconnect();
-        }
-    }, [playbackType, shouldAttemptConnection, disconnect]);
+        disconnect();
+    }, [disconnect]);
 
     const connect = useCallback(async () => {
         if (!isElectron()) {
@@ -131,7 +128,7 @@ export function useVisualizerSystemAudio(options: {
     connectRef.current = connect;
 
     useEffect(() => {
-        if (playbackType !== PlayerType.LOCAL || !isElectron() || !shouldAttemptConnection) {
+        if (!isElectron() || !shouldAttemptConnection) {
             return;
         }
 

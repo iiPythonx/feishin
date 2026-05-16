@@ -26,9 +26,7 @@ import { SegmentedControl } from '/@/shared/components/segmented-control/segment
 import { Select } from '/@/shared/components/select/select';
 import { Slider } from '/@/shared/components/slider/slider';
 import { Switch } from '/@/shared/components/switch/switch';
-import { CrossfadeStyle, PlayerStatus, PlayerStyle, PlayerType } from '/@/shared/types/types';
-
-const ipc = isElectron() ? window.api.ipc : null;
+import { CrossfadeStyle, PlayerStatus, PlayerStyle } from '/@/shared/types/types';
 
 export const PlayerConfig = () => {
     const { t } = useTranslation();
@@ -51,11 +49,6 @@ export const PlayerConfig = () => {
 
     const options = useMemo(() => {
         const allOptions = [
-            {
-                component: <AudioPlayerTypeConfig />,
-                id: 'audioPlayerType',
-                label: t('setting.audioPlayer'),
-            },
             {
                 component: <AudioDeviceConfig />,
                 id: 'audioDevice',
@@ -194,38 +187,6 @@ export const PlayerConfig = () => {
     );
 };
 
-const AudioPlayerTypeConfig = () => {
-    const status = usePlayerStatus();
-    const playbackSettings = usePlaybackSettings();
-    const { setSettings } = useSettingsStoreActions();
-
-    return (
-        <Select
-            comboboxProps={{ withinPortal: false }}
-            data={[
-                {
-                    disabled: !isElectron(),
-                    label: 'MPV',
-                    value: PlayerType.LOCAL,
-                },
-                { label: 'Web', value: PlayerType.WEB },
-            ]}
-            defaultValue={playbackSettings.type}
-            disabled={status === PlayerStatus.PLAYING}
-            onChange={(e) => {
-                setSettings({
-                    playback: { ...playbackSettings, type: e as PlayerType },
-                });
-                ipc?.send('settings-set', {
-                    property: 'playbackType',
-                    value: e,
-                });
-            }}
-            width="100%"
-        />
-    );
-};
-
 const AudioDeviceConfig = () => {
     const status = usePlayerStatus();
     const playbackType = usePlaybackType();
@@ -233,10 +194,7 @@ const AudioDeviceConfig = () => {
     const { setSettings } = useSettingsStoreActions();
 
     const audioDevices = useAudioDevices(playbackType);
-    const audioDeviceId =
-        playbackType === PlayerType.LOCAL
-            ? playbackSettings.mpvAudioDeviceId
-            : playbackSettings.audioDeviceId;
+    const audioDeviceId = playbackSettings.audioDeviceId;
 
     return (
         <Select
@@ -249,9 +207,7 @@ const AudioDeviceConfig = () => {
                 setSettings({
                     playback: {
                         ...playbackSettings,
-                        ...(playbackType === PlayerType.LOCAL
-                            ? { mpvAudioDeviceId: e }
-                            : { audioDeviceId: e }),
+                        ...{ audioDeviceId: e },
                     },
                 });
             }}
@@ -263,7 +219,6 @@ const AudioDeviceConfig = () => {
 const TransitionTypeConfig = () => {
     const { t } = useTranslation();
     const status = usePlayerStatus();
-    const playbackSettings = usePlaybackSettings();
     const { transitionType } = usePlayerProperties();
     const { setTransitionType } = usePlayerActions();
 
@@ -283,7 +238,7 @@ const TransitionTypeConfig = () => {
                     value: PlayerStyle.CROSSFADE,
                 },
             ]}
-            disabled={playbackSettings.type !== PlayerType.WEB || status === PlayerStatus.PLAYING}
+            disabled={status === PlayerStatus.PLAYING}
             onChange={(value) => setTransitionType(value as PlayerStyle)}
             size="sm"
             value={transitionType}
@@ -294,7 +249,6 @@ const TransitionTypeConfig = () => {
 
 const CrossfadeStyleConfig = () => {
     const status = usePlayerStatus();
-    const playbackSettings = usePlaybackSettings();
     const { crossfadeStyle, transitionType } = usePlayerProperties();
     const { setCrossfadeStyle } = usePlayerActions();
 
@@ -308,11 +262,7 @@ const CrossfadeStyleConfig = () => {
                 { label: 'Exponential', value: CrossfadeStyle.EXPONENTIAL },
             ]}
             defaultValue={crossfadeStyle}
-            disabled={
-                playbackSettings.type !== PlayerType.WEB ||
-                transitionType !== PlayerStyle.CROSSFADE ||
-                status === PlayerStatus.PLAYING
-            }
+            disabled={transitionType !== PlayerStyle.CROSSFADE || status === PlayerStatus.PLAYING}
             onChange={(e) => {
                 if (e) {
                     setCrossfadeStyle(e as CrossfadeStyle);
@@ -325,18 +275,13 @@ const CrossfadeStyleConfig = () => {
 
 const CrossfadeDurationConfig = () => {
     const status = usePlayerStatus();
-    const playbackSettings = usePlaybackSettings();
     const { crossfadeDuration, transitionType } = usePlayerProperties();
     const { setCrossfadeDuration } = usePlayerActions();
 
     return (
         <Slider
             defaultValue={crossfadeDuration}
-            disabled={
-                playbackSettings.type !== PlayerType.WEB ||
-                transitionType !== PlayerStyle.CROSSFADE ||
-                status === PlayerStatus.PLAYING
-            }
+            disabled={transitionType !== PlayerStyle.CROSSFADE || status === PlayerStatus.PLAYING}
             marks={[
                 { label: '3', value: 3 },
                 { label: '6', value: 6 },

@@ -1987,7 +1987,6 @@ export const SubsonicController: InternalControllerEndpoint = {
             return appendTranscodeParams(streamUrl, format, bitrate);
         }
 
-        // Used in cases where MPV is the default player, since mpv handles basically every audio format
         if (skipAutoTranscode) {
             return streamUrl;
         }

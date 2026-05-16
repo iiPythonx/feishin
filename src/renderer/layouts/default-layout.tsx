@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import isElectron from 'is-electron';
 
 import styles from './default-layout.module.css';
 
@@ -7,16 +6,8 @@ import { ContextMenuController } from '/@/renderer/features/context-menu/context
 import { MainContent } from '/@/renderer/layouts/default-layout/main-content';
 import { PlayerBar } from '/@/renderer/layouts/default-layout/player-bar';
 import { WindowBar } from '/@/renderer/layouts/window-bar';
-import { useSettingsStore, useWindowBarStyle } from '/@/renderer/store/settings.store';
-import { Platform, PlayerType } from '/@/shared/types/types';
-
-if (!isElectron()) {
-    useSettingsStore.getState().actions.setSettings({
-        playback: {
-            type: PlayerType.WEB,
-        },
-    });
-}
+import { useWindowBarStyle } from '/@/renderer/store/settings.store';
+import { Platform } from '/@/shared/types/types';
 
 interface DefaultLayoutProps {
     shell?: boolean;

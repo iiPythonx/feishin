@@ -61,7 +61,7 @@ interface Actions {
     mediaSkipForward: (offset?: number) => void;
     /**
      * @param options.reset - When true (default), sets seekToTimestamp(0) so the engine seeks to start.
-     * Timestamp display is always cleared to 0. Use false when the engine is already idle (e.g. mpv `stopped`) to skip that seek.
+     * Timestamp display is always cleared to 0. Use false when the engine is already idle to skip that seek.
      */
     mediaStop: (options?: { reset?: boolean }) => void;
     mediaToggleMute: () => void;

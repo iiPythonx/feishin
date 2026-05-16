@@ -21,7 +21,7 @@ import { usePlayerStatus } from '/@/renderer/store/player.store';
 import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
 import { Group } from '/@/shared/components/group/group';
 import { Text } from '/@/shared/components/text/text';
-import { PlayerStatus, PlayerType } from '/@/shared/types/types';
+import { PlayerStatus } from '/@/shared/types/types';
 
 // Ignore presets that are erroring out
 const IGNORED_PRESETS = ['Flexi + Martin - astral projection'];
@@ -150,16 +150,12 @@ const VisualizerInner = () => {
         const canvas = canvasRef.current;
         const container = containerRef.current;
 
-        const shouldRunForWebPlayback = playbackType === PlayerType.WEB && isPlaying;
-        const shouldRunForMpvLoopback =
-            playbackType === PlayerType.LOCAL && isPlaying && inputNodes.length > 0;
-
         const needsInitialization =
             context &&
             inputNodes.length > 0 &&
             canvas &&
             container &&
-            (shouldRunForWebPlayback || shouldRunForMpvLoopback) &&
+            isPlaying &&
             librariesLoaded &&
             (!isInitializedRef.current || !visualizerRef.current);
 

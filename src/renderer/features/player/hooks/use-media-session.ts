@@ -14,12 +14,11 @@ import {
     subscribePlayerStatus,
     usePlaybackSettings,
     usePlayerStore,
-    useSettingsStore,
     useSkipButtons,
     useTimestampStoreBase,
 } from '/@/renderer/store';
 import { LibraryItem, QueueSong } from '/@/shared/types/domain-types';
-import { PlayerStatus, PlayerType } from '/@/shared/types/types';
+import { PlayerStatus } from '/@/shared/types/types';
 
 const mediaSession = navigator.mediaSession;
 
@@ -27,7 +26,6 @@ export const useMediaSession = () => {
     const { mediaSession: mediaSessionEnabled } = usePlaybackSettings();
     const player = usePlayer();
     const skip = useSkipButtons();
-    const playbackType = useSettingsStore((state) => state.playback.type);
     const isRadioActive = useIsRadioActive();
     const { isPlaying: isRadioPlaying, metadata: radioMetadata, stationName } = useRadioPlayer();
 
@@ -71,8 +69,8 @@ export const useMediaSession = () => {
             return true;
         }
 
-        return Boolean(mediaSessionEnabled && playbackType === PlayerType.WEB);
-    }, [mediaSessionEnabled, playbackType]);
+        return Boolean(mediaSessionEnabled);
+    }, [mediaSessionEnabled]);
 
     useEffect(() => {
         isMediaSessionEnabledRef.current = isMediaSessionEnabled;

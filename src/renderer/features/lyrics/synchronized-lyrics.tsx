@@ -14,9 +14,8 @@ import {
 } from '/@/renderer/store';
 import { usePlayerTimestamp } from '/@/renderer/store/timestamp.store';
 import { FullLyricsMetadata, SynchronizedLyricsArray } from '/@/shared/types/domain-types';
-import { PlayerStatus, PlayerType } from '/@/shared/types/types';
+import { PlayerStatus } from '/@/shared/types/types';
 
-const mpvPlayer = isElectron() ? window.api.mpvPlayer : null;
 const utils = isElectron() ? window.api.utils : null;
 const mpris = isElectron() && utils?.isLinux() ? window.api.mpris : null;
 
@@ -63,14 +62,10 @@ export const SynchronizedLyrics = ({
 
     const handleSeek = useCallback(
         (time: number) => {
-            if (playbackType === PlayerType.LOCAL && mpvPlayer) {
-                mpvPlayer.seekTo(time);
-            } else {
-                mpris?.updateSeek(time);
-                mediaSeekToTimestamp(time);
-            }
+            mpris?.updateSeek(time);
+            mediaSeekToTimestamp(time);
         },
-        [mediaSeekToTimestamp, playbackType],
+        [mediaSeekToTimestamp],
     );
 
     // const seeked = useSeeked();

@@ -10,7 +10,6 @@ export type EventMap = {
     ITEM_LIST_UPDATE_ITEM: ItemListUpdateItemEventPayload;
     MEDIA_NEXT: MediaNextEventPayload;
     MEDIA_PREV: MediaPrevEventPayload;
-    MPV_RELOAD: MpvReloadEventPayload;
     PLAYER_PLAY: PlayerPlayEventPayload;
     PLAYER_REPEATED: PlayerRepeatedEventPayload;
     PLAYLIST_MOVE_DOWN: PlaylistMoveEventPayload;
@@ -42,8 +41,6 @@ export type MediaPrevEventPayload = {
     currentIndex: number;
     prevIndex: number;
 };
-
-export type MpvReloadEventPayload = Record<string, never>;
 
 export type PlayerPlayEventPayload = {
     id: string;

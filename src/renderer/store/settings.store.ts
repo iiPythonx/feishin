@@ -37,7 +37,6 @@ import {
     ListPaginationType,
     Platform,
     Play,
-    PlayerType,
     TableColumn,
 } from '/@/shared/types/types';
 
@@ -627,7 +626,6 @@ const PlaybackSettingsSchema = z.object({
     preservePitch: z.boolean(),
     scrobble: ScrobbleSettingsSchema,
     transcode: TranscodingConfigSchema,
-    type: z.nativeEnum(PlayerType),
     webAudio: z.boolean(),
 });
 
@@ -1842,7 +1840,6 @@ const initialState: SettingsState = {
         transcode: {
             enabled: false,
         },
-        type: PlayerType.WEB,
         webAudio: true,
     },
     queryBuilder: {

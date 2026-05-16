@@ -8,7 +8,6 @@ import { ipc } from './ipc';
 import { localSettings } from './local-settings';
 import { lyrics } from './lyrics';
 import { mpris } from './mpris';
-import { mpvPlayer, mpvPlayerListener } from './mpv-player';
 import { remote } from './remote';
 import { utils } from './utils';
 
@@ -21,8 +20,6 @@ const api = {
     localSettings,
     lyrics,
     mpris,
-    mpvPlayer,
-    mpvPlayerListener,
     remote,
     utils,
 };

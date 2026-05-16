@@ -1,11 +1,6 @@
-import isElectron from 'is-electron';
-import { memo, useEffect, useState } from 'react';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { getMpvSetting } from './mpv-properties';
-
-import { eventEmitter } from '/@/renderer/events/event-emitter';
-import { usePlayer } from '/@/renderer/features/player/context/player-context';
 import {
     SettingOption,
     SettingsSection,
@@ -15,57 +10,15 @@ import {
     usePlaybackSettings,
     useSettingsStoreActions,
 } from '/@/renderer/store/settings.store';
-import { ActionIcon } from '/@/shared/components/action-icon/action-icon';
-import { Group } from '/@/shared/components/group/group';
 import { NumberInput } from '/@/shared/components/number-input/number-input';
 import { Select } from '/@/shared/components/select/select';
-import { Stack } from '/@/shared/components/stack/stack';
 import { Switch } from '/@/shared/components/switch/switch';
-import { TextInput } from '/@/shared/components/text-input/text-input';
 import { Text } from '/@/shared/components/text/text';
-import { Textarea } from '/@/shared/components/textarea/textarea';
-import { PlayerType } from '/@/shared/types/types';
-
-const localSettings = isElectron() ? window.api.localSettings : null;
-const mpvPlayer = isElectron() ? window.api.mpvPlayer : null;
 
 export const MpvSettings = memo(() => {
     const { t } = useTranslation();
     const settings = usePlaybackSettings();
     const { setSettings } = useSettingsStoreActions();
-    // const { pause } = usePlayerControls();
-    // const { clearQueue } = useQueueControls();
-
-    const [mpvPath, setMpvPath] = useState('');
-
-    const handleSetMpvPath = async (clear?: boolean) => {
-        if (clear) {
-            localSettings?.set('mpv_path', undefined);
-            setMpvPath('');
-            return;
-        }
-
-        const result = await localSettings?.openFileSelector();
-
-        if (result === null) {
-            localSettings?.set('mpv_path', undefined);
-            setMpvPath('');
-            return;
-        }
-
-        localSettings?.set('mpv_path', result);
-        setMpvPath(result);
-    };
-
-    useEffect(() => {
-        const getMpvPath = async () => {
-            if (!localSettings) return setMpvPath('');
-            const mpvPath = (await localSettings.get('mpv_path')) as string | undefined;
-            return setMpvPath(mpvPath || '');
-        };
-
-        getMpvPath();
-    }, []);
 
     const handleSetMpvProperty = (
         setting: keyof SettingsState['playback']['mpvProperties'],
@@ -78,135 +31,9 @@ export const MpvSettings = memo(() => {
                 },
             },
         });
-
-        const mpvSetting = getMpvSetting(setting, value);
-
-        mpvPlayer?.setProperties(mpvSetting);
     };
-
-    const player = usePlayer();
-
-    const handleReloadMpv = () => {
-        player.mediaStop();
-        eventEmitter.emit('MPV_RELOAD', {});
-    };
-
-    const handleSetExtraParameters = (data: string[]) => {
-        setSettings({
-            playback: {
-                mpvExtraParameters: data,
-            },
-        });
-    };
-
-    const options: SettingOption[] = [
-        {
-            control: (
-                <Group gap="sm">
-                    <ActionIcon
-                        icon="refresh"
-                        onClick={handleReloadMpv}
-                        tooltip={{
-                            label: t('common.reload'),
-                            openDelay: 0,
-                        }}
-                        variant="subtle"
-                    />
-                    <TextInput
-                        onChange={(e) => {
-                            setMpvPath(e.currentTarget.value);
-
-                            // Transform backslashes to forward slashes
-                            const transformedValue = e.currentTarget.value.replace(/\\/g, '/');
-                            localSettings?.set('mpv_path', transformedValue);
-                        }}
-                        onClick={() => handleSetMpvPath()}
-                        rightSection={
-                            mpvPath && (
-                                <ActionIcon
-                                    icon="x"
-                                    onClick={() => handleSetMpvPath(true)}
-                                    variant="transparent"
-                                />
-                            )
-                        }
-                        value={mpvPath}
-                        width={200}
-                    />
-                </Group>
-            ),
-            description: t('setting.mpvExecutablePath', {
-                context: 'description',
-            }),
-            isHidden: settings.type !== PlayerType.LOCAL,
-            note: 'Restart required',
-            title: t('setting.mpvExecutablePath'),
-        },
-        {
-            control: (
-                <Stack gap="xs">
-                    <Textarea
-                        autosize
-                        defaultValue={settings.mpvExtraParameters.join('\n')}
-                        minRows={4}
-                        onBlur={(e) => {
-                            handleSetExtraParameters(e.currentTarget.value.split('\n'));
-                        }}
-                        placeholder={`(${t('setting.mpvExtraParameters', {
-                            context: 'help',
-                        })}):\n--gapless-audio=weak\n--prefetch-playlist=yes`}
-                        width={225}
-                    />
-                </Stack>
-            ),
-            description: (
-                <Stack gap={0}>
-                    <Text isMuted isNoSelect size="sm">
-                        {t('setting.mpvExtraParameters', {
-                            context: 'description',
-                        })}
-                    </Text>
-                    <Text size="sm">
-                        <a
-                            href="https://mpv.io/manual/stable/#audio"
-                            rel="noreferrer"
-                            target="_blank"
-                        >
-                            https://mpv.io/manual/stable/#audio
-                        </a>
-                    </Text>
-                </Stack>
-            ),
-            isHidden: settings.type !== PlayerType.LOCAL,
-            note: t('common.restartRequired'),
-            title: t('setting.mpvExtraParameters'),
-        },
-    ];
 
     const generalOptions: SettingOption[] = [
-        {
-            control: (
-                <Select
-                    data={[
-                        { label: t('common.no'), value: 'no' },
-                        { label: t('common.yes'), value: 'yes' },
-                        {
-                            label: t('setting.gaplessAudio', {
-                                context: 'optionWeak',
-                            }),
-                            value: 'weak',
-                        },
-                    ]}
-                    defaultValue={settings.mpvProperties.gaplessAudio}
-                    onChange={(e) => handleSetMpvProperty('gaplessAudio', e)}
-                />
-            ),
-            description: t('setting.gaplessAudio', {
-                context: 'description',
-            }),
-            isHidden: settings.type !== PlayerType.LOCAL,
-            title: t('setting.gaplessAudio'),
-        },
         {
             control: (
                 <NumberInput
@@ -228,25 +55,6 @@ export const MpvSettings = memo(() => {
             }),
             note: 'Page refresh required for web player',
             title: t('setting.sampleRate'),
-        },
-        {
-            control: (
-                <Switch
-                    defaultChecked={settings.mpvProperties.audioExclusiveMode === 'yes'}
-                    onChange={(e) =>
-                        handleSetMpvProperty(
-                            'audioExclusiveMode',
-                            e.currentTarget.checked ? 'yes' : 'no',
-                        )
-                    }
-                />
-            ),
-
-            description: t('setting.audioExclusiveMode', {
-                context: 'description',
-            }),
-            isHidden: settings.type !== PlayerType.LOCAL,
-            title: t('setting.audioExclusiveMode'),
         },
     ];
 
@@ -334,7 +142,6 @@ export const MpvSettings = memo(() => {
 
     return (
         <>
-            <SettingsSection options={options} />
             <SettingsSection options={generalOptions} />
             <SettingsSection options={replayGainOptions} />
         </>

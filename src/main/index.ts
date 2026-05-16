@@ -42,7 +42,7 @@ import {
 } from './utils';
 import './features';
 
-import { PlayerRepeat, PlayerStatus, PlayerType, TitleTheme } from '/@/shared/types/types';
+import { PlayerRepeat, PlayerStatus, TitleTheme } from '/@/shared/types/types';
 
 const ALPHA_UPDATER_CONFIG: {
     bucket: string;
@@ -779,12 +779,9 @@ async function createWindow(first = true): Promise<void> {
 
 // Only allow hardware media key handling if:
 // 1. The "Enable Media Session" setting is enabled
-// 2. The playback type is WEB (mpv not supported)
-// 3. The platform is not Linux (because we are using mpris instead)
+// 2. The platform is not Linux (because we are using mpris instead)
 const enableMediaSession = store.get('mediaSession', false) as boolean;
-const playbackType = store.get('playbackType', PlayerType.WEB) as PlayerType;
-const shouldDisableMediaFeatures =
-    isLinux() || !enableMediaSession || playbackType !== PlayerType.WEB;
+const shouldDisableMediaFeatures = isLinux() || !enableMediaSession;
 
 const chromiumDisabledFeatures: string[] = [];
 // Fractional scaling on Wayland: https://github.com/jeffvli/feishin/issues/1271#issuecomment-4063326712

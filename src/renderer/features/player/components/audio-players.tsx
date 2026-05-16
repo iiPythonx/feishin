@@ -4,8 +4,6 @@ import { useEffect } from 'react';
 import { eventEmitter } from '/@/renderer/events/event-emitter';
 import { UserFavoriteEventPayload, UserRatingEventPayload } from '/@/renderer/events/events';
 import { DiscordRpcHook } from '/@/renderer/features/discord-rpc/use-discord-rpc';
-import { MainPlayerListenerHook } from '/@/renderer/features/player/audio-player/hooks/use-main-player-listener';
-import { MpvPlayer } from '/@/renderer/features/player/audio-player/mpv-player';
 import { WebPlayer } from '/@/renderer/features/player/audio-player/web-player';
 import { SleepTimerHook } from '/@/renderer/features/player/components/sleep-timer-button';
 import { AutoDJHook } from '/@/renderer/features/player/hooks/use-auto-dj';
@@ -25,7 +23,6 @@ import {
     useIsRadioActive,
 } from '/@/renderer/features/radio/hooks/use-radio-player';
 import { RemoteHook } from '/@/renderer/features/remote/hooks/use-remote';
-import { VisualizerSystemAudioBridgeHook } from '/@/renderer/features/visualizer/components/visualizer-system-audio-bridge';
 import {
     updateQueueFavorites,
     updateQueueRatings,
@@ -37,7 +34,6 @@ import {
 import { logFn } from '/@/renderer/utils/logger';
 import { toast } from '/@/shared/components/toast/toast';
 import { LibraryItem } from '/@/shared/types/domain-types';
-import { PlayerType } from '/@/shared/types/types';
 
 const CODEC_PROBES = [
     { codec: 'mp3', container: 'mp3', mime: 'audio/mpeg' },
@@ -128,7 +124,6 @@ export const AudioPlayers = () => {
             <PowerSaveBlockerHook />
             <DiscordRpcHook />
             <MPRISHook />
-            <MainPlayerListenerHook />
             <MediaSessionHook />
             <PlaybackHotkeysHook />
             <RemoteHook />
@@ -137,7 +132,6 @@ export const AudioPlayers = () => {
             <UpdateCurrentSongHook />
             <RadioAudioInstanceHook />
             <RadioMetadataHook />
-            <VisualizerSystemAudioBridgeHook />
             <AutosaveHook />
             <AudioPlayersContent
                 audioContext={audioContext}
@@ -157,7 +151,6 @@ const AudioPlayersContent = ({
     audioContext,
     audioDeviceId,
     audioSampleRateHz,
-    playbackType,
     resetSampleRate,
     serverId,
     setWebAudio,
@@ -166,7 +159,6 @@ const AudioPlayersContent = ({
     audioContext: ReturnType<typeof useWebAudio>['webAudio'];
     audioDeviceId: null | string | undefined;
     audioSampleRateHz: number | undefined;
-    playbackType: PlayerType;
     resetSampleRate: ReturnType<typeof useSettingsStoreActions>['resetSampleRate'];
     serverId: null | string;
     setWebAudio: ReturnType<typeof useWebAudio>['setWebAudio'];
@@ -211,10 +203,6 @@ const AudioPlayersContent = ({
             return;
         }
 
-        if (playbackType !== PlayerType.WEB) {
-            return;
-        }
-
         if (audioContext && 'setSinkId' in audioContext.context && audioDeviceId) {
             const setSink = async () => {
                 try {
@@ -228,7 +216,7 @@ const AudioPlayersContent = ({
 
             setSink();
         }
-    }, [audioContext, audioDeviceId, playbackType]);
+    }, [audioContext, audioDeviceId]);
 
     // Listen to favorite and rating events to update queue songs
     useEffect(() => {
@@ -257,18 +245,5 @@ const AudioPlayersContent = ({
         };
     }, [serverId]);
 
-    if (isRadioActive && playbackType === PlayerType.LOCAL) {
-        return <MpvPlayer />;
-    }
-
-    if (isRadioActive && playbackType === PlayerType.WEB) {
-        return <RadioWebPlayer />;
-    }
-
-    return (
-        <>
-            {playbackType === PlayerType.WEB && <WebPlayer />}
-            {playbackType === PlayerType.LOCAL && <MpvPlayer />}
-        </>
-    );
+    return isRadioActive ? <RadioWebPlayer /> : <WebPlayer />;
 };

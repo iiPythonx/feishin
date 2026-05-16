@@ -153,11 +153,6 @@ export enum PlayerStyle {
     GAPLESS = 'gapless',
 }
 
-export enum PlayerType {
-    LOCAL = 'local',
-    WEB = 'web',
-}
-
 export enum TableColumn {
     ACTIONS = 'actions',
     ALBUM = 'album',

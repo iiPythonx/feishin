@@ -153,9 +153,6 @@ importers:
       nanoid:
         specifier: ^3.3.11
         version: 3.3.11
-      node-mpv:
-        specifier: github:jeffvli/Node-MPV#32b4d64395289ad710c41d481d2707a7acfc228f
-        version: https://codeload.github.com/jeffvli/Node-MPV/tar.gz/32b4d64395289ad710c41d481d2707a7acfc228f
       overlayscrollbars:
         specifier: ^2.14.0
         version: 2.14.0
@@ -4266,10 +4263,6 @@ packages:
     resolution: {integrity: sha512-ra7Kvlhxn5V9Slyus0ygMa2h+UqExPqUIkfk7Pc8QTLT956JLSy51uWFwHtIYy0vI8cB4BDhc/S03+880My/LQ==}
     engines: {node: ^18.17.0 || >=20.5.0}
     hasBin: true
-
-  node-mpv@https://codeload.github.com/jeffvli/Node-MPV/tar.gz/32b4d64395289ad710c41d481d2707a7acfc228f:
-    resolution: {tarball: https://codeload.github.com/jeffvli/Node-MPV/tar.gz/32b4d64395289ad710c41d481d2707a7acfc228f}
-    version: 2.0.0-beta.3
 
   node-releases@2.0.37:
     resolution: {integrity: sha512-1h5gKZCF+pO/o3Iqt5Jp7wc9rH3eJJ0+nh/CIoiRwjRxde/hAHyLPXYN4V3CqKAbiZPSeJFSWHmJsbkicta0Eg==}
@@ -10237,8 +10230,6 @@ snapshots:
       which: 5.0.0
     transitivePeerDependencies:
       - supports-color
-
-  node-mpv@https://codeload.github.com/jeffvli/Node-MPV/tar.gz/32b4d64395289ad710c41d481d2707a7acfc228f: {}
 
   node-releases@2.0.37: {}
 

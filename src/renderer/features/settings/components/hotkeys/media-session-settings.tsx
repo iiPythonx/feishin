@@ -9,7 +9,6 @@ import {
 import { openRestartRequiredToast } from '/@/renderer/features/settings/restart-toast';
 import { usePlaybackSettings, useSettingsStoreActions } from '/@/renderer/store/settings.store';
 import { Switch } from '/@/shared/components/switch/switch';
-import { PlayerType } from '/@/shared/types/types';
 
 const isLinux = isElectron() ? window.api.utils.isLinux() : false;
 const isDesktop = isElectron();
@@ -17,7 +16,7 @@ const localSettings = isElectron() ? window.api.localSettings : null;
 
 export const MediaSessionSettings = memo(() => {
     const { t } = useTranslation();
-    const { mediaSession, type: playbackType } = usePlaybackSettings();
+    const { mediaSession } = usePlaybackSettings();
     const { setSettings } = useSettingsStoreActions();
 
     function handleMediaSessionChange(e: boolean) {
@@ -48,7 +47,7 @@ export const MediaSessionSettings = memo(() => {
                 <Switch
                     aria-label="Toggle media Session"
                     checked={mediaSession}
-                    disabled={isLinux || !isDesktop || playbackType !== PlayerType.WEB}
+                    disabled={isLinux || !isDesktop}
                     onChange={(e) => handleMediaSessionChange(e.currentTarget.checked)}
                 />
             ),

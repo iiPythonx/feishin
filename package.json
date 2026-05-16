@@ -119,7 +119,6 @@
         "motion": "^12.38.0",
         "mpris-service": "^2.1.2",
         "nanoid": "^3.3.11",
-        "node-mpv": "github:jeffvli/Node-MPV#32b4d64395289ad710c41d481d2707a7acfc228f",
         "overlayscrollbars": "^2.14.0",
         "overlayscrollbars-react": "^0.5.6",
         "qs": "^6.15.0",
