@@ -14,9 +14,7 @@ import { useHotkeys } from '/@/renderer/hooks/use-hotkeys';
 import {
     useAppStoreActions,
     useAutoDJSettings,
-    useCurrentServer,
     useFullScreenPlayerStore,
-    useGeneralSettings,
     useHotkeySettings,
     usePlayerData,
     usePlayerMuted,
@@ -38,7 +36,7 @@ import { Rating } from '/@/shared/components/rating/rating';
 import { useMediaQuery } from '/@/shared/hooks/use-media-query';
 import { useThrottledCallback } from '/@/shared/hooks/use-throttled-callback';
 import { useThrottledValue } from '/@/shared/hooks/use-throttled-value';
-import { LibraryItem, QueueSong, ServerType } from '/@/shared/types/domain-types';
+import { LibraryItem, QueueSong } from '/@/shared/types/domain-types';
 
 const calculateVolumeUp = (volume: number, volumeWheelStep: number) => {
     let volumeToSet: number;
@@ -340,12 +338,7 @@ const RatingButton = () => {
         [bindings.rate5.isGlobal ? '' : bindings.rate5.hotkey, () => handleUpdateRating(5)],
     ]);
 
-    return (
-        <>
-            (
-            <Rating onChange={handleUpdateRating} size="xs" value={currentSong?.userRating || 0} />)
-        </>
-    );
+    return <Rating onChange={handleUpdateRating} size="xs" value={currentSong?.userRating || 0} />;
 };
 
 const VolumeButton = () => {
