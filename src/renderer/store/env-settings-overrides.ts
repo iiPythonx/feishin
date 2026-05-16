@@ -169,11 +169,6 @@ const ENV_SETTING_SPECS: EnvSettingSpec[] = [
         type: 'num',
     },
     {
-        key: 'FS_GENERAL_BLUR_EXPLICIT_IMAGES',
-        path: ['general', 'blurExplicitImages'],
-        type: 'bool',
-    },
-    {
         key: 'FS_GENERAL_COMBINED_LYRICS_AND_VISUALIZER',
         path: ['general', 'combinedLyricsAndVisualizer'],
         type: 'bool',

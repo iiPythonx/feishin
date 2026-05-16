@@ -102,7 +102,7 @@ export const FullScreenPlayerImage = () => {
 
     const currentSong = usePlayerSong();
     const { nextSong } = usePlayerData();
-    const { blurExplicitImages, playerItems } = useGeneralSettings();
+    const { playerItems } = useGeneralSettings();
 
     const isPlayingRadio = isRadioActive && isRadioPlaying;
 
@@ -221,7 +221,6 @@ export const FullScreenPlayerImage = () => {
                             custom={{ isOpen: imageState.current === 0 }}
                             draggable={false}
                             exit="closed"
-                            explicit={blurExplicitImages && imageState.topExplicit}
                             initial="closed"
                             key={`top-${currentSong?._uniqueId || 'none'}`}
                             placeholder="var(--theme-colors-foreground-muted)"
@@ -237,7 +236,6 @@ export const FullScreenPlayerImage = () => {
                             custom={{ isOpen: imageState.current === 1 }}
                             draggable={false}
                             exit="closed"
-                            explicit={blurExplicitImages && imageState.bottomExplicit}
                             initial="closed"
                             key={`bottom-${currentSong?._uniqueId || 'none'}`}
                             placeholder="var(--theme-colors-foreground-muted)"

@@ -15,7 +15,6 @@ These variables override app settings **on first run** when no persisted setting
 | `general.albumBackgroundBlur` | `3` | `FS_GENERAL_ALBUM_BACKGROUND_BLUR` | Blur amount for album background (number). |
 | `general.artistBackground` | `true` | `FS_GENERAL_ARTIST_BACKGROUND` | `true` / `false` — Show artist background image. |
 | `general.artistBackgroundBlur` | `3` | `FS_GENERAL_ARTIST_BACKGROUND_BLUR` | Blur amount for artist background (number). |
-| `general.blurExplicitImages` | `false` | `FS_GENERAL_BLUR_EXPLICIT_IMAGES` | `true` / `false` — Blur explicit images. |
 | `general.combinedLyricsAndVisualizer` | `false` | `FS_GENERAL_COMBINED_LYRICS_AND_VISUALIZER` | `true` / `false` — Combine lyrics and visualizer panel. |
 | `general.enableGridMultiSelect` | `false` | `FS_GENERAL_ENABLE_GRID_MULTI_SELECT` | `true` / `false` — Enable multi-select in grid views. |
 | `general.externalLinks` | `true` | `FS_GENERAL_EXTERNAL_LINKS` | `true` / `false` — Show external links in UI. |

@@ -519,27 +519,6 @@ export const ApplicationSettings = memo(() => {
         {
             control: (
                 <Switch
-                    aria-label={t('setting.blurExplicitImages')}
-                    defaultChecked={settings.blurExplicitImages}
-                    onChange={(e) =>
-                        setSettings({
-                            general: {
-                                ...settings,
-                                blurExplicitImages: e.currentTarget.checked,
-                            },
-                        })
-                    }
-                />
-            ),
-            description: t('setting.blurExplicitImages', {
-                context: 'description',
-            }),
-            isHidden: false,
-            title: t('setting.blurExplicitImages'),
-        },
-        {
-            control: (
-                <Switch
                     aria-label={t('setting.enableGridMultiSelect')}
                     defaultChecked={settings.enableGridMultiSelect}
                     onChange={(e) =>

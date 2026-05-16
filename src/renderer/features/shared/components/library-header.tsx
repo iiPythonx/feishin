@@ -71,7 +71,6 @@ export const LibraryHeader = forwardRef(
         ref: Ref<HTMLDivElement>,
     ) => {
         const { t } = useTranslation();
-        const { blurExplicitImages } = useGeneralSettings();
 
         const itemTypeString = (): string => {
             switch (item.type) {
@@ -123,10 +122,6 @@ export const LibraryHeader = forwardRef(
                             enableDebounce={false}
                             enableViewport={false}
                             fetchPriority="high"
-                            isExplicit={
-                                blurExplicitImages &&
-                                item.explicitStatus === ExplicitStatus.EXPLICIT
-                            }
                             src={imageUrl}
                             style={{
                                 maxHeight: '100%',
@@ -139,7 +134,7 @@ export const LibraryHeader = forwardRef(
                 ),
                 fullScreen: true,
             });
-        }, [blurExplicitImages, item.explicitStatus, item.imageId, item.type]);
+        }, [item.explicitStatus, item.imageId, item.type]);
 
         const imageSectionSharedProps = {
             onClick: () => {

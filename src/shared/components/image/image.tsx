@@ -32,14 +32,12 @@ export interface ImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 's
     imageRequest?: ImageRequest;
     includeLoader?: boolean;
     includeUnloader?: boolean;
-    isExplicit?: boolean;
     src: string | undefined;
     unloaderIcon?: keyof typeof AppIcon;
 }
 
 interface ImageContainerProps extends HTMLAttributes<HTMLDivElement> {
     children: ReactNode;
-    isExplicit?: boolean;
 }
 
 interface ImageLoaderProps {
@@ -65,7 +63,6 @@ export function BaseImage({
     imageRequest,
     includeLoader = true,
     includeUnloader = true,
-    isExplicit = false,
     onError,
     onLoad,
     src,
@@ -123,7 +120,6 @@ export function BaseImage({
     return (
         <ImageContainer
             className={clsx(containerClassName, containerPropsClassName)}
-            isExplicit={isExplicit}
             ref={ref}
             {...restContainerProps}
         >
@@ -155,18 +151,9 @@ export function BaseImage({
 export const Image = memo(BaseImage);
 
 const ImageContainer = forwardRef(
-    (
-        { children, className, isExplicit, ...props }: ImageContainerProps,
-        ref: ForwardedRef<HTMLDivElement>,
-    ) => {
+    ({ children, className, ...props }: ImageContainerProps, ref: ForwardedRef<HTMLDivElement>) => {
         return (
-            <div
-                className={clsx(styles.imageContainer, className, {
-                    [styles.censored]: isExplicit,
-                })}
-                ref={ref}
-                {...props}
-            >
+            <div className={clsx(styles.imageContainer, className)} ref={ref} {...props}>
                 {children}
             </div>
         );

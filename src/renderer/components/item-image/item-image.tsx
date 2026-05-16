@@ -44,7 +44,6 @@ const BaseItemImage = (
     },
 ) => {
     const { explicitStatus, serverId, src, ...rest } = props;
-    const { blurExplicitImages } = useGeneralSettings();
 
     const imageUrl = useItemImageUrl({
         id: props.id,
@@ -62,12 +61,9 @@ const BaseItemImage = (
         type: props.type,
     });
 
-    const isExplicit = blurExplicitImages && explicitStatus === ExplicitStatus.EXPLICIT;
-
     return (
         <BaseImage
             imageRequest={imageRequest}
-            isExplicit={isExplicit}
             src={imageUrl}
             unloaderIcon={getUnloaderIcon(props.itemType)}
             {...rest}

@@ -161,7 +161,6 @@ const SidebarImage = () => {
     const currentSong = usePlayerSong();
     const isRadioActive = useIsRadioActive();
     const { currentStationArt, isPlaying: isRadioPlaying } = useRadioPlayer();
-    const { blurExplicitImages } = useGeneralSettings();
 
     const imageUrl = useItemImageUrl({
         id: currentSong?.imageId || undefined,
@@ -232,15 +231,7 @@ const SidebarImage = () => {
                         <Icon color="muted" icon="radio" size="40%" />
                     </Center>
                 ) : imageUrl ? (
-                    <img
-                        className={clsx(styles.sidebarImage, {
-                            [styles.censored]:
-                                currentSong?.explicitStatus === ExplicitStatus.EXPLICIT &&
-                                blurExplicitImages,
-                        })}
-                        loading="eager"
-                        src={imageUrl}
-                    />
+                    <img className={clsx(styles.sidebarImage)} loading="eager" src={imageUrl} />
                 ) : (
                     <ImageUnloader icon="emptySongImage" />
                 )}
