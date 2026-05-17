@@ -7,10 +7,14 @@ import {
     SettingOption,
     SettingsSection,
 } from '/@/renderer/features/settings/components/settings-section';
+import { usePlayerActions, usePlayerProperties, usePlayerStatus } from '/@/renderer/store';
 import { usePlaybackSettings, useSettingsStoreActions } from '/@/renderer/store/settings.store';
+import { SegmentedControl } from '/@/shared/components/segmented-control/segmented-control';
 import { Select } from '/@/shared/components/select/select';
+import { Slider } from '/@/shared/components/slider/slider';
 import { Switch } from '/@/shared/components/switch/switch';
 import { toast } from '/@/shared/components/toast/toast';
+import { CrossfadeStyle, PlayerStatus, PlayerStyle } from '/@/shared/types/types';
 
 const getAudioDevices = async () => {
     const devices = await navigator.mediaDevices.enumerateDevices();
@@ -131,7 +135,112 @@ export const AudioSettings = memo(() => {
             }),
             title: t('setting.audioFadeOnStatusChange'),
         },
+        {
+            control: <TransitionTypeConfig />,
+            description: t('setting.playbackStyle', {
+                context: 'description',
+            }),
+            title: t('setting.playbackStyle'),
+        },
+        {
+            control: <CrossfadeStyleConfig />,
+            description: t('setting.crossfadeStyle', {
+                context: 'description',
+            }),
+            title: t('setting.crossfadeStyle'),
+        },
+        {
+            control: <CrossfadeDurationConfig />,
+            description: t('setting.crossfadeDuration', {
+                context: 'description',
+            }),
+            title: t('setting.crossfadeDuration'),
+        },
     ];
 
     return <SettingsSection options={audioOptions} title={t('page.setting.audio')} />;
 });
+
+const TransitionTypeConfig = () => {
+    const { t } = useTranslation();
+    const status = usePlayerStatus();
+    const { transitionType } = usePlayerProperties();
+    const { setTransitionType } = usePlayerActions();
+
+    return (
+        <SegmentedControl
+            data={[
+                {
+                    label: t('setting.playbackStyle', {
+                        context: 'optionNormal',
+                    }),
+                    value: PlayerStyle.GAPLESS,
+                },
+                {
+                    label: t('setting.playbackStyle', {
+                        context: 'optionCrossFade',
+                    }),
+                    value: PlayerStyle.CROSSFADE,
+                },
+            ]}
+            disabled={status === PlayerStatus.PLAYING}
+            onChange={(value) => setTransitionType(value as PlayerStyle)}
+            size="sm"
+            value={transitionType}
+            w="100%"
+        />
+    );
+};
+
+const CrossfadeStyleConfig = () => {
+    const status = usePlayerStatus();
+    const { crossfadeStyle, transitionType } = usePlayerProperties();
+    const { setCrossfadeStyle } = usePlayerActions();
+
+    return (
+        <Select
+            comboboxProps={{ withinPortal: false }}
+            data={[
+                { label: 'Linear', value: CrossfadeStyle.LINEAR },
+                { label: 'Equal Power', value: CrossfadeStyle.EQUAL_POWER },
+                { label: 'S-Curve', value: CrossfadeStyle.S_CURVE },
+                { label: 'Exponential', value: CrossfadeStyle.EXPONENTIAL },
+            ]}
+            defaultValue={crossfadeStyle}
+            disabled={transitionType !== PlayerStyle.CROSSFADE || status === PlayerStatus.PLAYING}
+            onChange={(e) => {
+                if (e) {
+                    setCrossfadeStyle(e as CrossfadeStyle);
+                }
+            }}
+            width="100%"
+        />
+    );
+};
+
+const CrossfadeDurationConfig = () => {
+    const status = usePlayerStatus();
+    const { crossfadeDuration, transitionType } = usePlayerProperties();
+    const { setCrossfadeDuration } = usePlayerActions();
+
+    return (
+        <Slider
+            defaultValue={crossfadeDuration}
+            disabled={transitionType !== PlayerStyle.CROSSFADE || status === PlayerStatus.PLAYING}
+            marks={[
+                { label: '3', value: 3 },
+                { label: '6', value: 6 },
+                { label: '9', value: 9 },
+                { label: '12', value: 12 },
+                { label: '15', value: 15 },
+            ]}
+            max={15}
+            min={3}
+            onChangeEnd={setCrossfadeDuration}
+            styles={{
+                root: {},
+            }}
+            w={200}
+        />
+    );
+};

@@ -15,6 +15,12 @@ const AdvancedSettings = lazy(() =>
     }),
 );
 
+const ReplayGainSettings = lazy(() =>
+    import('./replaygain-settings').then((module) => {
+        return { default: module.ReplayGainSettings };
+    }),
+);
+
 export const PlaybackTab = memo(() => {
     const { useWebAudio } = useSettingsStore(
         (state) => ({
@@ -26,8 +32,12 @@ export const PlaybackTab = memo(() => {
     return (
         <Stack gap="md">
             <AudioSettings />
+            <Divider />
             <Suspense fallback={<></>}>
                 {useWebAudio && 'AudioContext' in window && <AdvancedSettings />}
+            </Suspense>
+            <Suspense fallback={<></>}>
+                {useWebAudio && 'AudioContext' in window && <ReplayGainSettings />}
             </Suspense>
             <Divider />
             <TranscodeSettings />

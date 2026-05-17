@@ -134,7 +134,7 @@ import {
     LuWrench,
     LuX,
 } from 'react-icons/lu';
-import { MdOutlineVisibility, MdOutlineVisibilityOff } from 'react-icons/md';
+import { MdOutlineVisibility, MdOutlineVisibilityOff, MdSpeed } from 'react-icons/md';
 import { PiMouseLeftClickFill, PiMouseRightClickFill } from 'react-icons/pi';
 import { RiPlayListAddLine, RiRepeat2Line, RiRepeatOneLine } from 'react-icons/ri';
 
@@ -347,6 +347,7 @@ export const AppIcon = {
     sort: LuArrowUpDown,
     sortAsc: LuArrowUpNarrowWide,
     sortDesc: LuArrowDownWideNarrow,
+    speed: MdSpeed,
     spinner: LuLoader,
     square: LuSquare,
     squareCheck: LuSquareCheck,

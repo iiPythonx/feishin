@@ -52,5 +52,5 @@ export const PasswordSettings = memo(() => {
         },
     ];
 
-    return <SettingsSection options={updateOptions} />;
+    return <SettingsSection options={updateOptions} title={'Secrets'} />;
 });
