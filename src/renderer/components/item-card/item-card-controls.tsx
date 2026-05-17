@@ -28,7 +28,6 @@ import { Play } from '/@/shared/types/types';
 
 interface ItemCardControlsProps {
     controls?: ItemControls;
-    enableExpansion?: boolean;
     internalState?: ItemListStateActions;
     item: Album | AlbumArtist | Artist | Genre | Playlist | Song | undefined;
     itemType: LibraryItem;
@@ -179,27 +178,8 @@ const createMoreHandler =
         });
     };
 
-const createExpandHandler =
-    (
-        controls: ItemControls | undefined,
-        item: Album | AlbumArtist | Artist | Genre | Playlist | Song | undefined,
-        internalState: ItemListStateActions | undefined,
-        itemType: LibraryItem,
-    ) =>
-    (e: MouseEvent<HTMLButtonElement>) => {
-        e.stopPropagation();
-        e.preventDefault();
-        controls?.onExpand?.({
-            event: e,
-            internalState,
-            item,
-            itemType,
-        });
-    };
-
 export const ItemCardControls = ({
     controls,
-    enableExpansion,
     internalState,
     item,
     itemType,
@@ -250,11 +230,6 @@ export const ItemCardControls = ({
         [controls, item, internalState, itemType],
     );
 
-    const expandHandler = useMemo(
-        () => createExpandHandler(controls, item, internalState, itemType),
-        [controls, item, internalState, itemType],
-    );
-
     const isFavorite = (item as { userFavorite?: boolean })?.userFavorite ?? false;
 
     return (
@@ -301,13 +276,6 @@ export const ItemCardControls = ({
                     icon="ellipsisHorizontal"
                     onClick={moreHandler}
                     onDoubleClick={moreDoubleClickHandler}
-                />
-            )}
-            {controls?.onExpand && enableExpansion && (
-                <SecondaryButton
-                    className={styles.expand}
-                    icon="arrowDownS"
-                    onClick={expandHandler}
                 />
             )}
         </motion.div>

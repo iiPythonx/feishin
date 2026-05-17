@@ -8,7 +8,6 @@ import { ContextMenuController } from '/@/renderer/features/context-menu/context
 import { usePlayer } from '/@/renderer/features/player/context/player-context';
 import { useSetFavorite } from '/@/renderer/features/shared/hooks/use-set-favorite';
 import { useSetRating } from '/@/renderer/features/shared/hooks/use-set-rating';
-import { useAppStore } from '/@/renderer/store';
 import { LibraryItem, QueueSong, Song } from '/@/shared/types/domain-types';
 import { Play, TableColumn } from '/@/shared/types/types';
 
@@ -282,29 +281,6 @@ export const useDefaultItemListControls = (args?: UseDefaultItemListControlsArgs
                     if (queueSong._uniqueId) {
                         playerRef.current.mediaPlay(queueSong._uniqueId);
                     }
-                }
-            },
-
-            onExpand: ({ item, itemType }: DefaultItemControlProps) => {
-                if (!item) return;
-
-                const itemListItem = item as ItemListStateItemWithRequiredProperties;
-                const setGlobalExpanded = useAppStore.getState().actions.setGlobalExpanded;
-                const globalExpanded = useAppStore.getState().globalExpanded;
-
-                if (globalExpanded?.item?.id === item.id) {
-                    setGlobalExpanded(null);
-                } else {
-                    const itemForStore: ItemListStateItemWithRequiredProperties & {
-                        imageId: null | string;
-                    } = {
-                        ...itemListItem,
-                        imageId: (itemListItem as { imageId?: null | string }).imageId ?? null,
-                    };
-                    setGlobalExpanded({
-                        item: itemForStore,
-                        itemType,
-                    });
                 }
             },
 

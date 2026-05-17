@@ -35,11 +35,6 @@ export type ItemListAction =
     | {
           extractRowId: (item: unknown) => string | undefined;
           payload: ItemListStateItemWithRequiredProperties;
-          type: 'TOGGLE_EXPANDED';
-      }
-    | {
-          extractRowId: (item: unknown) => string | undefined;
-          payload: ItemListStateItemWithRequiredProperties;
           type: 'TOGGLE_SELECTED';
       }
     | {
@@ -50,23 +45,15 @@ export type ItemListAction =
     | {
           extractRowId: (item: unknown) => string | undefined;
           payload: ItemListStateItemWithRequiredProperties[];
-          type: 'SET_EXPANDED';
-      }
-    | {
-          extractRowId: (item: unknown) => string | undefined;
-          payload: ItemListStateItemWithRequiredProperties[];
           type: 'SET_SELECTED';
       }
     | { type: 'CLEAR_ALL' }
     | { type: 'CLEAR_DRAGGING' }
-    | { type: 'CLEAR_EXPANDED' }
     | { type: 'CLEAR_SELECTED' };
 
 export interface ItemListState {
     dragging: Set<string>;
     draggingItems: Map<string, unknown>;
-    expanded: Set<string>;
-    expandedItems: Map<string, unknown>;
     selected: Set<string>;
     selectedItems: Map<string, unknown>;
     version: number;
@@ -75,7 +62,6 @@ export interface ItemListState {
 export interface ItemListStateActions {
     clearAll: () => void;
     clearDragging: () => void;
-    clearExpanded: () => void;
     clearSelected: () => void;
     deselectAll: () => void;
     extractRowId: (item: unknown) => string | undefined;
@@ -83,25 +69,18 @@ export interface ItemListStateActions {
     getData: () => unknown[];
     getDragging: () => unknown[];
     getDraggingIds: () => string[];
-    getExpanded: () => unknown[];
-    getExpandedIds: () => string[];
-    getExpandedItemsCached: () => unknown[];
     getSelected: () => unknown[];
     getSelectedIds: () => string[];
     getVersion: () => number;
     hasDragging: () => boolean;
-    hasExpanded: () => boolean;
     hasSelected: () => boolean;
     isAllSelected: () => boolean;
     isDragging: (rowId: string) => boolean;
-    isExpanded: (rowId: string) => boolean;
     isSelected: (rowId: string) => boolean;
     isSomeSelected: () => boolean;
     selectAll: () => void;
     setDragging: (items: ItemListStateItemWithRequiredProperties[]) => void;
-    setExpanded: (items: ItemListStateItemWithRequiredProperties[]) => void;
     setSelected: (items: ItemListStateItemWithRequiredProperties[]) => void;
-    toggleExpanded: (item: ItemListStateItemWithRequiredProperties) => void;
     toggleSelected: (item: ItemListStateItemWithRequiredProperties) => void;
 }
 
@@ -129,8 +108,6 @@ export const itemListReducer = (state: ItemListState, action: ItemListAction): I
                 ...state,
                 dragging: new Set(),
                 draggingItems: new Map(),
-                expanded: new Set(),
-                expandedItems: new Map(),
                 selected: new Set(),
                 selectedItems: new Map(),
                 version: state.version + 1,
@@ -141,14 +118,6 @@ export const itemListReducer = (state: ItemListState, action: ItemListAction): I
                 ...state,
                 dragging: new Set(),
                 draggingItems: new Map(),
-                version: state.version + 1,
-            };
-
-        case 'CLEAR_EXPANDED':
-            return {
-                ...state,
-                expanded: new Set(),
-                expandedItems: new Map(),
                 version: state.version + 1,
             };
 
@@ -180,27 +149,6 @@ export const itemListReducer = (state: ItemListState, action: ItemListAction): I
             };
         }
 
-        case 'SET_EXPANDED': {
-            const newExpanded = new Set<string>();
-            const newExpandedItems = new Map<string, unknown>();
-
-            if (action.payload.length > 0) {
-                const firstItem = action.payload[0];
-                const rowId = action.extractRowId(firstItem);
-                if (rowId) {
-                    newExpanded.add(rowId);
-                    newExpandedItems.set(rowId, firstItem);
-                }
-            }
-
-            return {
-                ...state,
-                expanded: newExpanded,
-                expandedItems: newExpandedItems,
-                version: state.version + 1,
-            };
-        }
-
         case 'SET_SELECTED': {
             const newSelected = new Set<string>();
             const newSelectedItems = new Map<string, unknown>();
@@ -217,32 +165,6 @@ export const itemListReducer = (state: ItemListState, action: ItemListAction): I
                 ...state,
                 selected: newSelected,
                 selectedItems: newSelectedItems,
-                version: state.version + 1,
-            };
-        }
-
-        case 'TOGGLE_EXPANDED': {
-            const newExpanded = new Set<string>();
-            const newExpandedItems = new Map<string, unknown>();
-
-            const rowId = action.extractRowId(action.payload);
-            if (!rowId) {
-                return state;
-            }
-
-            // If the item is already expanded, collapse it
-            if (state.expanded.has(rowId)) {
-                // Item is expanded, so collapse it (leave sets empty)
-            } else {
-                // Item is not expanded, so expand it (clear others first for single expansion)
-                newExpanded.add(rowId);
-                newExpandedItems.set(rowId, action.payload);
-            }
-
-            return {
-                ...state,
-                expanded: newExpanded,
-                expandedItems: newExpandedItems,
                 version: state.version + 1,
             };
         }
@@ -280,8 +202,6 @@ export const itemListReducer = (state: ItemListState, action: ItemListAction): I
 export const initialItemListState: ItemListState = {
     dragging: new Set(),
     draggingItems: new Map(),
-    expanded: new Set(),
-    expandedItems: new Map(),
     selected: new Set(),
     selectedItems: new Map(),
     version: 0,
@@ -293,31 +213,13 @@ export const initialItemListState: ItemListState = {
  */
 class ItemListStateStore {
     // Cache for derived values to prevent unnecessary rerenders
-    private expandedItemsCache: null | unknown[] = null;
-    private expandedItemsCacheVersion: number = -1;
     private listeners = new Set<() => void>();
     private state: ItemListState = { ...initialItemListState };
 
     dispatch(action: ItemListAction): void {
         this.state = itemListReducer(this.state, action);
-        // Invalidate caches when state changes
-        this.expandedItemsCache = null;
         // Notify all subscribers
         this.listeners.forEach((listener) => listener());
-    }
-
-    getExpandedItems(): unknown[] {
-        // Return cached array if state version hasn't changed
-        if (
-            this.expandedItemsCache !== null &&
-            this.expandedItemsCacheVersion === this.state.version
-        ) {
-            return this.expandedItemsCache;
-        }
-        // Create new array and cache it
-        this.expandedItemsCache = Array.from(this.state.expandedItems.values());
-        this.expandedItemsCacheVersion = this.state.version;
-        return this.expandedItemsCache;
     }
 
     getState(): ItemListState {
@@ -358,19 +260,6 @@ export const useItemSelectionState = (
 ): boolean => {
     return useItemListStateSubscription(internalState, (state) =>
         state && rowId ? state.selected.has(rowId) : false,
-    );
-};
-
-/**
- * Hook to subscribe to expansion state for a specific item
- * Use this in components that need to rerender when a specific item's expansion changes
- */
-export const useItemExpansionState = (
-    internalState: ItemListStateActions | undefined,
-    rowId: string | undefined,
-): boolean => {
-    return useItemListStateSubscription(internalState, (state) =>
-        state && rowId ? state.expanded.has(rowId) : false,
     );
 };
 
@@ -418,17 +307,6 @@ export const useItemListState = (
         [extractRowId],
     );
 
-    const setExpanded = useCallback(
-        (items: ItemListStateItemWithRequiredProperties[]) => {
-            store.dispatch({
-                extractRowId: extractRowIdFn,
-                payload: items,
-                type: 'SET_EXPANDED',
-            });
-        },
-        [store, extractRowIdFn],
-    );
-
     const setDragging = useCallback(
         (items: ItemListStateItemWithRequiredProperties[]) => {
             store.dispatch({
@@ -451,17 +329,6 @@ export const useItemListState = (
         [store, extractRowIdFn],
     );
 
-    const toggleExpanded = useCallback(
-        (item: ItemListStateItemWithRequiredProperties) => {
-            store.dispatch({
-                extractRowId: extractRowIdFn,
-                payload: item,
-                type: 'TOGGLE_EXPANDED',
-            });
-        },
-        [store, extractRowIdFn],
-    );
-
     const toggleSelected = useCallback(
         (item: ItemListStateItemWithRequiredProperties) => {
             store.dispatch({
@@ -474,14 +341,6 @@ export const useItemListState = (
     );
 
     // These methods read from the store without subscribing, so they don't cause rerenders
-    const isExpanded = useCallback(
-        (rowId: string) => {
-            const state = getCurrentState();
-            return itemListSelectors.isExpanded(state, rowId);
-        },
-        [getCurrentState],
-    );
-
     const isSelected = useCallback(
         (rowId: string) => {
             const state = getCurrentState();
@@ -489,15 +348,6 @@ export const useItemListState = (
         },
         [getCurrentState],
     );
-
-    const getExpanded = useCallback(() => {
-        const state = getCurrentState();
-        return itemListSelectors.getExpanded(state);
-    }, [getCurrentState]);
-
-    const getExpandedItemsCached = useCallback(() => {
-        return store.getExpandedItems();
-    }, [store]);
 
     const getDragging = useCallback(() => {
         const state = getCurrentState();
@@ -516,21 +366,12 @@ export const useItemListState = (
         return Array.from(state.dragging);
     }, [getCurrentState]);
 
-    const getExpandedIds = useCallback(() => {
-        const state = getCurrentState();
-        return Array.from(state.expanded);
-    }, [getCurrentState]);
-
     const getSelectedIds = useCallback(() => {
         const state = getCurrentState();
         const selectedIds = Array.from(state.selected);
         const data = getDataFn ? getDataFn() : [];
         return sortByDataOrder(selectedIds, data, extractRowIdFn, true);
     }, [getCurrentState, getDataFn, extractRowIdFn]);
-
-    const clearExpanded = useCallback(() => {
-        store.dispatch({ type: 'CLEAR_EXPANDED' });
-    }, [store]);
 
     const clearDragging = useCallback(() => {
         store.dispatch({ type: 'CLEAR_DRAGGING' });
@@ -547,11 +388,6 @@ export const useItemListState = (
     const getVersion = useCallback(() => {
         const state = getCurrentState();
         return itemListSelectors.getVersion(state);
-    }, [getCurrentState]);
-
-    const hasExpanded = useCallback(() => {
-        const state = getCurrentState();
-        return itemListSelectors.hasAnyExpanded(state);
     }, [getCurrentState]);
 
     const hasDragging = useCallback(() => {
@@ -623,7 +459,6 @@ export const useItemListState = (
             __store: store,
             clearAll,
             clearDragging,
-            clearExpanded,
             clearSelected,
             deselectAll,
             extractRowId: extractRowIdFn,
@@ -631,25 +466,18 @@ export const useItemListState = (
             getData,
             getDragging,
             getDraggingIds,
-            getExpanded,
-            getExpandedIds,
-            getExpandedItemsCached,
             getSelected,
             getSelectedIds,
             getVersion,
             hasDragging,
-            hasExpanded,
             hasSelected,
             isAllSelected,
             isDragging,
-            isExpanded,
             isSelected,
             isSomeSelected,
             selectAll,
             setDragging,
-            setExpanded,
             setSelected,
-            toggleExpanded,
             toggleSelected,
         } as ItemListStateActions & {
             __getState: () => ItemListState;
@@ -661,7 +489,6 @@ export const useItemListState = (
         store,
         clearAll,
         clearDragging,
-        clearExpanded,
         clearSelected,
         isAllSelected,
         isSomeSelected,
@@ -671,23 +498,16 @@ export const useItemListState = (
         getData,
         getDragging,
         getDraggingIds,
-        getExpanded,
-        getExpandedIds,
-        getExpandedItemsCached,
         getSelected,
         getSelectedIds,
         getVersion,
         hasDragging,
-        hasExpanded,
         hasSelected,
         isDragging,
-        isExpanded,
         isSelected,
         selectAll,
         setDragging,
-        setExpanded,
         setSelected,
-        toggleExpanded,
         toggleSelected,
     ]);
 

@@ -302,16 +302,3 @@ export const usePageSidebar = (key: string): [boolean, (value: boolean) => void]
 
     return [isOpen, setIsOpen];
 };
-
-export const useGlobalExpanded = () => useAppStore((state) => state.globalExpanded);
-
-export const useSetGlobalExpanded = () => useAppStore((state) => state.actions.setGlobalExpanded);
-
-export const useGlobalExpandedState = () => {
-    const globalExpanded = useGlobalExpanded();
-    const setGlobalExpanded = useSetGlobalExpanded();
-
-    const clearGlobalExpanded = () => setGlobalExpanded(null);
-
-    return { clearGlobalExpanded, globalExpanded, setGlobalExpanded };
-};

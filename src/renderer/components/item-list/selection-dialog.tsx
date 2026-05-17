@@ -39,10 +39,6 @@ const controls = [
 export const SelectionDialog = ({ internalState }: { internalState: ItemListStateActions }) => {
     const { t } = useTranslation();
 
-    const isListExpanded = useItemListStateSubscription(internalState, (state) =>
-        state ? state.expanded.size > 0 : false,
-    );
-
     const selectedCount = useItemListStateSubscription(internalState, (state) =>
         state ? state.selected.size : 0,
     );
@@ -75,7 +71,7 @@ export const SelectionDialog = ({ internalState }: { internalState: ItemListStat
                 <motion.div
                     {...animationProps.fadeIn}
                     className={styles.selectionIndicator}
-                    style={{ bottom: isListExpanded ? '320px' : '1rem' }}
+                    style={{ bottom: '1rem' }}
                 >
                     <Group gap="xl" justify="space-between">
                         <Group gap="sm">
