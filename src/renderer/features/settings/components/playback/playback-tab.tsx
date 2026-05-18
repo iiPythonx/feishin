@@ -29,16 +29,20 @@ export const PlaybackTab = memo(() => {
         shallow,
     );
 
+    const advancedAudio = useWebAudio && 'AudioContext' in window;
+
     return (
         <Stack gap="md">
             <AudioSettings />
-            <Divider />
-            <Suspense fallback={<></>}>
-                {useWebAudio && 'AudioContext' in window && <AdvancedSettings />}
-            </Suspense>
-            <Suspense fallback={<></>}>
-                {useWebAudio && 'AudioContext' in window && <ReplayGainSettings />}
-            </Suspense>
+            {advancedAudio && (
+                <>
+                    <Divider />
+                    <Suspense fallback={<></>}>
+                        <AdvancedSettings />
+                        <ReplayGainSettings />
+                    </Suspense>
+                </>
+            )}
             <Divider />
             <TranscodeSettings />
             <Divider />

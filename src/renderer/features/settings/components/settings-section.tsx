@@ -7,7 +7,7 @@ import { TextTitle } from '/@/shared/components/text-title/text-title';
 
 export type SettingOption = {
     control: ReactNode;
-    description: ReactNode | string;
+    description?: ReactNode | string;
     indent?: boolean;
     isHidden?: boolean;
     note?: string;

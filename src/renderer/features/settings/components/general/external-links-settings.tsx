@@ -47,9 +47,7 @@ export const ExternalLinksSettings = memo(() => {
                     }}
                 />
             ),
-            description: t('setting.lastfm', {
-                context: 'description',
-            }),
+            indent: true,
             isHidden: !settings.externalLinks,
             title: t('setting.lastfm'),
         },
@@ -67,9 +65,8 @@ export const ExternalLinksSettings = memo(() => {
                     }}
                 />
             ),
-            description: t('setting.listenbrainz', {
-                context: 'description',
-            }),
+            indent: true,
+
             isHidden: !settings.externalLinks,
             title: t('setting.listenbrainz'),
         },
@@ -87,9 +84,8 @@ export const ExternalLinksSettings = memo(() => {
                     }}
                 />
             ),
-            description: t('setting.musicbrainz', {
-                context: 'description',
-            }),
+            indent: true,
+
             isHidden: !settings.externalLinks,
             title: t('setting.musicbrainz'),
         },
@@ -107,9 +103,8 @@ export const ExternalLinksSettings = memo(() => {
                     }}
                 />
             ),
-            description: t('setting.qobuz', {
-                context: 'description',
-            }),
+            indent: true,
+
             isHidden: !settings.externalLinks,
             title: t('setting.qobuz'),
         },
@@ -127,9 +122,8 @@ export const ExternalLinksSettings = memo(() => {
                     }}
                 />
             ),
-            description: t('setting.spotify', {
-                context: 'description',
-            }),
+            indent: true,
+
             isHidden: !settings.externalLinks,
             title: t('setting.spotify'),
         },

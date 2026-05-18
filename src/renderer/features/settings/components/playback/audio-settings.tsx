@@ -59,6 +59,7 @@ export const AudioSettings = memo(() => {
     const { t } = useTranslation();
     const settings = usePlaybackSettings();
     const { setSettings } = useSettingsStoreActions();
+    const { transitionType } = usePlayerProperties();
 
     const audioDevices = useAudioDevices();
     const audioDeviceId = settings.audioDeviceId;
@@ -142,20 +143,26 @@ export const AudioSettings = memo(() => {
             }),
             title: t('setting.playbackStyle'),
         },
-        {
-            control: <CrossfadeStyleConfig />,
-            description: t('setting.crossfadeStyle', {
-                context: 'description',
-            }),
-            title: t('setting.crossfadeStyle'),
-        },
-        {
-            control: <CrossfadeDurationConfig />,
-            description: t('setting.crossfadeDuration', {
-                context: 'description',
-            }),
-            title: t('setting.crossfadeDuration'),
-        },
+        ...(transitionType === PlayerStyle.CROSSFADE
+            ? [
+                  {
+                      control: <CrossfadeStyleConfig />,
+                      description: t('setting.crossfadeStyle', {
+                          context: 'description',
+                      }),
+                      indent: true,
+                      title: t('setting.crossfadeStyle'),
+                  },
+                  {
+                      control: <CrossfadeDurationConfig />,
+                      description: t('setting.crossfadeDuration', {
+                          context: 'description',
+                      }),
+                      indent: true,
+                      title: t('setting.crossfadeDuration'),
+                  },
+              ]
+            : []),
     ];
 
     return <SettingsSection options={audioOptions} title={t('page.setting.audio')} />;

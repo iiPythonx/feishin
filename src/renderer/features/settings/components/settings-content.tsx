@@ -13,6 +13,12 @@ const GeneralTab = lazy(() =>
     })),
 );
 
+const PagesTab = lazy(() =>
+    import('/@/renderer/features/settings/components/pages/pages-tab').then((module) => ({
+        default: module.PagesTab,
+    })),
+);
+
 const PlaybackTab = lazy(() =>
     import('/@/renderer/features/settings/components/playback/playback-tab').then((module) => ({
         default: module.PlaybackTab,
@@ -54,6 +60,7 @@ export const SettingsContent = () => {
                 >
                     <Tabs.List>
                         <Tabs.Tab value="general">{t('page.setting.generalTab')}</Tabs.Tab>
+                        <Tabs.Tab value="pages">{'Pages'}</Tabs.Tab>
                         <Tabs.Tab value="playback">{t('page.setting.playbackTab')}</Tabs.Tab>
                         <Tabs.Tab value="hotkeys">{t('page.setting.hotkeysTab')}</Tabs.Tab>
                         {isElectron() && (
@@ -64,6 +71,11 @@ export const SettingsContent = () => {
                     <Tabs.Panel value="general">
                         <Suspense fallback={<Spinner container />}>
                             <GeneralTab />
+                        </Suspense>
+                    </Tabs.Panel>
+                    <Tabs.Panel value="pages">
+                        <Suspense fallback={<Spinner container />}>
+                            <PagesTab />
                         </Suspense>
                     </Tabs.Panel>
                     <Tabs.Panel value="playback">

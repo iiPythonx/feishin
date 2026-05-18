@@ -32,33 +32,6 @@ export const LyricSettings = memo(() => {
         {
             control: (
                 <Switch
-                    aria-label="Follow lyrics"
-                    defaultChecked={settings.follow}
-                    onChange={(e) => updateSetting({ follow: e.currentTarget.checked })}
-                />
-            ),
-            description: t('setting.followLyric', {
-                context: 'description',
-            }),
-            title: t('setting.followLyric'),
-        },
-        {
-            control: (
-                <Switch
-                    aria-label="Prefer local lyrics"
-                    defaultChecked={settings.preferLocalLyrics}
-                    onChange={(e) => updateSetting({ preferLocalLyrics: e.currentTarget.checked })}
-                />
-            ),
-            description: t('setting.preferLocalLyrics', {
-                context: 'description',
-            }),
-            isHidden: !isElectron(),
-            title: t('setting.preferLocalLyrics'),
-        },
-        {
-            control: (
-                <Switch
                     aria-label="Enable fetching lyrics"
                     defaultChecked={settings.fetch}
                     onChange={(e) => updateSetting({ fetch: e.currentTarget.checked })}
@@ -87,8 +60,24 @@ export const LyricSettings = memo(() => {
             description: t('setting.lyricFetchProvider', {
                 context: 'description',
             }),
-            isHidden: !isElectron(),
+            indent: true,
+            isHidden: !isElectron() || !settings.fetch,
             title: t('setting.lyricFetchProvider'),
+        },
+        {
+            control: (
+                <Switch
+                    aria-label="Prefer local lyrics"
+                    defaultChecked={settings.preferLocalLyrics}
+                    onChange={(e) => updateSetting({ preferLocalLyrics: e.currentTarget.checked })}
+                />
+            ),
+            description: t('setting.preferLocalLyrics', {
+                context: 'description',
+            }),
+            indent: true,
+            isHidden: !isElectron() || !settings.fetch,
+            title: t('setting.preferLocalLyrics'),
         },
         {
             control: (

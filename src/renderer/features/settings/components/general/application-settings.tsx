@@ -8,12 +8,6 @@ import { useTranslation } from 'react-i18next';
 import i18n, { languages } from '/@/i18n/i18n';
 import { ImageResolutionSettings } from '/@/renderer/features/settings/components/general/art-resolution-settings';
 import {
-    ArtistReleaseTypeSettings,
-    ArtistSettings,
-} from '/@/renderer/features/settings/components/general/artist-settings';
-import { FullscreenPlayerSettings } from '/@/renderer/features/settings/components/general/fullscreen-player-settings';
-import { HomeSettings } from '/@/renderer/features/settings/components/general/home-settings';
-import {
     SettingOption,
     SettingsSection,
 } from '/@/renderer/features/settings/components/settings-section';
@@ -29,7 +23,6 @@ import { FileInput } from '/@/shared/components/file-input/file-input';
 import { NumberInput } from '/@/shared/components/number-input/number-input';
 import { SegmentedControl } from '/@/shared/components/segmented-control/segmented-control';
 import { Select } from '/@/shared/components/select/select';
-import { Slider } from '/@/shared/components/slider/slider';
 import { Switch } from '/@/shared/components/switch/switch';
 import { toast } from '/@/shared/components/toast/toast';
 import { FontType } from '/@/shared/types/types';
@@ -98,13 +91,6 @@ export const ApplicationSettings = memo(() => {
     const fontSettings = useFontSettings();
     const { setSettings } = useSettingsStoreActions();
     const [localFonts, setLocalFonts] = useState<Font[]>([]);
-
-    // const fontList = useMemo(() => {
-    //     if (fontSettings.custom) {
-    //         return fontSettings.custom.split(/(\\|\/)/g).pop()!;
-    //     }
-    //     return '';
-    // }, [fontSettings.custom]);
 
     const onFontError = useCallback(
         (_: IpcRendererEvent, file: string) => {
@@ -363,98 +349,6 @@ export const ApplicationSettings = memo(() => {
         {
             control: (
                 <Switch
-                    aria-label={t('setting.albumBackground')}
-                    defaultChecked={settings.albumBackground}
-                    onChange={(e) =>
-                        setSettings({
-                            general: {
-                                ...settings,
-                                albumBackground: e.currentTarget.checked,
-                            },
-                        })
-                    }
-                />
-            ),
-            description: t('setting.albumBackground', {
-                context: 'description',
-            }),
-            isHidden: false,
-            title: t('setting.albumBackground'),
-        },
-        {
-            control: (
-                <Slider
-                    defaultValue={settings.albumBackgroundBlur}
-                    label={(e) => `${e} rem`}
-                    max={6}
-                    min={0}
-                    onChangeEnd={(e) => {
-                        setSettings({
-                            general: {
-                                ...settings,
-                                albumBackgroundBlur: e,
-                            },
-                        });
-                    }}
-                    step={0.5}
-                    w={100}
-                />
-            ),
-            description: t('setting.albumBackgroundBlur', {
-                context: 'description',
-            }),
-            isHidden: !settings.albumBackground,
-            title: t('setting.albumBackgroundBlur'),
-        },
-        {
-            control: (
-                <Switch
-                    aria-label={t('setting.artistBackground')}
-                    defaultChecked={settings.artistBackground}
-                    onChange={(e) =>
-                        setSettings({
-                            general: {
-                                ...settings,
-                                artistBackground: e.currentTarget.checked,
-                            },
-                        })
-                    }
-                />
-            ),
-            description: t('setting.artistBackground', {
-                context: 'description',
-            }),
-            isHidden: false,
-            title: t('setting.artistBackground'),
-        },
-        {
-            control: (
-                <Slider
-                    defaultValue={settings.artistBackgroundBlur}
-                    label={(e) => `${e} rem`}
-                    max={6}
-                    min={0}
-                    onChangeEnd={(e) => {
-                        setSettings({
-                            general: {
-                                ...settings,
-                                artistBackgroundBlur: e,
-                            },
-                        });
-                    }}
-                    step={0.5}
-                    w={100}
-                />
-            ),
-            description: t('setting.artistBackgroundBlur', {
-                context: 'description',
-            }),
-            isHidden: !settings.artistBackground,
-            title: t('setting.artistBackgroundBlur'),
-        },
-        {
-            control: (
-                <Switch
                     aria-label="Toggle using native aspect ratio"
                     defaultChecked={settings.nativeAspectRatio}
                     onChange={(e) =>
@@ -595,10 +489,6 @@ export const ApplicationSettings = memo(() => {
             extra={
                 <>
                     <ImageResolutionSettings />
-                    <HomeSettings />
-                    <ArtistSettings />
-                    <ArtistReleaseTypeSettings />
-                    <FullscreenPlayerSettings />
                 </>
             }
             options={options}

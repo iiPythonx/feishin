@@ -304,9 +304,6 @@ export const ControlSettings = memo(() => {
                     w="100%"
                 />
             ),
-            description: t('setting.playerbarSlider', {
-                context: 'description',
-            }),
             isHidden: false,
             title: t('setting.playerbarSlider'),
         },
@@ -353,9 +350,11 @@ export const ControlSettings = memo(() => {
                       ),
                       description: t('setting.playerbarWaveformAlign', {
                           context: 'description',
+                          postProcess: 'sentenceCase',
                       }),
+                      indent: true,
                       isHidden: false,
-                      title: t('setting.playerbarWaveformAlign'),
+                      title: t('setting.playerbarWaveformAlign', { postProcess: 'sentenceCase' }),
                   },
                   {
                       control: (
@@ -381,11 +380,11 @@ export const ControlSettings = memo(() => {
                               w="120px"
                           />
                       ),
-                      description: t('setting.playerbarWaveformBarWidth', {
-                          context: 'description',
-                      }),
+                      indent: true,
                       isHidden: false,
-                      title: t('setting.playerbarWaveformBarWidth'),
+                      title: t('setting.playerbarWaveformBarWidth', {
+                          postProcess: 'sentenceCase',
+                      }),
                   },
                   {
                       control: (
@@ -411,11 +410,9 @@ export const ControlSettings = memo(() => {
                               w="120px"
                           />
                       ),
-                      description: t('setting.playerbarWaveformGap', {
-                          context: 'description',
-                      }),
+                      indent: true,
                       isHidden: false,
-                      title: t('setting.playerbarWaveformGap'),
+                      title: t('setting.playerbarWaveformGap', { postProcess: 'sentenceCase' }),
                   },
                   {
                       control: (
@@ -441,11 +438,9 @@ export const ControlSettings = memo(() => {
                               w="120px"
                           />
                       ),
-                      description: t('setting.playerbarWaveformRadius', {
-                          context: 'description',
-                      }),
+                      indent: true,
                       isHidden: false,
-                      title: t('setting.playerbarWaveformRadius'),
+                      title: t('setting.playerbarWaveformRadius', { postProcess: 'sentenceCase' }),
                   },
                   {
                       control: (
@@ -466,9 +461,11 @@ export const ControlSettings = memo(() => {
                       ),
                       description: t('setting.playerbarWaveformStretch', {
                           context: 'description',
+                          postProcess: 'sentenceCase',
                       }),
+                      indent: true,
                       isHidden: false,
-                      title: t('setting.playerbarWaveformStretch'),
+                      title: t('setting.playerbarWaveformStretch', { postProcess: 'sentenceCase' }),
                   },
               ]
             : []),
