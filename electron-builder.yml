@@ -35,6 +35,5 @@ linux:
         - tar.xz
     category: AudioVideo;Audio;Player
     icon: assets/icons/icon.png
-    artifactName: ${productName}-${os}-${arch}.${ext}
 
 npmRebuild: false
