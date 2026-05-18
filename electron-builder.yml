@@ -1,5 +1,5 @@
 appId: org.jeffvli.feishin
-productName: Feishin
+productName: fxshin
 artifactName: ${productName}-${version}-${os}-${arch}.${ext}
 electronVersion: 42.1.0
 directories:
