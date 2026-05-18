@@ -293,7 +293,7 @@ export const useDiscordRpc = () => {
                                     'Content-Type': 'multipart/form-data',
                                 },
                                 method: 'POST',
-                                url: 'https://covers.iipython.dev/api/image',
+                                url: 'https://pizza.iipython.dev/api/image',
                             })
                         ).data.url;
                         if (activity.largeImageKey) setlastProxiedUrl(activity.largeImageKey);
