@@ -55,7 +55,7 @@
 
 .song-info-title {
     font-size: clamp(2rem, 8vw, 6rem);
-    line-height: 1.2;
+    line-height: 1.4;
     color: #ddd;
 }
 
