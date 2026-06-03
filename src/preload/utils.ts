@@ -1,6 +1,6 @@
 import { ipcRenderer, webFrame } from 'electron';
 
-import { disableAutoUpdates, isLinux, isMacOS, isWindows } from '../main/env';
+import { isLinux, isMacOS, isWindows } from '../main/env';
 
 const openItem = async (path: string) => {
     return ipcRenderer.invoke('open-item', path);
@@ -119,7 +119,6 @@ const rendererUpdateAvailable = (cb: (version: string) => void) => {
 export const utils = {
     checkForUpdates,
     customCssUpdatedListener,
-    disableAutoUpdates,
     download,
     forceGarbageCollection,
     getCustomCss,

@@ -3,7 +3,6 @@ import {
     app,
     BrowserWindow,
     BrowserWindowConstructorOptions,
-    desktopCapturer,
     globalShortcut,
     ipcMain,
     Menu,
@@ -19,18 +18,16 @@ import {
     Tray,
 } from 'electron';
 import electronLocalShortcut from 'electron-localshortcut';
-import log from 'electron-log/main';
 import { access, constants } from 'fs';
 import path, { join } from 'path';
 
+import { isLinux, isMacOS, isWindows } from './env';
 import { disableMediaKeys, enableMediaKeys } from './features/core/player/media-keys';
 import { shutdownServer } from './features/core/remote';
 import { store } from './features/core/settings';
-import { canHandleVisualizerDisplayMedia } from './features/core/visualizer';
 import MenuBuilder, { MenuPlaybackState } from './menu';
-import { createLog, hotkeyToElectronAccelerator, isLinux, isMacOS, isWindows } from './utils';
+import { createLog, hotkeyToElectronAccelerator } from './utils';
 import './features';
-import { autoUpdaterLogInterface, createLog, hotkeyToElectronAccelerator } from './utils';
 
 import { PlayerRepeat, PlayerStatus, TitleTheme } from '/@/shared/types/types';
 
@@ -482,34 +479,6 @@ async function createWindow(first = true): Promise<void> {
             shell.openExternal(edata.url);
         }
         return { action: 'deny' };
-    });
-
-    mainWindow.webContents.session.setDisplayMediaRequestHandler((_request, callback) => {
-        if (!canHandleVisualizerDisplayMedia()) {
-            callback({});
-            return;
-        }
-
-        if (!isMacOS()) {
-            callback({ audio: 'loopback' });
-            return;
-        }
-
-        desktopCapturer
-            .getSources({ thumbnailSize: { height: 0, width: 0 }, types: ['screen'] })
-            .then((sources) => {
-                const source = sources[0];
-                if (!source) {
-                    callback({});
-                    return;
-                }
-
-                callback({ audio: 'loopback', video: source });
-            })
-            .catch((err) => {
-                log.warn('desktopCapturer.getSources failed', err);
-                callback({});
-            });
     });
 
     const theme = store.get('theme') as TitleTheme | undefined;

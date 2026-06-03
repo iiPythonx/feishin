@@ -82,7 +82,6 @@ const AppShell = memo(function AppShell() {
 const AppEffects = () => (
     <>
         <SyncSettingsEffect />
-        <UpdateCheckEffect />
         <CustomCssFileEffect />
         <CssSettingsEffect />
         <GlobalShortcutsEffect />
