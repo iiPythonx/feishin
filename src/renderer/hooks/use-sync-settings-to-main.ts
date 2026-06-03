@@ -32,6 +32,7 @@ export const useSyncSettingsToMain = () => {
             const settingsFromStore = useSettingsStore.getState();
 
             const settings = {
+                font: settingsFromStore.font,
                 general: settingsFromStore.general,
                 hotkeys: settingsFromStore.hotkeys,
                 lyrics: settingsFromStore.lyrics,
@@ -88,6 +89,14 @@ export const useSyncSettingsToMain = () => {
                 {
                     mainStoreKey: 'global_media_hotkeys',
                     rendererValue: settings.hotkeys.globalMediaHotkeys,
+                },
+                {
+                    mainStoreKey: 'enableNeteaseTranslation',
+                    rendererValue: settings.lyrics.enableNeteaseTranslation,
+                },
+                {
+                    mainStoreKey: 'local_font_path',
+                    rendererValue: settings.font.custom,
                 },
             ];
 

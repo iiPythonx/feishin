@@ -14,6 +14,7 @@ import {
     protocol,
     Rectangle,
     screen,
+    session,
     shell,
     Tray,
 } from 'electron';
@@ -25,13 +26,17 @@ import path, { join } from 'path';
 import { disableMediaKeys, enableMediaKeys } from './features/core/player/media-keys';
 import { shutdownServer } from './features/core/remote';
 import { store } from './features/core/settings';
+import { canHandleVisualizerDisplayMedia } from './features/core/visualizer';
 import MenuBuilder, { MenuPlaybackState } from './menu';
 import { createLog, hotkeyToElectronAccelerator, isLinux, isMacOS, isWindows } from './utils';
 import './features';
+import { autoUpdaterLogInterface, createLog, hotkeyToElectronAccelerator } from './utils';
 
 import { PlayerRepeat, PlayerStatus, TitleTheme } from '/@/shared/types/types';
 
-protocol.registerSchemesAsPrivileged([{ privileges: { bypassCSP: true }, scheme: 'feishin' }]);
+protocol.registerSchemesAsPrivileged([
+    { privileges: { bypassCSP: true, corsEnabled: true }, scheme: 'feishin' },
+]);
 
 process.on('uncaughtException', (error: any) => {
     console.error('Error in main process', error);
@@ -59,6 +64,16 @@ let currentRepeatMode: PlayerRepeat = PlayerRepeat.NONE;
 let currentSidebarCollapsed = false;
 let currentShuffleEnabled = false;
 let playbackMenuAccelerators: MenuPlaybackState['accelerators'] = {};
+let inputFocused = false;
+
+ipcMain.on('input-focus-state', (_event, focused: boolean) => {
+    const next = !!focused;
+    if (inputFocused === next) return;
+    inputFocused = next;
+    if (isMacOS()) {
+        rebuildMainMenu();
+    }
+});
 
 if (process.env.NODE_ENV === 'production') {
     import('source-map-support').then((sourceMapSupport) => {
@@ -104,7 +119,7 @@ if (isDevelopment) {
 }
 
 const RESOURCES_PATH = app.isPackaged
-    ? path.join(process.resourcesPath, 'assets')
+    ? path.join(path.dirname(app.getAppPath()), 'assets')
     : path.join(__dirname, '../../assets');
 
 const getAssetPath = (...paths: string[]): string => {
@@ -119,7 +134,7 @@ const rebuildMainMenu = () => {
     if (!menuBuilder || !mainWindow) return;
 
     menuBuilder.buildMenu({
-        accelerators: playbackMenuAccelerators,
+        accelerators: inputFocused ? {} : playbackMenuAccelerators,
         playbackStatus: currentPlaybackStatus,
         privateMode: currentPrivateMode,
         repeatMode: currentRepeatMode,
@@ -250,6 +265,15 @@ const createTray = () => {
     tray.setContextMenu(contextMenu);
 };
 
+const validateUrl = (url: string): boolean => {
+    // Minor security, really. Enforce only loading websites (http/https). file://
+    // URLs and the like should've already been blocked, but this is another check.
+    // Note that arbitrary web URLs are still allowed under this scheme, although
+    // that should really only be hit by Subsonic share url (or if artist homepage
+    // is allowed for ND extensions)
+    return url.startsWith('http://') || url.startsWith('https://');
+};
+
 async function createWindow(first = true): Promise<void> {
     if (isDevelopment) {
         await installExtensions().catch(console.log);
@@ -289,9 +313,9 @@ async function createWindow(first = true): Promise<void> {
             backgroundThrottling: false,
             contextIsolation: true,
             devTools: true,
-            nodeIntegration: true,
+            nodeIntegration: false,
             preload: join(__dirname, '../preload/index.js'),
-            sandbox: false,
+            sandbox: true,
             webSecurity: !store.get('ignore_cors'),
         },
         width: 1440,
@@ -454,11 +478,18 @@ async function createWindow(first = true): Promise<void> {
 
     // Open URLs in the user's browser
     mainWindow.webContents.setWindowOpenHandler((edata) => {
-        shell.openExternal(edata.url);
+        if (validateUrl(edata.url)) {
+            shell.openExternal(edata.url);
+        }
         return { action: 'deny' };
     });
 
     mainWindow.webContents.session.setDisplayMediaRequestHandler((_request, callback) => {
+        if (!canHandleVisualizerDisplayMedia()) {
+            callback({});
+            return;
+        }
+
         if (!isMacOS()) {
             callback({ audio: 'loopback' });
             return;
@@ -485,7 +516,9 @@ async function createWindow(first = true): Promise<void> {
     nativeTheme.themeSource = theme || 'dark';
 
     mainWindow.webContents.setWindowOpenHandler((details) => {
-        shell.openExternal(details.url);
+        if (validateUrl(details.url)) {
+            shell.openExternal(details.url);
+        }
         return { action: 'deny' };
     });
 
@@ -684,14 +717,33 @@ app.on('window-all-closed', () => {
     }
 });
 
-const FONT_HEADERS = [
+const FONT_HEADERS = new Set([
     'font/collection',
     'font/otf',
     'font/sfnt',
     'font/ttf',
     'font/woff',
     'font/woff2',
-];
+]);
+
+const bytesToInt = (array: Uint8Array, length: number): number => {
+    let value = 0;
+    for (let i = 0; i < length; i++) {
+        value = (value << 8) + array[i];
+    }
+
+    return value;
+};
+
+const FONT_FOUR_BYTE_MAGIC_NUMBERS = new Set([
+    0x4f54544f, // font/otf
+    0x774f4632, // font/woff2
+    0x774f4646, // font/woff
+]);
+
+const FONT_FIVE_BYTE_MAGIC_NUMBERS = new Set([
+    0x0001000000, // ttf, collection, sfnt
+]);
 
 const singleInstance = isDevelopment ? true : app.requestSingleInstanceLock();
 
@@ -712,12 +764,9 @@ if (!singleInstance) {
 
     app.whenReady()
         .then(() => {
-            protocol.handle('feishin', async (request) => {
-                const filePath = `file:${request.url.slice('feishin:'.length)}`;
-                const response = await net.fetch(filePath);
-                const contentType = response.headers.get('content-type');
-
-                if (!contentType || !FONT_HEADERS.includes(contentType)) {
+            protocol.handle('feishin', async () => {
+                const filePath = store.get('local_font_path');
+                if (typeof filePath !== 'string') {
                     getMainWindow()?.webContents.send('custom-font-error', filePath);
 
                     return new Response(null, {
@@ -726,7 +775,49 @@ if (!singleInstance) {
                     });
                 }
 
-                return response;
+                const response = await net.fetch('file:' + filePath);
+                const contentType = response.headers.get('content-type');
+
+                // On Linux, the mime type is included in the response header
+                // In this case, we can forward the response with no further processing
+                if (contentType && FONT_HEADERS.has(contentType)) {
+                    return response;
+                }
+
+                // Otherwise, let's check the magic number to see if
+                // the file is a font type. This is either four or five bytes
+                const payload = await response.arrayBuffer();
+                const magicNumber = new Uint8Array(payload.slice(0, 5));
+                const fiveHex = bytesToInt(magicNumber, 5);
+                const fourHex = bytesToInt(magicNumber, 4);
+
+                if (
+                    FONT_FIVE_BYTE_MAGIC_NUMBERS.has(fiveHex) ||
+                    FONT_FOUR_BYTE_MAGIC_NUMBERS.has(fourHex)
+                ) {
+                    // We have to create a new response with the payload, since it has been read now
+                    return new Response(payload, {
+                        headers: response.headers,
+                    });
+                }
+
+                getMainWindow()?.webContents.send('custom-font-error', filePath);
+
+                return new Response(null, {
+                    status: 403,
+                    statusText: 'Forbidden',
+                });
+            });
+
+            session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+                callback({
+                    responseHeaders: {
+                        ...details.responseHeaders,
+                        'Content-Security-Policy': [
+                            "script-src 'self' 'wasm-unsafe-eval' 'unsafe-inline' https://umami.jeffvli.org; style-src 'self' 'unsafe-inline'; media-src 'self' http: https: data: blob:; img-src 'self' http: https: data: blob:; connect-src 'self' http: https: ws: wss:; default-src 'self';",
+                        ],
+                    },
+                });
             });
 
             createWindow();
